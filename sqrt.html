@@ -199,7 +199,7 @@ svg{max-width:100%;height:auto;display:block}
   <div class="card">
     <div class="dist" id="dist"></div>
     <p class="dim" style="font-size:14px;margin:14px 0 0">
-      資料：國家教育研究院 111 年會考數學科官方試題分析（通過率 0.7503、<strong>鑑別度 0.64</strong>）。
+      資料：國家教育研究院 111 年會考數學科官方試題分析（通過率 0.7503、<strong>鑑別度 0.64</strong>）。<br><span style="color:var(--ink2)">「鑑別度」是官方算出來的一個數字：<strong>越高，代表這題越能分出「真的懂」和「只是猜對」的人</strong>。</span><br><span style="color:var(--ink2)">「待加強」是會考成績的最低一級（官方把考生分成<strong>精熟、基礎、待加強</strong>三級）。這裡把最低那一級單獨拉出來看。</span>
     </p>
   </div>
 
@@ -317,7 +317,7 @@ svg{max-width:100%;height:auto;display:block}
   <div class="step">STEP 6　這個數從哪裡來</div>
   <h2>一個「算不完」的數，曾經是禁忌</h2>
 
-  <p class="lead"><span class="eq">√<span class="rad">2</span></span> ＝ 1.41421356⋯⋯ 這串小數<strong>永遠不會停，也永遠不會循環</strong>。<br>你可能覺得這很正常。但兩千五百年前，這件事幾乎摧毀了一個學派。</p>
+  <p class="lead"><span class="eq">√<span class="rad">2</span></span> ＝ 1.41421356⋯⋯ 這串小數<strong>永遠不會停</strong>，也不會出現一直重複的規律。<br>你可能覺得這很正常。但兩千五百年前，這件事幾乎毀掉了一群數學家的信念。</p>
 
   <div class="card">
     <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 2500 年前 · 畢達哥拉斯學派</p>
@@ -330,9 +330,9 @@ svg{max-width:100%;height:auto;display:block}
   <div class="card">
     <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 4000 年前 · 巴比倫</p>
     <p style="margin:0 0 6px;font-size:18px;font-weight:700">他們不管它是什麼，先算出來再說</p>
-    <p style="margin:0 0 12px">比希臘人早一千多年，巴比倫人就有一套<strong>逼近平方根</strong>的方法：<em>先亂猜一個數，然後讓它自己修正自己。</em></p>
+    <p style="margin:0 0 12px">比希臘人早一千多年，巴比倫人就有一套<strong>越算越接近平方根</strong>的方法：<em>先亂猜一個數，然後讓它自己修正自己。</em></p>
     <p style="margin:0 0 6px;text-align:center" class="eq">下一次的猜測 ＝ ( 這次的猜測 ＋ 要開根號的數 ÷ 這次的猜測 ) ÷ 2</p>
-    <p style="margin:12px 0 0">看起來很怪？按下去看它怎麼收斂——<strong>從一個很爛的猜測開始</strong>。</p>
+    <p style="margin:12px 0 0">看起來很怪？按下去看它怎麼一步一步靠近答案——<strong>而且是從一個很爛的猜測開始</strong>。</p>
   </div>
 
   <div class="lab">
@@ -347,8 +347,8 @@ svg{max-width:100%;height:auto;display:block}
 
   <div class="note">
     <p><b>這個四千年前的方法，是今天電腦開根號的雛形。</b></p>
-    <p style="margin-top:10px">它每一步都讓誤差<em>平方級地縮小</em>——所以從 100 這種爛猜測出發，五、六步就精確到小數點後十位。</p>
-    <p style="margin-top:10px">你按計算機上的 <span class="eq">√</span> 鍵時，晶片裡跑的就是這一類迭代法。<strong>巴比倫人用泥板，我們用矽晶片，公式是同一條。</strong></p>
+    <p style="margin-top:10px">它每走一步，誤差就小得非常多——所以從 100 這種爛猜測出發，五、六步就準到小數點後十位。</p>
+    <p style="margin-top:10px">你按計算機上的 <span class="eq">√</span> 鍵時，晶片裡跑的就是這一種「一直重複同一個算式」的方法。<strong>巴比倫人用泥板，我們用矽晶片，公式是同一條。</strong></p>
   </div>
 
   <div class="q" id="q4">
@@ -374,11 +374,13 @@ svg{max-width:100%;height:auto;display:block}
     <p class="big" style="text-align:left">看到根號，先找兩個平方數把它夾住。</p>
     <div style="text-align:left">
       <div class="aside">
-        <p><strong>把三個單元串起來看：</strong><br>
-        乘法公式教你<em>把形狀換掉</em>（44² ＝ (40＋4)²）；<br>
-        多項式除法教你<em>什麼時候該停</em>；<br>
-        這一節教你<em>算不出來的時候怎麼辦</em>。<br>
-        三件事都在說同一句話：<strong>會考考的不是計算能力，是判斷力。</strong></p>
+        <p><strong>這一冊的三課，你走完了。</strong>順序是：<br>
+        <a href="multiply.html" style="color:var(--accent);font-weight:700">不要算，先看</a>（1-1 乘法公式）→ <a href="division.html" style="color:var(--accent);font-weight:700">什麼時候可以停下來</a>（1-3 多項式除法）→ 這一課（2-1 平方根）。</p>
+        <p style="margin-top:10px">三課其實在講同一件事：<br>
+        乘法公式教你<em>把難算的樣子換掉</em>（你剛剛就用它算出 44²＝1936）；<br>
+        除法教你<em>什麼時候該收手</em>；<br>
+        這一課教你<em>算不出來的時候怎麼辦</em>。<br>
+        <strong>會考考的不是算得快，是知道該怎麼做。</strong></p>
       </div>
     </div>
     <button class="reset" id="rst">清除進度，重新開始</button>
@@ -566,7 +568,7 @@ function babylon(){
   else if(n===1){v.className="verdict";v.innerHTML="一步就從 100 掉到 "+guesses[1].toFixed(2)+"。<strong>誤差瞬間縮小了十幾倍。</strong>"}
   else if(n===2){v.className="verdict warn";v.innerHTML="第 2 次已經是 "+guesses[2].toFixed(4)+"，誤差從一開始的 55 掉到不到 2。<em>而我們只做了兩次加法和兩次除法。</em>"}
   else if(n>=3&&n<5){v.className="verdict good";v.innerHTML="第 "+n+" 次：<strong>"+guesses[n].toFixed(8)+"</strong>。<br>正確值是 44.96665⋯⋯ —— 誤差已經小到看不見了。"}
-  else{v.className="verdict good";v.innerHTML="再按也不會變了——<strong>已經到達電腦能表示的精度極限</strong>。<br>從一個爛猜測 100 出發，總共只花了四、五步。這是四千年前的方法。"}
+  else{v.className="verdict good";v.innerHTML="再按也不會變了——<strong>已經到了電腦能算的最多位數</strong>。<br>從一個爛猜測 100 出發，總共只花了四、五步。這是四千年前的方法。"}
   document.getElementById("itBtn").disabled = guesses.length>7;
 }
 document.getElementById("itBtn").addEventListener("click",()=>{

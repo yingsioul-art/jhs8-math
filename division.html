@@ -211,7 +211,7 @@ footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
   <div class="card">
     <div class="dist" id="dist"></div>
     <p class="dim" style="font-size:14px;margin:14px 0 0">
-      資料：國家教育研究院 111 年會考數學科官方試題分析。上為全體考生，下為「待加強」等級的考生。
+      資料：國家教育研究院 111 年會考數學科官方試題分析。上為全體考生，下為「待加強」等級的考生。<br><span style="color:var(--ink2)">「待加強」是會考成績的最低一級（官方把考生分成<strong>精熟、基礎、待加強</strong>三級）。這裡把最低那一級單獨拉出來看。</span>
     </p>
   </div>
 
@@ -354,14 +354,14 @@ footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
   <div class="step">STEP 6　這個「停止條件」從哪裡來</div>
   <h2>兩千三百年前就寫好的規則</h2>
 
-  <p class="lead">你可能覺得「餘式次數要低於除式」是課本為了考試發明的規矩。<br><strong>它其實是人類最古老的演算法能運作的原因。</strong></p>
+  <p class="lead">你可能覺得「餘式次數要低於除式」是課本為了考試發明的規矩。<br><strong>它其實是人類最古老的一套算法，能夠停下來的原因。</strong></p>
 
   <div class="card">
     <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 2300 年前 · 歐幾里得</p>
     <p style="margin:0 0 6px;font-size:18px;font-weight:700">輾轉相除法</p>
     <p style="margin:0 0 10px">《幾何原本》第七卷記載了一個求最大公因數的方法：<strong>大的除以小的，取餘數；再拿除數除餘數⋯⋯一直到整除為止。</strong></p>
     <p class="eq" style="margin:0 0 8px;font-size:15px">1071 ÷ 462 ＝ 2 餘 147　→　462 ÷ 147 ＝ 3 餘 21　→　147 ÷ 21 ＝ 7 餘 0　→　答案 21</p>
-    <p style="margin:0"><strong>為什麼這個過程一定會結束？</strong>因為每次的餘數都<em>嚴格小於</em>上一個除數。一串越來越小的正整數，不可能無限下去——<strong>它必須在有限步內走到 0。</strong></p>
+    <p style="margin:0"><strong>為什麼這個過程一定會結束？</strong>因為每次的餘數都<em>一定比上一個除數小</em>。數字一次比一次小，一直減下去總會到 0——<strong>不可能永遠除不完。</strong></p>
   </div>
 
   <div class="quote">
@@ -393,14 +393,14 @@ footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
   <div class="done">
     <div class="step">結案</div>
     <h2>難的不是除，是停</h2>
-    <p style="text-align:left">多項式除法的每一步都很機械：拿最高次項相除、乘回去、減掉。真正會出錯的只有最後那一下——<strong>該收手的時候有沒有收手</strong>。</p>
+    <p style="text-align:left">多項式除法的每一步都是固定動作：拿最高次項相除、乘回去、減掉。真正會出錯的只有最後那一下——<strong>該收手的時候有沒有收手</strong>。</p>
     <p style="text-align:left">而那個停止點不是誰規定的。它是<em>讓這件事做得完</em>的唯一辦法，歐幾里得兩千三百年前就靠它了。</p>
     <p style="text-align:left">如果只留一句話帶走：</p>
     <p class="big" style="text-align:left">每減完一次，先比次數再決定要不要繼續。</p>
     <div style="text-align:left">
       <div class="aside">
-        <p><strong>下一個單元預告：</strong>把它夾在兩個整數中間。<br>
-        <span class="eq">√2022</span> 大概是多少？估值題十三年來只有一招：夾在兩個完全平方數之間。<span class="eq">44<sup>2</sup>＝1936</span>、<span class="eq">45<sup>2</sup>＝2025</span>——所以答案就在 44 和 45 之間，而且非常靠近 45。</p>
+        <p><strong>下一課（照課本順序）：</strong><a href="sqrt.html" style="color:var(--accent);font-weight:700">把它夾在兩個整數中間</a>（第 2 章 2-1 平方根）<br>
+        沒有計算機，<span class="eq">√2022</span> 大概是多少？<br>        估值題十三年來只有一招：找兩個平方數把它夾住。<span class="eq">44<sup>2</sup>＝1936</span>、<span class="eq">45<sup>2</sup>＝2025</span> —— 答案就在 44 和 45 中間，而且很靠近 45。</p>
       </div>
     </div>
     <button class="reset" id="rst">清除進度，重新開始</button>
@@ -450,7 +450,7 @@ const FB={
   D:["這就是最快的方法","<p><span class='eq'>(x＋2)(4x＋5) ＝ 4x<sup>2</sup>＋5x＋8x＋10 ＝ 4x<sup>2</sup>＋13x＋10</span><br>再加餘式 5 → <span class='eq'>4x<sup>2</sup>＋13x＋15</span></p><p>但被除式是 <span class='eq'>4x<sup>2</sup>−3x−5</span>——<strong>對不上，所以他錯了</strong>。</p><p>這個檢查只要一次乘法就能做完，而且<em>百分之百可靠</em>。考場上除完花十秒驗一下，比重算一遍划算太多。</p>"]},
  5:{ans:"B",
   A:["好看不是理由","<p>數學規則背後通常有更硬的原因。這條的原因是：<strong>沒有它，除法可能永遠停不下來。</strong></p>"],
-  B:["對，兩件事一起保證","<p><strong>①會停：</strong>每除一次，餘式次數至少降 1。從高次一路降到 0，必定在有限步內結束——這正是歐幾里得輾轉相除法能終止的理由。</p><p><strong>②不越界：</strong>一旦次數低於除式還硬除，就會冒出 <span class='eq'>2/x</span>，那不是多項式了。</p><p>一個條件，同時擋住「做不完」和「做出界」。</p>"],
+  B:["對，兩件事一起保證","<p><strong>①會停：</strong>每除一次，餘式的次數至少降 1。從高次一路降到 0，一定會在幾步之內結束——這正是歐幾里得輾轉相除法能停下來的理由。</p><p><strong>②不越界：</strong>一旦次數低於除式還硬除，就會冒出 <span class='eq'>2/x</span>，那不是多項式了。</p><p>一個條件，同時擋住「做不完」和「做出界」。</p>"],
   C:["沒有這條規定","<p>商式有時候比餘式短很多（像 111-02 商是 3、餘是 4x）。<strong>長短無關，次數才是重點。</strong></p>"],
   D:["和正負沒有關係","<p>餘式可以是負的（像 <span class='eq'>(2x<sup>2</sup>−3)÷(x＋1)</span> 餘 <span class='eq'>−1</span>），完全合法。</p><p>唯一的要求是<strong>次數</strong>要低於除式。</p>"]}
 };

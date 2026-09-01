@@ -708,6 +708,17 @@ const PRAC=[
   why:"<span class='eq'>a²−b² ＝ (a＋b)(a−b)</span>，所以 ＝ (655＋345)(655−345) ＝ <b>1000 × 310</b> ＝ 310000。<br>如果硬算 655²＝429025、345²＝119025 再相減，要花好幾分鐘還容易錯。<br><b>這就是公式真正的用途。</b>"}
 ];
 
+
+/* 打散選項順序 —— 正解不會永遠在同一個位置（每次開啟都重洗） */
+PRAC.forEach(function(P){
+  var pairs=P.o.map(function(t,i){return {t:t, ok:(i===P.a)};});
+  for(var i=pairs.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1)), tmp=pairs[i]; pairs[i]=pairs[j]; pairs[j]=tmp;
+  }
+  P.o=pairs.map(function(x){return x.t;});
+  P.a=pairs.findIndex(function(x){return x.ok;});
+});
+
 let pi=0, pDone=(state.prac||0);
 
 function pDots(){

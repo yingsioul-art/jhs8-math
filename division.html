@@ -544,6 +544,17 @@ const PRAC=[
   why:"B ＝ [(8x²＋2x−15) − 6] ÷ (4x＋7) ＝ (8x²＋2x−21) ÷ (4x＋7) ＝ <b>2x−3</b>。<br>驗算：(2x−3)(4x＋7) ＝ 8x²＋14x−12x−21 ＝ 8x²＋2x−21，再加 6 ＝ 8x²＋2x−15 ✓<br><b>八題做完了。你已經把三種問法都練過一次。</b>"}
 ];
 
+
+/* 打散選項順序 —— 正解不會永遠在同一個位置（每次開啟都重洗） */
+PRAC.forEach(function(P){
+  var pairs=P.o.map(function(t,i){return {t:t, ok:(i===P.a)};});
+  for(var i=pairs.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1)), tmp=pairs[i]; pairs[i]=pairs[j]; pairs[j]=tmp;
+  }
+  P.o=pairs.map(function(x){return x.t;});
+  P.a=pairs.findIndex(function(x){return x.ok;});
+});
+
 let pi=0, pDone=(state.prac||0);
 function pDots(){
   $("pDots").innerHTML=PRAC.map((_,i)=>

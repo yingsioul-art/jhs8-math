@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>什麼時候可以停下來｜多項式除法</title>
+<style>
+:root{
+  --paper:#f8f7f4; --ink:#232026; --ink2:#57525e; --line:#dcd8e0;
+  --accent:#4338ca; --accent-soft:#eeecfd;
+  --teal:#0f6b63; --teal-soft:#e6f2f0;
+  --green:#3f6d3a; --green-soft:#eef4ec;
+  --red:#b03030; --red-soft:#fdeeee;
+  --shadow:0 1px 2px rgba(35,32,38,.06),0 8px 24px rgba(35,32,38,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:17px;line-height:1.85;letter-spacing:.01em}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 120px}
+
+header{padding:56px 0 28px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:14px}
+h1{font-size:34px;line-height:1.3;margin:0 0 14px;letter-spacing:-.01em}
+.sub{color:var(--ink2);font-size:15px;margin:0}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.tag{font-size:12px;padding:4px 11px;border:1px solid var(--line);border-radius:99px;color:var(--ink2);background:#fff}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(248,247,244,.94);
+  border-bottom:1px solid var(--line);margin:0 -20px 0;padding:10px 20px}
+.bar-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.track{flex:1;height:5px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.bar b{font-size:12px;color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+.step{font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:10px}
+h2{font-size:25px;line-height:1.4;margin:0 0 20px;letter-spacing:-.01em}
+h3{font-size:19px;margin:34px 0 12px}
+p{margin:0 0 18px}
+.lead{font-size:19px;line-height:1.9}
+.dim{color:var(--ink2)}
+.big{font-size:22px;font-weight:700;line-height:1.6;margin:26px 0}
+em{font-style:normal;background:linear-gradient(transparent 62%,#cfc9fb 62%);font-weight:600;padding:0 1px}
+.eq{font-family:"Cambria","Times New Roman",Georgia,serif;font-size:1.06em;font-variant-numeric:tabular-nums}
+.eq sup{font-size:.68em;vertical-align:super;line-height:0}
+.eq.blk{display:block;text-align:center;font-size:21px;margin:20px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  font-size:.84em;line-height:1.18;margin:0 3px}
+.frac span:first-child{border-bottom:1.4px solid currentColor;padding:0 5px}
+.hl{background:#fff3c4;border-radius:3px;padding:0 3px}
+.hl2{background:#d5f0e8;border-radius:3px;padding:0 3px}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:24px 0;box-shadow:var(--shadow)}
+.quote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 20px;border-radius:0 10px 10px 0;margin:24px 0}
+.quote p:last-child{margin:0}
+.note{background:var(--teal-soft);border:1px solid #c5e0db;border-radius:12px;padding:18px 20px;margin:24px 0;font-size:16px}
+.note p:last-child{margin:0}
+.note b{color:var(--teal)}
+.aside{background:#fdf7e8;border:1px dashed #e5d5a8;border-radius:12px;padding:16px 18px;margin:24px 0;font-size:15px;color:#5c4d20}
+.aside p:last-child{margin:0}
+
+.q{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:24px;margin:26px 0;box-shadow:var(--shadow)}
+.q-src{font-size:12px;letter-spacing:.12em;color:var(--accent);font-weight:700;margin-bottom:12px}
+.q-body{font-size:16.5px;line-height:1.9;margin-bottom:20px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;gap:12px;align-items:center;padding:14px 16px;border:1.5px solid var(--line);
+  border-radius:11px;cursor:pointer;background:#fff;font-size:16px;line-height:1.7;
+  transition:border-color .15s,background .15s;text-align:left;width:100%;font-family:inherit;color:inherit}
+.opt:hover:not(.locked){border-color:var(--ink2);background:#fcfbfe}
+.opt .k{font-weight:700;flex-shrink:0;width:22px;color:var(--ink2)}
+.opt.picked{border-color:var(--ink);border-width:2px}
+.opt.right{border-color:var(--green);background:var(--green-soft)}
+.opt.right .k{color:var(--green)}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.opt.wrong .k{color:var(--red)}
+.opt.locked{cursor:default}
+.opt .pct{margin-left:auto;font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink2);
+  flex-shrink:0;padding-left:10px;font-weight:600}
+.fb{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);font-size:16px;display:none}
+.fb.show{display:block;animation:rise .45s ease}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.fb h4{margin:0 0 8px;font-size:15px;letter-spacing:.06em}
+.fb p:last-child{margin:0}
+
+.locked-zone{opacity:.3;pointer-events:none;filter:blur(4px) saturate(.2);user-select:none}
+.revealed{animation:reveal .6s ease both}
+@keyframes reveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.lab{background:linear-gradient(#fff,#fcfbfe);border:1px solid var(--line);border-radius:16px;
+  padding:22px;margin:26px 0;box-shadow:var(--shadow)}
+.lab-t{font-size:12px;letter-spacing:.18em;color:var(--teal);font-weight:700;margin-bottom:16px}
+.btn{padding:9px 18px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+  border-radius:99px;cursor:pointer;font-size:14.5px;font-family:inherit;font-weight:600;transition:opacity .15s}
+.btn:hover{opacity:.86}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn.warn{background:#fff;color:var(--red);border-color:var(--red)}
+.btn:disabled{opacity:.35;cursor:default}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.verdict{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15px;line-height:1.7;
+  background:var(--teal-soft);border:1px solid #c5e0db}
+.verdict.good{background:var(--green-soft);border-color:#c8dcc4}
+.verdict.bad{background:var(--red-soft);border-color:#edc4c4}
+.verdict.warn{background:#fdf7e8;border-color:#e5d5a8}
+
+/* 直式除法 */
+.long{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 14px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch}
+.long pre{margin:0;font-family:"SF Mono",Consolas,"Courier New",monospace;
+  font-size:15.5px;line-height:1.38;white-space:pre;color:var(--ink)}
+.long .ln{display:block;transition:opacity .4s,background .4s;border-radius:4px}
+.long .ln.hidden{opacity:0}
+.long .ln.flash{background:#fff3c4}
+.long .ln.stop{color:var(--red);font-weight:700}
+
+.dist{margin:18px 0}
+.dbar{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:14px}
+.dbar .dk{width:56px;font-weight:700;flex-shrink:0;font-size:13px}
+.dtrack{flex:1;height:26px;background:#eeebf2;border-radius:6px;overflow:hidden}
+.dfill{height:100%;border-radius:6px;width:0;transition:width 1s cubic-bezier(.4,0,.2,1)}
+.dbar .dv{width:52px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2);flex-shrink:0;font-weight:600}
+
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15px;background:#fff;
+  border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#f1eff5;font-weight:700;font-size:13.5px;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:24px -20px;padding:0 20px}
+.scroll table{margin:0;min-width:480px}
+
+.done{text-align:center;padding:52px 0 20px}
+.done h2{font-size:27px}
+.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:9px 18px;
+  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:28px}
+footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="bar-inner">
+  <b id="pnum">0 / 6</b>
+  <div class="track"><div class="fill" id="pfill"></div></div>
+</div></div>
+
+<div class="wrap">
+
+<header>
+  <div class="kicker">八年級上 · 第一章 1-3 多項式的乘除運算</div>
+  <h1>什麼時候可以停下來</h1>
+  <p class="sub">多項式除法只有一個難點，而它不是「怎麼除」。<br>是「除到哪裡就該收手」。</p>
+  <div class="meta">
+    <span class="tag">會考 111-02</span>
+    <span class="tag">13 年考 5 題</span>
+    <span class="tag">第 1 章 CP 值最高</span>
+  </div>
+</header>
+
+<!-- ══ 0 案發 ══ -->
+<section>
+  <div class="step">案發現場</div>
+  <h2>有人算出了一個不是多項式的東西</h2>
+
+  <p class="lead">先看一個很短的除法：<span class="eq">(6x<sup>2</sup> ＋ 4x) ÷ 2x<sup>2</sup></span></p>
+
+  <div class="card">
+    <p style="margin:0 0 10px"><strong>第一步（大家都會）</strong></p>
+    <p style="margin:0 0 6px" class="eq">6x<sup>2</sup> ÷ 2x<sup>2</sup> ＝ 3　　→　商的第一項是 3</p>
+    <p style="margin:0 0 6px" class="eq">3 × 2x<sup>2</sup> ＝ 6x<sup>2</sup>　　→　減掉</p>
+    <p style="margin:0;" class="eq">剩下 <span class="hl">4x</span></p>
+  </div>
+
+  <p>接下來就是分岔路了。有人在這裡<strong>停下來</strong>，有人<strong>繼續除</strong>。</p>
+
+  <div class="card" style="border-color:var(--red)">
+    <p style="margin:0 0 10px;color:var(--red)"><strong>繼續除會發生什麼</strong></p>
+    <p style="margin:0 0 6px" class="eq">4x ÷ 2x<sup>2</sup> ＝ <span class="frac"><span>2</span><span>x</span></span></p>
+    <p style="margin:0">於是商變成 <span class="eq">3 ＋ <span class="frac"><span>2</span><span>x</span></span></span>——<strong>x 跑到分母去了</strong>。</p>
+  </div>
+
+  <div class="quote">
+    <p><span class="eq"><span class="frac"><span>2</span><span>x</span></span></span> 不是多項式。多項式的每一項都長得像 <span class="eq">ax<sup>n</sup></span>，而且 <em>n 必須是 0 或正整數</em>。</p>
+    <p style="margin-top:10px">你做多項式除法，做出了一個不是多項式的東西——<strong>這代表你越線了。</strong></p>
+  </div>
+
+  <p class="big">那麼，到底該在哪裡停？</p>
+</section>
+
+<!-- ══ 1 押注 ══ -->
+<section>
+  <div class="step">STEP 1　先押注</div>
+  <h2>這題只問你一件事：停在哪</h2>
+
+  <div class="q" id="q0">
+    <div class="q-src">111 年會考數學科 第 2 題（原題）</div>
+    <div class="q-body">計算多項式 <span class="eq">6x<sup>2</sup> ＋ 4x</span> 除以 <span class="eq">2x<sup>2</sup></span> 後，得到的<strong>餘式</strong>為何？</div>
+    <div class="opts" data-q="0" data-ans="D">
+      <button class="opt" data-k="A"><span class="k">A</span><span class="eq">2</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span class="eq">4</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span class="eq">2x</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span class="eq">4x</span></button>
+    </div>
+    <div class="fb" id="fb0"></div>
+  </div>
+</section>
+
+<!-- ══ 2 全台 ══ -->
+<section class="locked-zone" id="z2">
+  <div class="step">STEP 2　全國怎麼選</div>
+  <h2>八成的人對了——但那兩成不是粗心</h2>
+
+  <div class="card">
+    <div class="dist" id="dist"></div>
+    <p class="dim" style="font-size:14px;margin:14px 0 0">
+      資料：國家教育研究院 111 年會考數學科官方試題分析。上為全體考生，下為「待加強」等級的考生。
+    </p>
+  </div>
+
+  <div class="note">
+    <p><b>這題全體通過率 0.8236，看起來很簡單。</b>但把「待加強」那群人單獨拉出來看，通過率只剩 <strong>0.4679</strong>——<em>一半以上的人錯</em>。</p>
+    <p style="margin-top:10px">同一題，兩個世界。差別不在計算能力（這題只有一個除法），而在<strong>知不知道什麼時候該停</strong>。</p>
+    <p style="margin-top:10px">會選 A（2）或 B（4）的人，多半是<em>硬除到剩下常數為止</em>——就像整數除法總要除到剩下一個數字那樣。</p>
+  </div>
+</section>
+
+<!-- ══ 3 互動 ══ -->
+<section class="locked-zone" id="z3">
+  <div class="step">STEP 3　自己走一次直式</div>
+  <h2>每一步都由你決定要不要繼續</h2>
+
+  <p>換一題長一點的（115 年考過的）：<span class="eq">(4x<sup>2</sup> − 3x − 5) ÷ (x ＋ 2)</span>。</p>
+  <p>每做完一步，我會問你：<strong>還能再除嗎？</strong></p>
+
+  <div class="lab">
+    <div class="lab-t">實驗室 ── 直式除法，一步一步</div>
+    <div class="long"><pre id="pre"></pre></div>
+    <div class="btnrow">
+      <button class="btn" id="goBtn">開始</button>
+      <button class="btn ghost" id="rstBtn">重來</button>
+    </div>
+    <div class="verdict" id="labv">按「開始」，我們一步一步把它除完。</div>
+  </div>
+
+  <div class="q" id="q1">
+    <div class="q-body">走到剩下 <span class="eq">17</span> 的時候，為什麼<strong>不能</strong>再除下去？</div>
+    <div class="opts" data-q="1" data-ans="B">
+      <button class="opt" data-k="A"><span class="k">A</span><span>因為 17 是質數</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span>因為 17 沒有 x，次數比除式 <span class="eq">x＋2</span> 低了，再除會跑出 <span class="eq"><span class="frac"><span>17</span><span>x</span></span></span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span>因為老師規定除法只能做兩步</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span>因為 17 除以 2 除不盡</span></button>
+    </div>
+    <div class="fb" id="fb1"></div>
+  </div>
+</section>
+
+<!-- ══ 4 命名 ══ -->
+<section class="locked-zone" id="z4">
+  <div class="step">STEP 4　現在把規則寫下來</div>
+  <h2>一條算式，一個條件</h2>
+
+  <div class="card">
+    <p style="margin:0 0 6px;font-size:15px;color:var(--ink2)">除法的骨架</p>
+    <div class="eq blk" style="margin:6px 0 16px">被除式 ＝ 商式 × 除式 ＋ 餘式</div>
+    <p style="margin:0 0 6px;font-size:15px;color:var(--ink2)">停止條件（整題的關鍵）</p>
+    <div class="eq blk" style="margin:6px 0 4px;color:var(--accent)">餘式的次數　＜　除式的次數</div>
+  </div>
+
+  <div class="note">
+    <p><b>這個條件不是規定，是「保證你會停下來」的設計。</b></p>
+    <p style="margin-top:10px">如果允許餘式的次數和除式一樣高，那你<em>永遠還能再除一次</em>——除法就沒有終點了。</p>
+    <p style="margin-top:10px">而且一旦次數低於除式還硬除，就會冒出 <span class="eq"><span class="frac"><span>2</span><span>x</span></span></span> 這種東西：<strong>你已經離開多項式的世界了。</strong></p>
+  </div>
+
+  <h3>回到第一題</h3>
+  <div class="scroll">
+  <table>
+    <tr><th></th><th>次數</th><th>能不能再除</th></tr>
+    <tr><td>除式 <span class="eq">2x<sup>2</sup></span></td><td><b>2</b></td><td>—</td></tr>
+    <tr><td>剩下 <span class="eq">4x</span></td><td><b>1</b></td><td>1 ＜ 2 → <b style="color:var(--green)">停</b></td></tr>
+  </table>
+  </div>
+  <p>所以餘式就是 <span class="eq"><strong>4x</strong></span>，商是 <span class="eq">3</span>。<strong>答案 D。</strong></p>
+  <p class="dim">整題只有一個除法。難的是相信自己可以停。</p>
+
+  <div class="aside">
+    <p><strong>對照整數看一次，會發現是同一件事：</strong><br>
+    <span class="eq">17 ÷ 5 ＝ 3 餘 2</span>。為什麼停在 2？因為 <em>2 ＜ 5</em>（餘數比除數小）。<br>
+    多項式只是把「比較大小」換成「比較次數」。<strong>同一套規則，換一種比法。</strong></p>
+  </div>
+</section>
+
+<!-- ══ 5 變形 ══ -->
+<section class="locked-zone" id="z5">
+  <div class="step">STEP 5　三種問法，同一條骨架</div>
+  <h2>會考只會問你三件事</h2>
+
+  <p>13 年考了 5 題，問法從來沒變過：<strong>求商式／求餘式／求商＋餘</strong>。全都是那條骨架的變形。</p>
+
+  <h3>變形一：被除式已經幫你排好了</h3>
+  <p>這題長得很嚇人，但你<em>一次長除法都不用做</em>。先看清楚它的形狀：</p>
+
+  <div class="q" id="q2">
+    <div class="q-src">104 年會考數學科 第 6 題（原題）</div>
+    <div class="q-body">計算多項式 <span class="eq">−2x(3x−2)<sup>2</sup> ＋ 3</span> 除以 <span class="eq">3x−2</span> 後，所得<strong>商式與餘式兩者之和</strong>為何？
+      <span class="dim" style="font-size:15px">（提示：把 <span class="eq">−2x(3x−2)<sup>2</sup></span> 拆成「<span class="eq">□ × (3x−2)</span>」的樣子。）</span>
+    </div>
+    <div class="opts" data-q="2" data-ans="C">
+      <button class="opt" data-k="A"><span class="k">A</span><span class="eq">−2x ＋ 3</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span class="eq">−6x<sup>2</sup> ＋ 4x</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span class="eq">−6x<sup>2</sup> ＋ 4x ＋ 3</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span class="eq">−6x<sup>2</sup> − 4x ＋ 3</span></button>
+    </div>
+    <div class="fb" id="fb2"></div>
+  </div>
+
+  <div class="locked-zone" id="z5b">
+  <h3>變形二：先除完，再相加</h3>
+  <div class="q" id="q3">
+    <div class="q-src">115 年會考數學科 第 7 題（原題）</div>
+    <div class="q-body">計算多項式 <span class="eq">4x<sup>2</sup> − 3x − 5</span> 除以 <span class="eq">x ＋ 2</span> 後，所得<strong>商式與餘式兩者之和</strong>為何？
+      <span class="dim" style="font-size:15px">（你剛剛在實驗室已經除完了：商 <span class="eq">4x − 11</span>、餘 <span class="eq">17</span>。）</span>
+    </div>
+    <div class="opts" data-q="3" data-ans="A">
+      <button class="opt" data-k="A"><span class="k">A</span><span class="eq">4x ＋ 6</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span class="eq">4x − 6</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span class="eq">4x ＋ 28</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span class="eq">4x − 11</span></button>
+    </div>
+    <div class="fb" id="fb3"></div>
+  </div>
+
+  <h3>變形三：驗算比計算重要</h3>
+  <p>做完除法，有一個<strong>免費的檢查</strong>：把答案代回骨架，看等不等於被除式。</p>
+  <div class="card">
+    <p style="margin:0 0 8px">以 <span class="eq">(2x<sup>2</sup> − 3) ÷ (x ＋ 1)</span> 為例，某人算出<strong>商 <span class="eq">2x − 2</span>、餘 <span class="eq">−1</span></strong>。驗算：</p>
+    <p style="margin:0 0 6px" class="eq">(x＋1)(2x−2) ＝ 2x<sup>2</sup> − 2x ＋ 2x − 2 ＝ 2x<sup>2</sup> − 2</p>
+    <p style="margin:0" class="eq">2x<sup>2</sup> − 2 ＋ (−1) ＝ <span class="hl2">2x<sup>2</sup> − 3</span> ✓ 與被除式相同</p>
+  </div>
+
+  <div class="q" id="q4">
+    <div class="q-body">另一個同學算 <span class="eq">(4x<sup>2</sup> − 3x − 5) ÷ (x＋2)</span>，得到<strong>商 <span class="eq">4x ＋ 5</span>、餘 <span class="eq">5</span></strong>。不用重算，怎麼<em>最快</em>知道他錯了？</div>
+    <div class="opts" data-q="4" data-ans="D">
+      <button class="opt" data-k="A"><span class="k">A</span><span>看不出來，一定要重算一次</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span>餘式 5 太大了，餘式應該要小於 5</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span>商式的次數不對，應該是二次</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span>代回去：<span class="eq">(x＋2)(4x＋5)＋5 ＝ 4x<sup>2</sup>＋13x＋15</span>，不等於被除式</span></button>
+    </div>
+    <div class="fb" id="fb4"></div>
+  </div>
+  </div>
+</section>
+
+<!-- ══ 6 來源 ══ -->
+<section class="locked-zone" id="z6">
+  <div class="step">STEP 6　這個「停止條件」從哪裡來</div>
+  <h2>兩千三百年前就寫好的規則</h2>
+
+  <p class="lead">你可能覺得「餘式次數要低於除式」是課本為了考試發明的規矩。<br><strong>它其實是人類最古老的演算法能運作的原因。</strong></p>
+
+  <div class="card">
+    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 2300 年前 · 歐幾里得</p>
+    <p style="margin:0 0 6px;font-size:18px;font-weight:700">輾轉相除法</p>
+    <p style="margin:0 0 10px">《幾何原本》第七卷記載了一個求最大公因數的方法：<strong>大的除以小的，取餘數；再拿除數除餘數⋯⋯一直到整除為止。</strong></p>
+    <p class="eq" style="margin:0 0 8px;font-size:15px">1071 ÷ 462 ＝ 2 餘 147　→　462 ÷ 147 ＝ 3 餘 21　→　147 ÷ 21 ＝ 7 餘 0　→　答案 21</p>
+    <p style="margin:0"><strong>為什麼這個過程一定會結束？</strong>因為每次的餘數都<em>嚴格小於</em>上一個除數。一串越來越小的正整數，不可能無限下去——<strong>它必須在有限步內走到 0。</strong></p>
+  </div>
+
+  <div class="quote">
+    <p><strong>把「小於」換成「次數低於」，同一套邏輯就搬到多項式上了。</strong></p>
+    <p style="margin-top:10px">每除一次，餘式的次數至少降 1。<span class="eq">3 次 → 2 次 → 1 次 → 0 次</span>，最多幾步就一定停。</p>
+    <p style="margin-top:10px">所以那個條件不是限制你，<em>是它保證這件事做得完。</em></p>
+  </div>
+
+  <div class="note">
+    <p><b>這個兩千三百年前的方法，今天還在你的手機裡跑。</b></p>
+    <p style="margin-top:10px">網路傳輸用的 RSA 加密，核心步驟就是輾轉相除法的延伸；而多項式版本的除法，被用在<strong>錯誤更正碼</strong>上——CD 有刮痕還能播、QR code 被擋住一角還掃得出來，靠的都是多項式除法的餘式。</p>
+    <p style="margin-top:10px">你每次掃 QR code，都有一個多項式除法在背後跑，而且它<em>正因為餘式次數必須低於除式，才知道什麼時候該停</em>。</p>
+  </div>
+
+  <div class="q" id="q5">
+    <div class="q-body">綜合這一節：為什麼「餘式的次數必須低於除式」這件事這麼重要？</div>
+    <div class="opts" data-q="5" data-ans="B">
+      <button class="opt" data-k="A"><span class="k">A</span><span>因為這樣答案比較好看</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span>因為它同時保證兩件事：除法一定會停，而且結果不會跑出多項式之外</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span>因為課本規定商式一定要比餘式長</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span>因為餘式如果太大，答案就會是負數</span></button>
+    </div>
+    <div class="fb" id="fb5"></div>
+  </div>
+</section>
+
+<!-- ══ 收束 ══ -->
+<section class="locked-zone" id="z7">
+  <div class="done">
+    <div class="step">結案</div>
+    <h2>難的不是除，是停</h2>
+    <p style="text-align:left">多項式除法的每一步都很機械：拿最高次項相除、乘回去、減掉。真正會出錯的只有最後那一下——<strong>該收手的時候有沒有收手</strong>。</p>
+    <p style="text-align:left">而那個停止點不是誰規定的。它是<em>讓這件事做得完</em>的唯一辦法，歐幾里得兩千三百年前就靠它了。</p>
+    <p style="text-align:left">如果只留一句話帶走：</p>
+    <p class="big" style="text-align:left">每減完一次，先比次數再決定要不要繼續。</p>
+    <div style="text-align:left">
+      <div class="aside">
+        <p><strong>下一個單元預告：</strong>把它夾在兩個整數中間。<br>
+        <span class="eq">√2022</span> 大概是多少？估值題十三年來只有一招：夾在兩個完全平方數之間。<span class="eq">44<sup>2</sup>＝1936</span>、<span class="eq">45<sup>2</sup>＝2025</span>——所以答案就在 44 和 45 之間，而且非常靠近 45。</p>
+      </div>
+    </div>
+    <button class="reset" id="rst">清除進度，重新開始</button>
+  </div>
+</section>
+
+<footer>
+  題目、通過率、鑑別度與選項百分比引自國家教育研究院歷年國中教育會考數學科試題及官方試題分析。<br>
+  題目為原題文字重排，未使用課本內容。<br>
+  <span style="color:#a09aa8">為自學而做 · 2026</span>
+</footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+const KEY="jhs8-division-v1", TOTAL=6;
+let state={};
+try{state=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){state={}}
+
+const FB={
+ 0:{ans:"D",
+  A:["你除過頭了","<p>要得到常數 2，必須把 <span class='eq'>4x</span> 再除一次 <span class='eq'>2x<sup>2</sup></span>——但那會得到 <span class='eq'>2/x</span>，<strong>x 跑到分母去了</strong>。</p><p>3.11% 的人選這個。問題不在計算，在<em>沒有停</em>。</p>"],
+  B:["這是「硬除到底」的結果","<p>整數除法習慣除到剩下一個數字，所以很多人也想把多項式除到只剩常數。</p><p>但多項式除法的終點不是「剩下常數」，是<strong>「剩下的次數比除式低」</strong>。除式 <span class='eq'>2x<sup>2</sup></span> 是二次，所以剩下一次式 <span class='eq'>4x</span> 就該停了。</p>"],
+  C:["係數掉了一半","<p>第一步：<span class='eq'>6x<sup>2</sup> ÷ 2x<sup>2</sup> ＝ 3</span>，<span class='eq'>3 × 2x<sup>2</sup> ＝ 6x<sup>2</sup></span>，減掉之後 <span class='eq'>4x</span> <strong>原封不動地留下來</strong>——它沒有被除到，所以係數不會變。</p><p>餘式是 <span class='eq'>4x</span> 不是 <span class='eq'>2x</span>。</p>"],
+  D:["對，停在 4x","<p><span class='eq'>4x</span> 是一次式，除式 <span class='eq'>2x<sup>2</sup></span> 是二次式。<strong>1 ＜ 2，所以不能再除。</strong></p><p>先別走——這題全體通過率 82%，但有一群人的通過率只有一半。等一下你會看到他們是誰、卡在哪。</p>"]},
+ 1:{ans:"B",
+  A:["和質數沒有關係","<p>就算餘數是 18、100、任何數字，只要它<strong>沒有 x</strong>，次數就是 0，比除式 <span class='eq'>x＋2</span>（一次）低——就該停。</p>"],
+  B:["正確","<p><span class='eq'>17</span> 的次數是 <strong>0</strong>，除式 <span class='eq'>x＋2</span> 的次數是 <strong>1</strong>。<em>0 ＜ 1，停。</em></p><p>如果硬要再除：<span class='eq'>17 ÷ x ＝ 17/x</span>——x 跑到分母，那已經不是多項式了。<strong>停止條件同時保護了兩件事：會停下來，而且不會越界。</strong></p>"],
+  C:["和步數無關","<p>有的題目除一步就停（像 111-02），有的要除三、四步。<strong>決定停不停的是次數，不是步數。</strong></p>"],
+  D:["這裡沒有在除 2","<p>除式是 <span class='eq'>x＋2</span> 這整個一次式，不是數字 2。<br>比的是<strong>次數</strong>：17 是 0 次、<span class='eq'>x＋2</span> 是 1 次。</p>"]},
+ 2:{ans:"C",
+  A:["這是把商式漏掉了","<p><span class='eq'>−2x</span> 是拆出來的其中一塊，但商式是 <span class='eq'>−2x(3x−2)</span> 整個乘開 ＝ <span class='eq'>−6x<sup>2</sup>＋4x</span>。</p><p>再加上餘式 3，答案是 <span class='eq'>−6x<sup>2</sup>＋4x＋3</span>。</p>"],
+  B:["這是商式，還沒加餘式","<p>商式確實是 <span class='eq'>−6x<sup>2</sup>＋4x</span>。但題目問的是<strong>商式「與餘式」兩者之和</strong>。</p><p>那個 <span class='eq'>＋3</span> 就是餘式（次數 0 ＜ 除式的 1，除不動），要加進去。</p>"],
+  C:["漂亮，而且你沒有做長除法","<p>被除式 <span class='eq'>−2x(3x−2)<sup>2</sup> ＋ 3</span> 其實已經寫成骨架的樣子了：</p><p class='eq' style='text-align:center'>[<span class='hl2'>−2x(3x−2)</span>] × (3x−2) ＋ <span class='hl'>3</span><br>　商式　　　　　除式　　餘式</p><p>商式 ＝ <span class='eq'>−2x(3x−2) ＝ −6x<sup>2</sup>＋4x</span>，餘式 ＝ <span class='eq'>3</span>（次數 0 ＜ 1，除不動）。<br>兩者相加 ＝ <span class='eq'>−6x<sup>2</sup>＋4x＋3</span>。</p><p><em>出題者把答案排好放在那裡，只等你認出那個形狀。</em></p>"],
+  D:["中間項的符號反了","<p><span class='eq'>−2x(3x−2) ＝ −6x<sup>2</sup> <strong>＋</strong> 4x</span>——<span class='eq'>−2x</span> 乘 <span class='eq'>−2</span> 是<strong>正的</strong> <span class='eq'>4x</span>。</p><p>負負得正，這是最容易掉的一個號。</p>"]},
+ 3:{ans:"A",
+  A:["對","<p>商 <span class='eq'>4x − 11</span>，餘 <span class='eq'>17</span>。<br>兩者相加：<span class='eq'>4x − 11 ＋ 17 ＝ 4x ＋ 6</span> ✓</p><p>注意這題的陷阱在最後一步——<strong>「商＋餘」是把兩個式子直接相加</strong>，不是相乘也不是寫成分數。很多人除對了，卻在這一步停手交卷。</p>"],
+  B:["加減弄反了","<p><span class='eq'>−11 ＋ 17 ＝ ＋6</span>，不是 <span class='eq'>−6</span>。</p><p>商是 <span class='eq'>4x − 11</span>（負 11），餘是 <span class='eq'>＋17</span>，相加之後常數項是 <span class='eq'>6</span>。</p>"],
+  C:["17 加錯對象了","<p><span class='eq'>4x ＋ 28</span> 是把 <span class='eq'>11 ＋ 17</span> 當成 28 加上去。但商裡是 <span class='eq'>−11</span>，要用減的。</p><p><span class='eq'>−11 ＋ 17 ＝ 6</span>。</p>"],
+  D:["這只是商式","<p>題目要的是<strong>商式＋餘式</strong>。你把餘式 17 忘了加。</p><p><span class='eq'>4x − 11 ＋ 17 ＝ 4x ＋ 6</span>。</p>"]},
+ 4:{ans:"D",
+  A:["有更快的方法","<p>不必重算——<strong>把他的答案代回骨架</strong>，看看還原得回被除式嗎。這一步只要一次乘法。</p>"],
+  B:["餘式和「大小」無關","<p>多項式的餘式不比大小，<strong>只比次數</strong>。餘 5 是 0 次，除式 <span class='eq'>x＋2</span> 是 1 次，0 ＜ 1 —— 這一項<em>他其實沒錯</em>。</p><p>錯的地方要用驗算抓。</p>"],
+  C:["商式的次數是對的","<p>二次式除以一次式，商應該是<strong>一次式</strong>。他寫 <span class='eq'>4x＋5</span> 確實是一次式，這裡沒問題。</p><p>問題在係數——用驗算才抓得到。</p>"],
+  D:["這就是最快的方法","<p><span class='eq'>(x＋2)(4x＋5) ＝ 4x<sup>2</sup>＋5x＋8x＋10 ＝ 4x<sup>2</sup>＋13x＋10</span><br>再加餘式 5 → <span class='eq'>4x<sup>2</sup>＋13x＋15</span></p><p>但被除式是 <span class='eq'>4x<sup>2</sup>−3x−5</span>——<strong>對不上，所以他錯了</strong>。</p><p>這個檢查只要一次乘法就能做完，而且<em>百分之百可靠</em>。考場上除完花十秒驗一下，比重算一遍划算太多。</p>"]},
+ 5:{ans:"B",
+  A:["好看不是理由","<p>數學規則背後通常有更硬的原因。這條的原因是：<strong>沒有它，除法可能永遠停不下來。</strong></p>"],
+  B:["對，兩件事一起保證","<p><strong>①會停：</strong>每除一次，餘式次數至少降 1。從高次一路降到 0，必定在有限步內結束——這正是歐幾里得輾轉相除法能終止的理由。</p><p><strong>②不越界：</strong>一旦次數低於除式還硬除，就會冒出 <span class='eq'>2/x</span>，那不是多項式了。</p><p>一個條件，同時擋住「做不完」和「做出界」。</p>"],
+  C:["沒有這條規定","<p>商式有時候比餘式短很多（像 111-02 商是 3、餘是 4x）。<strong>長短無關，次數才是重點。</strong></p>"],
+  D:["和正負沒有關係","<p>餘式可以是負的（像 <span class='eq'>(2x<sup>2</sup>−3)÷(x＋1)</span> 餘 <span class='eq'>−1</span>），完全合法。</p><p>唯一的要求是<strong>次數</strong>要低於除式。</p>"]}
+};
+
+function done(){return Object.keys(state).filter(k=>/^q\d+$/.test(k)).length}
+function paint(){
+  document.getElementById("pnum").textContent=done()+" / "+TOTAL;
+  document.getElementById("pfill").style.width=(done()/TOTAL*100)+"%";
+}
+function unlock(id){
+  const el=document.getElementById(id);
+  if(el&&el.classList.contains("locked-zone")){
+    el.classList.remove("locked-zone");el.classList.add("revealed");
+    setTimeout(()=>el.classList.remove("revealed"),700);
+  }
+}
+function gate(){
+  if(state.q0!==undefined){unlock("z2");unlock("z3");drawDist()}
+  if(state.q1!==undefined){unlock("z4");unlock("z5")}
+  if(state.q2!==undefined){unlock("z5b")}
+  if(state.q4!==undefined){unlock("z6")}
+  if(state.q5!==undefined){unlock("z7")}
+  paint();
+}
+
+document.querySelectorAll(".opts").forEach(box=>{
+  const qi=box.dataset.q, ans=box.dataset.ans;
+  box.querySelectorAll(".opt").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      if(box.dataset.locked)return;
+      const k=btn.dataset.k;
+      state["q"+qi]=k;
+      try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
+      reveal(qi,k,ans,box,true);gate();
+    });
+  });
+});
+
+function reveal(qi,k,ans,box,scroll){
+  box.dataset.locked="1";
+  const PCT={A:"3.11%",B:"5.58%",C:"8.75%",D:"82.36%"};
+  box.querySelectorAll(".opt").forEach(b=>{
+    b.classList.add("locked");
+    if(b.dataset.k===k)b.classList.add("picked",k===ans?"right":"wrong");
+    else if(b.dataset.k===ans)b.classList.add("right");
+    if(qi==="0"&&!b.querySelector(".pct")){
+      const s=document.createElement("span");s.className="pct";s.textContent=PCT[b.dataset.k];b.appendChild(s);
+    }
+  });
+  const f=FB[qi][k], fb=document.getElementById("fb"+qi);
+  fb.innerHTML="<h4 style='color:"+(k===ans?"var(--green)":"var(--red)")+"'>"+f[0]+"</h4>"+f[1];
+  fb.classList.add("show");
+  if(scroll)setTimeout(()=>fb.scrollIntoView({behavior:"smooth",block:"nearest"}),120);
+}
+
+let distDone=false;
+function drawDist(){
+  if(distDone)return;distDone=true;
+  const box=document.getElementById("dist");
+  const rows=[
+    {k:"全體",v:82.36,c:"#3f6d3a",t:"答對率"},
+    {k:"待加強",v:46.79,c:"#b03030",t:"同一題，一半以上的人錯"}
+  ];
+  box.innerHTML=rows.map(r=>
+    '<div class="dbar"><span class="dk">'+r.k+'</span>'+
+    '<div class="dtrack"><div class="dfill" data-w="'+r.v+'" style="background:'+r.c+'"></div></div>'+
+    '<span class="dv">'+r.v.toFixed(1)+'%</span></div>'+
+    '<div style="font-size:12px;color:var(--ink2);margin:-4px 0 12px 66px">'+r.t+'</div>'
+  ).join("");
+  setTimeout(()=>{box.querySelectorAll(".dfill").forEach(d=>d.style.width=d.dataset.w+"%")},80);
+}
+
+/* ── 直式除法逐步器 ── */
+const LINES=[
+  {t:"          4x  − 11",            k:"quo"},
+  {t:"       ┌─────────────────",     k:"bar"},
+  {t:" x + 2 │ 4x² − 3x − 5",         k:"src"},
+  {t:"         4x² + 8x",             k:"s1"},
+  {t:"         ─────────",            k:"l1"},
+  {t:"             −11x − 5",         k:"r1"},
+  {t:"             −11x − 22",        k:"s2"},
+  {t:"             ─────────",        k:"l2"},
+  {t:"                    17",        k:"r2"}
+];
+const SHOW=[
+  {n:2, v:"這是題目：<span class='eq'>4x<sup>2</sup>−3x−5</span> 要除以 <span class='eq'>x＋2</span>。", c:""},
+  {n:3, v:"<strong>第 1 步：</strong>看最高次項 <span class='eq'>4x<sup>2</sup> ÷ x ＝ 4x</span> → 商的第一項。再把 <span class='eq'>4x × (x＋2) ＝ 4x<sup>2</sup>＋8x</span> 寫下來準備減。", c:""},
+  {n:6, v:"相減：<span class='eq'>(4x<sup>2</sup>−3x) − (4x<sup>2</sup>＋8x) ＝ −11x</span>，帶下 <span class='eq'>−5</span>。<br><strong>現在問自己：<span class='eq'>−11x</span> 是一次，除式 <span class='eq'>x＋2</span> 也是一次 —— 1 不小於 1，所以還能再除。</strong>", c:"warn"},
+  {n:7, v:"<strong>第 2 步：</strong><span class='eq'>−11x ÷ x ＝ −11</span> → 商的第二項。再算 <span class='eq'>−11 × (x＋2) ＝ −11x−22</span>。", c:""},
+  {n:9, v:"相減：<span class='eq'>(−11x−5) − (−11x−22) ＝ 17</span>。<br><strong>再問一次：17 是 0 次，除式是 1 次 —— 0 ＜ 1。<span style='color:#b03030'>停。</span></strong>", c:"good"}
+];
+let gi=0;
+const pre=document.getElementById("pre");
+function render(){
+  const shown = gi===0 ? 0 : SHOW[gi-1].n;
+  pre.innerHTML=LINES.map((l,i)=>
+    '<span class="ln'+(i<shown?"":" hidden")+(gi===SHOW.length&&l.k==="r2"?" stop":"")+'">'+
+    l.t.replace(/</g,"&lt;")+'</span>').join("\n");
+  const btn=document.getElementById("goBtn");
+  btn.textContent = gi===0 ? "開始" : (gi>=SHOW.length ? "除完了" : "下一步");
+  btn.disabled = gi>=SHOW.length;
+  const v=document.getElementById("labv");
+  if(gi===0){v.className="verdict";v.innerHTML="按「開始」，我們一步一步把它除完。"}
+  else{const s=SHOW[gi-1];v.className="verdict"+(s.c?" "+s.c:"");v.innerHTML=s.v}
+  if(gi>=SHOW.length&&!state.divDone){
+    state.divDone=1;
+    try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
+  }
+}
+document.getElementById("goBtn").addEventListener("click",()=>{if(gi<SHOW.length){gi++;render()}});
+document.getElementById("rstBtn").addEventListener("click",()=>{gi=0;render()});
+render();
+if(state.divDone){gi=SHOW.length;render()}
+
+document.querySelectorAll(".opts").forEach(box=>{
+  const qi=box.dataset.q, saved=state["q"+qi];
+  if(saved!==undefined)reveal(qi,saved,box.dataset.ans,box,false);
+});
+gate();
+
+document.getElementById("rst").addEventListener("click",()=>{
+  try{localStorage.removeItem(KEY)}catch(e){}
+  location.reload();
+});
+})();
+</script>
+</body>
+</html>

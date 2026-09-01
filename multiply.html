@@ -147,7 +147,7 @@ footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
 <body>
 
 <div class="bar"><div class="bar-inner">
-  <b id="pnum">0 / 5</b>
+  <b id="pnum">0 / 6</b>
   <div class="track"><div class="fill" id="pfill"></div></div>
 </div></div>
 
@@ -419,12 +419,133 @@ footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
   </div>
 </section>
 
-<!-- ══ 收束 ══ -->
+<!-- ══ 7 來源 ══ -->
 <section class="locked-zone" id="z7">
+  <div class="step">STEP 7　這條公式從哪裡來</div>
+  <h2>在有 a 和 b 之前，它是一張紙</h2>
+
+  <p class="lead">你今天用了一整節的 <span class="eq">a<sup>2</sup> − b<sup>2</sup> ＝ (a＋b)(a−b)</span>。<br>
+  現在問一個課本不會問的問題：<strong>當初的人怎麼知道它是對的？</strong></p>
+
+  <p>兩千三百年前的希臘人沒有 a、沒有 b、沒有等號，連「平方」這個寫法都沒有。他們只能<em>把它剪出來</em>。</p>
+
+  <div class="lab">
+    <div class="lab-t">動手 ── 用一張紙證明平方差</div>
+    <svg viewBox="-42 -34 350 268" role="img" aria-label="平方差的剪貼證明">
+      <defs>
+        <pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#c9c3d6" stroke-width="2"/>
+        </pattern>
+      </defs>
+      <!-- 原正方形外框（挖掉後留下的虛線） -->
+      <rect id="ghost" x="0" y="0" width="200" height="200" fill="none" stroke="#b9b3c4"
+            stroke-width="1.2" stroke-dasharray="5 4" opacity="1"/>
+      <!-- 被挖掉的小正方形 -->
+      <rect id="hole" x="125" y="125" width="75" height="75" fill="url(#hatch)"
+            stroke="#b9b3c4" stroke-width="1.2" opacity="0"/>
+      <!-- A 塊：上方 a × (a-b) -->
+      <g id="pieceA" style="transition:transform .85s cubic-bezier(.4,0,.2,1)">
+        <rect x="0" y="0" width="200" height="125" fill="#dfe7fb" stroke="#4338ca" stroke-width="1.6"/>
+        <text x="100" y="68" text-anchor="middle" font-size="13" fill="#302a70">A</text>
+      </g>
+      <!-- B 塊：左下 (a-b) × b -->
+      <g id="pieceB" style="transition:transform .85s cubic-bezier(.4,0,.2,1)">
+        <rect x="0" y="125" width="125" height="75" fill="#cfe9e2" stroke="#0f6b63" stroke-width="1.6"/>
+        <text x="62" y="168" text-anchor="middle" font-size="13" fill="#0a4a44">B</text>
+      </g>
+      <!-- 標註 -->
+      <g id="lab1" font-size="12" fill="#57525e">
+        <text x="100" y="-14" text-anchor="middle">a ＝ 8</text>
+        <text x="-14" y="104" text-anchor="middle" transform="rotate(-90,-14,104)">a ＝ 8</text>
+        <text x="163" y="219" text-anchor="middle">b ＝ 3</text>
+      </g>
+      <g id="lab2" font-size="12" fill="#4338ca" opacity="0">
+        <text x="138" y="-14" text-anchor="middle">a ＋ b ＝ 11</text>
+        <text x="-14" y="66" text-anchor="middle" transform="rotate(-90,-14,66)">a − b ＝ 5</text>
+      </g>
+    </svg>
+    <div class="btnrow">
+      <button class="btn" id="geoBtn">下一步</button>
+      <button class="btn ghost" id="geoReset">重來</button>
+    </div>
+    <div class="verdict" id="geov">這是一個邊長 a 的正方形，面積 <span class="eq">a<sup>2</sup></span>。按「下一步」。</div>
+  </div>
+
+  <div class="locked-zone" id="z7b">
+  <h3>三個時間點</h3>
+
+  <div class="card">
+    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 2300 年前</p>
+    <p style="margin:0 0 6px;font-size:18px;font-weight:700">歐幾里得沒有符號可用</p>
+    <p style="margin:0">《幾何原本》第二卷處理的就是這一類命題。那時候沒有代數式，只能寫「若將一線段分為兩部分⋯⋯」再配一張圖。<br>
+    你剛剛剪的那個 L 形，希臘人有專門的名字：<strong>gnomon</strong>（磬折形）——原意是日晷上那根投影的指針。</p>
+  </div>
+
+  <div class="card">
+    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 1200 年前</p>
+    <p style="margin:0 0 6px;font-size:18px;font-weight:700">algebra 的原意是「接骨」</p>
+    <p style="margin:0">九世紀的巴格達，花拉子米（al-Khwārizmī）寫了一本書，書名裡有 <strong>al-jabr</strong> 這個字，意思是<em>把斷掉的接回去、把散掉的復位</em>。<br>
+    這正是移項在做的事：式子這邊少了什麼，就從那邊搬回來。這個字後來變成 <strong>algebra</strong>（代數）。<br>
+    <span class="dim" style="font-size:14.5px">中世紀的西班牙，algebrista 這個字一度同時指「代數學家」和「接骨師」——兩種人做的是同一件事。</span></p>
+  </div>
+
+  <div class="card">
+    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 400 年前</p>
+    <p style="margin:0 0 6px;font-size:18px;font-weight:700">現在這個寫法才出現</p>
+    <p style="margin:0">用字母代表數，是韋達（Viète, 1591）開始的；把已知數寫成 <span class="eq">a、b、c</span>、未知數寫成 <span class="eq">x、y、z</span>，還有 <span class="eq">x<sup>2</sup></span> 這種指數寫法，是笛卡兒 1637 年定下來的慣例。</p>
+  </div>
+
+  <div class="quote">
+    <p><strong>所以：這個概念 2300 歲，但它長成現在這個樣子只有 400 歲。</strong></p>
+    <p style="margin-top:10px">課本上那行 <span class="eq">a<sup>2</sup>−b<sup>2</sup>＝(a＋b)(a−b)</span> 看起來理所當然，其實是<em>人類花了兩千年才學會怎麼把它寫下來</em>的一句話。<br>
+    在那之前，它一直是一張被剪開又拼起來的紙。</p>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="z7c">
+  <h3>最後一個故事：兩百年前的人也在偷懶</h3>
+
+  <p>這條公式在歷史上<strong>最實用的用途，是拿來躲開乘法</strong>。</p>
+  <p>因為只要把 <span class="eq">(a＋b)</span> 和 <span class="eq">(a−b)</span> 各自當成一個整體，就會得到一條很有用的式子。先自己看一次：</p>
+
+  <div class="q" id="q5">
+    <div class="q-body"><span class="eq">(a＋b)<sup>2</sup> − (a−b)<sup>2</sup></span> ＝ ？<br>
+      <span class="dim" style="font-size:15px">（提示：不要展開。這整串本身就是「某個東西的平方，減某個東西的平方」。）</span>
+    </div>
+    <div class="opts" data-q="5" data-ans="A">
+      <button class="opt" data-k="A"><span class="k">A</span><span class="eq">4ab</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span class="eq">2ab</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span class="eq">a<sup>2</sup> ＋ b<sup>2</sup></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span class="eq">4a<sup>2</sup></span></button>
+    </div>
+    <div class="fb" id="fb5"></div>
+  </div>
+
+  <div class="locked-zone" id="z7d">
+  <p>把它反過來寫，就是兩百年前工程師的救命工具：</p>
+  <div class="eq blk">a × b ＝ [ (a＋b)<sup>2</sup> − (a−b)<sup>2</sup> ] ÷ 4</div>
+
+  <div class="note">
+    <p><b>看懂這條式子在說什麼：</b>等號左邊要做<strong>一次乘法</strong>；右邊只要做<em>兩次加減、查兩個平方、除以 4</em>。</p>
+    <p style="margin-top:10px">如果你手上有一本印好的平方表，那麼<strong>任何兩個數相乘，你都不必真的去乘</strong>。</p>
+    <p style="margin-top:10px">19 世紀真的有人出版這種書，叫<strong>四分之一平方表</strong>（quarter-square table）。工程師、天文學家、會計員靠它算了將近一百年，直到計算機普及才退休。</p>
+  </div>
+
+  <div class="quote">
+    <p><strong>他們的理由，和你今天做這一節的理由一模一樣：</strong></p>
+    <p style="margin-top:10px;font-size:18px"><em>平方好查，乘法難算。所以先換個形狀，再動手。</em></p>
+  </div>
+  </div>
+  </div>
+</section>
+
+<!-- ══ 收束 ══ -->
+<section class="locked-zone" id="z8">
   <div class="done">
     <div class="step">結案</div>
     <h2>公式不是用來算的，是用來換形狀的</h2>
     <p style="text-align:left">今天這三題，<strong>沒有一題需要你把答案乘出來</strong>。114-10 只要看因數是不是同一組；104-16 只要發現全部差 50；110-08 只要檢查中間有沒有那個 2。</p>
+    <p style="text-align:left">而這不是現代人發明的偷懶方式。歐幾里得用剪刀證明它、花拉子米拿它解方程、19 世紀的工程師靠它躲開乘法——<strong>兩千三百年來，這條公式一直在做同一件事：把難算的形狀，換成好算的形狀。</strong></p>
     <p style="text-align:left">如果只留一句話帶走：</p>
     <p class="big" style="text-align:left">看到大數字在平方相加減，先別動筆——先問「這是什麼形狀」。</p>
     <div style="text-align:left">
@@ -448,7 +569,7 @@ footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
 <script>
 (function(){
 "use strict";
-const KEY="jhs8-math-mult-v1", TOTAL=5;
+const KEY="jhs8-math-mult-v1", TOTAL=6;
 let state={};
 try{state=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){state={}}
 
@@ -477,7 +598,12 @@ const FB={
   A:["不是「沒教」的問題","<p>是它<strong>真的做不到</strong>。用整數係數，<span class='eq'>a<sup>2</sup>＋b<sup>2</sup></span> 沒辦法寫成兩個括號相乘。</p><p>試著把 (a＋b)(a＋b) 展開看看，會多出什麼？</p>"],
   B:["對","<p><span class='eq'>(a＋b)(a＋b) ＝ a<sup>2</sup>＋2ab＋b<sup>2</sup></span>，永遠會多出一個 <strong>2ab</strong>，而且沒有東西可以把它消掉。</p><p>對照 <span class='eq'>(a＋b)(a−b) ＝ a<sup>2</sup>−ab＋ab−b<sup>2</sup></span>——中間的 −ab 和 ＋ab <em>剛好抵銷</em>，這才是平方差成立的原因。</p><p>所以那個減號不是裝飾，它是整條公式能運作的理由。</p>"],
   C:["加法有交換律","<p>a＋b ＝ b＋a 是成立的。問題不在交換律，在展開後<strong>多出來的中間項消不掉</strong>。</p>"],
-  D:["那是 <span class='eq'>a<sup>2</sup>−b<sup>2</sup></span> 的拆法","<p>(a＋b)(a−b) 展開會得到 <span class='eq'>a<sup>2</sup>−b<sup>2</sup></span>（中間<em>減</em>），不是 a<sup>2</sup>＋b<sup>2</sup>。</p><p>這兩個只差一個符號，拆法卻天差地遠：一個拆得開，一個永遠拆不開。</p>"]}
+  D:["那是 <span class='eq'>a<sup>2</sup>−b<sup>2</sup></span> 的拆法","<p>(a＋b)(a−b) 展開會得到 <span class='eq'>a<sup>2</sup>−b<sup>2</sup></span>（中間<em>減</em>），不是 a<sup>2</sup>＋b<sup>2</sup>。</p><p>這兩個只差一個符號，拆法卻天差地遠：一個拆得開，一個永遠拆不開。</p>"]},
+ 5:{ans:"A",
+  A:["對，而且你用的是最短的那條路","<p>把 <span class='eq'>(a＋b)</span> 和 <span class='eq'>(a−b)</span> 各當成<strong>一整個東西</strong>，這串就是「某數的平方減某數的平方」：</p><p class='eq' style='text-align:center;font-size:18px'>[(a＋b)＋(a−b)] × [(a＋b)−(a−b)]<br>＝ 2a × 2b ＝ 4ab</p><p>兩個括號一相加，b 抵銷剩 2a；一相減，a 抵銷剩 2b。<strong>整題沒有展開任何一個完全平方。</strong></p><p>另一條路（把兩個完全平方都展開再相減）答案一樣，但要寫六項。<em>這就是「先看形狀」的價值。</em></p>"],
+  B:["少了一半","<p>方向是對的，係數不對。用平方差拆：[(a＋b)＋(a−b)]×[(a＋b)−(a−b)] ＝ <strong>2a × 2b</strong>。</p><p>兩個 2 相乘是 4，所以是 4ab 不是 2ab。（<span class='eq'>2ab</span> 是完全平方公式中間那一項，很容易混在一起。）</p>"],
+  C:["這是把減號看成加號了","<p><span class='eq'>a<sup>2</sup>＋b<sup>2</sup></span> 是 <span class='eq'>(a＋b)<sup>2</sup> − 2ab</span> 的結果，跟這題不同。</p><p>這題是<strong>兩個平方相減</strong>——看到「平方減平方」，第一個念頭應該是平方差，而不是展開。試著把 (a＋b) 整個當成一個字母看看。</p>"],
+  D:["a 沒有被留下來兩次","<p>如果拆成 [(a＋b)＋(a−b)]×[(a＋b)−(a−b)]，第一個括號是 <strong>2a</strong>、第二個括號是 <strong>2b</strong>——<em>一個留下 a，另一個留下 b</em>。</p><p>相乘是 4ab。會答 4a<sup>2</sup> 通常是只算了第一個括號就重複用它。</p>"]}
 };
 
 function done(){return Object.keys(state).filter(k=>/^q\d+$/.test(k)).length}
@@ -499,6 +625,8 @@ function gate(){
   if(state.q2!==undefined){unlock("z5b");unlock("z5c");unlock("z5c2")}
   if(state.q3!==undefined){unlock("z6")}
   if(state.q4!==undefined){unlock("z7")}
+  if(state.geoDone){unlock("z7b");unlock("z7c")}
+  if(state.q5!==undefined){unlock("z7d");unlock("z8")}
   paint();
 }
 
@@ -598,6 +726,49 @@ document.getElementById("resetBtn").addEventListener("click",()=>{
   const v=document.getElementById("splitv");v.className="verdict";
   v.textContent="按「拆下一個」，一次看一個選項。";
 });
+
+/* ── 剪貼證明 ── */
+const GEO=[
+ {v:"這是一個邊長 <span class='eq'>a</span> 的正方形，面積 <span class='eq'>a<sup>2</sup></span>。它先被分成三塊，等一下用得到。",cls:""},
+ {v:"從角落<strong>挖掉一個邊長 b 的小正方形</strong>。剩下的面積就是 <span class='eq'>a<sup>2</sup> − b<sup>2</sup></span>。<br>這個 L 形，希臘人有專門的名字：<strong>gnomon</strong>。",cls:""},
+ {v:"把 L 形沿著線<strong>剪成兩塊</strong>：<br>A 是 <span class='eq'>a × (a−b)</span>　＝　8 × 5<br>B 是 <span class='eq'>(a−b) × b</span>　＝　5 × 3",cls:""},
+ {v:"把 B <strong>轉 90 度，接到 A 的右邊</strong>。<br>注意：紙沒有變多，也沒有變少。",cls:"warn"},
+ {v:"拼出來是一個長方形：<strong>寬 <span class='eq'>a＋b</span> ＝ 11，高 <span class='eq'>a−b</span> ＝ 5</strong>。<br>面積 55，而原本 <span class='eq'>a<sup>2</sup>−b<sup>2</sup></span> ＝ 64−9 ＝ 55。<br><strong>同一張紙，兩種算法 → <span class='eq'>a<sup>2</sup>−b<sup>2</sup> ＝ (a＋b)(a−b)</span>。</strong><br>這就是兩千三百年前的證明方式：不用符號，用剪刀。",cls:"good"}
+];
+let gIdx=0;
+const gHole=document.getElementById("hole"), gHoleR=gHole,
+      gB=document.getElementById("pieceB"), gBR=gB.querySelector("rect"),
+      gGhost=document.getElementById("ghost"),
+      gL1=document.getElementById("lab1"), gL2=document.getElementById("lab2"),
+      gV=document.getElementById("geov"), gBtn=document.getElementById("geoBtn");
+[gHole,gBR,gGhost,gL1,gL2].forEach(e=>e.style.transition="opacity .6s, fill .6s");
+
+function geoRender(){
+  // 0 完整正方形 → 1 挖洞 → 2 分色 → 3 移動 → 4 標註
+  gHole.setAttribute("opacity", gIdx===0?"1":(gIdx>=3?"0.22":"1"));
+  gHole.setAttribute("fill", gIdx===0?"#dfe7fb":"url(#hatch)");
+  gHole.setAttribute("stroke", gIdx===0?"#4338ca":"#b9b3c4");
+  gBR.setAttribute("fill", gIdx>=2?"#cfe9e2":"#dfe7fb");
+  gBR.setAttribute("stroke", gIdx>=2?"#0f6b63":"#4338ca");
+  gB.setAttribute("transform", gIdx>=3?"translate(200,0) rotate(-90,0,125)":"");
+  gGhost.setAttribute("opacity", gIdx>=3?"0.22":"1");
+  gL1.setAttribute("opacity", gIdx>=4?"0":"1");
+  gL2.setAttribute("opacity", gIdx>=4?"1":"0");
+  const g=GEO[gIdx];
+  gV.className="verdict"+(g.cls?" "+g.cls:"");
+  gV.innerHTML=g.v;
+  gBtn.disabled = gIdx>=GEO.length-1;
+  gBtn.textContent = gIdx>=GEO.length-1 ? "完成" : "下一步";
+  if(gIdx>=GEO.length-1 && !state.geoDone){
+    state.geoDone=1;
+    try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
+    gate();
+  }
+}
+gBtn.addEventListener("click",()=>{if(gIdx<GEO.length-1){gIdx++;geoRender()}});
+document.getElementById("geoReset").addEventListener("click",()=>{gIdx=0;geoRender()});
+geoRender();
+if(state.geoDone){gIdx=GEO.length-1;geoRender()}
 
 /* ── 練習器 ── */
 const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

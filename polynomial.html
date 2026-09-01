@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多項式與其加減運算｜八上 1-2</title>
+<style>
+:root{
+  --paper:#f8f7f4; --ink:#232026; --ink2:#57525e; --line:#dcd8e0;
+  --accent:#4338ca; --accent-soft:#eeecfd;
+  --teal:#0f6b63; --teal-soft:#e6f2f0;
+  --green:#3f6d3a; --green-soft:#eef4ec;
+  --red:#b03030; --red-soft:#fdeeee;
+  --shadow:0 1px 2px rgba(35,32,38,.06),0 8px 24px rgba(35,32,38,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:17px;line-height:1.85;letter-spacing:.01em}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 120px}
+
+header{padding:56px 0 28px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:14px}
+h1{font-size:34px;line-height:1.3;margin:0 0 14px;letter-spacing:-.01em}
+.sub{color:var(--ink2);font-size:15px;margin:0}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.tag{font-size:12px;padding:4px 11px;border:1px solid var(--line);border-radius:99px;color:var(--ink2);background:#fff}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(248,247,244,.95);
+  border-bottom:1px solid var(--line);margin:0 -20px 0;padding:10px 20px}
+.bar-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.track{flex:1;height:5px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.bar b{font-size:12px;color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+.step{font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.step .n{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;
+  width:20px;height:20px;line-height:20px;text-align:center;margin-right:8px;letter-spacing:0}
+h2{font-size:25px;line-height:1.4;margin:0 0 20px;letter-spacing:-.01em}
+h3{font-size:19px;margin:34px 0 12px}
+h4{font-size:16.5px;margin:24px 0 8px;color:var(--teal)}
+p{margin:0 0 18px}
+.lead{font-size:19px;line-height:1.9}
+.dim{color:var(--ink2)}
+.big{font-size:22px;font-weight:700;line-height:1.6;margin:26px 0}
+em{font-style:normal;background:linear-gradient(transparent 62%,#cfc9fb 62%);font-weight:600;padding:0 1px}
+.eq{font-family:"Cambria","Times New Roman",Georgia,serif;font-size:1.06em;font-variant-numeric:tabular-nums}
+.eq sup{font-size:.68em;vertical-align:super;line-height:0}
+.eq.blk{display:block;text-align:center;font-size:21px;margin:20px 0}
+.hl{background:#fff3c4;border-radius:3px;padding:0 3px}
+.hl2{background:#d5f0e8;border-radius:3px;padding:0 3px}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:24px 0;box-shadow:var(--shadow)}
+.quote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 20px;border-radius:0 10px 10px 0;margin:24px 0}
+.quote p:last-child{margin:0}
+.note{background:var(--teal-soft);border:1px solid #c5e0db;border-radius:12px;padding:18px 20px;margin:24px 0;font-size:16px}
+.note p:last-child{margin:0}
+.note b{color:var(--teal)}
+.aside{background:#fdf7e8;border:1px dashed #e5d5a8;border-radius:12px;padding:16px 18px;margin:24px 0;font-size:15px;color:#5c4d20}
+.aside p:last-child{margin:0}
+
+.fcard{background:#fff;border:2px solid var(--accent);border-radius:14px;padding:20px;margin:16px 0;box-shadow:var(--shadow)}
+.fcard .fname{font-size:13px;letter-spacing:.14em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.fcard .fbody{font-size:21px;text-align:center;margin:10px 0 14px;font-family:"Cambria",Georgia,serif}
+.fcard .fsay{font-size:15.5px;color:var(--ink2);line-height:1.75;margin:0}
+.fcard .fsay strong{color:var(--ink)}
+
+.q{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:24px;margin:26px 0;box-shadow:var(--shadow)}
+.q-src{font-size:12px;letter-spacing:.12em;color:var(--accent);font-weight:700;margin-bottom:12px}
+.q-body{font-size:16.5px;line-height:1.9;margin-bottom:20px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;gap:12px;align-items:center;padding:14px 16px;border:1.5px solid var(--line);
+  border-radius:11px;cursor:pointer;background:#fff;font-size:16px;line-height:1.7;
+  transition:border-color .15s,background .15s;text-align:left;width:100%;font-family:inherit;color:inherit}
+.opt:hover:not(.locked){border-color:var(--ink2);background:#fcfbfe}
+.opt .k{font-weight:700;flex-shrink:0;width:22px;color:var(--ink2)}
+.opt.picked{border-color:var(--ink);border-width:2px}
+.opt.right{border-color:var(--green);background:var(--green-soft)}
+.opt.right .k{color:var(--green)}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.opt.wrong .k{color:var(--red)}
+.opt.locked{cursor:default}
+.opt .pct{margin-left:auto;font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink2);
+  flex-shrink:0;padding-left:10px;font-weight:600}
+.fb{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);font-size:16px;display:none}
+.fb.show{display:block;animation:rise .45s ease}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.fb h4{margin:0 0 8px;font-size:15px;letter-spacing:.06em;color:inherit}
+.fb p:last-child{margin:0}
+
+.locked-zone{opacity:.3;pointer-events:none;filter:blur(4px) saturate(.2);user-select:none}
+.revealed{animation:reveal .6s ease both}
+@keyframes reveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.prac{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:22px;margin:26px 0;box-shadow:var(--shadow)}
+.prac-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+  font-size:13px;color:var(--ink2);font-weight:600;gap:10px;flex-wrap:wrap}
+.prac-top .src{color:var(--teal);letter-spacing:.08em}
+.dots{display:flex;gap:5px;margin-bottom:16px;flex-wrap:wrap}
+.dot{width:22px;height:6px;border-radius:99px;background:var(--line);transition:background .3s}
+.dot.done{background:var(--green)}
+.dot.now{background:var(--teal)}
+.prac-q{font-size:17.5px;line-height:2;margin-bottom:8px}
+.prac-hint{font-size:14.5px;color:var(--ink2);margin-bottom:16px;line-height:1.7}
+.prac-fb{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15.5px;line-height:1.8;display:none}
+.prac-fb.show{display:block;animation:rise .3s ease}
+.prac-fb.ok{background:var(--green-soft);border:1px solid #c8dcc4}
+.prac-fb.no{background:var(--red-soft);border:1px solid #edc4c4}
+
+.btn{padding:9px 18px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+  border-radius:99px;cursor:pointer;font-size:14.5px;font-family:inherit;font-weight:600;transition:opacity .15s}
+.btn:hover{opacity:.86}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn:disabled{opacity:.35;cursor:default}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+.lab{background:linear-gradient(#fff,#fcfbfe);border:1px solid var(--line);border-radius:16px;
+  padding:22px;margin:26px 0;box-shadow:var(--shadow)}
+.lab-t{font-size:12px;letter-spacing:.18em;color:var(--teal);font-weight:700;margin-bottom:16px}
+.verdict{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15px;line-height:1.7;
+  background:var(--teal-soft);border:1px solid #c5e0db}
+.verdict.good{background:var(--green-soft);border-color:#c8dcc4}
+.verdict.warn{background:#fdf7e8;border-color:#e5d5a8}
+
+/* 同類項對齊示範 */
+.align{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 14px;overflow-x:auto}
+.align pre{margin:0;font-family:"SF Mono",Consolas,"Courier New",monospace;
+  font-size:15.5px;line-height:1.6;white-space:pre;color:var(--ink)}
+.align .ln{display:block;border-radius:4px;transition:background .35s}
+.align .ln.on{background:#fff3c4}
+
+/* 拆項器 */
+.terms{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
+.term{border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;background:#fff;
+  font-family:"Cambria",Georgia,serif;font-size:19px;transition:all .2s;cursor:pointer}
+.term.on{border-color:var(--accent);background:var(--accent-soft)}
+.term small{display:block;font-family:inherit;font-size:11px;color:var(--ink2);margin-top:3px;letter-spacing:.05em}
+.term.on small{color:var(--accent);font-weight:700}
+
+.dist{margin:18px 0}
+.dbar{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:14px}
+.dbar .dk{width:20px;font-weight:700;flex-shrink:0}
+.dtrack{flex:1;height:26px;background:#eeebf2;border-radius:6px;overflow:hidden}
+.dfill{height:100%;border-radius:6px;width:0;transition:width 1s cubic-bezier(.4,0,.2,1)}
+.dbar .dv{width:52px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2);flex-shrink:0;font-weight:600}
+
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15px;background:#fff;
+  border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#f1eff5;font-weight:700;font-size:13.5px;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:24px -20px;padding:0 20px}
+.scroll table{margin:0;min-width:460px}
+
+.flow{counter-reset:s;list-style:none;padding:0;margin:14px 0 0}
+.flow li{counter-increment:s;position:relative;padding:7px 0 7px 40px;font-size:15.5px;line-height:1.7}
+.flow li::before{content:counter(s);position:absolute;left:0;top:8px;width:25px;height:25px;
+  background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:12.5px;font-weight:700}
+details.pre{background:#fff;border:1px solid var(--line);border-radius:11px;margin-bottom:9px;overflow:hidden}
+details.pre summary{padding:13px 16px;cursor:pointer;font-size:16px;font-weight:600;list-style:none;
+  display:flex;align-items:center;gap:10px}
+details.pre summary::-webkit-details-marker{display:none}
+details.pre summary::before{content:"?";flex-shrink:0;width:22px;height:22px;border-radius:50%;
+  background:var(--line);color:var(--ink2);display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700}
+details.pre[open] summary::before{content:"\2713";background:var(--green);color:#fff}
+details.pre[open] summary{border-bottom:1px solid var(--line)}
+details.pre .bd{padding:14px 16px;font-size:15.5px;line-height:1.8;color:var(--ink2)}
+details.pre .bd strong{color:var(--ink)}
+details.pre .bd p{margin:0 0 10px}
+details.pre .bd p:last-child{margin:0}
+
+.dl{background:#fff;border:2px solid var(--accent);border-radius:14px;padding:20px 22px;margin:24px 0;text-align:left}
+.dl h4{margin:0 0 8px;font-size:17px;color:var(--ink)}
+.dl p{font-size:15px;line-height:1.8;margin:0 0 14px;color:var(--ink2)}
+.dl a.get{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+  text-decoration:none;padding:11px 20px;border-radius:99px;font-size:15px;font-weight:700;transition:opacity .15s}
+.dl a.get:hover{opacity:.86}
+.dl .meta{font-size:13px;color:var(--ink2);margin:10px 0 0}
+
+.done{text-align:center;padding:52px 0 20px}
+.done h2{font-size:27px}
+.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:9px 18px;
+  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:28px}
+footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="bar-inner">
+  <b id="pnum">0 / 10</b>
+  <div class="track"><div class="fill" id="pfill"></div></div>
+</div></div>
+
+<div class="wrap">
+
+<header>
+  <div class="kicker">八年級上 · 第一章 1-2 多項式與其加減運算</div>
+  <h1>先排整齊，再算</h1>
+  <p class="sub">這一節十三年只考過一題。<br><strong>但下一節的八題，全部踩在它上面。</strong></p>
+  <div class="meta">
+    <span class="tag">課本 p.22–34</span>
+    <span class="tag">課本練習 8 題</span>
+    <span class="tag">會考挑戰 2 題</span>
+    <span class="tag">約 25 分鐘</span>
+  </div>
+</header>
+
+<!-- ══ 開始之前 ══ -->
+<section>
+  <div class="step">開始之前</div>
+  <h2>這一節為什麼不能跳過</h2>
+
+  <div class="note">
+    <p><b>先說清楚一件事。</b></p>
+    <p style="margin-top:10px">13 年來，會考在這一節只出過 <strong>1 題</strong>——是整本第三冊考最少的一節。</p>
+    <p style="margin-top:10px">但下一節（1-3 多項式的乘除）考了 <strong>8 題</strong>，而那 8 題<em>每一題都要用到這裡的東西</em>：什麼是「次數」、什麼是「同類項」、怎麼把式子排整齊。</p>
+    <p style="margin-top:10px"><strong>這一節不是拿來考的，是拿來當地基的。</strong>花 25 分鐘，下一節會輕鬆很多。</p>
+  </div>
+
+  <div class="card">
+    <ol class="flow">
+      <li><strong>先認識四件事</strong>：多項式、項與係數、排列、加減</li>
+      <li>這些符號從哪來——數學曾經是用「寫作文」的</li>
+      <li><strong>用課本的例題與自我檢核動手做</strong>（8 題）</li>
+      <li>重點整理：課本 p.31 那一頁的完整版</li>
+      <li><strong>會考挑戰</strong>：那唯一的一題，加上它怎麼變成下一節的地基</li>
+    </ol>
+  </div>
+
+  <h3>先確認你知道這些</h3>
+  <details class="pre"><summary>「同類項」是什麼？（七年級學過）</summary><div class="bd">
+    <p><strong>x 的次方一樣的項，就是同類項。</strong></p>
+    <p><span class="eq">5x<sup>2</sup></span> 和 <span class="eq">−3x<sup>2</sup></span> 是同類項（都是 x²）；<br>
+    <span class="eq">2x</span> 和 <span class="eq">7x</span> 是同類項（都是 x）；<br>
+    但 <span class="eq">5x<sup>2</sup></span> 和 <span class="eq">2x</span> <em>不是</em>——次方不同，不能合併。</p>
+    <p>📌 合併的時候<strong>只加減係數，x 的部分不動</strong>：<span class="eq">5x<sup>2</sup> − 3x<sup>2</sup> ＝ 2x<sup>2</sup></span>。</p>
+  </div></details>
+  <details class="pre"><summary>去括號要注意什麼？（七年級學過）</summary><div class="bd">
+    <p>括號前面是<strong>加號</strong>：直接去掉，裡面不變。<br>
+    <span class="eq">3 ＋ (5 − 2) ＝ 3 ＋ 5 − 2</span></p>
+    <p>括號前面是<strong>減號</strong>：<span style="color:var(--red)"><strong>裡面每一項都要變號</strong></span>。<br>
+    <span class="eq">3 − (5 − 2) ＝ 3 − 5 <span class="hl">＋</span> 2</span></p>
+    <p>📌 這一節唯一的那道會考題，考的就是這件事。</p>
+  </div></details>
+</section>
+
+<!-- ══ 1 概念 ══ -->
+<section>
+  <div class="step"><span class="n">1</span>這一節在教什麼</div>
+  <h2>四件事，一次看清楚</h2>
+
+  <div class="fcard">
+    <div class="fname">① 什麼叫「x 的多項式」</div>
+    <div class="fbody">4　　2x　　x<sup>2</sup> ＋ 3x ＋ 3</div>
+    <p class="fsay">由數和文字符號 x，<strong>只用加法和乘法</strong>組出來的式子。<br>
+    ⚠️ 課本特別註明：<em>當 x 出現在分母或絕對值裡面，就不是 x 的多項式</em>（例如 <span class="eq">2/x</span>、<span class="eq">|x|</span>）。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">② 項、係數、次數</div>
+    <div class="fbody">a x<sup>2</sup> ＋ b x ＋ c</div>
+    <p class="fsay">用<strong>加號隔開</strong>的每一部分叫做「項」。<br>
+    <span class="eq">a</span> 是 x² 項的<strong>係數</strong>、<span class="eq">b</span> 是 x 項的係數、<span class="eq">c</span> 是<strong>常數項</strong>。<br>
+    係數不為 0 的最高次項，它的次數就是<strong>整個多項式的次數</strong>。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">③ 多項式的排列</div>
+    <div class="fbody">
+      <span style="font-size:15px">降冪：</span>6x<sup>3</sup> ＋ 3x<sup>2</sup> ＋ 8x − 4<br>
+      <span style="font-size:15px">升冪：</span>−4 ＋ 8x ＋ 3x<sup>2</sup> ＋ 6x<sup>3</sup>
+    </div>
+    <p class="fsay"><strong>降冪</strong>＝次數由大到小；<strong>升冪</strong>＝由小到大。<br>
+    為什麼要排？因為<em>排整齊了才好對齊計算</em>——下一節的直式除法就靠這個。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">④ 多項式的加減</div>
+    <div class="fbody">把<span class="hl">同類項</span>合併（係數相加減）</div>
+    <p class="fsay">x 的次方相同的項才能合併，而且<strong>只動係數</strong>。<br>
+    括號前面是減號時，<span style="color:var(--red)"><strong>裡面整串都要變號</strong></span>。</p>
+  </div>
+
+  <h3>看一次課本的示範</h3>
+  <p>課本 p.31 的例子：<span class="eq">( 5x<sup>2</sup> ＋ 2x ＋ 2 ) − ( 3x<sup>2</sup> − 1 )</span>。按按鈕一步一步走。</p>
+
+  <div class="lab">
+    <div class="lab-t">示範 ── 同類項怎麼合併</div>
+    <div class="align"><pre id="pre"></pre></div>
+    <div class="btnrow">
+      <button class="btn" id="goBtn">開始</button>
+      <button class="btn ghost" id="rstBtn">重來</button>
+    </div>
+    <div class="verdict" id="labv">按「開始」，看課本怎麼一步一步算。</div>
+  </div>
+
+  <h3>自己拆一次</h3>
+  <p>下面是 <span class="eq">5x<sup>3</sup> − 3x<sup>2</sup> ＋ 1</span> 拆開後的樣子。<strong>點任一項</strong>，看它是第幾次項、係數多少。</p>
+
+  <div class="lab">
+    <div class="lab-t">拆項器 ── 每一項是誰</div>
+    <div class="terms" id="terms"></div>
+    <div class="verdict" id="termv">點上面任一項看看。</div>
+  </div>
+</section>
+
+<!-- ══ 2 來源 ══ -->
+<section>
+  <div class="step"><span class="n">2</span>這些符號從哪來</div>
+  <h2>數學曾經是用「寫作文」的</h2>
+
+  <p class="lead">你看到的 <span class="eq">5x<sup>3</sup> − 3x<sup>2</sup> ＋ 1</span> 只有九個字元。<br>
+  但在符號發明之前，同樣一件事要寫成<strong>一整段文字</strong>。</p>
+
+  <div class="card">
+    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">第一階段 · 用文字寫</p>
+    <p style="margin:0 0 6px;font-size:18px;font-weight:700">「某數的平方，加上其三倍，等於十」</p>
+    <p style="margin:0">古巴比倫、古埃及、還有九世紀的花拉子米，寫數學題全部用文字敘述——<strong>一個符號都沒有</strong>。</p>
+    <p style="margin:10px 0 0">你可以想像那有多難算：要在腦中把整段話翻譯回數量關係，才能開始動筆。<em>算錯多半不是算術錯，是讀錯句子。</em></p>
+  </div>
+
+  <div class="card">
+    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">第二階段 · 用縮寫</p>
+    <p style="margin:0 0 6px;font-size:18px;font-weight:700">丟番圖開始偷懶</p>
+    <p style="margin:0">約公元 250 年，希臘的丟番圖（Diophantus）開始用<strong>縮寫符號</strong>代替常用字：未知數用一個記號、平方用另一個記號。</p>
+    <p style="margin:10px 0 0">還不是我們現在的樣子，但已經從「作文」變成「速記」了。</p>
+  </div>
+
+  <div class="card">
+    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">第三階段 · 純符號</p>
+    <p style="margin:0 0 6px;font-size:18px;font-weight:700">笛卡兒把它變成現在的樣子</p>
+    <p style="margin:0">韋達（1591）開始用字母代表數；笛卡兒（1637）定下我們今天的寫法——<strong>已知數用 a、b、c，未知數用 x、y、z</strong>，次方寫在右上角。</p>
+    <p style="margin:10px 0 0">從那時候起，一個式子可以<em>一眼看完</em>，不必逐句翻譯。</p>
+  </div>
+
+  <div class="quote">
+    <p><strong>「多項式」這個詞本身就在說它的樣子。</strong></p>
+    <p style="margin-top:10px">英文 <em>polynomial</em>：<strong>poly</strong>（多）＋ <strong>nomial</strong>（項）——<em>很多項的東西</em>。<br>
+    中文翻成「多項式」，一個字都沒有多。</p>
+  </div>
+
+  <div class="note">
+    <p><b>那「排整齊」又是為了什麼？</b></p>
+    <p style="margin-top:10px">符號讓式子變短，但<strong>還要排對位置才好算</strong>——就像整數加法要個位對個位、十位對十位。</p>
+    <p style="margin-top:10px">多項式的降冪排列，就是<em>把同類項排到同一直行</em>。下一節做直式除法時，你會看到這件事有多重要：<strong>沒有排好，減法就會對錯欄。</strong></p>
+  </div>
+</section>
+
+<!-- ══ 3 課本練習 ══ -->
+<section>
+  <div class="step"><span class="n">3</span>動手練</div>
+  <h2>照課本的順序，一題一題來</h2>
+
+  <p>下面 8 題出自<strong>課本 1-2 的隨堂練習與 p.31 的自我檢核</strong>。<br>
+  <span class="dim">答錯可以再選一次，選對才會進到下一題。</span></p>
+
+  <div class="prac">
+    <div class="prac-top">
+      <span class="src" id="pSrc">課本 主題 1</span>
+      <span id="pNo">第 1 題 / 共 8 題</span>
+    </div>
+    <div class="dots" id="pDots"></div>
+    <div class="prac-q" id="pQ"></div>
+    <div class="prac-hint" id="pHint"></div>
+    <div class="opts" id="pOpts"></div>
+    <div class="prac-fb" id="pFb"></div>
+    <div class="btnrow" style="justify-content:flex-end">
+      <button class="btn" id="pNext" disabled>下一題</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 4 重點整理 ══ -->
+<section class="locked-zone" id="z4">
+  <div class="step"><span class="n">4</span>重點整理</div>
+  <h2>整節 1-2 收成一張表</h2>
+
+  <p>課本 p.31 自己就有一頁「重點整理」，這裡是它的完整版。</p>
+
+  <h4>先備知識（七年級學過的）</h4>
+  <div class="scroll">
+  <table>
+    <tr><th>名稱</th><th>內容</th><th>在這一節哪裡用到</th></tr>
+    <tr><td><b>同類項</b></td><td>x 的次方相同的項</td><td>加減運算全靠它</td></tr>
+    <tr><td><b>去括號</b></td><td>括號前是減號 → <strong>裡面整串變號</strong></td><td>唯一那道會考題的考點</td></tr>
+  </table>
+  </div>
+
+  <h4>課本 1-2 的四個重點（p.22–29）</h4>
+  <div class="scroll">
+  <table>
+    <tr><th></th><th>內容</th><th>例</th></tr>
+    <tr><td><b>x 的多項式</b></td><td>由數與 x 用<strong>加法和乘法</strong>組成的式子<br><span style="color:var(--red)">x 在分母或絕對值裡 → 不是多項式</span></td>
+        <td class="eq">4、2x、x<sup>2</sup>＋3x＋3<br><span style="color:var(--red)">2/x ✗　|x| ✗</span></td></tr>
+    <tr><td><b>項、係數、次數</b></td><td>加號隔開的每一部分＝項<br>係數不為 0 的最高次項 → 決定次數</td>
+        <td class="eq">x<sup>3</sup>＋7x＋8<br>三次項 x<sup>3</sup>（係數 1）<br>一次項 7x（係數 7）<br>常數項 8　·　次數 3</td></tr>
+    <tr><td><b>排列</b></td><td><b>降冪</b>：次數由大到小<br><b>升冪</b>：由小到大</td>
+        <td class="eq">6x<sup>3</sup>＋3x<sup>2</sup>＋8x−4<br>−4＋8x＋3x<sup>2</sup>＋6x<sup>3</sup></td></tr>
+    <tr><td><b>加減運算</b></td><td>把同類項合併（<strong>只加減係數</strong>）</td>
+        <td class="eq">(5x<sup>2</sup>＋2x＋2)−(3x<sup>2</sup>−1)<br>＝2x<sup>2</sup>＋2x＋3</td></tr>
+  </table>
+  </div>
+
+  <div class="note">
+    <p><b>三個最容易錯的地方</b></p>
+    <p style="margin-top:10px">① <strong>係數忘了帶負號</strong>：<span class="eq">x<sup>2</sup>−2x＋5</span> 的一次項係數是 <span style="color:var(--red)"><b>−2</b></span>，不是 2。<em>減號是係數的一部分。</em></p>
+    <p style="margin-top:8px">② <strong>沒有 x 項時係數是 0，不是不存在</strong>：<span class="eq">5x<sup>3</sup>−3x<sup>2</sup>＋1</span> 可以看成 <span class="eq">5x<sup>3</sup>−3x<sup>2</sup>＋0x＋1</span>。<em>下一節做直式除法時，這個 0 要記得留位子。</em></p>
+    <p style="margin-top:8px">③ <strong>減號後面只變第一項</strong>：<span class="eq">−(3x<sup>2</sup>−1)</span> 是 <span class="eq">−3x<sup>2</sup><b>＋</b>1</span>，兩項都要變。</p>
+  </div>
+
+  <div class="aside">
+    <p><strong>一句話帶走這一節：</strong>多項式的加減沒有什麼技巧，<em>難的是排整齊和變號不出錯</em>。而這兩件事，下一節每一題都要做一次。</p>
+  </div>
+</section>
+
+<!-- ══ 5 會考挑戰 ══ -->
+<section class="locked-zone" id="z5">
+  <div class="step"><span class="n">5</span>會考挑戰</div>
+  <h2>十三年就這一題</h2>
+
+  <div class="note">
+    <p><b>這一節的會考題只有一題</b>（114 年第 2 題），而且是那年的第 2 題——<em>通常是整份考卷最簡單的位置</em>。</p>
+    <p style="margin-top:10px">全體通過率 0.8179，八成的人答對。<strong>但它的鑑別度是 0.57</strong>——對一個「簡單題」來說相當高，代表答錯的那兩成不是隨便錯的。</p>
+    <p style="margin-top:10px">你剛剛練過的東西，這裡全部用得上。</p>
+  </div>
+
+  <div class="q" id="q0">
+    <div class="q-src">114 年會考數學科 第 2 題（原題）</div>
+    <div class="q-body">計算 <span class="eq">( 5x<sup>2</sup> − 2x ) − ( 4 − 3x )</span> 的結果，與下列何者相同？</div>
+    <div class="opts" data-q="0" data-ans="B">
+      <button class="opt" data-k="A"><span class="k">A</span><span class="eq">5x<sup>2</sup> − 5x − 4</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span class="eq">5x<sup>2</sup> ＋ x − 4</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span class="eq">5x<sup>2</sup> − 5x ＋ 4</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span class="eq">5x<sup>2</sup> ＋ x ＋ 4</span></button>
+    </div>
+    <div class="fb" id="fb0"></div>
+  </div>
+
+  <div class="locked-zone" id="z5b">
+  <div class="card">
+    <div class="dist" id="dist"></div>
+    <p class="dim" style="font-size:14px;margin:14px 0 0">
+      資料：國家教育研究院 114 年會考數學科官方試題分析（通過率 0.8179、鑑別度 0.57）。
+      <br><span style="color:var(--ink2)">「鑑別度」越高，代表這題越能分出「真的懂」和「只是猜對」的人。</span>
+    </p>
+  </div>
+
+  <div class="quote">
+    <p><strong>看選項 C 和 D 就知道陷阱在哪：</strong></p>
+    <p style="margin-top:10px">它們的常數項是 <span class="eq"><b>＋4</b></span>——那是<em>忘記把減號分給第二項</em>的結果。<br>
+    而選項 A 的 <span class="eq">−5x</span>，是<em>把 −3x 的負號也忘了翻</em>。</p>
+    <p style="margin-top:10px">正確做法：<span class="eq">−(4 − 3x) ＝ −4 <span class="hl">＋</span> 3x</span>，<strong>兩項都翻。</strong><br>
+    然後合併：<span class="eq">−2x ＋ 3x ＝ ＋x</span> → 答案是 <span class="eq">5x<sup>2</sup>＋x−4</span>。</p>
+  </div>
+
+  <h3>這一節怎麼變成下一節的地基</h3>
+  <p>最後一題不是會考題，是<strong>橋接題</strong>——讓你看到 1-2 的東西怎麼直接出現在 1-3 裡。</p>
+
+  <div class="q" id="q1">
+    <div class="q-body">下一節做直式除法時，要算 <span class="eq">(4x<sup>2</sup> − 3x − 5) ÷ (x ＋ 2)</span>。<br>
+      第一步減掉 <span class="eq">4x<sup>2</sup> ＋ 8x</span> 之後，剩下什麼？
+      <span class="dim" style="font-size:15px">（提示：這就是這一節練的「減號後面整串變號」。）</span>
+    </div>
+    <div class="opts" data-q="1" data-ans="C">
+      <button class="opt" data-k="A"><span class="k">A</span><span class="eq">5x − 5</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span class="eq">11x − 5</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span class="eq">−11x − 5</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span class="eq">−11x ＋ 5</span></button>
+    </div>
+    <div class="fb" id="fb1"></div>
+  </div>
+  </div>
+</section>
+
+<!-- ══ 收束 ══ -->
+<section class="locked-zone" id="z6">
+  <div class="done">
+    <div class="step">這一課結束</div>
+    <h2>這一節不是拿來考的，是拿來墊底的</h2>
+    <p style="text-align:left">13 年只考 1 題，看起來像可以跳過的一節。但你剛剛在最後一題看到了：<strong>下一節的直式除法，每減一次就要做一次「整串變號」</strong>——那正是這一節在練的東西。</p>
+    <p style="text-align:left">還有「次數」「同類項」「沒有 x 項時係數是 0」，下一節每一題都會用到。</p>
+    <p style="text-align:left">如果只留一句話帶走：</p>
+    <p class="big" style="text-align:left">括號前面是減號，裡面<u>每一項</u>都要變。</p>
+
+    <div class="dl">
+      <h4>把這一課的原題印出來做一次</h4>
+      <p>這 1 題的<strong>會考原卷</strong>——官方排版、原始附圖，和考場上拿到的一模一樣。<br>
+      題目不多，但值得在紙上寫一次完整的過程。答案在最後一頁。</p>
+      <a class="get" href="pdf/polynomial_exam.pdf" target="_blank" rel="noopener">下載原始考題 PDF</a>
+      <p class="meta">第 1 章 1-2 多項式與其加減運算　·　1 題＋答案　·　A4 可直接列印</p>
+    </div>
+
+    <div style="text-align:left">
+      <div class="aside">
+        <p><strong>下一課（照課本順序）：</strong><a href="division.html" style="color:var(--accent);font-weight:700">多項式的乘除運算</a>（第 1 章 1-3）<br>
+        13 年考 8 題，是第 1 章考最多的一節。而除法只有一個難點：<strong>什麼時候該停下來</strong>。<br>
+        <span class="dim">你剛剛練的「整串變號」和「次數」，那裡每一題都要用。</span></p>
+      </div>
+    </div>
+    <button class="reset" id="rst">清除進度，重新開始</button>
+  </div>
+</section>
+
+<footer>
+  課本練習題取自八年級上冊 1-2 的隨堂練習與重點整理自我檢核，僅使用題目的數字與問法，未複製課本文字與圖片。<br>
+  會考題目與官方統計引自國家教育研究院歷年國中教育會考數學科試題及官方試題分析。<br>
+  <span style="color:#a09aa8">為自學而做 · 2026</span>
+</footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+const KEY="jhs8-polynomial-v1", TOTAL=10;
+let state={};
+try{state=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){state={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+const $=(id)=>document.getElementById(id);
+
+/* ══ 課本練習 8 題 ══ */
+const PRAC=[
+ {src:"課本 p.22（什麼是多項式）",
+  q:"下面哪一個<b>不是</b> x 的多項式？",
+  hint:"課本註明：x 出現在分母或絕對值裡面，就不是多項式。",
+  o:["<span class='eq'>2 ÷ x</span>","<span class='eq'>4</span>","<span class='eq'>2x</span>","<span class='eq'>x<sup>2</sup>＋3x＋3</span>"], a:0,
+  why:"<span class='eq'>2 ÷ x</span> 就是 <span class='eq'>2/x</span>，<b>x 跑到分母去了</b> → 不是多項式。<br>多項式只能用<b>加法和乘法</b>把數和 x 組起來。<br>📌 記住這件事——下一節除法時，如果算出 <span class='eq'>2/x</span>，就代表你除過頭了。"},
+
+ {src:"課本 p.23（項與係數）",
+  q:"多項式 <b class='eq'>x<sup>2</sup> − 2x ＋ 5</b> 的<b>一次項係數</b>是多少？",
+  hint:"⚠️ 減號是係數的一部分。",
+  o:["−2","2","1","5"], a:0,
+  why:"把它寫成 <span class='eq'>x<sup>2</sup> ＋ (−2)x ＋ 5</span> 就清楚了：一次項係數是 <b>−2</b>。<br>📌 <b>這是課本自我檢核的第 1 題</b>，也是最多人掉的坑——<em>看到 2x 就寫 2，忘了前面的減號。</em>"},
+
+ {src:"課本 p.31 自我檢核 2",
+  q:"「<b class='eq'>2x＋5</b> 和 <b class='eq'>3x−5</b> 有相同的常數項」——這個說法對嗎？",
+  hint:"常數項就是沒有 x 的那一項，要連正負號一起看。",
+  o:["不對，一個是 5、一個是 −5","對，兩個都是 5","不對，因為 x 的係數不同","對，因為都有 5 這個數字"], a:0,
+  why:"<span class='eq'>2x＋5</span> 的常數項是 <b>＋5</b>；<span class='eq'>3x−5</span> 的常數項是 <b>−5</b>。<br><b>數字一樣，但正負號不同 → 不是相同的常數項。</b>"},
+
+ {src:"課本 p.23（次數）",
+  q:"多項式 <b class='eq'>−x ＋ x<sup>2</sup> − 4x<sup>3</sup> ＋ 6</b> 是幾次多項式？",
+  hint:"看 x 頭上最大的那個數字（係數不能是 0）。",
+  o:["三次","二次","一次","四次"], a:0,
+  why:"最高次項是 <span class='eq'>−4x<sup>3</sup></span>，次數是 <b>3</b> → 三次多項式。<br>📌 <b>次數看的是「最高次項」，和項的排列順序無關</b>——就算它寫在中間也一樣。"},
+
+ {src:"課本 p.31 自我檢核 3",
+  q:"把 <b class='eq'>x ＋ 2 ＋ 2x<sup>2</sup></b> <b>升冪排列</b>，結果是什麼？",
+  hint:"升冪＝次數由小到大。常數項是幾次？",
+  o:["<span class='eq'>2 ＋ x ＋ 2x<sup>2</sup></span>","<span class='eq'>2x<sup>2</sup> ＋ x ＋ 2</span>",
+     "<span class='eq'>x ＋ 2x<sup>2</sup> ＋ 2</span>","<span class='eq'>2 ＋ 2x<sup>2</sup> ＋ x</span>"], a:0,
+  why:"常數項 2 是<b>零次</b>、x 是一次、2x² 是二次 → 由小到大就是 <b>2 ＋ x ＋ 2x²</b>。<br>（反過來由大到小是<b>降冪</b>：2x² ＋ x ＋ 2。）"},
+
+ {src:"課本 p.29（加減運算）",
+  q:"計算 <b class='eq'>( 5x<sup>2</sup> ＋ 2x ＋ 2 ) − ( 3x<sup>2</sup> − 1 )</b>。",
+  hint:"⚠️ 括號前面是減號 → 裡面<b>兩項都要變號</b>。",
+  o:["<span class='eq'>2x<sup>2</sup> ＋ 2x ＋ 3</span>","<span class='eq'>2x<sup>2</sup> ＋ 2x ＋ 1</span>",
+     "<span class='eq'>8x<sup>2</sup> ＋ 2x ＋ 1</span>","<span class='eq'>2x<sup>2</sup> ＋ 2x − 1</span>"], a:0,
+  why:"去括號：<span class='eq'>5x²＋2x＋2 <b>−3x²＋1</b></span>（−1 變成 ＋1）<br>合併同類項：<span class='eq'>(5x²−3x²) ＋ 2x ＋ (2＋1) ＝ <b>2x²＋2x＋3</b></span><br>📌 這就是課本 p.31 重點整理裡的那個例子。"},
+
+ {src:"課本 p.31 自我檢核 4",
+  q:"「一個<b>三次</b>多項式與一個<b>二次</b>多項式相加，結果<b>一定</b>是三次多項式」——對嗎？",
+  hint:"三次項會不會被抵銷掉？對方有三次項嗎？",
+  o:["對，因為二次多項式沒有三次項，抵銷不掉","不對，可能變成二次","不對，可能變成五次","不一定，要看係數"], a:0,
+  why:"二次多項式<b>沒有三次項</b>，所以無論怎麼加，那個三次項都留著 → 結果<b>一定</b>是三次多項式。<br>（例如 <span class='eq'>x³＋1</span> 加 <span class='eq'>2x²</span> ＝ <span class='eq'>x³＋2x²＋1</span>，還是三次。）"},
+
+ {src:"課本 p.31 自我檢核 5（最值得想的一題）",
+  q:"「一個<b>二次</b>多項式與另一個<b>二次</b>多項式相加，結果<b>一定</b>是二次多項式」——對嗎？",
+  hint:"⚠️ 這次兩邊都有二次項。它們會不會剛好抵銷？",
+  o:["不對，二次項可能剛好抵銷掉","對，兩個二次加起來一定還是二次",
+     "不對，會變成四次","對，因為次數不會改變"], a:0,
+  why:"<b>可能抵銷。</b>例如 <span class='eq'>x²＋1</span> 加上 <span class='eq'>−x²＋2</span> ＝ <b>3</b>——二次項不見了，結果變成<b>零次</b>（常數）。<br>📌 這一題和上一題只差一個字，答案卻相反。<b>關鍵在於：對方有沒有可以抵銷掉最高次項的東西。</b><br><b>八題做完了。</b>"}
+];
+
+/* 打散選項順序 —— 正解不會永遠在同一個位置（每次開啟都重洗） */
+PRAC.forEach(function(P){
+  var pairs=P.o.map(function(t,i){return {t:t, ok:(i===P.a)};});
+  for(var i=pairs.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1)), tmp=pairs[i]; pairs[i]=pairs[j]; pairs[j]=tmp;
+  }
+  P.o=pairs.map(function(x){return x.t;});
+  P.a=pairs.findIndex(function(x){return x.ok;});
+});
+
+let pi=0, pDone=(state.prac||0);
+function pDots(){
+  $("pDots").innerHTML=PRAC.map((_,i)=>
+    '<span class="dot'+(i<pDone?" done":(i===pi?" now":""))+'"></span>').join("");
+}
+function pRender(){
+  const P=PRAC[pi];
+  $("pSrc").textContent=P.src;
+  $("pNo").textContent="第 "+(pi+1)+" 題 / 共 "+PRAC.length+" 題";
+  $("pQ").innerHTML=P.q;
+  $("pHint").innerHTML=P.hint;
+  pDots();
+  const solved = pi<pDone;
+  $("pOpts").innerHTML=P.o.map((t,i)=>
+    '<button class="opt'+(solved&&i===P.a?" right locked":(solved?" locked":""))+'" data-i="'+i+'">'+
+    '<span class="k">'+"ABCD"[i]+'</span><span>'+t+'</span></button>').join("");
+  const fb=$("pFb");
+  if(solved){fb.className="prac-fb show ok";fb.innerHTML="<b>答對了</b>　"+P.why;$("pNext").disabled=false}
+  else{fb.className="prac-fb";fb.innerHTML="";$("pNext").disabled=true}
+  $("pNext").textContent = pi>=PRAC.length-1 ? "完成，進入重點整理" : "下一題";
+  $("pOpts").querySelectorAll(".opt").forEach(b=>{
+    b.addEventListener("click",()=>{
+      if(b.classList.contains("locked"))return;
+      const i=+b.dataset.i, P=PRAC[pi], fb=$("pFb");
+      if(i===P.a){
+        b.classList.add("right","locked");
+        $("pOpts").querySelectorAll(".opt").forEach(x=>x.classList.add("locked"));
+        fb.className="prac-fb show ok"; fb.innerHTML="<b>答對了</b>　"+P.why;
+        if(pi>=pDone){pDone=pi+1;state.prac=pDone;save();paint();gate()}
+        $("pNext").disabled=false; pDots();
+      }else{
+        b.classList.add("wrong");
+        fb.className="prac-fb show no";
+        fb.innerHTML="<b>再想一次</b>　"+P.hint+"<br><span style='color:var(--ink2)'>選錯不扣分，直接再選一個。</span>";
+      }
+    });
+  });
+}
+$("pNext").addEventListener("click",()=>{
+  if(pi<PRAC.length-1){pi++;pRender();
+    document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"})}
+  else{unlock("z4");unlock("z5");$("z4").scrollIntoView({behavior:"smooth",block:"start"})}
+});
+
+/* ══ 會考挑戰回饋 ══ */
+const FB={
+ 0:{ans:"B",
+  A:["負號翻了一半","<p>你把 <span class='eq'>−(4−3x)</span> 算成了 <span class='eq'>−4−3x</span>——<strong>只翻了第一項</strong>。</p><p>正確是 <span class='eq'>−4 ＋ 3x</span>（兩項都翻），所以中間項是 <span class='eq'>−2x＋3x＝＋x</span>，不是 <span class='eq'>−5x</span>。</p>"],
+  B:["對","<p>去括號：<span class='eq'>5x<sup>2</sup> − 2x <b>− 4 ＋ 3x</b></span>（減號後面兩項都翻）</p><p>合併同類項：<span class='eq'>−2x ＋ 3x ＝ ＋x</span></p><p>結果 <span class='eq'><b>5x<sup>2</sup> ＋ x − 4</b></span>。</p><p>八成的人答對這題——但它的鑑別度有 0.57，代表<em>答錯的那兩成不是隨便錯的</em>，是真的沒掌握變號。</p>"],
+  C:["兩個地方都沒翻","<p>常數項寫成 <span class='eq'>＋4</span>、中間寫成 <span class='eq'>−5x</span>——等於<strong>整個括號直接搬下來</strong>，減號沒有分給任何一項。</p><p><span class='eq'>−(4−3x) ＝ −4＋3x</span>。</p>"],
+  D:["中間對了，常數項忘了翻","<p>你算對了 <span class='eq'>−2x＋3x＝＋x</span>，代表你有翻 <span class='eq'>−3x</span> 的號。</p><p>但常數項 4 也在括號裡，<strong>它也要翻</strong>：<span class='eq'>−4</span>，不是 <span class='eq'>＋4</span>。</p><p>8.46% 的人選這個——<em>翻了一項就以為做完了</em>。</p>"]},
+ 1:{ans:"C",
+  A:["符號和數字都要再檢查","<p>被減的是 <span class='eq'>4x<sup>2</sup>＋8x</span>，所以要算 <span class='eq'>(4x<sup>2</sup>−3x) − (4x<sup>2</sup>＋8x)</span>。</p><p>4x² 消掉之後：<span class='eq'>−3x − 8x</span>。</p>"],
+  B:["正負號反了","<p><span class='eq'>−3x − 8x ＝ −11x</span>，是<strong>負的</strong>。</p><p>兩個都是要減掉的，加起來只會更負。</p>"],
+  C:["對，而且這就是這一節在練的東西","<p><span class='eq'>(4x<sup>2</sup> − 3x) − (4x<sup>2</sup> ＋ 8x) ＝ 4x<sup>2</sup> − 3x <b>− 4x<sup>2</sup> − 8x</b> ＝ −11x</span>，再帶下常數項 −5。</p><p>所以剩下 <span class='eq'><b>−11x − 5</b></span>。</p><p><strong>看到那個「整串變號」了嗎？</strong>下一節的直式除法，<em>每減一次就要做一次這個動作</em>。這一節練熟了，那裡就不會錯。</p>"],
+  D:["常數項不該變號","<p><span class='eq'>−5</span> 是<strong>被除式原本就有的</strong>，不在被減的括號裡，所以直接帶下來，不用翻號。</p><p>要翻號的只有 <span class='eq'>4x<sup>2</sup>＋8x</span> 這一串。</p>"]}
+};
+
+/* ══ 進度與解鎖 ══ */
+function qDone(){return Object.keys(state).filter(k=>/^q\d+$/.test(k)).length}
+function paint(){
+  const d=(state.prac||0)+qDone();
+  $("pnum").textContent=d+" / "+TOTAL;
+  $("pfill").style.width=(d/TOTAL*100)+"%";
+}
+function unlock(id){
+  const el=$(id);
+  if(el&&el.classList.contains("locked-zone")){
+    el.classList.remove("locked-zone");el.classList.add("revealed");
+    setTimeout(()=>el.classList.remove("revealed"),700);
+  }
+}
+function gate(){
+  if((state.prac||0)>=PRAC.length){unlock("z4");unlock("z5")}
+  if(state.q0!==undefined){unlock("z5b");drawDist()}
+  if(state.q1!==undefined){unlock("z6")}
+  paint();
+}
+
+document.querySelectorAll(".opts[data-q]").forEach(box=>{
+  const qi=box.dataset.q, ans=box.dataset.ans;
+  box.querySelectorAll(".opt").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      if(box.dataset.locked)return;
+      const k=btn.dataset.k;
+      state["q"+qi]=k; save();
+      reveal(qi,k,ans,box,true); gate();
+    });
+  });
+});
+
+function reveal(qi,k,ans,box,scroll){
+  box.dataset.locked="1";
+  const PCT={A:"3.22%",B:"81.79%",C:"6.40%",D:"8.46%"};
+  box.querySelectorAll(".opt").forEach(b=>{
+    b.classList.add("locked");
+    if(b.dataset.k===k)b.classList.add("picked",k===ans?"right":"wrong");
+    else if(b.dataset.k===ans)b.classList.add("right");
+    if(qi==="0"&&!b.querySelector(".pct")){
+      const s=document.createElement("span");s.className="pct";s.textContent=PCT[b.dataset.k];b.appendChild(s);
+    }
+  });
+  const f=FB[qi][k], fb=$("fb"+qi);
+  fb.innerHTML="<h4 style='color:"+(k===ans?"var(--green)":"var(--red)")+"'>"+f[0]+"</h4>"+f[1];
+  fb.classList.add("show");
+  if(scroll)setTimeout(()=>fb.scrollIntoView({behavior:"smooth",block:"nearest"}),120);
+}
+
+let distDone=false;
+function drawDist(){
+  if(distDone)return;distDone=true;
+  const rows=[
+    {k:"A",v:3.22,c:"#b8b2c4",t:"只翻了第一項"},
+    {k:"B",v:81.79,c:"#3f6d3a",t:"正確答案"},
+    {k:"C",v:6.40,c:"#b8b2c4",t:"整個括號直接搬下來"},
+    {k:"D",v:8.46,c:"#b03030",t:"最多人選錯 ── 常數項忘了翻號"}
+  ];
+  $("dist").innerHTML=rows.map(r=>
+    '<div class="dbar"><span class="dk">'+r.k+'</span>'+
+    '<div class="dtrack"><div class="dfill" data-w="'+r.v+'" style="background:'+r.c+'"></div></div>'+
+    '<span class="dv">'+r.v.toFixed(2)+'%</span></div>'+
+    (r.t?'<div style="font-size:12px;color:var(--ink2);margin:-4px 0 10px 30px">'+r.t+'</div>':'<div style="height:6px"></div>')
+  ).join("");
+  setTimeout(()=>{$("dist").querySelectorAll(".dfill").forEach(d=>d.style.width=d.dataset.w+"%")},80);
+}
+
+/* ══ 同類項合併示範 ══ */
+const LINES=[
+  {t:"  ( 5x² + 2x + 2 ) − ( 3x² − 1 )"},
+  {t:"= 5x² + 2x + 2 − 3x² + 1"},
+  {t:"= ( 5x² − 3x² ) + 2x + ( 2 + 1 )"},
+  {t:"= 2x² + 2x + 3"}
+];
+const SHOW=[
+  {n:1, v:"原式。<strong>注意第二個括號前面是減號。</strong>", c:""},
+  {n:2, v:"<strong>去括號</strong>：減號後面<em>兩項都要變號</em> —— <span class='eq'>3x<sup>2</sup></span> 變成 <span class='eq'>−3x<sup>2</sup></span>、<span class='eq'>−1</span> 變成 <span class='eq'>＋1</span>。<br>這一步錯，後面全錯。", c:"warn"},
+  {n:3, v:"<strong>找同類項</strong>：<span class='eq'>5x<sup>2</sup></span> 和 <span class='eq'>−3x<sup>2</sup></span> 是一組（都是 x²）；<span class='eq'>2</span> 和 <span class='eq'>＋1</span> 是一組（都是常數）。<br><span class='eq'>2x</span> 沒有同伴，自己一項。", c:""},
+  {n:4, v:"<strong>合併</strong>：只把係數加減，x 的部分不動。<br><span class='eq'>5−3＝2</span> → <span class='eq'>2x<sup>2</sup></span>；<span class='eq'>2＋1＝3</span> → 常數 3。<br>答案：<span class='eq'>2x<sup>2</sup>＋2x＋3</span>。", c:"good"}
+];
+let gi=0;
+function longRender(){
+  const shown = gi===0 ? 0 : SHOW[gi-1].n;
+  $("pre").innerHTML=LINES.map((l,i)=>
+    '<span class="ln'+(i===shown-1&&gi>0?" on":"")+'" style="'+(i<shown?"":"opacity:0")+'">'+
+    l.t.replace(/</g,"&lt;")+'</span>').join("\n");
+  const btn=$("goBtn");
+  btn.textContent = gi===0 ? "開始" : (gi>=SHOW.length ? "算完了" : "下一步");
+  btn.disabled = gi>=SHOW.length;
+  const v=$("labv");
+  if(gi===0){v.className="verdict";v.innerHTML="按「開始」，看課本怎麼一步一步算。"}
+  else{const s=SHOW[gi-1];v.className="verdict"+(s.c?" "+s.c:"");v.innerHTML=s.v}
+}
+$("goBtn").addEventListener("click",()=>{if(gi<SHOW.length){gi++;longRender()}});
+$("rstBtn").addEventListener("click",()=>{gi=0;longRender()});
+longRender();
+
+/* ══ 拆項器 ══ */
+const TERMS=[
+  {t:"5x³", n:"三次項", c:"5", note:"x 的三次方，係數是 <b>5</b>。這是<b>最高次項</b>，所以整個多項式是<b>三次</b>多項式。"},
+  {t:"−3x²", n:"二次項", c:"−3", note:"係數是 <b>−3</b> —— <em>減號是係數的一部分</em>，別漏掉。"},
+  {t:"0x", n:"一次項", c:"0", note:"原式裡<b>看不到 x 項</b>，但課本說可以把它看成 <span class='eq'>0·x</span>，係數是 <b>0</b>。<br>📌 下一節做直式除法時，這個位子要留著，不然會對錯欄。"},
+  {t:"+1", n:"常數項", c:"1", note:"沒有 x 的那一項，也叫<b>零次項</b>。這裡是 <b>1</b>。"}
+];
+$("terms").innerHTML=TERMS.map((t,i)=>
+  '<button class="term" data-i="'+i+'">'+t.t+'<small>'+t.n+'</small></button>').join("");
+document.querySelectorAll(".term").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll(".term").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    const t=TERMS[+b.dataset.i];
+    $("termv").className="verdict";
+    $("termv").innerHTML="<strong>"+t.n+"</strong>　係數 <strong>"+t.c+"</strong><br>"+t.note;
+  });
+});
+
+/* ══ 還原進度 ══ */
+if(pDone>0 && pDone<PRAC.length) pi=pDone;
+else if(pDone>=PRAC.length) pi=PRAC.length-1;
+pRender();
+document.querySelectorAll(".opts[data-q]").forEach(box=>{
+  const qi=box.dataset.q, saved=state["q"+qi];
+  if(saved!==undefined)reveal(qi,saved,box.dataset.ans,box,false);
+});
+gate();
+
+$("rst").addEventListener("click",()=>{
+  try{localStorage.removeItem(KEY)}catch(e){}
+  location.reload();
+});
+})();
+</script>
+</body>
+</html>

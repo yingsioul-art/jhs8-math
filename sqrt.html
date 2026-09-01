@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>把它夾在兩個整數中間｜平方根</title>
+<title>平方根與近似值｜八上 2-1</title>
 <style>
 :root{
   --paper:#f8f7f4; --ink:#232026; --ink2:#57525e; --line:#dcd8e0;
@@ -26,7 +26,7 @@ h1{font-size:34px;line-height:1.3;margin:0 0 14px;letter-spacing:-.01em}
 .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
 .tag{font-size:12px;padding:4px 11px;border:1px solid var(--line);border-radius:99px;color:var(--ink2);background:#fff}
 
-.bar{position:sticky;top:0;z-index:50;background:rgba(248,247,244,.94);
+.bar{position:sticky;top:0;z-index:50;background:rgba(248,247,244,.95);
   border-bottom:1px solid var(--line);margin:0 -20px 0;padding:10px 20px}
 .bar-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:10px}
 .track{flex:1;height:5px;background:var(--line);border-radius:99px;overflow:hidden}
@@ -35,8 +35,11 @@ h1{font-size:34px;line-height:1.3;margin:0 0 14px;letter-spacing:-.01em}
 
 section{padding:44px 0;border-bottom:1px solid var(--line)}
 .step{font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.step .n{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;
+  width:20px;height:20px;line-height:20px;text-align:center;margin-right:8px;letter-spacing:0}
 h2{font-size:25px;line-height:1.4;margin:0 0 20px;letter-spacing:-.01em}
 h3{font-size:19px;margin:34px 0 12px}
+h4{font-size:16.5px;margin:24px 0 8px;color:var(--teal)}
 p{margin:0 0 18px}
 .lead{font-size:19px;line-height:1.9}
 .dim{color:var(--ink2)}
@@ -58,6 +61,12 @@ em{font-style:normal;background:linear-gradient(transparent 62%,#cfc9fb 62%);fon
 .aside{background:#fdf7e8;border:1px dashed #e5d5a8;border-radius:12px;padding:16px 18px;margin:24px 0;font-size:15px;color:#5c4d20}
 .aside p:last-child{margin:0}
 
+.fcard{background:#fff;border:2px solid var(--accent);border-radius:14px;padding:20px;margin:16px 0;box-shadow:var(--shadow)}
+.fcard .fname{font-size:13px;letter-spacing:.14em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.fcard .fbody{font-size:21px;text-align:center;margin:10px 0 14px;font-family:"Cambria",Georgia,serif}
+.fcard .fsay{font-size:15.5px;color:var(--ink2);line-height:1.75;margin:0}
+.fcard .fsay strong{color:var(--ink)}
+
 .q{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:24px;margin:26px 0;box-shadow:var(--shadow)}
 .q-src{font-size:12px;letter-spacing:.12em;color:var(--accent);font-weight:700;margin-bottom:12px}
 .q-body{font-size:16.5px;line-height:1.9;margin-bottom:20px}
@@ -78,12 +87,34 @@ em{font-style:normal;background:linear-gradient(transparent 62%,#cfc9fb 62%);fon
 .fb{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);font-size:16px;display:none}
 .fb.show{display:block;animation:rise .45s ease}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.fb h4{margin:0 0 8px;font-size:15px;letter-spacing:.06em}
+.fb h4{margin:0 0 8px;font-size:15px;letter-spacing:.06em;color:inherit}
 .fb p:last-child{margin:0}
 
 .locked-zone{opacity:.3;pointer-events:none;filter:blur(4px) saturate(.2);user-select:none}
 .revealed{animation:reveal .6s ease both}
 @keyframes reveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.prac{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:22px;margin:26px 0;box-shadow:var(--shadow)}
+.prac-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+  font-size:13px;color:var(--ink2);font-weight:600;gap:10px;flex-wrap:wrap}
+.prac-top .src{color:var(--teal);letter-spacing:.08em}
+.dots{display:flex;gap:5px;margin-bottom:16px;flex-wrap:wrap}
+.dot{width:22px;height:6px;border-radius:99px;background:var(--line);transition:background .3s}
+.dot.done{background:var(--green)}
+.dot.now{background:var(--teal)}
+.prac-q{font-size:17.5px;line-height:2;margin-bottom:8px}
+.prac-hint{font-size:14.5px;color:var(--ink2);margin-bottom:16px;line-height:1.7}
+.prac-fb{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15.5px;line-height:1.8;display:none}
+.prac-fb.show{display:block;animation:rise .3s ease}
+.prac-fb.ok{background:var(--green-soft);border:1px solid #c8dcc4}
+.prac-fb.no{background:var(--red-soft);border:1px solid #edc4c4}
+
+.btn{padding:9px 18px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+  border-radius:99px;cursor:pointer;font-size:14.5px;font-family:inherit;font-weight:600;transition:opacity .15s}
+.btn:hover{opacity:.86}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn:disabled{opacity:.35;cursor:default}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 
 .lab{background:linear-gradient(#fff,#fcfbfe);border:1px solid var(--line);border-radius:16px;
   padding:22px;margin:26px 0;box-shadow:var(--shadow)}
@@ -101,15 +132,13 @@ input[type=range]{width:100%;accent-color:var(--accent);height:26px}
 .verdict.good{background:var(--green-soft);border-color:#c8dcc4}
 .verdict.warn{background:#fdf7e8;border-color:#e5d5a8}
 
-/* 完全平方表 */
 .sqgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:6px;margin-top:12px}
 .sq{background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 4px;text-align:center;
-  font-size:13px;transition:all .2s;font-variant-numeric:tabular-nums}
+  font-size:13px;transition:all .2s;font-variant-numeric:tabular-nums;cursor:pointer}
 .sq b{display:block;font-size:11.5px;color:var(--ink2);font-weight:600}
 .sq.on{background:var(--accent);color:#fff;border-color:var(--accent);transform:scale(1.06)}
 .sq.on b{color:#fff}
 
-/* 巴比倫 */
 .iter{font-family:"SF Mono",Consolas,monospace;font-size:14.5px;line-height:2;
   background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto}
 .iter .ir{display:block;white-space:nowrap}
@@ -130,14 +159,6 @@ tr:last-child td{border-bottom:none}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:24px -20px;padding:0 20px}
 .scroll table{margin:0;min-width:460px}
 
-.done{text-align:center;padding:52px 0 20px}
-.done h2{font-size:27px}
-.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:9px 18px;
-  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:28px}
-footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
-svg{max-width:100%;height:auto;display:block}
-
-/* ── 開始之前 ── */
 .flow{counter-reset:s;list-style:none;padding:0;margin:14px 0 0}
 .flow li{counter-increment:s;position:relative;padding:7px 0 7px 40px;font-size:15.5px;line-height:1.7}
 .flow li::before{content:counter(s);position:absolute;left:0;top:8px;width:25px;height:25px;
@@ -156,12 +177,19 @@ details.pre .bd{padding:14px 16px;font-size:15.5px;line-height:1.8;color:var(--i
 details.pre .bd strong{color:var(--ink)}
 details.pre .bd p{margin:0 0 10px}
 details.pre .bd p:last-child{margin:0}
+
+.done{text-align:center;padding:52px 0 20px}
+.done h2{font-size:27px}
+.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:9px 18px;
+  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:28px}
+footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
+svg{max-width:100%;height:auto;display:block}
 </style>
 </head>
 <body>
 
 <div class="bar"><div class="bar-inner">
-  <b id="pnum">0 / 5</b>
+  <b id="pnum">0 / 12</b>
   <div class="track"><div class="fill" id="pfill"></div></div>
 </div></div>
 
@@ -169,106 +197,75 @@ details.pre .bd p:last-child{margin:0}
 
 <header>
   <div class="kicker">八年級上 · 第二章 2-1 平方根與近似值</div>
-  <h1>把它夾在兩個整數中間</h1>
-  <p class="sub">估值題十三年來只有一招。<br>而它靠的不是計算，是你記不記得幾個平方數。</p>
+  <h1>平方根與近似值</h1>
+  <p class="sub">有些數你永遠算不完。<br><strong>但十秒之內，你就能知道它站在哪裡。</strong></p>
   <div class="meta">
-    <span class="tag">會考 111-06</span>
-    <span class="tag">鑑別度 0.64</span>
-    <span class="tag">待加強群僅 28.8%</span>
+    <span class="tag">課本 p.58–74</span>
+    <span class="tag">課本練習 8 題</span>
+    <span class="tag">會考挑戰 4 題</span>
+    <span class="tag">約 30 分鐘</span>
   </div>
 </header>
 
 <!-- ══ 開始之前 ══ -->
 <section>
   <div class="step">開始之前</div>
-  <h2>這一課不是要你算出答案，是要你知道它在哪</h2>
-
-  <p class="lead">等一下你會先看到一題會考題。<strong>那不是要考你</strong>——是想讓你先猜一次。<br>有一個數字，你永遠算不完它。但十秒之內你就能知道它站在哪裡。</p>
+  <h2>這一課會怎麼走</h2>
 
   <div class="card">
-    <p style="margin:0 0 4px"><strong>這一課會這樣走：</strong></p>
     <ol class="flow">
-      <li>先看一個問題：沒有計算機，怎麼估 √2022？</li>
-      <li><strong>你先猜</strong>一個答案（猜錯完全沒關係）</li>
-      <li>看看全國的考生怎麼選</li>
-      <li>自己拉滑桿，找出「剛好夾住它」的兩個數</li>
-      <li>看看要記住哪些平方數（比你想的少）</li>
-      <li>兩種變化題</li>
-      <li>最後：一個算不完的數，兩千五百年前是個禁忌</li>
+      <li><strong>先認識根號的意思和完全平方數</strong></li>
+      <li>一個算不完的數：兩千五百年前它是個禁忌</li>
+      <li><strong>用課本的例題和隨堂練習動手算</strong>（8 題，從整數到小數）</li>
+      <li>重點整理：把整節收成一張表</li>
+      <li>最後才是<strong>會考挑戰</strong>——同樣一招，考場上怎麼問</li>
     </ol>
   </div>
 
   <h3>先確認你知道這些</h3>
-  <p>下面每一項點開來看，幾十秒就能確認。<strong>如果都很熟，直接往下開始。</strong></p>
-  <details class="pre"><summary>「平方根」和根號是什麼？</summary><div class="bd"><p><span class="eq">√<span class="rad">9</span></span> ＝ 3，因為 <strong>3 × 3 ＝ 9</strong>。</p><p>換句話說，<strong>根號在問：什麼數自己乘自己，會得到裡面那個數？</strong></p><p>📌 但大部分的數開根號都<em>不會剛好</em>。例如 <span class="eq">√<span class="rad">10</span></span> 就不是整數——這一課要處理的正是這種。</p></div></details>
-  <details class="pre"><summary>「完全平方數」是什麼？</summary><div class="bd"><p>可以由某個整數自己乘自己得到的數，就叫完全平方數：</p><p><strong>1、4、9、16、25、36、49、64、81、100⋯⋯</strong></p><p>（也就是 1²、2²、3²、4²⋯⋯）</p><p>📌 這一課的整個方法，就是<strong>拿這些數當尺，把算不出來的數夾在中間</strong>。所以背熟它們是唯一的本錢。</p></div></details>
-  <details class="pre"><summary>數字越大，平方也越大嗎？</summary><div class="bd"><p><strong>是的，而且這件事是這一課能成立的原因。</strong></p><p>3 ＜ 4，平方之後 9 ＜ 16，順序沒有亂掉。</p><p>📌 所以只要找到兩個平方數把某個數夾住，開根號之後<em>還是被那兩個整數夾住</em>。</p></div></details>
-
-  <div class="note">
-    <p><b>三個提醒</b></p>
-    <p style="margin-top:10px">① 一開始那題有七成五的人答對，但成績最低那一群只有 28.8% —— 差別在腦中有沒有一張平方表。</p>
-    <p style="margin-top:8px">② 這題<strong>不用做任何計算</strong>，只要找到兩個平方數把它夾住。</p>
-    <p style="margin-top:8px">③ 每一段要答完才解鎖下一段，不是要考你，是不想讓你跳過思考。進度會自己存著。</p>
-  </div>
+  <details class="pre"><summary>「平方」是什麼？</summary><div class="bd">
+    <p><span class="eq">7<sup>2</sup></span> 讀作「7 的平方」，意思是 <strong>7 × 7 ＝ 49</strong>。</p>
+    <p>右上角那個小小的 2，代表「自己乘自己兩次」。</p>
+  </div></details>
+  <details class="pre"><summary>正方形的面積怎麼算？</summary><div class="bd">
+    <p><strong>邊長 × 邊長</strong>。邊長 7 的正方形，面積就是 <span class="eq">7<sup>2</sup> ＝ 49</span>。</p>
+    <p>📌 課本就是用正方形引入平方根的：<em>已知面積，反過來求邊長</em>——那就是開根號。</p>
+  </div></details>
+  <details class="pre"><summary>小數的大小怎麼比？</summary><div class="bd">
+    <p>後面會用到「2.2 和 2.3 哪個大」這種比較，還有<strong>四捨五入到小數點後第一位</strong>。</p>
+    <p>例如 2.24 四捨五入到第一位是 <strong>2.2</strong>（因為第二位是 4，小於 5）。</p>
+  </div></details>
 </section>
 
-<!-- ══ 0 案發 ══ -->
+<!-- ══ 1 概念 ══ -->
 <section>
-  <div class="step">案發現場</div>
-  <h2>沒有計算機，你要怎麼估 <span class="eq">√<span class="rad">2022</span></span>？</h2>
+  <div class="step"><span class="n">1</span>這一節在教什麼</div>
+  <h2>根號在問一件事：什麼數自己乘自己會得到它</h2>
 
-  <p class="lead">會考不能帶計算機。而 <span class="eq">√<span class="rad">2022</span></span> 這種數字，你不可能「算」出來——<strong>它連小數點都不會停。</strong></p>
+  <p class="lead">課本從<strong>正方形</strong>開始講：面積 49 的正方形，邊長是多少？<br>答案是 7，因為 <span class="eq">7×7＝49</span>。而這個「反過來求邊長」的動作，就叫<em>開根號</em>。</p>
 
-  <div class="quote">
-    <p>但題目也沒有要你算出來。它只問：<em>它大概落在哪裡？</em></p>
+  <div class="fcard">
+    <div class="fname">① 根號的意思</div>
+    <div class="fbody">√<span class="rad">49</span> ＝ 7　　因為　7<sup>2</sup> ＝ 49</div>
+    <p class="fsay">面積是 49 的正方形，<strong>邊長就是 √49</strong>。<br>
+    課本寫成：<span class="eq">√<span class="rad">a<sup>2</sup></span> ＝ a</span>（a 是正數）。</p>
   </div>
 
-  <p>而「大概落在哪裡」這件事，有一個一步到位的方法：<strong>把它夾住</strong>。</p>
-  <p class="dim">如果你能找到兩個整數，一個的平方比 2022 小、一個的平方比 2022 大，那 <span class="eq">√<span class="rad">2022</span></span> 就<em>一定</em>被夾在這兩個整數中間。不多不少，剛剛好。</p>
-</section>
-
-<!-- ══ 1 押注 ══ -->
-<section>
-  <div class="step">STEP 1　先押注</div>
-  <h2>先猜，等一下再驗證</h2>
-
-  <div class="q" id="q0">
-    <div class="q-src">111 年會考數學科 第 6 題（原題）</div>
-    <div class="q-body"><span class="eq">√<span class="rad">2022</span></span> 的值介於下列哪兩個數之間？</div>
-    <div class="opts" data-q="0" data-ans="D">
-      <button class="opt" data-k="A"><span class="k">A</span><span class="eq">25　，　30</span></button>
-      <button class="opt" data-k="B"><span class="k">B</span><span class="eq">30　，　35</span></button>
-      <button class="opt" data-k="C"><span class="k">C</span><span class="eq">35　，　40</span></button>
-      <button class="opt" data-k="D"><span class="k">D</span><span class="eq">40　，　45</span></button>
-    </div>
-    <div class="fb" id="fb0"></div>
-  </div>
-</section>
-
-<!-- ══ 2 全台 ══ -->
-<section class="locked-zone" id="z2">
-  <div class="step">STEP 2　全國怎麼選</div>
-  <h2>七成五的人對了——但另一群人只有 28.8%</h2>
-
-  <div class="card">
-    <div class="dist" id="dist"></div>
-    <p class="dim" style="font-size:14px;margin:14px 0 0">
-      資料：國家教育研究院 111 年會考數學科官方試題分析（通過率 0.7503、<strong>鑑別度 0.64</strong>）。<br><span style="color:var(--ink2)">「鑑別度」是官方算出來的一個數字：<strong>越高，代表這題越能分出「真的懂」和「只是猜對」的人</strong>。</span><br><span style="color:var(--ink2)">「待加強」是會考成績的最低一級（官方把考生分成<strong>精熟、基礎、待加強</strong>三級）。這裡把最低那一級單獨拉出來看。</span>
-    </p>
+  <div class="fcard">
+    <div class="fname">② 完全平方數</div>
+    <div class="fbody">1、4、9、16、25、36、49、64、81、100 ⋯⋯</div>
+    <p class="fsay">可以由某個整數自己乘自己得到的數。<br>
+    <strong>只要背到 25<sup>2</sup>＝625 就夠用了</strong>（課本 p.63 的表列到這裡）。</p>
   </div>
 
-  <div class="note">
-    <p><b>鑑別度 0.64 很高，代表這題非常會「分人」。</b></p>
-    <p style="margin-top:10px">全體通過 75%，但「待加強」那群人只有 <strong>28.8%</strong>——<em>四個人裡不到一個對</em>。同一題，兩個世界。</p>
-    <p style="margin-top:10px">而分開這兩群人的，不是聰明程度，是<strong>腦中有沒有一張平方表</strong>。有的人一看到 2022 就想到「45² 是 2025，很接近」；沒有的人只能亂猜。</p>
+  <div class="fcard">
+    <div class="fname">③ 十分逼近法（課本 p.66）</div>
+    <div class="fbody">先找整數 → 再切 10 等分 → 決定一位小數</div>
+    <p class="fsay">大部分的數開根號<strong>不會剛好</strong>。這時候用「夾」的：<br>
+    先找兩個整數把它夾住，再把中間切成 10 份，一位一位逼近。</p>
   </div>
-</section>
 
-<!-- ══ 3 夾擠器 ══ -->
-<section class="locked-zone" id="z3">
-  <div class="step">STEP 3　夾擠器</div>
-  <h2>找出剛好夾住它的那兩個平方數</h2>
-
+  <h3>先自己玩玩看夾擠</h3>
   <p>拉滑桿選一個數，我會幫你找出<strong>剛好把它夾住</strong>的兩個完全平方數。</p>
 
   <div class="lab">
@@ -284,8 +281,8 @@ details.pre .bd p:last-child{margin:0}
       <circle id="dot" cx="286" cy="46" r="5.5" fill="#b03030"/>
       <text id="dotLab" x="286" y="14" text-anchor="middle" font-size="11.5" font-weight="700" fill="#b03030">2022</text>
     </svg>
-    <div class="slider-lab"><span>100</span><span>選一個數</span><span>2500</span></div>
-    <input type="range" id="sl" min="100" max="2500" value="2022" aria-label="要估的數">
+    <div class="slider-lab"><span>2</span><span>選一個數</span><span>2500</span></div>
+    <input type="range" id="sl" min="2" max="2500" value="2022" aria-label="要估的數">
     <div class="readout">
       <div class="pill"><div class="lb">這個數</div><div class="vl" id="vN">2022</div></div>
       <div class="pill hi"><div class="lb">它的平方根介於</div><div class="vl" id="vR">44 ~ 45</div></div>
@@ -293,82 +290,18 @@ details.pre .bd p:last-child{margin:0}
     <div class="verdict" id="labv"></div>
   </div>
 
-  <div class="q" id="q1">
-    <div class="q-body">為什麼「找到兩個平方數夾住它」，就能<strong>確定</strong>平方根在那兩個整數之間？</div>
-    <div class="opts" data-q="1" data-ans="B">
-      <button class="opt" data-k="A"><span class="k">A</span><span>這是規定，記起來就好</span></button>
-      <button class="opt" data-k="B"><span class="k">B</span><span>因為數字越大，平方也越大——<strong>順序不會亂掉</strong>，所以夾住原數就等於夾住根號</span></button>
-      <button class="opt" data-k="C"><span class="k">C</span><span>因為平方根一定是整數</span></button>
-      <button class="opt" data-k="D"><span class="k">D</span><span>因為 2022 接近 2000，剛好可以整除</span></button>
-    </div>
-    <div class="fb" id="fb1"></div>
-  </div>
-</section>
-
-<!-- ══ 4 命名 ══ -->
-<section class="locked-zone" id="z4">
-  <div class="step">STEP 4　那到底要背幾個平方數</div>
-  <h2>1 到 30 就夠了，剩下的用上一個單元的公式算</h2>
-
+  <h3>課本 p.63 的完全平方數表</h3>
+  <p>點任一格，看它和下一格之間夾住哪些數。</p>
   <div class="lab">
-    <div class="lab-t">平方表 ── 點一下看它夾住哪個範圍</div>
+    <div class="lab-t">平方表 ── 1<sup>2</sup> 到 25<sup>2</sup></div>
     <div class="sqgrid" id="sqgrid"></div>
-    <div class="verdict" id="sqv">這 30 個數字是估值題唯一的本錢。</div>
-  </div>
-
-  <div class="note">
-    <p><b>可是 2022 要用到 44² 和 45²，表上沒有啊？</b></p>
-    <p style="margin-top:10px">這時候<strong>完全平方公式</strong>就派上用場了——你在上一個單元剛用過它：</p>
-    <p style="margin-top:10px;text-align:center" class="eq">44<sup>2</sup> ＝ (40＋4)<sup>2</sup> ＝ 40<sup>2</sup> ＋ 2×40×4 ＋ 4<sup>2</sup> ＝ 1600 ＋ 320 ＋ 16 ＝ <strong>1936</strong></p>
-    <p style="margin-top:10px;text-align:center" class="eq">45<sup>2</sup> ＝ (40＋5)<sup>2</sup> ＝ 1600 ＋ 400 ＋ 25 ＝ <strong>2025</strong></p>
-    <p style="margin-top:10px">兩個都是心算五秒的事。<em>上一節學的「改寫形狀」，在這一節變成了工具。</em></p>
-  </div>
-
-  <div class="quote">
-    <p><strong>回到那題：</strong>2022 卡在 1936 和 2025 之間，所以 <span class="eq">√<span class="rad">2022</span></span> 卡在 <strong>44 和 45</strong> 之間。</p>
-    <p style="margin-top:10px">四個選項裡，只有 <strong>D（40，45）</strong>裝得下 44～45 這個範圍。</p>
-    <p style="margin-top:10px">而且 2022 離 2025 只差 3，所以 <span class="eq">√<span class="rad">2022</span></span> 幾乎就是 45（實際約 44.97）。<em>但題目只要範圍，不要精確值——別做多餘的工。</em></p>
+    <div class="verdict" id="sqv">這 25 個數字是估值題唯一的本錢。</div>
   </div>
 </section>
 
-<!-- ══ 5 變形 ══ -->
-<section class="locked-zone" id="z5">
-  <div class="step">STEP 5　變形</div>
-  <h2>先變成一個根號，再夾</h2>
-
-  <p>會考不會直接給你 <span class="eq">√<span class="rad">n</span></span>。它會先繞一圈。</p>
-
-  <div class="q" id="q2">
-    <div class="q-src">105 年會考數學科 第 13 題（原題改寫敘述）</div>
-    <div class="q-body">有一個正方形的面積是 <strong>20</strong>，它的<strong>周長</strong> x 介於下列哪兩個整數之間？
-      <span class="dim" style="font-size:15px">（提示：先寫出周長是多少，再想辦法把它變成<em>一個</em>根號。）</span>
-    </div>
-    <div class="opts" data-q="2" data-ans="B">
-      <button class="opt" data-k="A"><span class="k">A</span><span class="eq">16 與 17</span></button>
-      <button class="opt" data-k="B"><span class="k">B</span><span class="eq">17 與 18</span></button>
-      <button class="opt" data-k="C"><span class="k">C</span><span class="eq">18 與 19</span></button>
-      <button class="opt" data-k="D"><span class="k">D</span><span class="eq">19 與 20</span></button>
-    </div>
-    <div class="fb" id="fb2"></div>
-  </div>
-
-  <div class="locked-zone" id="z5b">
-  <div class="q" id="q3">
-    <div class="q-body">再一題（自製練習）：一塊正方形農地的面積是 <strong>5000</strong> 平方公尺，邊長大約是多少公尺？</div>
-    <div class="opts" data-q="3" data-ans="C">
-      <button class="opt" data-k="A"><span class="k">A</span><span>大約 50 公尺</span></button>
-      <button class="opt" data-k="B"><span class="k">B</span><span>介於 60 和 65 之間</span></button>
-      <button class="opt" data-k="C"><span class="k">C</span><span>介於 70 和 71 之間，比較靠近 71</span></button>
-      <button class="opt" data-k="D"><span class="k">D</span><span>介於 71 和 72 之間</span></button>
-    </div>
-    <div class="fb" id="fb3"></div>
-  </div>
-  </div>
-</section>
-
-<!-- ══ 6 來源 ══ -->
-<section class="locked-zone" id="z6">
-  <div class="step">STEP 6　這個數從哪裡來</div>
+<!-- ══ 2 來源 ══ -->
+<section>
+  <div class="step"><span class="n">2</span>這種數從哪來</div>
   <h2>一個「算不完」的數，曾經是禁忌</h2>
 
   <p class="lead"><span class="eq">√<span class="rad">2</span></span> ＝ 1.41421356⋯⋯ 這串小數<strong>永遠不會停</strong>，也不會出現一直重複的規律。<br>你可能覺得這很正常。但兩千五百年前，這件事幾乎毀掉了一群數學家的信念。</p>
@@ -376,9 +309,9 @@ details.pre .bd p:last-child{margin:0}
   <div class="card">
     <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 2500 年前 · 畢達哥拉斯學派</p>
     <p style="margin:0 0 6px;font-size:18px;font-weight:700">「萬物皆數」——而數指的是分數</p>
-    <p style="margin:0">畢氏學派相信：任何長度都可以寫成<strong>兩個整數的比</strong>。這不只是數學主張，是他們的信仰。</p>
+    <p style="margin:0">他們相信：任何長度都可以寫成<strong>兩個整數的比</strong>。這不只是數學主張，是他們的信仰。</p>
     <p style="margin:10px 0 0">但一個邊長為 1 的正方形，它的<strong>對角線</strong>是 <span class="eq">√<span class="rad">2</span></span>——而 <span class="eq">√<span class="rad">2</span></span> <em>寫不成任何分數</em>。</p>
-    <p style="margin:10px 0 0" class="dim">傳說發現這件事的人叫希帕索斯（Hippasus），他因為洩漏這個秘密而被扔進海裡。故事真假難考，但它反映了一件事：<strong>這個發現在當時是災難級的。</strong></p>
+    <p style="margin:10px 0 0" class="dim">傳說發現這件事的人叫希帕索斯（Hippasus），他因為洩漏這個祕密而被扔進海裡。故事真假難考，但它反映了一件事：<strong>這個發現在當時是災難級的。</strong></p>
   </div>
 
   <div class="card">
@@ -392,9 +325,9 @@ details.pre .bd p:last-child{margin:0}
   <div class="lab">
     <div class="lab-t">巴比倫法 ── 求 √2022，從亂猜 100 開始</div>
     <div class="iter" id="iter"></div>
-    <div class="btnrow" style="display:flex;gap:10px;margin-top:14px">
-      <button class="reset" id="itBtn" style="margin:0;border-color:var(--accent);color:var(--accent)">下一步</button>
-      <button class="reset" id="itRst" style="margin:0">重來</button>
+    <div class="btnrow">
+      <button class="btn" id="itBtn">下一步</button>
+      <button class="btn ghost" id="itRst">重來</button>
     </div>
     <div class="verdict" id="itv">從 100 開始猜——這個猜測差得很遠（正確答案大約 45）。</div>
   </div>
@@ -405,22 +338,167 @@ details.pre .bd p:last-child{margin:0}
     <p style="margin-top:10px">你按計算機上的 <span class="eq">√</span> 鍵時，晶片裡跑的就是這一種「一直重複同一個算式」的方法。<strong>巴比倫人用泥板，我們用矽晶片，公式是同一條。</strong></p>
   </div>
 
-  <div class="q" id="q4">
-    <div class="q-body">看完這一段，你覺得會考為什麼只問「介於哪兩個數之間」，而不問精確值？</div>
-    <div class="opts" data-q="4" data-ans="C">
+  <div class="aside">
+    <p><strong>課本教的「十分逼近法」也是同一個精神：</strong>不追求一次算對，而是<em>一層一層把範圍縮小</em>。先確定整數位、再確定十分位——每縮一次，答案就更準一點。</p>
+  </div>
+</section>
+
+<!-- ══ 3 課本練習 ══ -->
+<section>
+  <div class="step"><span class="n">3</span>動手練</div>
+  <h2>照課本的順序，一題一題來</h2>
+
+  <p>下面 8 題全部出自<strong>課本 2-1 的例題與隨堂練習</strong>，從整數的開根號一路走到十分逼近法。<br>
+  <span class="dim">答錯可以再選一次，選對才會進到下一題。</span></p>
+
+  <div class="prac">
+    <div class="prac-top">
+      <span class="src" id="pSrc">課本 主題 2</span>
+      <span id="pNo">第 1 題 / 共 8 題</span>
+    </div>
+    <div class="dots" id="pDots"></div>
+    <div class="prac-q" id="pQ"></div>
+    <div class="prac-hint" id="pHint"></div>
+    <div class="opts" id="pOpts"></div>
+    <div class="prac-fb" id="pFb"></div>
+    <div class="btnrow" style="justify-content:flex-end">
+      <button class="btn" id="pNext" disabled>下一題</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 4 重點整理 ══ -->
+<section class="locked-zone" id="z4">
+  <div class="step"><span class="n">4</span>重點整理</div>
+  <h2>整節 2-1 收成一張表</h2>
+
+  <h4>先備知識</h4>
+  <div class="scroll">
+  <table>
+    <tr><th>名稱</th><th>內容</th><th>在這一節哪裡用到</th></tr>
+    <tr><td><b>平方</b></td><td class="eq">7<sup>2</sup> ＝ 7 × 7 ＝ 49</td><td>整節都在用</td></tr>
+    <tr><td><b>正方形面積</b></td><td>邊長 × 邊長</td><td>課本用它引入根號</td></tr>
+    <tr><td><b>四捨五入</b></td><td>看下一位是不是 ≥ 5</td><td>十分逼近法的最後一步</td></tr>
+  </table>
+  </div>
+
+  <h4>主題 1、2　平方根與 √a 的值（課本 p.58–63）</h4>
+  <div class="scroll">
+  <table>
+    <tr><th>要點</th><th>內容</th></tr>
+    <tr><td><b>根號的意思</b></td><td class="eq">√<span class="rad">a<sup>2</sup></span> ＝ a（a ＞ 0）</td></tr>
+    <tr><td><b>完全平方數</b></td><td>1、4、9、16、25、36、49、64、81、100、121、144、169、196、225⋯⋯到 625</td></tr>
+    <tr><td>怎麼求值</td><td>把根號裡的數寫成某個整數的平方，例如 <span class="eq">√<span class="rad">169</span> ＝ √<span class="rad">13<sup>2</sup></span> ＝ 13</span></td></tr>
+  </table>
+  </div>
+
+  <h4>主題 3　十分逼近法（課本 p.66）</h4>
+  <div class="scroll">
+  <table>
+    <tr><th>步驟</th><th>做什麼</th><th>以 <span class="eq">√<span class="rad">5</span></span> 為例</th></tr>
+    <tr><td><b>① 找整數</b></td><td>找兩個相鄰整數把它夾住</td><td class="eq">2<sup>2</sup>＝4 ＜ 5 ＜ 9＝3<sup>2</sup><br>→ 2 ＜ √5 ＜ 3</td></tr>
+    <tr><td><b>② 切 10 等分</b></td><td>試 2.1、2.2、2.3⋯⋯的平方</td><td class="eq">2.2<sup>2</sup>＝4.84 ＜ 5 ＜ 5.29＝2.3<sup>2</sup><br>→ 2.2 ＜ √5 ＜ 2.3</td></tr>
+    <tr><td><b>③ 決定四捨五入</b></td><td>試中間值 2.25 的平方</td><td class="eq">2.25<sup>2</sup>＝5.0625 ＞ 5<br>→ √5 ≒ 2.2</td></tr>
+  </table>
+  </div>
+
+  <div class="note">
+    <p><b>兩個最容易錯的地方</b></p>
+    <p style="margin-top:10px">① <strong>把「面積」當成「邊長」</strong>：正方形面積 20，邊長是 <span class="eq">√<span class="rad">20</span></span> 不是 20。</p>
+    <p style="margin-top:8px">② <strong>忘了先把係數收進根號</strong>：<span class="eq">4√<span class="rad">20</span></span> 要先變成 <span class="eq">√<span class="rad">320</span></span> 才能夾（因為 <span class="eq">4 ＝ √<span class="rad">16</span></span>）。</p>
+  </div>
+
+  <div class="aside">
+    <p><strong>一句話帶走這一節：</strong>算不出來，不代表不知道它在哪。<em>找兩個平方數把它夾住，就等於掌握了它。</em></p>
+  </div>
+</section>
+
+<!-- ══ 5 會考挑戰 ══ -->
+<section class="locked-zone" id="z5">
+  <div class="step"><span class="n">5</span>會考挑戰</div>
+  <h2>同樣一招，在考場上怎麼問</h2>
+
+  <div class="note">
+    <p><b>接下來三題是歷年會考真題。</b>你剛剛已經把夾擠練過一輪了，現在只是去看看它在考場上的樣子。</p>
+    <p style="margin-top:10px">第一題有七成五的人答對，但成績最低那一群只有 28.8%——<em>差別在腦中有沒有那張平方表</em>。</p>
+  </div>
+
+  <div class="q" id="q0">
+    <div class="q-src">111 年會考數學科 第 6 題（原題）</div>
+    <div class="q-body"><span class="eq">√<span class="rad">2022</span></span> 的值介於下列哪兩個數之間？</div>
+    <div class="opts" data-q="0" data-ans="D">
+      <button class="opt" data-k="A"><span class="k">A</span><span class="eq">25　，　30</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span class="eq">30　，　35</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span class="eq">35　，　40</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span class="eq">40　，　45</span></button>
+    </div>
+    <div class="fb" id="fb0"></div>
+  </div>
+
+  <div class="locked-zone" id="z5b">
+  <div class="card">
+    <div class="dist" id="dist"></div>
+    <p class="dim" style="font-size:14px;margin:14px 0 0">
+      資料：國家教育研究院 111 年會考數學科官方試題分析（通過率 0.7503、鑑別度 0.64）。
+      <br><span style="color:var(--ink2)">「鑑別度」越高，代表這題越能分出「真的懂」和「只是猜對」的人。<br>
+      「待加強」是會考成績的最低一級（官方分成<strong>精熟、基礎、待加強</strong>三級）。</span>
+    </p>
+  </div>
+
+  <div class="quote">
+    <p><strong>2022 卡在哪裡？</strong></p>
+    <p style="margin-top:10px">課本的表只到 25<sup>2</sup>＝625，所以 44<sup>2</sup> 要自己算——<em>用上一課的完全平方公式</em>：</p>
+    <p style="margin-top:10px;text-align:center" class="eq">44<sup>2</sup> ＝ (40＋4)<sup>2</sup> ＝ 1600 ＋ 320 ＋ 16 ＝ <strong>1936</strong><br>
+    45<sup>2</sup> ＝ (40＋5)<sup>2</sup> ＝ 1600 ＋ 400 ＋ 25 ＝ <strong>2025</strong></p>
+    <p style="margin-top:10px">2022 卡在 1936 和 2025 中間 → <span class="eq">√<span class="rad">2022</span></span> 卡在 <strong>44 和 45</strong> 之間 → 只有選項 D 裝得下。</p>
+  </div>
+
+  <h3>挑戰二：先變成一個根號，再夾</h3>
+  <div class="q" id="q1">
+    <div class="q-src">105 年會考數學科 第 13 題（改寫敘述）</div>
+    <div class="q-body">有一個正方形的面積是 <strong>20</strong>，它的<strong>周長</strong> x 介於下列哪兩個整數之間？
+      <span class="dim" style="font-size:15px">（提示：先寫出周長是多少，再想辦法把它變成<em>一個</em>根號。）</span>
+    </div>
+    <div class="opts" data-q="1" data-ans="B">
+      <button class="opt" data-k="A"><span class="k">A</span><span class="eq">16 與 17</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span class="eq">17 與 18</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span class="eq">18 與 19</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span class="eq">19 與 20</span></button>
+    </div>
+    <div class="fb" id="fb1"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="z5c">
+  <h3>挑戰三：用在生活裡</h3>
+  <div class="q" id="q2">
+    <div class="q-body">一塊正方形農地的面積是 <strong>5000</strong> 平方公尺，邊長大約是多少公尺？<span class="dim">（自製練習）</span></div>
+    <div class="opts" data-q="2" data-ans="C">
+      <button class="opt" data-k="A"><span class="k">A</span><span>大約 50 公尺</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span>介於 60 和 65 之間</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span>介於 70 和 71 之間，比較靠近 71</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span>介於 71 和 72 之間</span></button>
+    </div>
+    <div class="fb" id="fb2"></div>
+  </div>
+
+  <div class="q" id="q3">
+    <div class="q-body">最後一題：會考為什麼只問「介於哪兩個數之間」，而不問精確值？</div>
+    <div class="opts" data-q="3" data-ans="C">
       <button class="opt" data-k="A"><span class="k">A</span><span>因為出題老師懶得算</span></button>
       <button class="opt" data-k="B"><span class="k">B</span><span>因為精確值太長，答案卡印不下</span></button>
       <button class="opt" data-k="C"><span class="k">C</span><span>因為 <span class="eq">√<span class="rad">2022</span></span> 根本沒有「精確值」可以寫完——能掌握它的位置，就是掌握它了</span></button>
       <button class="opt" data-k="D"><span class="k">D</span><span>因為國中生還沒學過小數</span></button>
     </div>
-    <div class="fb" id="fb4"></div>
+    <div class="fb" id="fb3"></div>
+  </div>
   </div>
 </section>
 
 <!-- ══ 收束 ══ -->
-<section class="locked-zone" id="z7">
+<section class="locked-zone" id="z6">
   <div class="done">
-    <div class="step">結案</div>
+    <div class="step">這一課結束</div>
     <h2>算不出來，不代表不知道它在哪</h2>
     <p style="text-align:left"><span class="eq">√<span class="rad">2022</span></span> 寫不完、也寫不成分數。但你只花了十秒就知道它卡在 44 和 45 之間，而且非常靠近 45。</p>
     <p style="text-align:left">希帕索斯的時代把這種數當成災難，因為他們堅持每個數都要能被<em>寫下來</em>。但其實你不需要寫下它——<strong>你只需要知道它站在哪裡</strong>。</p>
@@ -429,9 +507,10 @@ details.pre .bd p:last-child{margin:0}
     <div style="text-align:left">
       <div class="aside">
         <p><strong>這一冊的三課，你走完了。</strong>順序是：<br>
-        <a href="multiply.html" style="color:var(--accent);font-weight:700">不要算，先看</a>（1-1 乘法公式）→ <a href="division.html" style="color:var(--accent);font-weight:700">什麼時候可以停下來</a>（1-3 多項式除法）→ 這一課（2-1 平方根）。</p>
+        <a href="multiply.html" style="color:var(--accent);font-weight:700">乘法公式</a>（1-1）→
+        <a href="division.html" style="color:var(--accent);font-weight:700">多項式的除法</a>（1-3）→ 這一課（2-1）。</p>
         <p style="margin-top:10px">三課其實在講同一件事：<br>
-        乘法公式教你<em>把難算的樣子換掉</em>（你剛剛就用它算出 44²＝1936）；<br>
+        乘法公式教你<em>把難算的樣子換掉</em>（你剛剛就用它算出 44<sup>2</sup>＝1936）；<br>
         除法教你<em>什麼時候該收手</em>；<br>
         這一課教你<em>算不出來的時候怎麼辦</em>。<br>
         <strong>會考考的不是算得快，是知道該怎麼做。</strong></p>
@@ -442,8 +521,8 @@ details.pre .bd p:last-child{margin:0}
 </section>
 
 <footer>
-  題目、通過率、鑑別度與選項百分比引自國家教育研究院歷年國中教育會考數學科試題及官方試題分析。<br>
-  105-13 為配合閱讀改寫敘述，另有一題為自製練習並已標示。未使用課本內容。<br>
+  課本練習題取自八年級上冊 2-1 的例題與隨堂練習，僅使用題目的數字與問法，未複製課本文字與圖片。<br>
+  會考題目與官方統計引自國家教育研究院歷年國中教育會考數學科試題及官方試題分析；105-13 為配合閱讀改寫敘述，另有一題為自製練習並已標示。<br>
   <span style="color:#a09aa8">為自學而做 · 2026</span>
 </footer>
 
@@ -452,68 +531,161 @@ details.pre .bd p:last-child{margin:0}
 <script>
 (function(){
 "use strict";
-const KEY="jhs8-sqrt-v1", TOTAL=5;
+const KEY="jhs8-sqrt-v2", TOTAL=12;
 let state={};
 try{state=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){state={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+const $=(id)=>document.getElementById(id);
 
+/* ══ 課本練習 8 題 ══ */
+const PRAC=[
+ {src:"課本 主題 2（利用完全平方求值）",
+  q:"面積是 <b>49</b> 的正方形，邊長是多少？",
+  hint:"邊長 × 邊長 ＝ 面積。什麼數自己乘自己等於 49？",
+  o:["7","24.5","49","14"], a:0,
+  why:"<b>7 × 7 ＝ 49</b>，所以邊長是 7，也就是 <span class='eq'>√49 ＝ 7</span>。<br>📌 這就是根號在做的事：<b>已知面積，反過來求邊長。</b>"},
+
+ {src:"課本 隨堂練習",
+  q:"利用完全平方數，求 <b class='eq'>√<span class='rad'>81</span></b> 的值。",
+  hint:"81 是哪一個整數的平方？",
+  o:["9","8.1","40.5","81"], a:0,
+  why:"<span class='eq'>81 ＝ 9<sup>2</sup></span>，所以 <span class='eq'>√81 ＝ √9<sup>2</sup> ＝ <b>9</b></span>。"},
+
+ {src:"課本 p.63（用平方表）",
+  q:"求 <b class='eq'>√<span class='rad'>169</span></b> 的值。",
+  hint:"查課本的完全平方數表：169 在哪一格？",
+  o:["13","12","14","16.9"], a:0,
+  why:"<span class='eq'>169 ＝ 13<sup>2</sup></span>，所以 <span class='eq'>√169 ＝ <b>13</b></span>。<br>📌 這就是為什麼要背平方表——<b>看到 169 就要立刻想到 13。</b>"},
+
+ {src:"課本 p.63（表的最後一格）",
+  q:"求 <b class='eq'>√<span class='rad'>625</span></b> 的值。",
+  hint:"625 是課本平方表的最後一個數。",
+  o:["25","24","26","62.5"], a:0,
+  why:"<span class='eq'>625 ＝ 25<sup>2</sup></span>，所以 <span class='eq'>√625 ＝ <b>25</b></span>。<br>課本的表就列到這裡：<b>1<sup>2</sup> 到 25<sup>2</sup></b>。再往上就要自己用乘法公式算。"},
+
+ {src:"課本 例 3（十分逼近法 · 第 1 步）",
+  q:"用十分逼近法求 <b class='eq'>√<span class='rad'>5</span></b>。<br><b>第一步：</b>√5 介於哪兩個相鄰的整數之間？",
+  hint:"找兩個完全平方數把 5 夾住。",
+  o:["2 和 3","1 和 2","3 和 4","2.2 和 2.3"], a:0,
+  why:"<span class='eq'>2<sup>2</sup> ＝ 4 ＜ 5 ＜ 9 ＝ 3<sup>2</sup></span><br>所以 <b>2 ＜ √5 ＜ 3</b>。<br>📌 這就是十分逼近法的第一層：<b>先把整數位確定下來。</b>"},
+
+ {src:"課本 例 3（第 2 步）",
+  q:"承上：把 2 和 3 之間切成 10 等分。<br><b class='eq'>2.2<sup>2</sup> ＝ 4.84</b>、<b class='eq'>2.3<sup>2</sup> ＝ 5.29</b>。那 √5 介於哪兩個數之間？",
+  hint:"5 卡在 4.84 和 5.29 中間，所以 √5 卡在⋯⋯",
+  o:["2.2 和 2.3","2.1 和 2.2","2.3 和 2.4","2.4 和 2.5"], a:0,
+  why:"<span class='eq'>4.84 ＜ 5 ＜ 5.29</span>，所以 <b>2.2 ＜ √5 ＜ 2.3</b>。<br>📌 <b>和第一層完全一樣的做法</b>，只是把整數換成一位小數。這就是「十分逼近」的意思。"},
+
+ {src:"課本 例 3（第 3 步 · 四捨五入）",
+  q:"承上：<b class='eq'>2.25<sup>2</sup> ＝ 5.0625</b>，比 5 大。<br>那 <b class='eq'>√<span class='rad'>5</span></b> 四捨五入到小數點後第一位是多少？",
+  hint:"2.25 是 2.2 和 2.3 的中間點。√5 落在中間點的哪一邊？",
+  o:["2.2","2.3","2.25","2.0"], a:0,
+  why:"因為 <span class='eq'>2.25<sup>2</sup> ＝ 5.0625 ＞ 5</span>，代表 <b>√5 比 2.25 小</b>。<br>所以 √5 落在 2.2 到 2.25 之間 → 四捨五入到第一位是 <b>2.2</b>。<br>📌 <b>只要比中間點就能決定四捨五入</b>，不必真的算出小數第二位。"},
+
+ {src:"課本 隨堂練習",
+  q:"用同樣的方法求 <b class='eq'>√<span class='rad'>7</span></b>（四捨五入到小數點後第一位）。<br><span style='font-size:15px;color:var(--ink2)'>已知：2.6<sup>2</sup>＝6.76、2.7<sup>2</sup>＝7.29、2.65<sup>2</sup>＝7.0225</span>",
+  hint:"照三個步驟走一次：先找整數 → 再找一位小數 → 最後比中間點。",
+  o:["2.6","2.7","2.65","2.8"], a:0,
+  why:"① <span class='eq'>2<sup>2</sup>＝4 ＜ 7 ＜ 9＝3<sup>2</sup></span> → 2 ＜ √7 ＜ 3<br>② <span class='eq'>6.76 ＜ 7 ＜ 7.29</span> → 2.6 ＜ √7 ＜ 2.7<br>③ <span class='eq'>2.65<sup>2</sup>＝7.0225 ＞ 7</span> → √7 比 2.65 小<br>所以 <b>√7 ≒ 2.6</b>。<br><b>八題做完了。你已經把整套十分逼近法走過一次。</b>"}
+];
+
+let pi=0, pDone=(state.prac||0);
+function pDots(){
+  $("pDots").innerHTML=PRAC.map((_,i)=>
+    '<span class="dot'+(i<pDone?" done":(i===pi?" now":""))+'"></span>').join("");
+}
+function pRender(){
+  const P=PRAC[pi];
+  $("pSrc").textContent=P.src;
+  $("pNo").textContent="第 "+(pi+1)+" 題 / 共 "+PRAC.length+" 題";
+  $("pQ").innerHTML=P.q;
+  $("pHint").innerHTML=P.hint;
+  pDots();
+  const solved = pi<pDone;
+  $("pOpts").innerHTML=P.o.map((t,i)=>
+    '<button class="opt'+(solved&&i===P.a?" right locked":(solved?" locked":""))+'" data-i="'+i+'">'+
+    '<span class="k">'+"ABCD"[i]+'</span><span class="eq">'+t+'</span></button>').join("");
+  const fb=$("pFb");
+  if(solved){fb.className="prac-fb show ok";fb.innerHTML="<b>答對了</b>　"+P.why;$("pNext").disabled=false}
+  else{fb.className="prac-fb";fb.innerHTML="";$("pNext").disabled=true}
+  $("pNext").textContent = pi>=PRAC.length-1 ? "完成，進入重點整理" : "下一題";
+  $("pOpts").querySelectorAll(".opt").forEach(b=>{
+    b.addEventListener("click",()=>{
+      if(b.classList.contains("locked"))return;
+      const i=+b.dataset.i, P=PRAC[pi], fb=$("pFb");
+      if(i===P.a){
+        b.classList.add("right","locked");
+        $("pOpts").querySelectorAll(".opt").forEach(x=>x.classList.add("locked"));
+        fb.className="prac-fb show ok"; fb.innerHTML="<b>答對了</b>　"+P.why;
+        if(pi>=pDone){pDone=pi+1;state.prac=pDone;save();paint();gate()}
+        $("pNext").disabled=false; pDots();
+      }else{
+        b.classList.add("wrong");
+        fb.className="prac-fb show no";
+        fb.innerHTML="<b>再想一次</b>　"+P.hint+"<br><span style='color:var(--ink2)'>選錯不扣分，直接再選一個。</span>";
+      }
+    });
+  });
+}
+$("pNext").addEventListener("click",()=>{
+  if(pi<PRAC.length-1){pi++;pRender();
+    document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"})}
+  else{unlock("z4");unlock("z5");$("z4").scrollIntoView({behavior:"smooth",block:"start"})}
+});
+
+/* ══ 會考挑戰回饋 ══ */
 const FB={
  0:{ans:"D",
-  A:["25² 是 625，差太遠了","<p>如果 <span class='eq'>√<span class='rad'>2022</span></span> 在 25 到 30 之間，那 2022 應該落在 <span class='eq'>25<sup>2</sup>＝625</span> 和 <span class='eq'>30<sup>2</sup>＝900</span> 之間。</p><p>但 2022 比 900 大得多。<strong>要往上找更大的平方數。</strong></p>"],
-  B:["30² 是 900、35² 是 1225","<p>2022 比 1225 還大，所以 <span class='eq'>√<span class='rad'>2022</span></span> 一定大於 35。</p><p>9.53% 的人選了這個。通常是憑感覺覺得「2022 開根號大概三十幾」，<em>沒有真的去乘一次驗證</em>。</p>"],
-  C:["很接近了","<p><span class='eq'>35<sup>2</sup>＝1225</span>、<span class='eq'>40<sup>2</sup>＝1600</span>。2022 比 1600 還大，所以還要再往上。</p><p>下一個要試的是 45：<span class='eq'>45<sup>2</sup>＝2025</span>——<strong>剛剛好比 2022 大一點點</strong>。</p>"],
-  D:["答對了","<p><span class='eq'>44<sup>2</sup>＝1936</span>、<span class='eq'>45<sup>2</sup>＝2025</span>，而 2022 剛好卡在中間 → <span class='eq'>√<span class='rad'>2022</span></span> 介於 <strong>44 和 45</strong> 之間。</p><p>四個選項只有 D 裝得下這個範圍。</p><p>先別走——這題全體通過 75%，但有一群人只有 28.8%。差別在一個很具體的東西上。</p>"]},
+  A:["25<sup>2</sup> 是 625，差太遠了","<p>如果 <span class='eq'>√2022</span> 在 25 到 30 之間，那 2022 應該落在 625 和 900 之間。</p><p>但 2022 比 900 大得多。<strong>要往上找更大的平方數。</strong></p>"],
+  B:["30<sup>2</sup> 是 900、35<sup>2</sup> 是 1225","<p>2022 比 1225 還大，所以 <span class='eq'>√2022</span> 一定大於 35。</p><p>9.53% 的人選了這個，通常是憑感覺覺得「2022 開根號大概三十幾」，<em>沒有真的去乘一次驗證</em>。</p>"],
+  C:["很接近了","<p><span class='eq'>35<sup>2</sup>＝1225</span>、<span class='eq'>40<sup>2</sup>＝1600</span>。2022 比 1600 還大，還要再往上。</p><p>下一個要試的是 45：<span class='eq'>45<sup>2</sup>＝2025</span>——<strong>剛剛好比 2022 大一點點</strong>。</p>"],
+  D:["答對了","<p><span class='eq'>44<sup>2</sup>＝1936</span>、<span class='eq'>45<sup>2</sup>＝2025</span>，而 2022 剛好卡在中間 → <span class='eq'>√2022</span> 介於 <strong>44 和 45</strong> 之間。</p><p>四個選項只有 D 裝得下這個範圍。而且 2022 離 2025 只差 3，所以它幾乎就是 45。</p>"]},
  1:{ans:"B",
-  A:["它有原因，而且很簡單","<p>這條規則背後只有一句話：<strong>大的數，平方也比較大</strong>。往下看 B。</p>"],
-  B:["對，就是這個","<p>因為平方保持順序：<span class='eq'>44 ＜ □ ＜ 45</span> 的話，平方之後一定 <span class='eq'>1936 ＜ □<sup>2</sup> ＜ 2025</span>。</p><p>反過來也成立——<em>既然 2022 卡在 1936 和 2025 中間，開根號之後就一定卡在 44 和 45 中間</em>。</p><p><strong>順序不會亂掉，所以夾住原數就等於夾住根號。</strong>（這裡的數都是正的，這個性質才成立。）</p>"],
-  C:["平方根通常不是整數","<p><span class='eq'>√<span class='rad'>2022</span></span> ≈ 44.966⋯⋯，它<strong>不是整數，而且小數永遠不會停</strong>。</p><p>正因為它不是整數，我們才需要「夾」——夾住是唯一能在沒有計算機時掌握它的方法。</p>"],
-  D:["2022 不能被 45 整除","<p><span class='eq'>45<sup>2</sup>＝2025</span>，比 2022 多 3，所以 2022 <em>不是</em>完全平方數。</p><p>而正因為它不是，才要用夾的。</p>"]},
- 2:{ans:"B",
   A:["再夾一次","<p>周長 <span class='eq'>x ＝ 4√<span class='rad'>20</span> ＝ √<span class='rad'>320</span></span>。</p><p><span class='eq'>16<sup>2</sup>＝256</span>、<span class='eq'>17<sup>2</sup>＝289</span>——320 比 289 還大，所以 x 大於 17。</p>"],
-  B:["正確，而且關鍵在第一步","<p>面積 20 → 邊長 <span class='eq'>√<span class='rad'>20</span></span> → 周長 <span class='eq'>4√<span class='rad'>20</span></span>。</p><p><strong>關鍵：把 4 收進根號裡。</strong><span class='eq'>4 ＝ √<span class='rad'>16</span></span>，所以 <span class='eq'>4√<span class='rad'>20</span> ＝ √<span class='rad'>16</span>×√<span class='rad'>20</span> ＝ √<span class='rad'>320</span></span>。</p><p>再夾：<span class='eq'>17<sup>2</sup>＝289</span>、<span class='eq'>18<sup>2</sup>＝324</span>。320 卡在中間 → <strong>x 介於 17 和 18</strong>。</p><p><em>320 離 324 只差 4，所以 x 幾乎就是 18（約 17.89）。</em></p>"],
-  C:["超過了","<p><span class='eq'>18<sup>2</sup>＝324</span>，比 320 大——所以 <span class='eq'>√<span class='rad'>320</span></span> <strong>小於</strong> 18，不可能在 18 到 19 之間。</p><p>它就在 18 的下面一點點。</p>"],
-  D:["差得比較遠了","<p><span class='eq'>19<sup>2</sup>＝361</span>、<span class='eq'>20<sup>2</sup>＝400</span>，都比 320 大很多。</p><p>會選到這裡，通常是把周長算成 <span class='eq'>4×20＝80</span> 之類的——注意 <strong>20 是面積不是邊長</strong>，邊長要先開根號。</p>"]},
- 3:{ans:"C",
-  A:["50² 只有 2500","<p>差了一半。<span class='eq'>50<sup>2</sup> ＝ 2500</span>，而農地是 5000 平方公尺。</p><p>往上找：<span class='eq'>70<sup>2</sup> ＝ 4900</span>。</p>"],
-  B:["還不夠大","<p><span class='eq'>60<sup>2</sup>＝3600</span>、<span class='eq'>65<sup>2</sup>＝4225</span>，都還沒到 5000。</p><p>再往上：<span class='eq'>70<sup>2</sup>＝4900</span>——快到了。</p>"],
+  B:["正確，而且關鍵在第一步","<p>面積 20 → 邊長 <span class='eq'>√<span class='rad'>20</span></span> → 周長 <span class='eq'>4√<span class='rad'>20</span></span>。</p><p><strong>關鍵：把 4 收進根號裡。</strong><span class='eq'>4 ＝ √<span class='rad'>16</span></span>，所以 <span class='eq'>4√<span class='rad'>20</span> ＝ √<span class='rad'>320</span></span>。</p><p>再夾：<span class='eq'>17<sup>2</sup>＝289</span>、<span class='eq'>18<sup>2</sup>＝324</span>。320 卡在中間 → <strong>x 介於 17 和 18</strong>。</p>"],
+  C:["超過了","<p><span class='eq'>18<sup>2</sup>＝324</span>，比 320 大——所以 <span class='eq'>√320</span> <strong>小於</strong> 18。它就在 18 的下面一點點。</p>"],
+  D:["差得比較遠了","<p>會選到這裡，通常是把周長算成 <span class='eq'>4×20＝80</span> 之類的——注意 <strong>20 是面積不是邊長</strong>，邊長要先開根號。</p>"]},
+ 2:{ans:"C",
+  A:["50<sup>2</sup> 只有 2500","<p>差了一半。往上找：<span class='eq'>70<sup>2</sup> ＝ 4900</span>。</p>"],
+  B:["還不夠大","<p><span class='eq'>60<sup>2</sup>＝3600</span>、<span class='eq'>65<sup>2</sup>＝4225</span>，都還沒到 5000。再往上：<span class='eq'>70<sup>2</sup>＝4900</span>——快到了。</p>"],
   C:["對","<p><span class='eq'>70<sup>2</sup> ＝ 4900</span>、<span class='eq'>71<sup>2</sup> ＝ 5041</span>。5000 卡在中間 → 邊長介於 <strong>70 和 71</strong>。</p><p>而 5000 離 5041 只差 41、離 4900 差 100 → <strong>比較靠近 71</strong>（實際約 70.71）。</p><p>注意 <span class='eq'>71<sup>2</sup></span> 怎麼來的：<span class='eq'>(70＋1)<sup>2</sup> ＝ 4900 ＋ 140 ＋ 1 ＝ 5041</span>——又是完全平方公式。</p>"],
-  D:["71² 已經超過 5000 了","<p><span class='eq'>71<sup>2</sup> ＝ 5041 ＞ 5000</span>，所以邊長<strong>小於</strong> 71。</p><p>它在 70 和 71 之間，靠近 71 那一側。</p>"]},
- 4:{ans:"C",
+  D:["71<sup>2</sup> 已經超過 5000 了","<p><span class='eq'>71<sup>2</sup> ＝ 5041 ＞ 5000</span>，所以邊長<strong>小於</strong> 71。</p>"]},
+ 3:{ans:"C",
   A:["出題老師其實算得出來","<p>真正的原因比較深：<em>那個「精確值」根本不存在於有限的位數裡。</em></p>"],
-  B:["不只是印不下的問題","<p>就算給你一整頁，也寫不完——<strong>它是無理數，小數永遠不停也不循環</strong>。</p>"],
-  C:["對","<p><span class='eq'>√<span class='rad'>2022</span></span> 是無理數：小數永遠不會結束，也永遠不會循環。<em>沒有任何有限的寫法能「等於」它。</em></p><p>所以數學上真正有用的能力，不是把它寫出來，而是<strong>知道它站在數線的哪個位置</strong>——這就是為什麼會考只問範圍。</p><p>兩千五百年前，希臘人因為寫不出這種數而崩潰；今天你只要能把它夾住，就等於掌握了它。</p>"],
+  B:["不只是印不下的問題","<p>就算給你一整頁，也寫不完——<strong>它的小數永遠不停也不重複</strong>。</p>"],
+  C:["對","<p><span class='eq'>√2022</span> 的小數永遠不會結束，也不會一直重複。<em>沒有任何有限的寫法能「等於」它。</em></p><p>所以數學上真正有用的能力，不是把它寫出來，而是<strong>知道它站在數線的哪個位置</strong>——這就是為什麼會考只問範圍。</p><p>兩千五百年前，希臘人因為寫不出這種數而崩潰；今天你只要能把它夾住，就等於掌握了它。</p>"],
   D:["國中當然學過小數","<p>問題不在小數難不難，在於<strong>這個數的小數根本寫不完</strong>。</p>"]}
 };
 
-function done(){return Object.keys(state).filter(k=>/^q\d+$/.test(k)).length}
+/* ══ 進度與解鎖 ══ */
+function qDone(){return Object.keys(state).filter(k=>/^q\d+$/.test(k)).length}
 function paint(){
-  document.getElementById("pnum").textContent=done()+" / "+TOTAL;
-  document.getElementById("pfill").style.width=(done()/TOTAL*100)+"%";
+  const d=(state.prac||0)+qDone();
+  $("pnum").textContent=d+" / "+TOTAL;
+  $("pfill").style.width=(d/TOTAL*100)+"%";
 }
 function unlock(id){
-  const el=document.getElementById(id);
+  const el=$(id);
   if(el&&el.classList.contains("locked-zone")){
     el.classList.remove("locked-zone");el.classList.add("revealed");
     setTimeout(()=>el.classList.remove("revealed"),700);
   }
 }
 function gate(){
-  if(state.q0!==undefined){unlock("z2");unlock("z3");drawDist()}
-  if(state.q1!==undefined){unlock("z4");unlock("z5")}
-  if(state.q2!==undefined){unlock("z5b")}
+  if((state.prac||0)>=PRAC.length){unlock("z4");unlock("z5")}
+  if(state.q0!==undefined){unlock("z5b");drawDist()}
+  if(state.q1!==undefined){unlock("z5c")}
   if(state.q3!==undefined){unlock("z6")}
-  if(state.q4!==undefined){unlock("z7")}
   paint();
 }
 
-document.querySelectorAll(".opts").forEach(box=>{
+document.querySelectorAll(".opts[data-q]").forEach(box=>{
   const qi=box.dataset.q, ans=box.dataset.ans;
   box.querySelectorAll(".opt").forEach(btn=>{
     btn.addEventListener("click",()=>{
       if(box.dataset.locked)return;
       const k=btn.dataset.k;
-      state["q"+qi]=k;
-      try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
-      reveal(qi,k,ans,box,true);gate();
+      state["q"+qi]=k; save();
+      reveal(qi,k,ans,box,true); gate();
     });
   });
 });
@@ -529,7 +701,7 @@ function reveal(qi,k,ans,box,scroll){
       const s=document.createElement("span");s.className="pct";s.textContent=PCT[b.dataset.k];b.appendChild(s);
     }
   });
-  const f=FB[qi][k], fb=document.getElementById("fb"+qi);
+  const f=FB[qi][k], fb=$("fb"+qi);
   fb.innerHTML="<h4 style='color:"+(k===ans?"var(--green)":"var(--red)")+"'>"+f[0]+"</h4>"+f[1];
   fb.classList.add("show");
   if(scroll)setTimeout(()=>fb.scrollIntoView({behavior:"smooth",block:"nearest"}),120);
@@ -538,37 +710,34 @@ function reveal(qi,k,ans,box,scroll){
 let distDone=false;
 function drawDist(){
   if(distDone)return;distDone=true;
-  const box=document.getElementById("dist");
   const rows=[
     {k:"全體",v:75.03,c:"#3f6d3a",t:"答對率"},
     {k:"待加強",v:28.80,c:"#b03030",t:"同一題，不到三成"}
   ];
-  box.innerHTML=rows.map(r=>
+  $("dist").innerHTML=rows.map(r=>
     '<div class="dbar"><span class="dk">'+r.k+'</span>'+
     '<div class="dtrack"><div class="dfill" data-w="'+r.v+'" style="background:'+r.c+'"></div></div>'+
     '<span class="dv">'+r.v.toFixed(1)+'%</span></div>'+
     '<div style="font-size:12px;color:var(--ink2);margin:-4px 0 12px 66px">'+r.t+'</div>'
   ).join("");
-  setTimeout(()=>{box.querySelectorAll(".dfill").forEach(d=>d.style.width=d.dataset.w+"%")},80);
+  setTimeout(()=>{$("dist").querySelectorAll(".dfill").forEach(d=>d.style.width=d.dataset.w+"%")},80);
 }
 
-/* ── 夾擠器 ── */
-const sl=document.getElementById("sl");
+/* ══ 夾擠器 ══ */
+const sl=$("sl");
 function squeeze(){
   const n=+sl.value, lo=Math.floor(Math.sqrt(n)), hi=lo+1;
   const l2=lo*lo, h2=hi*hi;
   const t=(n-l2)/(h2-l2);
   const x=20+t*280;
-  document.getElementById("vN").textContent=n;
-  document.getElementById("vR").textContent=(n===l2)?("= "+lo):(lo+" ~ "+hi);
-  document.getElementById("loLab").textContent=lo;
-  document.getElementById("hiLab").textContent=hi;
-  document.getElementById("loSq").textContent=lo+"²="+l2;
-  document.getElementById("hiSq").textContent=hi+"²="+h2;
-  document.getElementById("dot").setAttribute("cx",x.toFixed(1));
-  document.getElementById("dotLab").setAttribute("x",x.toFixed(1));
-  document.getElementById("dotLab").textContent=n;
-  const v=document.getElementById("labv");
+  $("vN").textContent=n;
+  $("vR").textContent=(n===l2)?("= "+lo):(lo+" ~ "+hi);
+  $("loLab").textContent=lo; $("hiLab").textContent=hi;
+  $("loSq").textContent=lo+"²="+l2; $("hiSq").textContent=hi+"²="+h2;
+  $("dot").setAttribute("cx",x.toFixed(1));
+  $("dotLab").setAttribute("x",x.toFixed(1));
+  $("dotLab").textContent=n;
+  const v=$("labv");
   if(n===l2){
     v.className="verdict good";
     v.innerHTML="<strong>"+n+" 剛好是完全平方數</strong>（"+lo+"²），所以 √"+n+" ＝ "+lo+"，整整齊齊。這種數不用夾。";
@@ -586,60 +755,60 @@ function squeeze(){
 sl.addEventListener("input",squeeze);
 squeeze();
 
-/* ── 平方表 ── */
-const sqg=document.getElementById("sqgrid");
+/* ══ 平方表（課本列到 25²） ══ */
 let html="";
-for(let i=1;i<=30;i++) html+='<div class="sq" data-i="'+i+'"><b>'+i+'²</b>'+(i*i)+'</div>';
-sqg.innerHTML=html;
-sqg.addEventListener("click",e=>{
+for(let i=1;i<=25;i++) html+='<div class="sq" data-i="'+i+'"><b>'+i+'²</b>'+(i*i)+'</div>';
+$("sqgrid").innerHTML=html;
+$("sqgrid").addEventListener("click",e=>{
   const el=e.target.closest(".sq"); if(!el)return;
   const i=+el.dataset.i;
   document.querySelectorAll(".sq").forEach(s=>s.classList.toggle("on",+s.dataset.i===i||+s.dataset.i===i+1));
-  const v=document.getElementById("sqv");
-  if(i<30){
+  const v=$("sqv");
+  if(i<25){
     v.className="verdict";
     v.innerHTML="<strong>"+(i*i)+" 到 "+((i+1)*(i+1))+"</strong> 之間的任何數，開根號都落在 <strong>"+i+" 和 "+(i+1)+"</strong> 之間。<br>例如 √"+(i*i+1)+"、√"+Math.floor((i*i+(i+1)*(i+1))/2)+" ⋯⋯ 全部都是。";
   }else{
     v.className="verdict";
-    v.innerHTML="30² ＝ 900。<strong>再往上就要自己算了</strong>——用完全平方公式，例如 44² ＝ (40＋4)² ＝ 1936。";
+    v.innerHTML="25² ＝ 625，這是課本表格的最後一格。<strong>再往上就要自己算了</strong>——用上一課的完全平方公式，例如 44² ＝ (40＋4)² ＝ 1936。";
   }
 });
 
-/* ── 巴比倫迭代 ── */
+/* ══ 巴比倫迭代 ══ */
 const TARGET=2022;
-let guesses=[100], itRow=0;
+let guesses=[100];
 function babylon(){
-  const box=document.getElementById("iter");
   const lines=guesses.map((g,i)=>{
     const err=Math.abs(g-Math.sqrt(TARGET));
     return '<span class="ir">第 '+i+' 次猜測：<b>'+g.toFixed(i===0?0:8)+'</b>'+
       (i>0?'　誤差 '+(err<1e-9?"＜0.000000001":err.toFixed(9)):'　（隨便猜的）')+'</span>';
   });
-  box.innerHTML=lines.join("");
-  const v=document.getElementById("itv");
-  const n=guesses.length-1;
+  $("iter").innerHTML=lines.join("");
+  const v=$("itv"), n=guesses.length-1;
   if(n===0){v.className="verdict";v.innerHTML="從 100 開始猜——這個猜測差得很遠（正確答案大約 45）。"}
   else if(n===1){v.className="verdict";v.innerHTML="一步就從 100 掉到 "+guesses[1].toFixed(2)+"。<strong>誤差瞬間縮小了十幾倍。</strong>"}
   else if(n===2){v.className="verdict warn";v.innerHTML="第 2 次已經是 "+guesses[2].toFixed(4)+"，誤差從一開始的 55 掉到不到 2。<em>而我們只做了兩次加法和兩次除法。</em>"}
   else if(n>=3&&n<5){v.className="verdict good";v.innerHTML="第 "+n+" 次：<strong>"+guesses[n].toFixed(8)+"</strong>。<br>正確值是 44.96665⋯⋯ —— 誤差已經小到看不見了。"}
   else{v.className="verdict good";v.innerHTML="再按也不會變了——<strong>已經到了電腦能算的最多位數</strong>。<br>從一個爛猜測 100 出發，總共只花了四、五步。這是四千年前的方法。"}
-  document.getElementById("itBtn").disabled = guesses.length>7;
+  $("itBtn").disabled = guesses.length>7;
 }
-document.getElementById("itBtn").addEventListener("click",()=>{
+$("itBtn").addEventListener("click",()=>{
   const g=guesses[guesses.length-1];
-  guesses.push((g+TARGET/g)/2);
-  babylon();
+  guesses.push((g+TARGET/g)/2); babylon();
 });
-document.getElementById("itRst").addEventListener("click",()=>{guesses=[100];babylon()});
+$("itRst").addEventListener("click",()=>{guesses=[100];babylon()});
 babylon();
 
-document.querySelectorAll(".opts").forEach(box=>{
+/* ══ 還原進度 ══ */
+if(pDone>0 && pDone<PRAC.length) pi=pDone;
+else if(pDone>=PRAC.length) pi=PRAC.length-1;
+pRender();
+document.querySelectorAll(".opts[data-q]").forEach(box=>{
   const qi=box.dataset.q, saved=state["q"+qi];
   if(saved!==undefined)reveal(qi,saved,box.dataset.ans,box,false);
 });
 gate();
 
-document.getElementById("rst").addEventListener("click",()=>{
+$("rst").addEventListener("click",()=>{
   try{localStorage.removeItem(KEY)}catch(e){}
   location.reload();
 });

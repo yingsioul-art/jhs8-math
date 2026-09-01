@@ -133,6 +133,26 @@ tr:last-child td{border-bottom:none}
 .reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:9px 18px;
   border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:28px}
 footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
+
+/* ── 開始之前 ── */
+.flow{counter-reset:s;list-style:none;padding:0;margin:14px 0 0}
+.flow li{counter-increment:s;position:relative;padding:7px 0 7px 40px;font-size:15.5px;line-height:1.7}
+.flow li::before{content:counter(s);position:absolute;left:0;top:8px;width:25px;height:25px;
+  background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:12.5px;font-weight:700}
+details.pre{background:#fff;border:1px solid var(--line);border-radius:11px;margin-bottom:9px;overflow:hidden}
+details.pre summary{padding:13px 16px;cursor:pointer;font-size:16px;font-weight:600;list-style:none;
+  display:flex;align-items:center;gap:10px}
+details.pre summary::-webkit-details-marker{display:none}
+details.pre summary::before{content:"?";flex-shrink:0;width:22px;height:22px;border-radius:50%;
+  background:var(--line);color:var(--ink2);display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700}
+details.pre[open] summary::before{content:"\2713";background:var(--green);color:#fff}
+details.pre[open] summary{border-bottom:1px solid var(--line)}
+details.pre .bd{padding:14px 16px;font-size:15.5px;line-height:1.8;color:var(--ink2)}
+details.pre .bd strong{color:var(--ink)}
+details.pre .bd p{margin:0 0 10px}
+details.pre .bd p:last-child{margin:0}
 </style>
 </head>
 <body>
@@ -154,6 +174,40 @@ footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
     <span class="tag">第 1 章 CP 值最高</span>
   </div>
 </header>
+
+<!-- ══ 開始之前 ══ -->
+<section>
+  <div class="step">開始之前</div>
+  <h2>這一課只問你一件事：什麼時候該停</h2>
+
+  <p class="lead">等一下你會先看到一題會考題。<strong>那不是要考你</strong>——是想讓你先做一次。<br>這題八成的人都對，但如果你是另外兩成，問題八成不在計算。</p>
+
+  <div class="card">
+    <p style="margin:0 0 4px"><strong>這一課會這樣走：</strong></p>
+    <ol class="flow">
+      <li>先看一個「算過頭」的除法，看看會出什麼事</li>
+      <li><strong>你先算</strong>一次（算錯完全沒關係）</li>
+      <li>看看全國的考生怎麼選</li>
+      <li>按按鈕，一步一步把一題長的除法除完</li>
+      <li>這時候才把規則寫下來</li>
+      <li>會考只會問的那三種問法</li>
+      <li>最後：這個規則是兩千三百年前訂的</li>
+    </ol>
+  </div>
+
+  <h3>先確認你知道這些</h3>
+  <p>下面每一項點開來看，幾十秒就能確認。<strong>如果都很熟，直接往下開始。</strong></p>
+  <details class="pre"><summary>整數的除法：商和餘數</summary><div class="bd"><p><strong>17 ÷ 5 ＝ 3 餘 2</strong>。這裡的 <strong>3 叫做商</strong>、<strong>2 叫做餘數</strong>。</p><p>為什麼停在 2？因為 <strong>2 已經比 5 小了</strong>，不能再除。</p><p>📌 多項式除法是<em>完全一樣的道理</em>，只是「比大小」換成了「比次數」。這一課就在講這件事。</p></div></details>
+  <details class="pre"><summary>「多項式」和「次數」是什麼？</summary><div class="bd"><p><strong>多項式</strong>＝用 x 寫出來的式子，例如 <span class="eq">4x<sup>2</sup> − 3x − 5</span>。</p><p><strong>次數</strong>＝看 x 頭上最大的那個數字：</p><p>　<span class="eq">4x<sup>2</sup></span> 是<strong>二次</strong>　·　<span class="eq">3x</span> 是<strong>一次</strong>　·　<span class="eq">5</span>（沒有 x）是<strong>零次</strong></p><p>📌 整堂課的關鍵就是這個「次數」。<strong>什麼時候可以停，靠的就是比次數。</strong></p></div></details>
+  <details class="pre"><summary>直式除法怎麼寫？</summary><div class="bd"><p>就是國小做 <span class="eq">856 ÷ 4</span> 那種寫法：<strong>從最前面開始除、乘回去、減掉、把下一位帶下來</strong>，重複到不能再除。</p><p>多項式除法的動作<em>一模一樣</em>，只是把數字換成了 x 的式子。這一課有一個按鈕，會一步一步做給你看。</p></div></details>
+
+  <div class="note">
+    <p><b>三個提醒</b></p>
+    <p style="margin-top:10px">① 一開始那題有八成的人答對，但成績最低那一群只有 46.8% —— 差別不在會不會算，在知不知道何時該停。</p>
+    <p style="margin-top:8px">② 這題<strong>只需要做一次除法</strong>。難的是相信自己可以停手。</p>
+    <p style="margin-top:8px">③ 每一段要答完才解鎖下一段，不是要考你，是不想讓你跳過思考。進度會自己存著。</p>
+  </div>
+</section>
 
 <!-- ══ 0 案發 ══ -->
 <section>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>不要算，先看｜乘法公式</title>
+<title>乘法公式｜八上 1-1</title>
 <style>
 :root{
   --paper:#f8f7f4; --ink:#232026; --ink2:#57525e; --line:#dcd8e0;
@@ -26,7 +26,7 @@ h1{font-size:34px;line-height:1.3;margin:0 0 14px;letter-spacing:-.01em}
 .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
 .tag{font-size:12px;padding:4px 11px;border:1px solid var(--line);border-radius:99px;color:var(--ink2);background:#fff}
 
-.bar{position:sticky;top:0;z-index:50;background:rgba(248,247,244,.94);
+.bar{position:sticky;top:0;z-index:50;background:rgba(248,247,244,.95);
   border-bottom:1px solid var(--line);margin:0 -20px 0;padding:10px 20px}
 .bar-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:10px}
 .track{flex:1;height:5px;background:var(--line);border-radius:99px;overflow:hidden}
@@ -35,17 +35,17 @@ h1{font-size:34px;line-height:1.3;margin:0 0 14px;letter-spacing:-.01em}
 
 section{padding:44px 0;border-bottom:1px solid var(--line)}
 .step{font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.step .n{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;
+  width:20px;height:20px;line-height:20px;text-align:center;margin-right:8px;letter-spacing:0}
 h2{font-size:25px;line-height:1.4;margin:0 0 20px;letter-spacing:-.01em}
 h3{font-size:19px;margin:34px 0 12px}
+h4{font-size:16.5px;margin:24px 0 8px;color:var(--teal)}
 p{margin:0 0 18px}
 .lead{font-size:19px;line-height:1.9}
 .dim{color:var(--ink2)}
 .big{font-size:22px;font-weight:700;line-height:1.6;margin:26px 0}
 em{font-style:normal;background:linear-gradient(transparent 62%,#cfc9fb 62%);font-weight:600;padding:0 1px}
-
-/* 數學式 */
-.eq{font-family:"Cambria","Times New Roman",Georgia,serif;font-size:1.06em;
-  font-variant-numeric:tabular-nums;white-space:nowrap}
+.eq{font-family:"Cambria","Times New Roman",Georgia,serif;font-size:1.06em;font-variant-numeric:tabular-nums}
 .eq sup{font-size:.68em;vertical-align:super;line-height:0}
 .eq.blk{display:block;text-align:center;font-size:21px;margin:20px 0}
 .hl{background:#fff3c4;border-radius:3px;padding:0 3px}
@@ -60,7 +60,12 @@ em{font-style:normal;background:linear-gradient(transparent 62%,#cfc9fb 62%);fon
 .aside{background:#fdf7e8;border:1px dashed #e5d5a8;border-radius:12px;padding:16px 18px;margin:24px 0;font-size:15px;color:#5c4d20}
 .aside p:last-child{margin:0}
 
-/* 題目 */
+.fcard{background:#fff;border:2px solid var(--accent);border-radius:14px;padding:20px;margin:16px 0;box-shadow:var(--shadow)}
+.fcard .fname{font-size:13px;letter-spacing:.14em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.fcard .fbody{font-size:22px;text-align:center;margin:10px 0 14px;font-family:"Cambria",Georgia,serif}
+.fcard .fsay{font-size:15.5px;color:var(--ink2);line-height:1.75;margin:0}
+.fcard .fsay strong{color:var(--ink)}
+
 .q{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:24px;margin:26px 0;box-shadow:var(--shadow)}
 .q-src{font-size:12px;letter-spacing:.12em;color:var(--accent);font-weight:700;margin-bottom:12px}
 .q-body{font-size:16.5px;line-height:1.9;margin-bottom:20px}
@@ -81,14 +86,35 @@ em{font-style:normal;background:linear-gradient(transparent 62%,#cfc9fb 62%);fon
 .fb{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);font-size:16px;display:none}
 .fb.show{display:block;animation:rise .45s ease}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.fb h4{margin:0 0 8px;font-size:15px;letter-spacing:.06em}
+.fb h4{margin:0 0 8px;font-size:15px;letter-spacing:.06em;color:inherit}
 .fb p:last-child{margin:0}
 
 .locked-zone{opacity:.3;pointer-events:none;filter:blur(4px) saturate(.2);user-select:none}
 .revealed{animation:reveal .6s ease both}
 @keyframes reveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-/* 拆解器 */
+.prac{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:22px;margin:26px 0;box-shadow:var(--shadow)}
+.prac-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+  font-size:13px;color:var(--ink2);font-weight:600;gap:10px;flex-wrap:wrap}
+.prac-top .src{color:var(--teal);letter-spacing:.08em}
+.dots{display:flex;gap:5px;margin-bottom:16px;flex-wrap:wrap}
+.dot{width:22px;height:6px;border-radius:99px;background:var(--line);transition:background .3s}
+.dot.done{background:var(--green)}
+.dot.now{background:var(--teal)}
+.prac-q{font-size:17.5px;line-height:2;margin-bottom:8px}
+.prac-hint{font-size:14.5px;color:var(--ink2);margin-bottom:16px;line-height:1.7}
+.prac-fb{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15.5px;line-height:1.8;display:none}
+.prac-fb.show{display:block;animation:rise .3s ease}
+.prac-fb.ok{background:var(--green-soft);border:1px solid #c8dcc4}
+.prac-fb.no{background:var(--red-soft);border:1px solid #edc4c4}
+
+.btn{padding:9px 18px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+  border-radius:99px;cursor:pointer;font-size:14.5px;font-family:inherit;font-weight:600;transition:opacity .15s}
+.btn:hover{opacity:.86}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn:disabled{opacity:.35;cursor:default}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
 .lab{background:linear-gradient(#fff,#fcfbfe);border:1px solid var(--line);border-radius:16px;
   padding:22px;margin:26px 0;box-shadow:var(--shadow)}
 .lab-t{font-size:12px;letter-spacing:.18em;color:var(--teal);font-weight:700;margin-bottom:16px}
@@ -101,18 +127,11 @@ em{font-style:normal;background:linear-gradient(transparent 62%,#cfc9fb 62%);fon
 .split-row.done .dst{opacity:1}
 .split-row.same{background:var(--teal-soft);border-color:#a8d5cd}
 .split-row.diff{background:#fff8e6;border-color:#e8cf94}
-.btn{padding:9px 18px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
-  border-radius:99px;cursor:pointer;font-size:14.5px;font-family:inherit;font-weight:600;transition:opacity .15s}
-.btn:hover{opacity:.86}
-.btn.ghost{background:#fff;color:var(--accent)}
-.btn:disabled{opacity:.4;cursor:default}
-.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .verdict{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15px;line-height:1.7;
   background:var(--teal-soft);border:1px solid #c5e0db}
 .verdict.good{background:var(--green-soft);border-color:#c8dcc4}
 .verdict.warn{background:#fdf7e8;border-color:#e5d5a8}
 
-/* 練習器 */
 .drill{background:#fff;border:2px solid var(--accent);border-radius:16px;padding:24px;margin:26px 0;box-shadow:var(--shadow)}
 .drill-q{font-size:26px;text-align:center;margin:18px 0 22px;min-height:40px}
 .drill-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
@@ -137,13 +156,6 @@ tr:last-child td{border-bottom:none}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:24px -20px;padding:0 20px}
 .scroll table{margin:0;min-width:480px}
 
-.done{text-align:center;padding:52px 0 20px}
-.done h2{font-size:27px}
-.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:9px 18px;
-  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:28px}
-footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
-
-/* ── 開始之前 ── */
 .flow{counter-reset:s;list-style:none;padding:0;margin:14px 0 0}
 .flow li{counter-increment:s;position:relative;padding:7px 0 7px 40px;font-size:15.5px;line-height:1.7}
 .flow li::before{content:counter(s);position:absolute;left:0;top:8px;width:25px;height:25px;
@@ -162,12 +174,19 @@ details.pre .bd{padding:14px 16px;font-size:15.5px;line-height:1.8;color:var(--i
 details.pre .bd strong{color:var(--ink)}
 details.pre .bd p{margin:0 0 10px}
 details.pre .bd p:last-child{margin:0}
+
+.done{text-align:center;padding:52px 0 20px}
+.done h2{font-size:27px}
+.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:9px 18px;
+  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:28px}
+footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
+svg{max-width:100%;height:auto;display:block}
 </style>
 </head>
 <body>
 
 <div class="bar"><div class="bar-inner">
-  <b id="pnum">0 / 6</b>
+  <b id="pnum">0 / 14</b>
   <div class="track"><div class="fill" id="pfill"></div></div>
 </div></div>
 
@@ -175,83 +194,267 @@ details.pre .bd p:last-child{margin:0}
 
 <header>
   <div class="kicker">八年級上 · 第一章 1-1 乘法公式</div>
-  <h1>不要算，先看</h1>
-  <p class="sub">這一節不教你背乘法公式。<br>我們要練一件更難的事：在動筆之前，先看出這題根本不用算。</p>
+  <h1>乘法公式</h1>
+  <p class="sub">三條公式，一個共同的用途：<br><strong>把難算的樣子，換成好算的樣子。</strong></p>
   <div class="meta">
-    <span class="tag">會考 114-10</span>
-    <span class="tag">通過率 57.6%</span>
-    <span class="tag">鑑別度 0.60（該年最高之一）</span>
+    <span class="tag">課本 p.6–21</span>
+    <span class="tag">課本練習 8 題</span>
+    <span class="tag">會考挑戰 6 題</span>
+    <span class="tag">約 30 分鐘</span>
   </div>
 </header>
 
 <!-- ══ 開始之前 ══ -->
 <section>
   <div class="step">開始之前</div>
-  <h2>這一課不是考試，是一場破解</h2>
-
-  <p class="lead">等一下你會先看到一題會考題。<strong>那不是要考你</strong>——是想讓你先猜一次。<br>這一題如果老實算，十分鐘都算不完；但看穿它只要十秒。</p>
+  <h2>這一課會怎麼走</h2>
 
   <div class="card">
-    <p style="margin:0 0 4px"><strong>這一課會這樣走：</strong></p>
     <ol class="flow">
-      <li>先看四個很嚇人的算式，估估看硬算要多久</li>
-      <li><strong>你先猜</strong>一個答案（猜錯完全沒關係）</li>
-      <li>看看全國的考生怎麼選</li>
-      <li>把四個算式拆開，答案會自己浮出來</li>
-      <li>這時候才給公式的名字</li>
-      <li>同一招的兩種變化</li>
-      <li>練習「認出形狀」的手感</li>
-      <li>最後：這條公式是誰想出來的（可以動手剪一張紙證明）</li>
+      <li><strong>先認識這一節的三條公式</strong>（名字、式子、在做什麼）</li>
+      <li>這些公式從哪來——可以動手剪一張紙來證明</li>
+      <li><strong>用課本的例題和隨堂練習動手算</strong>（8 題，由淺入深）</li>
+      <li>重點整理：把整節收成一張表</li>
+      <li>最後才是<strong>會考挑戰</strong>——看這些公式在考場上長什麼樣子</li>
     </ol>
   </div>
 
   <h3>先確認你知道這些</h3>
-  <p>下面每一項點開來看，幾十秒就能確認。<strong>如果都很熟，直接往下開始。</strong></p>
-  <details class="pre"><summary>「平方」是什麼？</summary><div class="bd"><p><span class="eq">106<sup>2</sup></span> 讀作「106 的平方」，意思就是 <strong>106 × 106</strong>。</p><p>右上角那個小小的 2，代表「自己乘自己兩次」。</p><p>📌 這一課到處都是平方，但<strong>你一次都不用真的把它乘出來</strong>。</p></div></details>
-  <details class="pre"><summary>分配律還記得嗎？（國小學過）</summary><div class="bd"><p><strong>3 × (10 ＋ 2) ＝ 3×10 ＋ 3×2</strong> —— 括號外面的數要「分給」裡面每一個。</p><p>這一課的乘法公式，其實就是分配律用兩次的結果。</p></div></details>
-  <details class="pre"><summary>交換律是什麼？（這一課的關鍵）</summary><div class="bd"><p><strong>乘法的順序可以隨便換，答案不變。</strong></p><p>例如 2×3×5 ＝ 5×2×3 ＝ 30。</p><p>📌 這條看起來理所當然的規則，等一下會變成解開整題的鑰匙——<em>因為有三個算式其實是同一組數字換順序而已</em>。</p></div></details>
+  <details class="pre"><summary>「平方」是什麼？</summary><div class="bd">
+    <p><span class="eq">106<sup>2</sup></span> 讀作「106 的平方」，意思就是 <strong>106 × 106</strong>。</p>
+    <p>右上角那個小小的 2，代表「自己乘自己兩次」。</p>
+  </div></details>
+  <details class="pre"><summary>分配律還記得嗎？（七年級學過）</summary><div class="bd">
+    <p><strong>3 × (10 ＋ 2) ＝ 3×10 ＋ 3×2</strong> —— 括號外面的數要「分給」裡面每一個。</p>
+    <p>📌 這一節的三條公式，全部都是<strong>分配律用兩次</strong>的結果。</p>
+  </div></details>
+  <details class="pre"><summary>交換律是什麼？</summary><div class="bd">
+    <p><strong>乘法的順序可以隨便換，答案不變。</strong>例如 2×3×5 ＝ 5×2×3 ＝ 30。</p>
+    <p>📌 這條看起來理所當然的規則，到最後的會考挑戰會變成解題的鑰匙。</p>
+  </div></details>
+</section>
+
+<!-- ══ 1 公式 ══ -->
+<section>
+  <div class="step"><span class="n">1</span>這一節在教什麼</div>
+  <h2>三條公式，先把名字認熟</h2>
+
+  <p class="lead">課本 1-1 只教三條公式。它們長得很像，但用途不同。<br><strong>先看過一遍就好，等一下會一題一題練。</strong></p>
+
+  <div class="fcard">
+    <div class="fname">① 和的平方公式</div>
+    <div class="fbody">( a ＋ b )<sup>2</sup> ＝ a<sup>2</sup> ＋ <span class="hl">2ab</span> ＋ b<sup>2</sup></div>
+    <p class="fsay">兩個數<strong>相加</strong>之後再平方。<br>
+    展開後是三項，中間那項<strong>一定有個 2</strong>——這是最多人漏掉的地方。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">② 差的平方公式</div>
+    <div class="fbody">( a − b )<sup>2</sup> ＝ a<sup>2</sup> − <span class="hl">2ab</span> ＋ b<sup>2</sup></div>
+    <p class="fsay">兩個數<strong>相減</strong>之後再平方。<br>
+    中間變成減號，但<strong>最後一項還是加的</strong>——因為 (−b)×(−b) 是正的。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">③ 平方差公式</div>
+    <div class="fbody">( a ＋ b )( a − b ) ＝ a<sup>2</sup> − b<sup>2</sup></div>
+    <p class="fsay">一個加、一個減，兩個括號<strong>相乘</strong>。<br>
+    展開後只剩<strong>兩項</strong>——中間的 ab 剛好抵銷掉了。</p>
+  </div>
 
   <div class="note">
-    <p><b>三個提醒</b></p>
-    <p style="margin-top:10px">① 一開始那題全國只有 57.6% 的人答對，而且它是那年最會分人的幾題之一。</p>
-    <p style="margin-top:8px">② 這題<strong>一次乘法都不用做</strong>。如果你開始算 106×106，那就是走錯方向了。</p>
-    <p style="margin-top:8px">③ 每一段要答完才解鎖下一段，不是要考你，是不想讓你跳過思考。進度會自己存著。</p>
+    <p><b>三條公式怎麼分？看括號長什麼樣子就好：</b></p>
+    <p style="margin-top:10px">
+    <span class="eq">( )<sup>2</sup></span> 而且裡面是<strong>加</strong> → 用①<br>
+    <span class="eq">( )<sup>2</sup></span> 而且裡面是<strong>減</strong> → 用②<br>
+    <span class="eq">( ＋ )( − )</span> <strong>兩個括號相乘</strong> → 用③</p>
+  </div>
+
+  <div class="aside">
+    <p><strong>三條都可以自己推出來</strong>，不必硬背——把括號用<em>分配律</em>拆兩次就會了。例如：</p>
+    <p style="margin-top:10px" class="eq">(a−b)(a−b) ＝ a×(a−b) − b×(a−b) ＝ a<sup>2</sup>−ab−ba＋b<sup>2</sup> ＝ a<sup>2</sup>−2ab＋b<sup>2</sup></p>
+    <p style="margin-top:10px">（這就是課本 p.13「用分配律說明」在做的事。）</p>
   </div>
 </section>
 
-<!-- ══ 0 案發 ══ -->
+<!-- ══ 2 來源 ══ -->
 <section>
-  <div class="step">先估一下</div>
-  <h2>這題如果硬算，你要算幾次乘法？</h2>
+  <div class="step"><span class="n">2</span>這些公式從哪來</div>
+  <h2>在有 a 和 b 之前，它是一張紙</h2>
 
-  <p class="lead">會考數學 25 題，考試時間 80 分鐘。<strong>平均一題 3 分鐘</strong>，而且後面的題目更長。</p>
-  <p>現在看這一題：</p>
+  <p class="lead">兩千三百年前的希臘人沒有 a、沒有 b、沒有等號，連「平方」這個寫法都沒有。<br>他們只能<em>把它剪出來</em>。</p>
+
+  <div class="lab">
+    <div class="lab-t">動手 ── 用一張紙證明平方差</div>
+    <svg viewBox="-42 -34 350 268" role="img" aria-label="平方差的剪貼證明">
+      <defs>
+        <pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#c9c3d6" stroke-width="2"/>
+        </pattern>
+      </defs>
+      <rect id="ghost" x="0" y="0" width="200" height="200" fill="none" stroke="#b9b3c4"
+            stroke-width="1.2" stroke-dasharray="5 4" opacity="1"/>
+      <rect id="hole" x="125" y="125" width="75" height="75" fill="url(#hatch)"
+            stroke="#b9b3c4" stroke-width="1.2" opacity="0"/>
+      <g id="pieceA" style="transition:transform .85s cubic-bezier(.4,0,.2,1)">
+        <rect x="0" y="0" width="200" height="125" fill="#dfe7fb" stroke="#4338ca" stroke-width="1.6"/>
+        <text x="100" y="68" text-anchor="middle" font-size="13" fill="#302a70">A</text>
+      </g>
+      <g id="pieceB" style="transition:transform .85s cubic-bezier(.4,0,.2,1)">
+        <rect x="0" y="125" width="125" height="75" fill="#cfe9e2" stroke="#0f6b63" stroke-width="1.6"/>
+        <text x="62" y="168" text-anchor="middle" font-size="13" fill="#0a4a44">B</text>
+      </g>
+      <g id="lab1" font-size="12" fill="#57525e">
+        <text x="100" y="-14" text-anchor="middle">a ＝ 8</text>
+        <text x="-14" y="104" text-anchor="middle" transform="rotate(-90,-14,104)">a ＝ 8</text>
+        <text x="163" y="219" text-anchor="middle">b ＝ 3</text>
+      </g>
+      <g id="lab2" font-size="12" fill="#4338ca" opacity="0">
+        <text x="138" y="-14" text-anchor="middle">a ＋ b ＝ 11</text>
+        <text x="-14" y="66" text-anchor="middle" transform="rotate(-90,-14,66)">a − b ＝ 5</text>
+      </g>
+    </svg>
+    <div class="btnrow">
+      <button class="btn" id="geoBtn">下一步</button>
+      <button class="btn ghost" id="geoReset">重來</button>
+    </div>
+    <div class="verdict" id="geov">這是一個邊長 a 的正方形，面積 <span class="eq">a<sup>2</sup></span>。按「下一步」。</div>
+  </div>
+
+  <div class="aside">
+    <p><strong>課本也是這樣教的。</strong>課本 p.13 用「大正方形挖掉一塊 L 形」說明差的平方公式——<em>和你剛剛剪的是同一招</em>。兩千三百年前的方法，現在還印在你的課本上。</p>
+  </div>
+
+  <h3>三個時間點</h3>
 
   <div class="card">
-    <p style="margin:0 0 14px">下列算式之值，何者與其他 <strong>不相同</strong>？</p>
-    <div class="eq" style="line-height:2.4">
-      (A)　( 106<sup>2</sup> − 4<sup>2</sup> ) × ( 108<sup>2</sup> − 2<sup>2</sup> )<br>
-      (B)　( 107<sup>2</sup> − 3<sup>2</sup> ) × ( 107<sup>2</sup> − 1<sup>2</sup> )<br>
-      (C)　( 108<sup>2</sup> − 2<sup>2</sup> ) × ( 106<sup>2</sup> − 2<sup>2</sup> )<br>
-      (D)　( 109<sup>2</sup> − 1<sup>2</sup> ) × ( 105<sup>2</sup> − 1<sup>2</sup> )
-    </div>
+    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 2300 年前</p>
+    <p style="margin:0 0 6px;font-size:18px;font-weight:700">歐幾里得沒有符號可用</p>
+    <p style="margin:0">《幾何原本》第二卷處理的就是這一類問題。那時候沒有代數式，只能寫「若將一線段分為兩部分⋯⋯」再配一張圖。<br>
+    你剛剛剪的那個 L 形，希臘人有專門的名字：<strong>gnomon</strong>（磬折形）——原意是日晷上那根投影的指針。</p>
   </div>
 
-  <p>先不要想答案。先想這件事：<strong>如果你老老實實地算</strong>——</p>
+  <div class="card">
+    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 1200 年前</p>
+    <p style="margin:0 0 6px;font-size:18px;font-weight:700">algebra 的原意是「接骨」</p>
+    <p style="margin:0">九世紀的巴格達，花拉子米（al-Khwārizmī）寫了一本書，書名裡有 <strong>al-jabr</strong> 這個字，意思是<em>把斷掉的接回去、把散掉的復位</em>。<br>
+    這正是移項在做的事：式子這邊少了什麼，就從那邊搬回來。這個字後來變成 <strong>algebra</strong>（代數）。<br>
+    <span class="dim" style="font-size:14.5px">中世紀的西班牙，algebrista 這個字一度同時指「代數學家」和「接骨師」。</span></p>
+  </div>
+
+  <div class="card">
+    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 400 年前</p>
+    <p style="margin:0 0 6px;font-size:18px;font-weight:700">現在這個寫法才出現</p>
+    <p style="margin:0">用字母代表數，是韋達（Viète, 1591）開始的。<br>
+    把已知數寫成 <span class="eq">a、b、c</span>、未知數寫成 <span class="eq">x、y、z</span>，還有 <span class="eq">x<sup>2</sup></span> 這種指數寫法，是笛卡兒 1637 年定下來的慣例。</p>
+  </div>
+
   <div class="quote">
-    <p>每個選項要算 <strong>2 個三位數的平方</strong>（例如 106<sup>2</sup>＝11236），減一下，再把兩個五位數<strong>相乘</strong>。</p>
-    <p style="margin-top:10px">四個選項 ＝ 8 次平方 ＋ 4 次五位數乘法。用直式，<em>沒有十分鐘做不完</em>，而且中間錯一位就全毀。</p>
+    <p><strong>所以：這個概念 2300 歲，但它長成現在這個樣子只有 400 歲。</strong></p>
+    <p style="margin-top:10px">課本上那行 <span class="eq">a<sup>2</sup>−b<sup>2</sup>＝(a＋b)(a−b)</span> 看起來理所當然，其實是<em>人類花了兩千年才學會怎麼把它寫下來</em>的一句話。</p>
   </div>
 
-  <p class="big">出題的人不可能要你這樣做。</p>
-  <p>所以這題真正的問題不是「答案是什麼」，而是：<strong>他到底要你看出什麼？</strong></p>
+  <div class="note">
+    <p><b>最後一個故事：兩百年前的人也用這條公式偷懶。</b></p>
+    <p style="margin-top:10px">把平方差反過來用，可以得到：<span class="eq">a × b ＝ [ (a＋b)<sup>2</sup> − (a−b)<sup>2</sup> ] ÷ 4</span></p>
+    <p style="margin-top:10px">等號左邊要做<strong>一次乘法</strong>；右邊只要<em>兩次加減、查兩個平方、除以 4</em>。<br>
+    如果手上有一本印好的平方表，<strong>任何兩個數相乘都不必真的去乘</strong>。</p>
+    <p style="margin-top:10px">19 世紀真的有人出版這種書，叫<strong>四分之一平方表</strong>。工程師、天文學家靠它算了將近一百年，直到計算機普及才退休。<em>理由和你這一節學的一模一樣：平方好查，乘法難算。</em></p>
+  </div>
 </section>
 
-<!-- ══ 1 押注 ══ -->
+<!-- ══ 3 課本練習 ══ -->
 <section>
-  <div class="step">STEP 1　先押注</div>
-  <h2>猜一個。猜錯完全沒關係。</h2>
-  <p>你現在跟考場上的人擁有一樣的資訊。<span class="dim">（提示：題目說「利用乘法公式判斷」——這是出題者留給你的話。）</span></p>
+  <div class="step"><span class="n">3</span>動手練</div>
+  <h2>照課本的順序，一題一題來</h2>
+
+  <p>下面 8 題全部出自<strong>課本 1-1 的例題與隨堂練習</strong>，由淺入深。<br>
+  <span class="dim">答錯可以再選一次，選對才會進到下一題。每一題都會告訴你為什麼。</span></p>
+
+  <div class="prac">
+    <div class="prac-top">
+      <span class="src" id="pSrc">課本 例 1</span>
+      <span id="pNo">第 1 題 / 共 8 題</span>
+    </div>
+    <div class="dots" id="pDots"></div>
+    <div class="prac-q" id="pQ"></div>
+    <div class="prac-hint" id="pHint"></div>
+    <div class="opts" id="pOpts"></div>
+    <div class="prac-fb" id="pFb"></div>
+    <div class="btnrow" style="justify-content:flex-end">
+      <button class="btn" id="pNext" disabled>下一題</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 4 重點整理 ══ -->
+<section class="locked-zone" id="z4">
+  <div class="step"><span class="n">4</span>重點整理</div>
+  <h2>整節 1-1 收成一張表</h2>
+
+  <p>照課本的小節順序排。<strong>複習的時候只要看這一張。</strong></p>
+
+  <h4>先備知識（七年級學過的）</h4>
+  <div class="scroll">
+  <table>
+    <tr><th>名稱</th><th>內容</th><th>在這一節哪裡用到</th></tr>
+    <tr><td><b>分配律</b></td><td class="eq">a(b＋c) ＝ ab ＋ ac<br>a(b−c) ＝ ab − ac</td><td>三條乘法公式全部由它推出來</td></tr>
+    <tr><td><b>交換律</b></td><td>乘法順序可換，答案不變</td><td>會考挑戰第一題的關鍵</td></tr>
+    <tr><td><b>平方</b></td><td class="eq">a<sup>2</sup> ＝ a × a</td><td>整節都在用</td></tr>
+  </table>
+  </div>
+
+  <h4>主題 1　分配律（課本 p.6–9）</h4>
+  <div class="scroll">
+  <table>
+    <tr><th>要點</th><th>說明</th></tr>
+    <tr><td>用面積理解</td><td>長 a、寬 (b＋c) 的長方形，可以切成兩塊：<span class="eq">ab</span> 和 <span class="eq">ac</span></td></tr>
+    <tr><td><b>拆數字來算</b></td><td>看到 <span class="eq">99×501</span>，把 99 拆成 <span class="eq">100−1</span>、501 拆成 <span class="eq">500＋1</span></td></tr>
+    <tr><td>怎麼拆最好</td><td><strong>拆成整百、整千</strong>，剩下的數字越小越好算</td></tr>
+  </table>
+  </div>
+
+  <h4>主題 2　乘法公式（課本 p.10–21）</h4>
+  <div class="scroll">
+  <table>
+    <tr><th>公式</th><th>式子</th><th>反過來用</th><th>什麼時候用</th></tr>
+    <tr><td><b>和的平方</b></td><td class="eq">(a＋b)<sup>2</sup>＝a<sup>2</sup>＋2ab＋b<sup>2</sup></td>
+        <td class="eq">a<sup>2</sup>＋2ab＋b<sup>2</sup><br>＝(a＋b)<sup>2</sup></td><td>算 504<sup>2</sup> 這種接近整百的平方</td></tr>
+    <tr><td><b>差的平方</b></td><td class="eq">(a−b)<sup>2</sup>＝a<sup>2</sup>−2ab＋b<sup>2</sup></td>
+        <td class="eq">a<sup>2</sup>−2ab＋b<sup>2</sup><br>＝(a−b)<sup>2</sup></td><td>算 93<sup>2</sup>−2×93×3＋3<sup>2</sup> 這種一長串</td></tr>
+    <tr><td><b>平方差</b></td><td class="eq">(a＋b)(a−b)＝a<sup>2</sup>−b<sup>2</sup></td>
+        <td class="eq">a<sup>2</sup>−b<sup>2</sup><br>＝(a＋b)(a−b)</td><td>算 203×197、655<sup>2</sup>−345<sup>2</sup></td></tr>
+  </table>
+  </div>
+
+  <div class="note">
+    <p><b>三個最容易錯的地方</b></p>
+    <p style="margin-top:10px">① <strong>中間那項的 2 不見了</strong>：<span class="eq">(a＋b)<sup>2</sup></span> 不等於 <span class="eq">a<sup>2</sup>＋b<sup>2</sup></span>，會多一個 <span class="eq">2ab</span>。</p>
+    <p style="margin-top:8px">② <strong>差的平方，最後一項寫成減</strong>：<span class="eq">(a−b)<sup>2</sup></span> 的末項是 <strong>＋b<sup>2</sup></strong>，因為負負得正。</p>
+    <p style="margin-top:8px">③ <strong>平方差和差的平方搞混</strong>：<span class="eq">(a＋b)(a−b)</span> 是兩個括號相乘（答案兩項）；<span class="eq">(a−b)<sup>2</sup></span> 是一個括號平方（答案三項）。</p>
+  </div>
+
+  <div class="aside">
+    <p><strong>一句話帶走這一節：</strong>這三條公式不是拿來「展開」的，是拿來<em>把難算的樣子換成好算的樣子</em>。</p>
+  </div>
+</section>
+
+<!-- ══ 5 會考挑戰 ══ -->
+<section class="locked-zone" id="z5">
+  <div class="step"><span class="n">5</span>會考挑戰</div>
+  <h2>同樣三條公式，在考場上長這樣</h2>
+
+  <p class="lead">課本題目會告訴你「用平方差公式計算」。<br><strong>會考不會。</strong>它只給你四個算式，要你自己看出該用哪一條。</p>
+
+  <div class="note">
+    <p><b>接下來三題全部是歷年會考真題。</b></p>
+    <p style="margin-top:10px">先說清楚：<strong>這不是要考你</strong>。你剛剛已經把公式練過一輪了，現在只是去看看同樣的東西在考場上長什麼樣。</p>
+    <p style="margin-top:10px">而且第一題全國只有 57.6% 的人答對——<em>答錯很正常，我們會一起看全國的人怎麼想</em>。</p>
+  </div>
+
+  <h3>挑戰一：四個算式，哪一個不一樣</h3>
+  <p>先估一下：如果老實算，每個選項要算 <strong>2 個三位數的平方</strong>，減一下，再把兩個五位數<strong>相乘</strong>。四個選項就是 8 次平方＋4 次大乘法——<em>十分鐘都做不完</em>。</p>
+  <p>所以這題一定有捷徑。<strong>先猜一個，猜錯完全沒關係。</strong></p>
 
   <div class="q" id="q0">
     <div class="q-src">114 年會考數學科 第 10 題（原題）</div>
@@ -264,38 +467,17 @@ details.pre .bd p:last-child{margin:0}
     </div>
     <div class="fb" id="fb0"></div>
   </div>
-</section>
 
-<!-- ══ 2 全台 ══ -->
-<section class="locked-zone" id="z2">
-  <div class="step">STEP 2　全國怎麼選</div>
-  <h2>這是那年鑑別度最高的幾題之一</h2>
-
+  <div class="locked-zone" id="z5b">
   <div class="card">
     <div class="dist" id="dist"></div>
     <p class="dim" style="font-size:14px;margin:14px 0 0">
       資料：國家教育研究院 114 年會考數學科官方試題分析（通過率 0.5764、鑑別度 0.60）。
-    <br><span style="color:var(--ink2)">「鑑別度」是官方算出來的一個數字：<strong>越高，代表這題越能分出「真的懂」和「只是猜對」的人</strong>。</span></p>
+      <br><span style="color:var(--ink2)">「鑑別度」是官方算出來的一個數字：<strong>越高，代表這題越能分出「真的懂」和「只是猜對」的人</strong>。</span>
+    </p>
   </div>
 
-  <div class="note">
-    <p><b>「鑑別度 0.60」是什麼意思？</b></p>
-    <p style="margin-top:10px">它衡量的是：這題能不能<em>分出真的懂和不懂的人</em>。0.60 已經非常高——代表答對的幾乎都是真的看懂了，答錯的是真的沒看出來，<strong>幾乎沒有人是猜對的</strong>。</p>
-    <p style="margin-top:10px">換句話說，這題沒有僥倖空間。但它的門檻不是計算能力，是<strong>一個念頭</strong>——而那個念頭，等一下你就會有。</p>
-  </div>
-
-  <p>接下來我不會告訴你答案。我們把四個選項<strong>拆開</strong>，答案會自己浮出來。</p>
-</section>
-
-<!-- ══ 3 拆解器 ══ -->
-<section class="locked-zone" id="z3">
-  <div class="step">STEP 3　拆開它</div>
-  <h2>平方差公式的用途，是「改寫」不是「計算」</h2>
-
-  <p>先看最小的零件。<span class="eq">106<sup>2</sup> − 4<sup>2</sup></span> 這種「<strong>平方減平方</strong>」的形狀，可以改寫成兩個數相乘：</p>
-  <div class="eq blk">106<sup>2</sup> − 4<sup>2</sup> ＝ (106＋4) × (106−4) ＝ <span class="hl">110 × 102</span></div>
-  <p>注意這裡發生了什麼：<strong>三位數的平方消失了</strong>。11236 這種數字根本不用出現，我們直接跳到 110×102。</p>
-  <p>現在把四個選項<em>全部</em>這樣拆一次。按按鈕，一個一個來。</p>
+  <p>與其我告訴你答案，不如把四個選項<strong>用你剛練過的平方差拆開</strong>——答案會自己浮出來。</p>
 
   <div class="lab">
     <div class="lab-t">拆解器 ── 把每個括號換成兩數相乘</div>
@@ -308,7 +490,6 @@ details.pre .bd p:last-child{margin:0}
     <div class="verdict" id="splitv">按「拆下一個」，一次看一個選項。</div>
   </div>
 
-  <div class="locked-zone" id="z3b">
   <div class="q" id="q1">
     <div class="q-body">四個都拆完了。現在看 B、C、D 三行的<strong>四個因數</strong>，你發現了什麼？</div>
     <div class="opts" data-q="1" data-ans="C">
@@ -320,52 +501,22 @@ details.pre .bd p:last-child{margin:0}
     <div class="fb" id="fb1"></div>
   </div>
   </div>
-</section>
 
-<!-- ══ 4 命名 ══ -->
-<section class="locked-zone" id="z4">
-  <div class="step">STEP 4　現在才輪到公式</div>
-  <h2>你剛剛用的，叫平方差公式</h2>
-
-  <div class="card">
-    <div class="eq blk" style="margin:6px 0 14px">a<sup>2</sup> − b<sup>2</sup> ＝ (a＋b)(a−b)</div>
-    <p style="margin:0">課本會叫你「背起來，然後展開」。但這題告訴你它真正的用法是<strong>反過來</strong>——<em>把難算的形狀，換成好比較的形狀</em>。</p>
-  </div>
-
-  <div class="note">
-    <p><b>整題的關鍵只有一句話：</b></p>
-    <p style="margin-top:10px;font-size:18px"><strong>乘法有交換律，所以四個數字一樣、順序不同，積就一樣。</strong></p>
-    <p style="margin-top:10px">B、C、D 拆完都是 <span class="eq hl2">104 × 106 × 108 × 110</span>，順序不同而已。<br>
-    A 拆完是 <span class="eq" style="background:#fff3c4;border-radius:3px;padding:0 3px">102 × 106 × 110 × 110</span>——<strong>有兩個 110、還混進一個 102</strong>，跟其他三個不是同一組。</p>
+  <div class="locked-zone" id="z5c">
+  <div class="quote">
+    <p><strong>整題的關鍵只有一句話：</strong></p>
+    <p style="margin-top:10px;font-size:18px">乘法有交換律，所以四個數字一樣、順序不同，積就一樣。</p>
+    <p style="margin-top:10px">B、C、D 拆完都是 <span class="eq hl2">104 × 106 × 108 × 110</span>。<br>
+    A 拆完是 <span class="eq hl">102 × 106 × 110 × 110</span>——<strong>有兩個 110、還混進一個 102</strong>。</p>
     <p style="margin-top:10px">所以答案是 <strong>A</strong>。整題從頭到尾，<em>一次乘法都沒做</em>。</p>
   </div>
 
-  <h3>那 18.65% 選 D 的人，在想什麼？</h3>
-  <p>D 是 <span class="eq">(109<sup>2</sup>−1<sup>2</sup>) × (105<sup>2</sup>−1<sup>2</sup>)</span>，長得最特別——兩個括號都減 1<sup>2</sup>，而且 109 和 105 是唯二出現的奇數。</p>
-  <div class="quote">
-    <p><strong>「看起來最不一樣」和「值不一樣」是兩件事。</strong></p>
-    <p style="margin-top:10px">D 的外表最突出，拆開後卻最平凡（110×108×106×104）。A 的外表最普通（106、108，跟 C 一樣的數字），拆開後才發現它藏了兩個 110。</p>
-    <p style="margin-top:10px"><em>這就是為什麼要拆。外表會騙人，因數不會。</em></p>
-  </div>
-
-  <div class="aside">
-    <p><strong>順手想一個：</strong>如果把 (A) 改成 <span class="eq">(106<sup>2</sup>−4<sup>2</sup>) × (108<sup>2</sup>−4<sup>2</sup>)</span>，它會變成和 B、C、D 一樣嗎？<br>
-    （拆開看看：110×102×112×104⋯⋯數字對不上。改動任何一個，整組就散了。）</p>
-  </div>
-</section>
-
-<!-- ══ 5 變形 ══ -->
-<section class="locked-zone" id="z5">
-  <div class="step">STEP 5　同一招的兩種變形</div>
-  <h2>換一個年份，換一個問法，還是同一件事</h2>
-
-  <h3>變形一：104 年——比大小</h3>
-  <p>這題乍看更兇：<strong>每個選項的前面還多乘了一個數</strong>。</p>
+  <h3>挑戰二：104 年——比大小</h3>
+  <p>這題乍看更兇：<strong>每個選項前面還多乘了一個數</strong>。<span class="dim">（提示：25×13<sup>2</sup> 可以看成什麼的平方？）</span></p>
 
   <div class="q" id="q2">
     <div class="q-src">104 年會考數學科 第 16 題（原題）</div>
-    <div class="q-body">判斷下列各式的值，何者<strong>最大</strong>？<br>
-      <span class="dim" style="font-size:15px">（提示：25×13<sup>2</sup> 可以看成什麼的平方？）</span>
+    <div class="q-body">判斷下列各式的值，何者<strong>最大</strong>？
       <div class="eq" style="line-height:2.4;margin-top:12px">
         (A)　25 × 13<sup>2</sup> − 15<sup>2</sup>　　(B)　16 × 17<sup>2</sup> − 18<sup>2</sup><br>
         (C)　9 × 21<sup>2</sup> − 13<sup>2</sup>　　(D)　4 × 31<sup>2</sup> − 12<sup>2</sup>
@@ -379,10 +530,11 @@ details.pre .bd p:last-child{margin:0}
     </div>
     <div class="fb" id="fb2"></div>
   </div>
+  </div>
 
-  <div class="locked-zone" id="z5b">
+  <div class="locked-zone" id="z5d">
   <div class="lab">
-    <div class="lab-t">拆解器 II ── 藏在 104-16 裡的巧合</div>
+    <div class="lab-t">四行並排 ── 藏在 104-16 裡的巧合</div>
     <p style="margin:0 0 14px;font-size:15.5px">關鍵第一步：<span class="eq">25×13<sup>2</sup> ＝ 5<sup>2</sup>×13<sup>2</sup> ＝ (5×13)<sup>2</sup> ＝ 65<sup>2</sup></span>。前面那個數<strong>本來就是個平方數</strong>，可以吸進去。</p>
     <div class="scroll">
     <table>
@@ -394,22 +546,13 @@ details.pre .bd p:last-child{margin:0}
     </table>
     </div>
     <div class="verdict good">
-      <strong>四行的第二個因數全都是 50。</strong>（65−15、68−18、63−13、62−12 —— 全部差 50，這是出題者設計好的。）<br>
+      <strong>四行的第二個因數全都是 50。</strong>（65−15、68−18、63−13、62−12 —— 全部差 50，這是出題老師設計好的。）<br>
       既然都乘 50，就只要比第一個因數：<strong>86 最大 → 選 B</strong>。連 4300 都不用算出來。
     </div>
   </div>
 
-  <div class="aside">
-    <p><strong>對照一下課本詳解的做法：</strong>「(A) 25×13<sup>2</sup>−15<sup>2</sup>＝4225−225＝4000；(B)＝4624−324＝4300⋯⋯」——硬算八個數，答案一樣對。</p>
-    <p style="margin-top:10px">兩條路都能到終點，但一條要三分鐘且容易算錯，另一條只要看出「全部差 50」。<em>會考真正在篩的，是你走哪一條。</em></p>
-  </div>
-  </div>
-
-  <h3 class="locked-zone" id="z5c">變形二：110 年——差一個 2 就不成立</h3>
-  <div class="locked-zone" id="z5c2">
-  <p>這題換成另一條公式：<strong>完全平方</strong>。</p>
-  <div class="eq blk">(a＋b)<sup>2</sup> ＝ a<sup>2</sup> ＋ <span class="hl">2ab</span> ＋ b<sup>2</sup></div>
-  <p>中間那項<strong>一定有個 2</strong>。出題者就在這個 2 上面設陷阱。</p>
+  <h3>挑戰三：110 年——差一個 2 就不成立</h3>
+  <p>這題換成<strong>完全平方</strong>。你在課本練習第 7 題已經做過同樣的判斷了——現在看看會考怎麼問。</p>
 
   <div class="q" id="q3">
     <div class="q-src">110 年會考數學科 第 8 題（原題）</div>
@@ -430,15 +573,10 @@ details.pre .bd p:last-child{margin:0}
     <div class="fb" id="fb3"></div>
   </div>
   </div>
-</section>
 
-<!-- ══ 6 練習器 ══ -->
-<section class="locked-zone" id="z6">
-  <div class="step">STEP 6　練手感</div>
-  <h2>認出形狀，比會算重要</h2>
-
-  <p>到這裡為止，你已經知道<strong>怎麼拆</strong>。剩下的是速度——在考場上，你只有幾秒鐘可以決定「這題要不要用公式」。</p>
-  <p>下面每按一次會給你一個新算式。<strong>只要判斷它是哪一種形狀</strong>，不要算出答案。</p>
+  <div class="locked-zone" id="z5e">
+  <h3>最後：練認形狀的手感</h3>
+  <p>在考場上，你只有幾秒鐘決定「這題要不要用公式」。下面每按一次會給一個新算式，<strong>只要判斷它是哪一種形狀</strong>，不要算出答案。</p>
 
   <div class="drill">
     <p style="margin:0;font-size:14px;color:var(--ink2);letter-spacing:.1em">這個算式屬於哪一種？</p>
@@ -453,17 +591,8 @@ details.pre .bd p:last-child{margin:0}
     <div class="btnrow" style="justify-content:center"><button class="btn" id="dnext">下一題</button></div>
   </div>
 
-  <div class="note">
-    <p><b>三種形狀的辨認法（記這個就夠）：</b></p>
-    <p style="margin-top:10px">
-      <strong>平方差</strong>：兩項，中間是<em>減號</em>，兩項都是平方 → <span class="eq">a<sup>2</sup>−b<sup>2</sup></span><br>
-      <strong>完全平方</strong>：三項，頭尾是平方且<em>都是正的</em>，中間有<em>2倍</em> → <span class="eq">a<sup>2</sup>±2ab＋b<sup>2</sup></span><br>
-      <strong>都不是</strong>：兩項相加（<span class="eq">a<sup>2</sup>＋b<sup>2</sup></span> 拆不開）、中間少了 2、或末項是負的
-    </p>
-  </div>
-
   <div class="q" id="q4">
-    <div class="q-body">最後一題，回到最根本的地方：為什麼 <span class="eq">a<sup>2</sup> ＋ b<sup>2</sup></span> 不能像 <span class="eq">a<sup>2</sup> − b<sup>2</sup></span> 那樣拆成兩個括號相乘？</div>
+    <div class="q-body">為什麼 <span class="eq">a<sup>2</sup> ＋ b<sup>2</sup></span> 不能像 <span class="eq">a<sup>2</sup> − b<sup>2</sup></span> 那樣拆成兩個括號相乘？</div>
     <div class="opts" data-q="4" data-ans="B">
       <button class="opt" data-k="A"><span class="k">A</span><span>因為課本沒有教這條公式</span></button>
       <button class="opt" data-k="B"><span class="k">B</span><span>因為 (a＋b)(a＋b) 展開會多出 2ab，補不掉</span></button>
@@ -472,99 +601,9 @@ details.pre .bd p:last-child{margin:0}
     </div>
     <div class="fb" id="fb4"></div>
   </div>
-</section>
-
-<!-- ══ 7 來源 ══ -->
-<section class="locked-zone" id="z7">
-  <div class="step">STEP 7　這條公式從哪裡來</div>
-  <h2>在有 a 和 b 之前，它是一張紙</h2>
-
-  <p class="lead">你今天用了一整節的 <span class="eq">a<sup>2</sup> − b<sup>2</sup> ＝ (a＋b)(a−b)</span>。<br>
-  現在問一個課本不會問的問題：<strong>當初的人怎麼知道它是對的？</strong></p>
-
-  <p>兩千三百年前的希臘人沒有 a、沒有 b、沒有等號，連「平方」這個寫法都沒有。他們只能<em>把它剪出來</em>。</p>
-
-  <div class="lab">
-    <div class="lab-t">動手 ── 用一張紙證明平方差</div>
-    <svg viewBox="-42 -34 350 268" role="img" aria-label="平方差的剪貼證明">
-      <defs>
-        <pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="0" y2="6" stroke="#c9c3d6" stroke-width="2"/>
-        </pattern>
-      </defs>
-      <!-- 原正方形外框（挖掉後留下的虛線） -->
-      <rect id="ghost" x="0" y="0" width="200" height="200" fill="none" stroke="#b9b3c4"
-            stroke-width="1.2" stroke-dasharray="5 4" opacity="1"/>
-      <!-- 被挖掉的小正方形 -->
-      <rect id="hole" x="125" y="125" width="75" height="75" fill="url(#hatch)"
-            stroke="#b9b3c4" stroke-width="1.2" opacity="0"/>
-      <!-- A 塊：上方 a × (a-b) -->
-      <g id="pieceA" style="transition:transform .85s cubic-bezier(.4,0,.2,1)">
-        <rect x="0" y="0" width="200" height="125" fill="#dfe7fb" stroke="#4338ca" stroke-width="1.6"/>
-        <text x="100" y="68" text-anchor="middle" font-size="13" fill="#302a70">A</text>
-      </g>
-      <!-- B 塊：左下 (a-b) × b -->
-      <g id="pieceB" style="transition:transform .85s cubic-bezier(.4,0,.2,1)">
-        <rect x="0" y="125" width="125" height="75" fill="#cfe9e2" stroke="#0f6b63" stroke-width="1.6"/>
-        <text x="62" y="168" text-anchor="middle" font-size="13" fill="#0a4a44">B</text>
-      </g>
-      <!-- 標註 -->
-      <g id="lab1" font-size="12" fill="#57525e">
-        <text x="100" y="-14" text-anchor="middle">a ＝ 8</text>
-        <text x="-14" y="104" text-anchor="middle" transform="rotate(-90,-14,104)">a ＝ 8</text>
-        <text x="163" y="219" text-anchor="middle">b ＝ 3</text>
-      </g>
-      <g id="lab2" font-size="12" fill="#4338ca" opacity="0">
-        <text x="138" y="-14" text-anchor="middle">a ＋ b ＝ 11</text>
-        <text x="-14" y="66" text-anchor="middle" transform="rotate(-90,-14,66)">a − b ＝ 5</text>
-      </g>
-    </svg>
-    <div class="btnrow">
-      <button class="btn" id="geoBtn">下一步</button>
-      <button class="btn ghost" id="geoReset">重來</button>
-    </div>
-    <div class="verdict" id="geov">這是一個邊長 a 的正方形，面積 <span class="eq">a<sup>2</sup></span>。按「下一步」。</div>
-  </div>
-
-  <div class="locked-zone" id="z7b">
-  <h3>三個時間點</h3>
-
-  <div class="card">
-    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 2300 年前</p>
-    <p style="margin:0 0 6px;font-size:18px;font-weight:700">歐幾里得沒有符號可用</p>
-    <p style="margin:0">《幾何原本》第二卷處理的就是這一類問題。那時候沒有代數式，只能寫「若將一線段分為兩部分⋯⋯」再配一張圖。<br>
-    你剛剛剪的那個 L 形，希臘人有專門的名字：<strong>gnomon</strong>（磬折形）——原意是日晷上那根投影的指針。</p>
-  </div>
-
-  <div class="card">
-    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 1200 年前</p>
-    <p style="margin:0 0 6px;font-size:18px;font-weight:700">algebra 的原意是「接骨」</p>
-    <p style="margin:0">九世紀的巴格達，花拉子米（al-Khwārizmī）寫了一本書，書名裡有 <strong>al-jabr</strong> 這個字，意思是<em>把斷掉的接回去、把散掉的復位</em>。<br>
-    這正是移項在做的事：式子這邊少了什麼，就從那邊搬回來。這個字後來變成 <strong>algebra</strong>（代數）。<br>
-    <span class="dim" style="font-size:14.5px">中世紀的西班牙，algebrista 這個字一度同時指「代數學家」和「接骨師」——兩種人做的是同一件事。</span></p>
-  </div>
-
-  <div class="card">
-    <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:var(--accent)">約 400 年前</p>
-    <p style="margin:0 0 6px;font-size:18px;font-weight:700">現在這個寫法才出現</p>
-    <p style="margin:0">用字母代表數，是韋達（Viète, 1591）開始的；把已知數寫成 <span class="eq">a、b、c</span>、未知數寫成 <span class="eq">x、y、z</span>，還有 <span class="eq">x<sup>2</sup></span> 這種指數寫法，是笛卡兒 1637 年定下來的慣例。</p>
-  </div>
-
-  <div class="quote">
-    <p><strong>所以：這個概念 2300 歲，但它長成現在這個樣子只有 400 歲。</strong></p>
-    <p style="margin-top:10px">課本上那行 <span class="eq">a<sup>2</sup>−b<sup>2</sup>＝(a＋b)(a−b)</span> 看起來理所當然，其實是<em>人類花了兩千年才學會怎麼把它寫下來</em>的一句話。<br>
-    在那之前，它一直是一張被剪開又拼起來的紙。</p>
-  </div>
-  </div>
-
-  <div class="locked-zone" id="z7c">
-  <h3>最後一個故事：兩百年前的人也在偷懶</h3>
-
-  <p>這條公式在歷史上<strong>最實用的用途，是拿來躲開乘法</strong>。</p>
-  <p>因為只要把 <span class="eq">(a＋b)</span> 和 <span class="eq">(a−b)</span> 各自當成一個整體，就會得到一條很有用的式子。先自己看一次：</p>
 
   <div class="q" id="q5">
-    <div class="q-body"><span class="eq">(a＋b)<sup>2</sup> − (a−b)<sup>2</sup></span> ＝ ？<br>
+    <div class="q-body">把 <span class="eq">(a＋b)</span> 和 <span class="eq">(a−b)</span> 各當成<strong>一整個東西</strong>，那 <span class="eq">(a＋b)<sup>2</sup> − (a−b)<sup>2</sup></span> ＝ ？
       <span class="dim" style="font-size:15px">（提示：不要展開。這整串本身就是「某個東西的平方，減某個東西的平方」。）</span>
     </div>
     <div class="opts" data-q="5" data-ans="A">
@@ -575,38 +614,23 @@ details.pre .bd p:last-child{margin:0}
     </div>
     <div class="fb" id="fb5"></div>
   </div>
-
-  <div class="locked-zone" id="z7d">
-  <p>把它反過來寫，就是兩百年前工程師的救命工具：</p>
-  <div class="eq blk">a × b ＝ [ (a＋b)<sup>2</sup> − (a−b)<sup>2</sup> ] ÷ 4</div>
-
-  <div class="note">
-    <p><b>看懂這條式子在說什麼：</b>等號左邊要做<strong>一次乘法</strong>；右邊只要做<em>兩次加減、查兩個平方、除以 4</em>。</p>
-    <p style="margin-top:10px">如果你手上有一本印好的平方表，那麼<strong>任何兩個數相乘，你都不必真的去乘</strong>。</p>
-    <p style="margin-top:10px">19 世紀真的有人出版這種書，叫<strong>四分之一平方表</strong>（quarter-square table）。工程師、天文學家、會計員靠它算了將近一百年，直到計算機普及才退休。</p>
-  </div>
-
-  <div class="quote">
-    <p><strong>他們的理由，和你今天做這一節的理由一模一樣：</strong></p>
-    <p style="margin-top:10px;font-size:18px"><em>平方好查，乘法難算。所以先換個形狀，再動手。</em></p>
-  </div>
-  </div>
   </div>
 </section>
 
 <!-- ══ 收束 ══ -->
-<section class="locked-zone" id="z8">
+<section class="locked-zone" id="z6">
   <div class="done">
-    <div class="step">結案</div>
+    <div class="step">這一課結束</div>
     <h2>公式不是用來算的，是用來換形狀的</h2>
-    <p style="text-align:left">今天這三題，<strong>沒有一題需要你把答案乘出來</strong>。114-10 只要看因數是不是同一組；104-16 只要發現全部差 50；110-08 只要檢查中間有沒有那個 2。</p>
-    <p style="text-align:left">而這不是現代人發明的偷懶方式。歐幾里得用剪刀證明它、花拉子米拿它解方程、19 世紀的工程師靠它躲開乘法——<strong>兩千三百年來，這條公式一直在做同一件事：把難算的形狀，換成好算的形狀。</strong></p>
+    <p style="text-align:left">你走完了整個 1-1：三條公式、8 題課本練習、3 題會考真題。</p>
+    <p style="text-align:left"><strong>會考那三題，沒有一題需要你把答案乘出來。</strong>114-10 只要看因數是不是同一組；104-16 只要發現全部差 50；110-08 只要檢查中間有沒有那個 2。</p>
+    <p style="text-align:left">而這不是現代人發明的偷懶方式。歐幾里得用剪刀證明它、19 世紀的工程師靠它躲開乘法——<strong>兩千三百年來，這條公式一直在做同一件事。</strong></p>
     <p style="text-align:left">如果只留一句話帶走：</p>
     <p class="big" style="text-align:left">看到大數字在平方相加減，先別動筆——先問「這是什麼形狀」。</p>
     <div style="text-align:left">
       <div class="aside">
-        <p><strong>下一課（照課本順序）：</strong><a href="division.html" style="color:var(--accent);font-weight:700">什麼時候可以停下來</a>（第 1 章 1-3 多項式除法）<br>
-        13 年考了 5 題，問法永遠是那三種：求商式、求餘式、求商加餘。<br>        而「什麼時候該收手」只有一句話：<strong>剩下的次數要比除式低</strong>。多除一步，就會冒出 <span class="eq">2/x</span> 這種東西——那已經不是多項式了。</p>
+        <p><strong>下一課（照課本順序）：</strong><a href="division.html" style="color:var(--accent);font-weight:700">多項式的乘除運算</a>（第 1 章 1-3）<br>
+        課本會先教多項式怎麼加減乘，最後教除法。而除法只有一個難點：<strong>什麼時候該停下來</strong>。</p>
       </div>
     </div>
     <button class="reset" id="rst">清除進度，重新開始</button>
@@ -614,8 +638,8 @@ details.pre .bd p:last-child{margin:0}
 </section>
 
 <footer>
-  題目、通過率、鑑別度與選項百分比引自國家教育研究院歷年國中教育會考數學科試題及官方試題分析。<br>
-  題目為原題文字重排，未使用課本內容。<br>
+  課本練習題取自八年級上冊 1-1 的例題與隨堂練習，僅使用題目的數字與問法，未複製課本文字與圖片。<br>
+  會考題目、通過率、鑑別度與選項百分比引自國家教育研究院歷年國中教育會考數學科試題及官方試題分析。<br>
   <span style="color:#a09aa8">為自學而做 · 2026</span>
 </footer>
 
@@ -624,76 +648,178 @@ details.pre .bd p:last-child{margin:0}
 <script>
 (function(){
 "use strict";
-const KEY="jhs8-math-mult-v1", TOTAL=6;
+const KEY="jhs8-multiply-v2", TOTAL=14;
 let state={};
 try{state=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){state={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+const $=(id)=>document.getElementById(id);
 
+/* ══ 課本練習 8 題 ══ */
+const PRAC=[
+ {src:"課本 例 1（分配律）",
+  q:"利用分配律計算 <b class='eq'>99 × 501</b> 的值。",
+  hint:"想法：把 99 看成 100−1、501 看成 500＋1。",
+  o:["49599","49601","50099","49500"], a:0,
+  why:"(100−1)(500＋1) ＝ 100×500 ＋ 100×1 − 1×500 − 1×1 ＝ 50000＋100−500−1 ＝ <b>49599</b>。<br>把數字拆成整百，四個小乘法就取代了一個大乘法。"},
+
+ {src:"課本 隨堂練習",
+  q:"利用分配律計算 <b class='eq'>89 × 102</b> 的值。",
+  hint:"想法：89 ＝ 90−1、102 ＝ 100＋2。（怎麼拆都行，好算就好。）",
+  o:["9078","8978","9178","9080"], a:0,
+  why:"(90−1)(100＋2) ＝ 9000 ＋ 180 − 100 − 2 ＝ <b>9078</b>。<br>驗算：89×102 ＝ 89×100 ＋ 89×2 ＝ 8900＋178 ＝ 9078 ✓"},
+
+ {src:"課本 例 2（和的平方）",
+  q:"利用和的平方公式，計算 <b class='eq'>504<sup>2</sup></b> 的值。",
+  hint:"想法：把 504 看成 500＋4，代進 (a＋b)² ＝ a²＋2ab＋b²。",
+  o:["254016","250016","254000","258016"], a:0,
+  why:"(500＋4)² ＝ 500² ＋ 2×500×4 ＋ 4² ＝ 250000 ＋ 4000 ＋ 16 ＝ <b>254016</b>。<br>注意中間那項 <b>2×500×4</b>——很多人漏掉那個 2，就會答成 250016。"},
+
+ {src:"課本 隨堂練習",
+  q:"利用和的平方公式，計算 <b class='eq'>201<sup>2</sup></b> 的值。",
+  hint:"201 ＝ 200＋1。",
+  o:["40401","40001","40201","44001"], a:0,
+  why:"(200＋1)² ＝ 40000 ＋ 2×200×1 ＋ 1 ＝ 40000＋400＋1 ＝ <b>40401</b>。<br>中間項是 400 不是 200——<b>那個 2 又出現了</b>。"},
+
+ {src:"課本 動動腦",
+  q:"課本用 500＋4 來算 504<sup>2</sup>。<br>如果改成把 504 看成 <b>498＋6</b>，答案會一樣嗎？哪一種比較好算？",
+  hint:"兩種都可以代進公式，先想想哪一步會卡住。",
+  o:["答案一樣，但 500＋4 比較好算",
+     "答案不一樣，只能拆成 500＋4",
+     "答案一樣，而且 498＋6 比較好算",
+     "504 不能拆成 498＋6"], a:0,
+  why:"兩種都對：(498＋6)² ＝ 248004 ＋ 5976 ＋ 36 ＝ <b>254016</b>，答案一樣。<br>但 498² 本身就很難算，2×498×6 也不好乘。<br><b>拆成整百（500）才是重點</b>——公式沒有規定怎麼拆，是你要挑好算的那一種。"},
+
+ {src:"課本 隨堂練習（反過來用）",
+  q:"計算 <b class='eq'>93<sup>2</sup> − 2×93×3 ＋ 3<sup>2</sup></b> 的值。",
+  hint:"這一長串本身就是某個公式展開後的樣子。把它收回去。",
+  o:["8100","8464","7921","8649"], a:0,
+  why:"這串正好是 <span class='eq'>a²−2ab＋b²</span> 的形狀（a＝93、b＝3），收回去就是 <span class='eq'>(93−3)²</span> ＝ 90² ＝ <b>8100</b>。<br><b>公式反過來用，比展開更常考。</b>"},
+
+ {src:"課本 隨堂練習（判斷對錯）",
+  q:"下面三個等式，<b>哪一個是正確的</b>？<br><span class='eq' style='line-height:2.2'>(甲) (7−2)<sup>2</sup> ＝ 7<sup>2</sup>−2<sup>2</sup><br>(乙) (8−4)<sup>2</sup> ＝ 8<sup>2</sup>−2×8×4＋4<sup>2</sup><br>(丙) (9−3)<sup>2</sup> ＝ 9<sup>2</sup>−2×9×3−3<sup>2</sup></span>",
+  hint:"對照差的平方公式：(a−b)² ＝ a² − 2ab ＋ b²。三個位置都要檢查。",
+  o:["只有乙","只有甲","只有丙","甲和丙"], a:0,
+  why:"<b>甲錯</b>：少了中間項。(7−2)²＝25，但 7²−2²＝45。<br><b>乙對</b>：三個位置都符合公式。<br><b>丙錯</b>：最後一項寫成減號，但 (a−b)² 的末項<b>一定是加的</b>（負負得正）。<br>📌 記住這個題型——會考 110 年考了幾乎一樣的東西，等一下你會遇到。"},
+
+ {src:"課本 例 4 ＋ 隨堂練習（平方差）",
+  q:"計算 <b class='eq'>655<sup>2</sup> − 345<sup>2</sup></b> 的值。",
+  hint:"平方減平方 → 想到哪一條公式？",
+  o:["310000","31000","100310","213000"], a:0,
+  why:"<span class='eq'>a²−b² ＝ (a＋b)(a−b)</span>，所以 ＝ (655＋345)(655−345) ＝ <b>1000 × 310</b> ＝ 310000。<br>如果硬算 655²＝429025、345²＝119025 再相減，要花好幾分鐘還容易錯。<br><b>這就是公式真正的用途。</b>"}
+];
+
+let pi=0, pDone=(state.prac||0);
+
+function pDots(){
+  $("pDots").innerHTML=PRAC.map((_,i)=>
+    '<span class="dot'+(i<pDone?" done":(i===pi?" now":""))+'"></span>').join("");
+}
+function pRender(){
+  const P=PRAC[pi];
+  $("pSrc").textContent=P.src;
+  $("pNo").textContent="第 "+(pi+1)+" 題 / 共 "+PRAC.length+" 題";
+  $("pQ").innerHTML=P.q;
+  $("pHint").innerHTML=P.hint;
+  pDots();
+  const solved = pi<pDone;
+  $("pOpts").innerHTML=P.o.map((t,i)=>
+    '<button class="opt'+(solved&&i===P.a?" right locked":(solved?" locked":""))+'" data-i="'+i+'">'+
+    '<span class="k">'+"ABCD"[i]+'</span><span class="eq">'+t+'</span></button>').join("");
+  const fb=$("pFb");
+  if(solved){fb.className="prac-fb show ok";fb.innerHTML="<b>答對了</b>　"+P.why;$("pNext").disabled=false}
+  else{fb.className="prac-fb";fb.innerHTML="";$("pNext").disabled=true}
+  $("pNext").textContent = pi>=PRAC.length-1 ? "完成，進入重點整理" : "下一題";
+  $("pOpts").querySelectorAll(".opt").forEach(b=>{
+    b.addEventListener("click",()=>{
+      if(b.classList.contains("locked"))return;
+      const i=+b.dataset.i, P=PRAC[pi], fb=$("pFb");
+      if(i===P.a){
+        b.classList.add("right","locked");
+        $("pOpts").querySelectorAll(".opt").forEach(x=>x.classList.add("locked"));
+        fb.className="prac-fb show ok"; fb.innerHTML="<b>答對了</b>　"+P.why;
+        if(pi>=pDone){pDone=pi+1;state.prac=pDone;save();paint();gate()}
+        $("pNext").disabled=false; pDots();
+      }else{
+        b.classList.add("wrong");
+        fb.className="prac-fb show no";
+        fb.innerHTML="<b>再想一次</b>　"+P.hint+"<br><span style='color:var(--ink2)'>選錯不扣分，直接再選一個。</span>";
+      }
+    });
+  });
+}
+$("pNext").addEventListener("click",()=>{
+  if(pi<PRAC.length-1){pi++;pRender();
+    document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"})}
+  else{unlock("z4");unlock("z5");
+    $("z4").scrollIntoView({behavior:"smooth",block:"start"})}
+});
+
+/* ══ 會考挑戰回饋 ══ */
 const FB={
  0:{ans:"A",
-  A:["答對了，而且這題沒有僥倖","<p>114 年這題通過率 57.6%、<strong>鑑別度 0.60</strong>——鑑別度這麼高，代表答對的人幾乎都是真的看出來的。</p><p>不過先別走。等一下的拆解器會確認一件事：你是<em>看出結構</em>，還是憑感覺挑了看起來最不一樣的那個。這兩者在下一題會差很多。</p>"],
-  B:["B 有 13.88% 的人選","<p>B 是 <span class='eq'>(107<sup>2</sup>−3<sup>2</sup>)(107<sup>2</sup>−1<sup>2</sup>)</span>，唯一一個<strong>兩個括號用同一個底數 107</strong> 的選項——看起來確實很特別。</p><p>但「長得特別」和「值不一樣」是兩件事。等一下拆開就會看到，107 這個數字在拆完之後<em>整個消失了</em>。</p>"],
-  C:["C 有 9.5% 的人選","<p>C 是四個選項裡最少人選的。</p><p>有意思的是：C 和 A 用的底數幾乎一樣（106、108），差別只在減的東西。這麼像的兩個，卻只有一個是答案——所以光看外表分不出來，得拆。</p>"],
-  D:["你和 18.65% 的人一樣，選了長得最不一樣的那個","<p>D 是最受歡迎的<strong>錯誤答案</strong>。理由很好懂：兩個括號都減 <span class='eq'>1<sup>2</sup></span>，而且 109、105 是唯二的奇數——它看起來就是異類。</p><p>但等一下你會看到，<strong>D 拆開之後反而最平凡</strong>。外表最突出的，內在最普通。這正是這題在考的東西。</p>"]},
+  A:["答對了，而且這題沒有僥倖","<p>114 年這題通過率 57.6%、<strong>鑑別度 0.60</strong>——鑑別度這麼高，代表答對的人幾乎都是真的看出來的。</p><p>不過先別走。等一下的拆解器會確認一件事：你是<em>看出結構</em>，還是憑感覺挑了看起來最不一樣的那個。</p>"],
+  B:["B 有 13.88% 的人選","<p>B 是唯一一個<strong>兩個括號用同一個底數 107</strong> 的選項——看起來確實很特別。</p><p>但「長得特別」和「值不一樣」是兩件事。等一下拆開就會看到，107 這個數字在拆完之後<em>整個消失了</em>。</p>"],
+  C:["C 有 9.5% 的人選","<p>C 和 A 用的底數幾乎一樣（106、108），差別只在減的東西。這麼像的兩個卻只有一個是答案——所以光看外表分不出來，得拆。</p>"],
+  D:["你和 18.65% 的人一樣，選了長得最不一樣的那個","<p>D 是最受歡迎的<strong>錯誤答案</strong>。理由很好懂：兩個括號都減 <span class='eq'>1<sup>2</sup></span>，而且 109、105 是唯二的奇數——它看起來就是異類。</p><p>但等一下你會看到，<strong>D 拆開之後反而最平凡</strong>。</p>"]},
  1:{ans:"C",
-  A:["再看一次那三行","<p>三行的因數分別是：<br>B ＝ 110、104、108、106<br>C ＝ 110、106、108、104<br>D ＝ 110、108、106、104</p><p>把它們<strong>排序</strong>看看：104、106、108、110——三行完全一樣。</p>"],
-  B:["「都有 110」不足以讓它們相等","<p>A 也有 110（而且有兩個），但 A 就不一樣。共用一個因數不代表積相同，<strong>四個因數全都要對上</strong>。</p><p>把 B、C、D 的四個數字各自排序，再比一次。</p>"],
-  C:["這就是整題的鑰匙","<p>B、C、D 拆完都是 <span class='eq hl2'>104 × 106 × 108 × 110</span>，只是順序不同。<strong>乘法有交換律，順序不影響積</strong>，所以這三個一定相等。</p><p>而 A 是 102 × 106 × 110 × 110——<em>有兩個 110，還混進一個 102</em>。它是唯一的異類。</p>"],
-  D:["和相同不代表積相同","<p>這是很常見的直覺陷阱。舉個小例子：1+9＝10、5+5＝10，但 1×9＝9、5×5＝25。<strong>和一樣，積可以差很多。</strong></p><p>回去看那三行：真正相同的不是「和」，是<em>那四個數字本身</em>。</p>"]},
+  A:["再看一次那三行","<p>把它們<strong>排序</strong>看看：104、106、108、110——三行完全一樣。</p>"],
+  B:["「都有 110」不足以讓它們相等","<p>A 也有 110（而且有兩個），但 A 就不一樣。<strong>四個因數全都要對上。</strong></p>"],
+  C:["這就是整題的鑰匙","<p>B、C、D 拆完都是 <span class='eq hl2'>104 × 106 × 108 × 110</span>，只是順序不同。<strong>乘法有交換律，順序不影響積</strong>。</p><p>而 A 是 102 × 106 × 110 × 110——<em>有兩個 110，還混進一個 102</em>。</p>"],
+  D:["和相同不代表積相同","<p>舉個小例子：1＋9＝10、5＋5＝10，但 1×9＝9、5×5＝25。<strong>和一樣，積可以差很多。</strong></p>"]},
  2:{ans:"B",
-  A:["A 是 4000","<p>拆開是 65<sup>2</sup>−15<sup>2</sup> ＝ 80×50。第一個因數 80，還有更大的。</p><p>關鍵是：四個選項拆開後<strong>第二個因數全都是 50</strong>，所以只要比第一個因數就好。</p>"],
-  B:["對，86×50＝4300 最大","<p>16×17<sup>2</sup> ＝ (4×17)<sup>2</sup> ＝ 68<sup>2</sup>，所以 B ＝ 68<sup>2</sup>−18<sup>2</sup> ＝ 86×<strong>50</strong>。</p><p>四個選項的第二個因數都是 50（這是出題者設計的），第一個因數是 80、<strong>86</strong>、76、74 —— B 最大。</p><p>你甚至不必算出 4300。</p>"],
-  C:["C 是 3800","<p>9×21<sup>2</sup> ＝ 63<sup>2</sup>，C ＝ 63<sup>2</sup>−13<sup>2</sup> ＝ 76×50。76 不是最大的。</p><p>往下捲，表格會把四行並排——你會看到一個很漂亮的巧合。</p>"],
-  D:["D 是 3700，最小的那個","<p>4×31<sup>2</sup> ＝ 62<sup>2</sup>，D ＝ 62<sup>2</sup>−12<sup>2</sup> ＝ 74×50。74 是四個裡最小的。</p><p>D 的底數 31 最大，但乘的 4 也最小——<em>前面那個係數會反過來壓縮它</em>。這就是為什麼不能只看誰的數字大。</p>"]},
+  A:["A 是 4000","<p>拆開是 65<sup>2</sup>−15<sup>2</sup> ＝ 80×50。第一個因數 80，還有更大的。</p>"],
+  B:["對，86×50＝4300 最大","<p>16×17<sup>2</sup> ＝ (4×17)<sup>2</sup> ＝ 68<sup>2</sup>，所以 B ＝ 68<sup>2</sup>−18<sup>2</sup> ＝ 86×<strong>50</strong>。</p><p>四個選項的第二個因數都是 50，第一個因數是 80、<strong>86</strong>、76、74 —— B 最大。你甚至不必算出 4300。</p>"],
+  C:["C 是 3800","<p>9×21<sup>2</sup> ＝ 63<sup>2</sup>，C ＝ 76×50。往下捲，表格會把四行並排。</p>"],
+  D:["D 是 3700，最小的那個","<p>4×31<sup>2</sup> ＝ 62<sup>2</sup>，D ＝ 74×50。</p><p>D 的底數 31 最大，但乘的 4 也最小——<em>前面那個數會反過來壓縮它</em>。</p>"]},
  3:{ans:"C",
-  A:["少了那個 2","<p>完全平方是 <span class='eq'>a<sup>2</sup>＋<strong>2</strong>ab＋b<sup>2</sup></span>。A 的中間項只有 248×52，<strong>沒有乘 2</strong>。</p><p>差這一個 2，等號就不成立了——而 C 補上了它。</p>"],
-  B:["兩個問題","<p>B 是 <span class='eq'>248<sup>2</sup>−248×48−48<sup>2</sup></span>：中間少了 2，而且<strong>最後一項是減的</strong>。</p><p>完全平方 <span class='eq'>(a−b)<sup>2</sup>＝a<sup>2</sup>−2ab＋b<sup>2</sup></span> 的末項永遠是<em>加</em>（因為負負得正）。看到末項是減號，直接淘汰。</p>"],
-  C:["正確","<p><span class='eq'>248<sup>2</sup>＋2×248×52＋52<sup>2</sup> ＝ (248＋52)<sup>2</sup> ＝ 300<sup>2</sup></span> ✓</p><p>三個條件都對上了：頭尾是平方、中間有 2 倍、全部是加號。而 248＋52 剛好湊成整數 300——出題者故意選這組數字，就是要獎勵看出形狀的人。</p>"],
-  D:["末項是減的，直接淘汰","<p><span class='eq'>(a−b)<sup>2</sup> ＝ a<sup>2</sup>−2ab<strong>＋</strong>b<sup>2</sup></span>——末項一定是加的，因為 (−b)×(−b) ＝ ＋b<sup>2</sup>。</p><p>D 寫成 −48<sup>2</sup>，形狀根本不對。它把「中間有 2」這個特徵放對了，卻在末項的符號上出錯——<em>出題者就是在測你會不會只檢查一半</em>。</p>"]},
+  A:["少了那個 2","<p>完全平方是 <span class='eq'>a<sup>2</sup>＋<strong>2</strong>ab＋b<sup>2</sup></span>。A 的中間項<strong>沒有乘 2</strong>。</p><p>這正是你在課本練習第 7 題判斷過的「甲」那種錯法。</p>"],
+  B:["兩個問題","<p>中間少了 2，而且<strong>最後一項是減的</strong>。</p><p>完全平方的末項永遠是<em>加</em>（負負得正）。看到末項是減號，直接淘汰。</p>"],
+  C:["正確","<p><span class='eq'>248<sup>2</sup>＋2×248×52＋52<sup>2</sup> ＝ (248＋52)<sup>2</sup> ＝ 300<sup>2</sup></span> ✓</p><p>三個條件都對上了：頭尾是平方、中間有 2 倍、全部是加號。而 248＋52 剛好湊成整數 300。</p>"],
+  D:["末項是減的，直接淘汰","<p><span class='eq'>(a−b)<sup>2</sup></span> 的末項一定是加的，因為 (−b)×(−b) ＝ ＋b<sup>2</sup>。</p><p>D 把「中間有 2」放對了，卻在末項符號上出錯——<em>出題老師就是在測你會不會只檢查一半</em>。</p>"]},
  4:{ans:"B",
-  A:["不是「沒教」的問題","<p>是它<strong>真的做不到</strong>。用整數係數，<span class='eq'>a<sup>2</sup>＋b<sup>2</sup></span> 沒辦法寫成兩個括號相乘。</p><p>試著把 (a＋b)(a＋b) 展開看看，會多出什麼？</p>"],
-  B:["對","<p><span class='eq'>(a＋b)(a＋b) ＝ a<sup>2</sup>＋2ab＋b<sup>2</sup></span>，永遠會多出一個 <strong>2ab</strong>，而且沒有東西可以把它消掉。</p><p>對照 <span class='eq'>(a＋b)(a−b) ＝ a<sup>2</sup>−ab＋ab−b<sup>2</sup></span>——中間的 −ab 和 ＋ab <em>剛好抵銷</em>，這才是平方差成立的原因。</p><p>所以那個減號不是裝飾，它是整條公式能運作的理由。</p>"],
-  C:["加法有交換律","<p>a＋b ＝ b＋a 是成立的。問題不在交換律，在展開後<strong>多出來的中間項消不掉</strong>。</p>"],
-  D:["那是 <span class='eq'>a<sup>2</sup>−b<sup>2</sup></span> 的拆法","<p>(a＋b)(a−b) 展開會得到 <span class='eq'>a<sup>2</sup>−b<sup>2</sup></span>（中間<em>減</em>），不是 a<sup>2</sup>＋b<sup>2</sup>。</p><p>這兩個只差一個符號，拆法卻天差地遠：一個拆得開，一個永遠拆不開。</p>"]},
+  A:["不是「沒教」的問題","<p>是它<strong>真的做不到</strong>。試著把 (a＋b)(a＋b) 展開看看，會多出什麼？</p>"],
+  B:["對","<p><span class='eq'>(a＋b)(a＋b) ＝ a<sup>2</sup>＋2ab＋b<sup>2</sup></span>，永遠會多出一個 <strong>2ab</strong>，沒有東西可以消掉它。</p><p>對照 <span class='eq'>(a＋b)(a−b) ＝ a<sup>2</sup>−ab＋ab−b<sup>2</sup></span>——中間的 −ab 和 ＋ab <em>剛好抵銷</em>，這才是平方差成立的原因。</p>"],
+  C:["加法有交換律","<p>問題不在交換律，在展開後<strong>多出來的中間項消不掉</strong>。</p>"],
+  D:["那是 <span class='eq'>a<sup>2</sup>−b<sup>2</sup></span> 的拆法","<p>(a＋b)(a−b) 展開會得到 <span class='eq'>a<sup>2</sup>−b<sup>2</sup></span>（中間<em>減</em>）。這兩個只差一個符號，拆法卻天差地遠。</p>"]},
  5:{ans:"A",
-  A:["對，而且你用的是最短的那條路","<p>把 <span class='eq'>(a＋b)</span> 和 <span class='eq'>(a−b)</span> 各當成<strong>一整個東西</strong>，這串就是「某數的平方減某數的平方」：</p><p class='eq' style='text-align:center;font-size:18px'>[(a＋b)＋(a−b)] × [(a＋b)−(a−b)]<br>＝ 2a × 2b ＝ 4ab</p><p>兩個括號一相加，b 抵銷剩 2a；一相減，a 抵銷剩 2b。<strong>整題沒有展開任何一個完全平方。</strong></p><p>另一條路（把兩個完全平方都展開再相減）答案一樣，但要寫六項。<em>這就是「先看形狀」的價值。</em></p>"],
-  B:["少了一半","<p>方向是對的，係數不對。用平方差拆：[(a＋b)＋(a−b)]×[(a＋b)−(a−b)] ＝ <strong>2a × 2b</strong>。</p><p>兩個 2 相乘是 4，所以是 4ab 不是 2ab。（<span class='eq'>2ab</span> 是完全平方公式中間那一項，很容易混在一起。）</p>"],
-  C:["這是把減號看成加號了","<p><span class='eq'>a<sup>2</sup>＋b<sup>2</sup></span> 是 <span class='eq'>(a＋b)<sup>2</sup> − 2ab</span> 的結果，跟這題不同。</p><p>這題是<strong>兩個平方相減</strong>——看到「平方減平方」，第一個念頭應該是平方差，而不是展開。試著把 (a＋b) 整個當成一個字母看看。</p>"],
-  D:["a 沒有被留下來兩次","<p>如果拆成 [(a＋b)＋(a−b)]×[(a＋b)−(a−b)]，第一個括號是 <strong>2a</strong>、第二個括號是 <strong>2b</strong>——<em>一個留下 a，另一個留下 b</em>。</p><p>相乘是 4ab。會答 4a<sup>2</sup> 通常是只算了第一個括號就重複用它。</p>"]}
+  A:["對，而且你用的是最短的那條路","<p>把 <span class='eq'>(a＋b)</span> 和 <span class='eq'>(a−b)</span> 各當成<strong>一整個東西</strong>：</p><p class='eq' style='text-align:center;font-size:18px'>[(a＋b)＋(a−b)] × [(a＋b)−(a−b)]<br>＝ 2a × 2b ＝ 4ab</p><p>兩個括號一相加，b 抵銷剩 2a；一相減，a 抵銷剩 2b。<strong>整題沒有展開任何一個完全平方。</strong></p><p>這條式子就是前面說的「四分之一平方表」的來源：<span class='eq'>ab ＝ [(a＋b)<sup>2</sup>−(a−b)<sup>2</sup>] ÷ 4</span>。</p>"],
+  B:["少了一半","<p>用平方差拆：[(a＋b)＋(a−b)]×[(a＋b)−(a−b)] ＝ <strong>2a × 2b</strong>。兩個 2 相乘是 4。</p>"],
+  C:["這是把減號看成加號了","<p>這題是<strong>兩個平方相減</strong>——看到「平方減平方」，第一個念頭應該是平方差。試著把 (a＋b) 整個當成一個字母看看。</p>"],
+  D:["a 沒有被留下來兩次","<p>第一個括號是 <strong>2a</strong>、第二個括號是 <strong>2b</strong>——<em>一個留下 a，另一個留下 b</em>。相乘是 4ab。</p>"]}
 };
 
-function done(){return Object.keys(state).filter(k=>/^q\d+$/.test(k)).length}
+/* ══ 進度與解鎖 ══ */
+function qDone(){return Object.keys(state).filter(k=>/^q\d+$/.test(k)).length}
 function paint(){
-  document.getElementById("pnum").textContent=done()+" / "+TOTAL;
-  document.getElementById("pfill").style.width=(done()/TOTAL*100)+"%";
+  const d=(state.prac||0)+qDone();
+  $("pnum").textContent=d+" / "+TOTAL;
+  $("pfill").style.width=(d/TOTAL*100)+"%";
 }
 function unlock(id){
-  const el=document.getElementById(id);
+  const el=$(id);
   if(el&&el.classList.contains("locked-zone")){
     el.classList.remove("locked-zone");el.classList.add("revealed");
     setTimeout(()=>el.classList.remove("revealed"),700);
   }
 }
 function gate(){
-  if(state.q0!==undefined){unlock("z2");unlock("z3");drawDist()}
-  if(state.splitDone){unlock("z3b")}
-  if(state.q1!==undefined){unlock("z4");unlock("z5")}
-  if(state.q2!==undefined){unlock("z5b");unlock("z5c");unlock("z5c2")}
-  if(state.q3!==undefined){unlock("z6")}
-  if(state.q4!==undefined){unlock("z7")}
-  if(state.geoDone){unlock("z7b");unlock("z7c")}
-  if(state.q5!==undefined){unlock("z7d");unlock("z8")}
+  if((state.prac||0)>=PRAC.length){unlock("z4");unlock("z5")}
+  if(state.q0!==undefined){unlock("z5b");drawDist()}
+  if(state.q1!==undefined){unlock("z5c")}
+  if(state.q2!==undefined){unlock("z5d")}
+  if(state.q3!==undefined){unlock("z5e")}
+  if(state.q5!==undefined){unlock("z6")}
   paint();
 }
 
-document.querySelectorAll(".opts").forEach(box=>{
+document.querySelectorAll(".opts[data-q]").forEach(box=>{
   const qi=box.dataset.q, ans=box.dataset.ans;
   box.querySelectorAll(".opt").forEach(btn=>{
     btn.addEventListener("click",()=>{
       if(box.dataset.locked)return;
       const k=btn.dataset.k;
-      state["q"+qi]=k;
-      try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
-      reveal(qi,k,ans,box,true);gate();
+      state["q"+qi]=k; save();
+      reveal(qi,k,ans,box,true); gate();
     });
   });
 });
@@ -709,97 +835,78 @@ function reveal(qi,k,ans,box,scroll){
       const s=document.createElement("span");s.className="pct";s.textContent=PCT[b.dataset.k];b.appendChild(s);
     }
   });
-  const f=FB[qi][k], fb=document.getElementById("fb"+qi);
+  const f=FB[qi][k], fb=$("fb"+qi);
   fb.innerHTML="<h4 style='color:"+(k===ans?"var(--green)":"var(--red)")+"'>"+f[0]+"</h4>"+f[1];
   fb.classList.add("show");
   if(scroll)setTimeout(()=>fb.scrollIntoView({behavior:"smooth",block:"nearest"}),120);
 }
 
-/* ── 全國分布 ── */
 let distDone=false;
 function drawDist(){
   if(distDone)return;distDone=true;
-  const box=document.getElementById("dist");
   const rows=[
     {k:"A",v:57.64,c:"#3f6d3a",t:"正確答案"},
     {k:"B",v:13.88,c:"#b8b2c4",t:""},
     {k:"C",v:9.50,c:"#b8b2c4",t:"最少人選"},
     {k:"D",v:18.65,c:"#b03030",t:"最多人選錯 ── 因為它「看起來」最不一樣"}
   ];
-  box.innerHTML=rows.map(r=>
+  $("dist").innerHTML=rows.map(r=>
     '<div class="dbar"><span class="dk">'+r.k+'</span>'+
     '<div class="dtrack"><div class="dfill" data-w="'+r.v+'" style="background:'+r.c+'"></div></div>'+
     '<span class="dv">'+r.v.toFixed(2)+'%</span></div>'+
     (r.t?'<div style="font-size:12px;color:var(--ink2);margin:-4px 0 10px 30px">'+r.t+'</div>':'<div style="height:6px"></div>')
   ).join("");
-  setTimeout(()=>{box.querySelectorAll(".dfill").forEach(d=>d.style.width=d.dataset.w+"%")},80);
+  setTimeout(()=>{$("dist").querySelectorAll(".dfill").forEach(d=>d.style.width=d.dataset.w+"%")},80);
 }
 
-/* ── 拆解器 I ── */
+/* ══ 拆解器 ══ */
 const SPLIT=[
-  {k:"A",src:"( 106<sup>2</sup> − 4<sup>2</sup> ) × ( 108<sup>2</sup> − 2<sup>2</sup> )",
-   dst:"110×102 × 110×106", set:[102,106,110,110], cls:"diff"},
-  {k:"B",src:"( 107<sup>2</sup> − 3<sup>2</sup> ) × ( 107<sup>2</sup> − 1<sup>2</sup> )",
-   dst:"110×104 × 108×106", set:[104,106,108,110], cls:"same"},
-  {k:"C",src:"( 108<sup>2</sup> − 2<sup>2</sup> ) × ( 106<sup>2</sup> − 2<sup>2</sup> )",
-   dst:"110×106 × 108×104", set:[104,106,108,110], cls:"same"},
-  {k:"D",src:"( 109<sup>2</sup> − 1<sup>2</sup> ) × ( 105<sup>2</sup> − 1<sup>2</sup> )",
-   dst:"110×108 × 106×104", set:[104,106,108,110], cls:"same"}
+  {k:"A",src:"( 106<sup>2</sup> − 4<sup>2</sup> ) × ( 108<sup>2</sup> − 2<sup>2</sup> )",dst:"110×102 × 110×106",cls:"diff"},
+  {k:"B",src:"( 107<sup>2</sup> − 3<sup>2</sup> ) × ( 107<sup>2</sup> − 1<sup>2</sup> )",dst:"110×104 × 108×106",cls:"same"},
+  {k:"C",src:"( 108<sup>2</sup> − 2<sup>2</sup> ) × ( 106<sup>2</sup> − 2<sup>2</sup> )",dst:"110×106 × 108×104",cls:"same"},
+  {k:"D",src:"( 109<sup>2</sup> − 1<sup>2</sup> ) × ( 105<sup>2</sup> − 1<sup>2</sup> )",dst:"110×108 × 106×104",cls:"same"}
 ];
 let sIdx=0;
-const rowsEl=document.getElementById("rows");
-rowsEl.innerHTML=SPLIT.map((r,i)=>
+$("rows").innerHTML=SPLIT.map((r,i)=>
   '<div class="split-row" id="sr'+i+'"><span class="rk">'+r.k+'</span>'+
   '<span class="src eq">'+r.src+'</span><span class="arrow">→</span>'+
   '<span class="dst eq">'+r.dst+'</span></div>').join("");
-
 function splitStep(){
   if(sIdx>=SPLIT.length)return;
-  const r=SPLIT[sIdx], el=document.getElementById("sr"+sIdx);
-  el.classList.add("done");
-  sIdx++;
-  const v=document.getElementById("splitv");
-  if(sIdx===1){v.className="verdict";v.innerHTML="A 拆完了：<span class='eq'>110×102×110×106</span>。<strong>注意有兩個 110。</strong>先記著，繼續拆下一個。"}
-  else if(sIdx===2){v.className="verdict";v.innerHTML="B 拆完是 <span class='eq'>110×104×108×106</span>。107 這個數字<strong>整個不見了</strong>——它只是拆解過程中的中途站。"}
+  $("sr"+sIdx).classList.add("done"); sIdx++;
+  const v=$("splitv");
+  if(sIdx===1){v.className="verdict";v.innerHTML="A 拆完了：<span class='eq'>110×102×110×106</span>。<strong>注意有兩個 110。</strong>"}
+  else if(sIdx===2){v.className="verdict";v.innerHTML="B 拆完是 <span class='eq'>110×104×108×106</span>。107 這個數字<strong>整個不見了</strong>。"}
   else if(sIdx===3){v.className="verdict warn";v.innerHTML="C 是 <span class='eq'>110×106×108×104</span>。把 B 和 C 的四個數字<strong>各自排序</strong>看看⋯⋯"}
   else{
-    SPLIT.forEach((r2,i)=>document.getElementById("sr"+i).classList.add(r2.cls));
+    SPLIT.forEach((r,i)=>$("sr"+i).classList.add(r.cls));
     v.className="verdict good";
-    v.innerHTML="四個都拆完了。<strong>B、C、D 的因數排序後全是 104、106、108、110</strong>（綠色三行），只有 <strong>A 是 102、106、110、110</strong>（黃色）。<br>乘法有交換律 → 那三行必然相等，A 是唯一的異類。";
-    state.splitDone=1;
-    try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
-    gate();
+    v.innerHTML="四個都拆完了。<strong>B、C、D 的因數排序後全是 104、106、108、110</strong>（綠色三行），只有 <strong>A 是 102、106、110、110</strong>（黃色）。";
+    state.splitDone=1; save();
   }
-  document.getElementById("stepBtn").disabled = sIdx>=SPLIT.length;
+  $("stepBtn").disabled = sIdx>=SPLIT.length;
 }
-document.getElementById("stepBtn").addEventListener("click",splitStep);
-document.getElementById("allBtn").addEventListener("click",()=>{while(sIdx<SPLIT.length)splitStep()});
-document.getElementById("resetBtn").addEventListener("click",()=>{
-  sIdx=0;
-  SPLIT.forEach((r,i)=>{const e=document.getElementById("sr"+i);e.className="split-row"});
-  document.getElementById("stepBtn").disabled=false;
-  const v=document.getElementById("splitv");v.className="verdict";
-  v.textContent="按「拆下一個」，一次看一個選項。";
+$("stepBtn").addEventListener("click",splitStep);
+$("allBtn").addEventListener("click",()=>{while(sIdx<SPLIT.length)splitStep()});
+$("resetBtn").addEventListener("click",()=>{
+  sIdx=0; SPLIT.forEach((r,i)=>{$("sr"+i).className="split-row"});
+  $("stepBtn").disabled=false;
+  const v=$("splitv"); v.className="verdict"; v.textContent="按「拆下一個」，一次看一個選項。";
 });
 
-/* ── 剪貼證明 ── */
+/* ══ 剪貼證明 ══ */
 const GEO=[
  {v:"這是一個邊長 <span class='eq'>a</span> 的正方形，面積 <span class='eq'>a<sup>2</sup></span>。它先被分成三塊，等一下用得到。",cls:""},
  {v:"從角落<strong>挖掉一個邊長 b 的小正方形</strong>。剩下的面積就是 <span class='eq'>a<sup>2</sup> − b<sup>2</sup></span>。<br>這個 L 形，希臘人有專門的名字：<strong>gnomon</strong>。",cls:""},
  {v:"把 L 形沿著線<strong>剪成兩塊</strong>：<br>A 是 <span class='eq'>a × (a−b)</span>　＝　8 × 5<br>B 是 <span class='eq'>(a−b) × b</span>　＝　5 × 3",cls:""},
  {v:"把 B <strong>轉 90 度，接到 A 的右邊</strong>。<br>注意：紙沒有變多，也沒有變少。",cls:"warn"},
- {v:"拼出來是一個長方形：<strong>寬 <span class='eq'>a＋b</span> ＝ 11，高 <span class='eq'>a−b</span> ＝ 5</strong>。<br>面積 55，而原本 <span class='eq'>a<sup>2</sup>−b<sup>2</sup></span> ＝ 64−9 ＝ 55。<br><strong>同一張紙，兩種算法 → <span class='eq'>a<sup>2</sup>−b<sup>2</sup> ＝ (a＋b)(a−b)</span>。</strong><br>這就是兩千三百年前的證明方式：不用符號，用剪刀。",cls:"good"}
+ {v:"拼出來是一個長方形：<strong>寬 <span class='eq'>a＋b</span> ＝ 11，高 <span class='eq'>a−b</span> ＝ 5</strong>。<br>面積 55，而原本 <span class='eq'>a<sup>2</sup>−b<sup>2</sup></span> ＝ 64−9 ＝ 55。<br><strong>同一張紙，兩種算法 → <span class='eq'>a<sup>2</sup>−b<sup>2</sup> ＝ (a＋b)(a−b)</span>。</strong>",cls:"good"}
 ];
 let gIdx=0;
-const gHole=document.getElementById("hole"), gHoleR=gHole,
-      gB=document.getElementById("pieceB"), gBR=gB.querySelector("rect"),
-      gGhost=document.getElementById("ghost"),
-      gL1=document.getElementById("lab1"), gL2=document.getElementById("lab2"),
-      gV=document.getElementById("geov"), gBtn=document.getElementById("geoBtn");
+const gHole=$("hole"), gB=$("pieceB"), gBR=gB.querySelector("rect"),
+      gGhost=$("ghost"), gL1=$("lab1"), gL2=$("lab2"), gV=$("geov"), gBtn=$("geoBtn");
 [gHole,gBR,gGhost,gL1,gL2].forEach(e=>e.style.transition="opacity .6s, fill .6s");
-
 function geoRender(){
-  // 0 完整正方形 → 1 挖洞 → 2 分色 → 3 移動 → 4 標註
   gHole.setAttribute("opacity", gIdx===0?"1":(gIdx>=3?"0.22":"1"));
   gHole.setAttribute("fill", gIdx===0?"#dfe7fb":"url(#hatch)");
   gHole.setAttribute("stroke", gIdx===0?"#4338ca":"#b9b3c4");
@@ -810,22 +917,15 @@ function geoRender(){
   gL1.setAttribute("opacity", gIdx>=4?"0":"1");
   gL2.setAttribute("opacity", gIdx>=4?"1":"0");
   const g=GEO[gIdx];
-  gV.className="verdict"+(g.cls?" "+g.cls:"");
-  gV.innerHTML=g.v;
+  gV.className="verdict"+(g.cls?" "+g.cls:""); gV.innerHTML=g.v;
   gBtn.disabled = gIdx>=GEO.length-1;
   gBtn.textContent = gIdx>=GEO.length-1 ? "完成" : "下一步";
-  if(gIdx>=GEO.length-1 && !state.geoDone){
-    state.geoDone=1;
-    try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
-    gate();
-  }
 }
 gBtn.addEventListener("click",()=>{if(gIdx<GEO.length-1){gIdx++;geoRender()}});
-document.getElementById("geoReset").addEventListener("click",()=>{gIdx=0;geoRender()});
+$("geoReset").addEventListener("click",()=>{gIdx=0;geoRender()});
 geoRender();
-if(state.geoDone){gIdx=GEO.length-1;geoRender()}
 
-/* ── 練習器 ── */
+/* ══ 形狀偵測練習 ══ */
 const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
 function makeDrill(){
   const t=["diff","square","none"][rnd(0,2)];
@@ -840,49 +940,47 @@ function makeDrill(){
     why="三項、中間有 2 倍、末項是加的 → 完全平方，等於 ("+a+sign+b+")<sup>2</sup> ＝ "+(sign==="＋"?a+b:a-b)+"<sup>2</sup>。";
   }else{
     const kind=rnd(0,2);
-    if(kind===0){
-      html=a+"<sup>2</sup> ＋ "+b+"<sup>2</sup>";
-      why="兩項<strong>相加</strong> → 拆不開。(a＋b)(a＋b) 會多出 2ab，補不掉。";
-    }else if(kind===1){
-      html=a+"<sup>2</sup> ＋ "+a+"×"+b+" ＋ "+b+"<sup>2</sup>";
-      why="三項，但中間<strong>少了 2 倍</strong>（只有 "+a+"×"+b+"）→ 不是完全平方。這是最常見的陷阱。";
-    }else{
-      html=a+"<sup>2</sup> − 2×"+a+"×"+b+" − "+b+"<sup>2</sup>";
-      why="中間的 2 有了，但<strong>末項是減的</strong> → 不是完全平方。(a−b)<sup>2</sup> 的末項一定是＋b<sup>2</sup>。";
-    }
+    if(kind===0){html=a+"<sup>2</sup> ＋ "+b+"<sup>2</sup>";
+      why="兩項<strong>相加</strong> → 拆不開。(a＋b)(a＋b) 會多出 2ab，補不掉。";}
+    else if(kind===1){html=a+"<sup>2</sup> ＋ "+a+"×"+b+" ＋ "+b+"<sup>2</sup>";
+      why="三項，但中間<strong>少了 2 倍</strong> → 不是完全平方。這是最常見的陷阱。";}
+    else{html=a+"<sup>2</sup> − 2×"+a+"×"+b+" − "+b+"<sup>2</sup>";
+      why="中間的 2 有了，但<strong>末項是減的</strong> → 不是完全平方。";}
   }
   return {t,html,why};
 }
 let cur=null, hit=0, tot=0;
-const dq=document.getElementById("dq"), dfb=document.getElementById("dfb"), dsc=document.getElementById("dsc");
 function nextDrill(){
-  cur=makeDrill();dq.innerHTML=cur.html;
-  dfb.className="drill-fb";dfb.innerHTML="";
+  cur=makeDrill(); $("dq").innerHTML=cur.html;
+  $("dfb").className="drill-fb"; $("dfb").innerHTML="";
   document.querySelectorAll(".drill-btns .btn").forEach(b=>b.disabled=false);
 }
-document.getElementById("dnext").addEventListener("click",nextDrill);
-nextDrill();
+$("dnext").addEventListener("click",nextDrill);
 document.querySelectorAll(".drill-btns .btn").forEach(btn=>{
   btn.addEventListener("click",()=>{
-    if(!cur||dfb.classList.contains("show")&&dfb.innerHTML)return;
+    if(!cur)return;
     const ok=btn.dataset.t===cur.t;
-    tot++;if(ok)hit++;
-    dfb.className="drill-fb show "+(ok?"ok":"no");
-    dfb.innerHTML="<strong>"+(ok?"對":"不是這個")+"</strong>　"+cur.why;
-    dsc.textContent="答對 "+hit+" / "+tot+"　"+(tot>=5&&hit/tot>=.8?"— 手感出來了":"");
+    tot++; if(ok)hit++;
+    $("dfb").className="drill-fb show "+(ok?"ok":"no");
+    $("dfb").innerHTML="<strong>"+(ok?"對":"不是這個")+"</strong>　"+cur.why;
+    $("dsc").textContent="答對 "+hit+" / "+tot+"　"+(tot>=5&&hit/tot>=.8?"— 手感出來了":"");
     document.querySelectorAll(".drill-btns .btn").forEach(b=>b.disabled=true);
   });
 });
+nextDrill();
 
-/* ── 還原 ── */
-document.querySelectorAll(".opts").forEach(box=>{
+/* ══ 還原進度 ══ */
+if(pDone>0 && pDone<PRAC.length) pi=pDone;
+else if(pDone>=PRAC.length) pi=PRAC.length-1;
+pRender();
+document.querySelectorAll(".opts[data-q]").forEach(box=>{
   const qi=box.dataset.q, saved=state["q"+qi];
   if(saved!==undefined)reveal(qi,saved,box.dataset.ans,box,false);
 });
 if(state.splitDone){while(sIdx<SPLIT.length)splitStep()}
 gate();
 
-document.getElementById("rst").addEventListener("click",()=>{
+$("rst").addEventListener("click",()=>{
   try{localStorage.removeItem(KEY)}catch(e){}
   location.reload();
 });

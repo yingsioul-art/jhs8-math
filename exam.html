@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>八年級數學 · 段考模擬</title>
+<style>
+:root{--paper:#f8f6fa;--ink:#26222b;--ink2:#585062;--line:#ddd6e4;--accent:#7c3aed;
+  --accent-soft:#f3ecff;--green:#3f6d3a;--green-soft:#eef4ec;
+  --shadow:0 1px 2px rgba(38,34,43,.05),0 8px 24px rgba(38,34,43,.05)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:17px;line-height:1.85}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 80px}
+header{padding:52px 0 26px;border-bottom:2px solid var(--ink)}
+.kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:12px}
+h1{font-size:30px;line-height:1.3;margin:0 0 14px}
+p{margin:0 0 16px}
+.dim{color:var(--ink2)}
+em{font-style:normal;background:linear-gradient(transparent 62%,#e5d5ff 62%);font-weight:600}
+a{color:var(--accent)}
+h2{font-size:15px;letter-spacing:.14em;color:var(--ink2);margin:40px 0 14px;font-weight:700}
+.howto{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:22px;margin:26px 0}
+.howto p:last-child{margin:0}
+.howto h3{font-size:18px;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.pcard{text-align:left;background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px;
+  cursor:pointer;font-family:inherit;font-size:15px;color:inherit;transition:border-color .15s,transform .15s;
+  box-shadow:var(--shadow)}
+.pcard:hover{border-color:var(--ink);transform:translateY(-2px)}
+.pcard.on{border-color:var(--accent);border-width:2px;background:var(--accent-soft)}
+.pcard b{display:block;font-size:17px;margin-bottom:5px}
+.pcard .sc{font-size:12px;color:var(--ink2);line-height:1.6}
+.badge{display:inline-block;font-size:11px;border-radius:99px;padding:2px 8px;margin-top:8px;border:1px solid var(--line)}
+.sc-ok{border-color:#c8dcc4;background:var(--green-soft);color:var(--green)}
+.sc-warn{border-color:#d8b46a;background:#fdf6e6;color:#8a6a1e}
+.sc-none{border-color:var(--line);background:#efeaf4;color:var(--ink2)}
+#panel{margin-top:34px}
+.pmeta{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:22px;
+  font-size:14.5px;line-height:1.8;box-shadow:var(--shadow)}
+.pmeta h3{margin:0 0 8px;font-size:20px}
+.pmeta .row{color:var(--ink2)}
+.pages img{width:100%;display:block;border:1px solid var(--line);border-radius:10px;margin-bottom:14px;background:#fff}
+.sheet{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:20px;margin:26px 0;box-shadow:var(--shadow)}
+.sheet h3{margin:0 0 4px;font-size:19px}
+.sheet .hint{font-size:13.5px;color:var(--ink2);margin-bottom:16px}
+.rows{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:7px}
+.row{display:flex;align-items:center;gap:7px;padding:3px 0}
+.row .no{width:26px;text-align:right;font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.row .bs{display:flex;gap:4px}
+.bs button{width:29px;height:29px;border-radius:50%;border:1.4px solid var(--line);background:#fff;
+  font-family:inherit;font-size:12.5px;color:var(--ink2);cursor:pointer;padding:0;line-height:1}
+.bs button:hover{border-color:var(--ink)}
+.bs button.pick{background:var(--ink);border-color:var(--ink);color:#fff}
+.bs button.ok{background:var(--green);border-color:var(--green);color:#fff}
+.bs button.bad{background:#c2410c;border-color:#c2410c;color:#fff}
+.bs button.miss{border-color:var(--green);border-width:2px;color:var(--green)}
+.row.done .no{color:var(--ink)}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;align-items:center}
+button.go{background:var(--accent);color:#fff;border:none;border-radius:99px;padding:11px 24px;
+  font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}
+button.go[disabled]{background:#cfc6da;cursor:default}
+button.ghost{background:none;border:1px solid var(--line);color:var(--ink2);border-radius:99px;
+  padding:10px 18px;font-family:inherit;font-size:13.5px;cursor:pointer}
+button.ghost:hover{border-color:var(--ink);color:var(--ink)}
+.score{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);display:none}
+.score.show{display:block}
+.score .big{font-size:30px;font-weight:700;margin:0 0 6px}
+.wrongs{font-size:14px;color:var(--ink2);line-height:2}
+.wrongs b{color:#c2410c}
+.notice{background:#fdf6e6;border:1px dashed #d8b46a;border-radius:12px;padding:16px 18px;
+  font-size:14.5px;color:#6b5418;line-height:1.8;margin:20px 0}
+.notice p:last-child{margin:0}
+details.ans{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:0;margin:26px 0;overflow:hidden}
+details.ans summary{cursor:pointer;padding:18px 20px;font-weight:700;font-size:17px;list-style:none}
+details.ans summary::-webkit-details-marker{display:none}
+details.ans summary::before{content:"▸ ";color:var(--accent)}
+details.ans[open] summary::before{content:"▾ "}
+details.ans .inner{padding:0 20px 20px}
+details.ans .inner p{font-size:14px;color:var(--ink2)}
+footer{padding:36px 0 0;margin-top:44px;border-top:1px solid var(--line);
+  font-size:13px;color:var(--ink2);line-height:1.9}
+@media(max-width:520px){.rows{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">丹鳳高中 · 八年級上學期 · 112～114 學年度</div>
+  <h1>整張考卷，<br>連填充題一起</h1>
+  <p class="dim">單元頁裡挑的是<em>和那一節有關的選擇題</em>；這裡是<strong>整張原卷</strong>——
+  基本題、選擇題、填充題、挑戰題全都在，跟你考試那天拿到的一模一樣。</p>
+</header>
+
+<div class="howto">
+  <h3>怎麼用這一頁</h3>
+  <p>① 選一份考卷 → ② 拿張紙，照著原卷從頭寫到尾 → ③ 選擇題在下面的<strong>答案卡</strong>點一點、按交卷 →
+  ④ 填充題按「<strong>看官方解答</strong>」展開對照。</p>
+  <p><strong>為什麼填充題不做成線上作答？</strong>因為數學段考的填充題答案是根式、分式和多項式
+  （像 <span style="font-family:Cambria,serif">22√3 − 24√2</span>），
+  打字比手寫還累，而且一個括號位置不同就會被判錯。<em>直接看學校的原始解答，比較快也比較準。</em></p>
+  <p class="dim" style="font-size:14px;margin-top:12px">
+  想看某一題為什麼——各單元的<strong>「再練一輪」</strong>裡有和該節有關的題目，附完整解析。</p>
+</div>
+
+<h2>選一份考卷</h2>
+<div class="grid" id="cards"></div>
+
+<div id="panel"></div>
+
+<footer>
+  試題與解答由學校於段考後公布，僅供本站自學複習使用；原卷版面未經修改。<br>
+  標示為「選擇題自行解出」者非官方答案，請以老師公布的為準。<br>
+  <a href="index.html">← 回自學站首頁</a>　·　<span style="color:#a09aa8">為自學而做 · 2026</span>
+</footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+var P=[{"id": "112-1-1", "year": "112", "n": 1, "pages": 2, "anspages": 4, "src": "official", "choice": {"label": "第二大題 單選題", "key": "DABCDACBAABBCB"}, "note": "基本題 12 格（每格 3 分）＋ 單選題 14 題（每題 4 分）＋ 挑戰題 4 格（每格 2 分）。", "scope": "1-1 乘法公式 · 1-2 多項式加減 · 1-3 多項式乘除 · 2-1 平方根"}, {"id": "112-1-2", "year": "112", "n": 2, "pages": 3, "anspages": 1, "src": "official", "choice": {"label": "第二大題 選擇題", "key": "DCDABCBAC"}, "note": "基礎題 6 題（每題 4 分）＋ 選擇題 9 題（每題 4 分）＋ 填充題（每題 4 分）。", "scope": "2-2 根式的運算 · 3-1 因式分解"}, {"id": "112-1-3", "year": "112", "n": 3, "pages": 2, "anspages": 3, "src": "official", "choice": {"label": "選擇題", "key": "CDBACABBCDDADABBACBADADCC"}, "note": "全卷 25 題選擇：1～10 每題 6 分、11～20 每題 3 分、21～25 每題 2 分。", "scope": "4-1 一元二次方程式 · 5-1 統計資料處理"}, {"id": "113-1-1", "year": "113", "n": 1, "pages": 4, "anspages": 5, "src": "official", "choice": {"label": "第二大題 選擇題", "key": "CDBA"}, "note": "基本題 12 格（每題 3 分）＋ 選擇題 4 題（每題 4 分）＋ 填充題 12 格（每題 4 分）。<em>題目卷上每一題都標了課本頁碼</em>，錯了可以直接翻回去。", "scope": "1-1 乘法公式 · 1-2 多項式加減 · 1-3 多項式乘除 · 2-1 平方根"}, {"id": "113-1-2", "year": "113", "n": 2, "pages": 2, "anspages": 1, "src": "official", "choice": {"label": "第二大題 選擇題", "key": "CDCABBDA"}, "note": "基礎填充 12 格（每格 3 分）＋ 選擇題 8 題（每題 4 分）＋ 填充題 8 格（每格 4 分）。", "scope": "2-2 根式的運算 · 3-1 因式分解"}, {"id": "113-1-3", "year": "113", "n": 3, "pages": 3, "anspages": 1, "src": "official", "choice": {"label": "選擇題", "key": "DADBCBCDBAACBBACDCADCDBCA"}, "note": "全卷 25 題選擇，劃記在電腦答案卡上。", "scope": "4-1 一元二次方程式 · 5-1 統計資料處理"}, {"id": "114-1-1", "year": "114", "n": 1, "pages": 2, "anspages": 0, "src": "self", "choice": {"label": "一、單選題", "key": "CACABDDBDBCD"}, "note": "單選題 12 題（每題 3 分，共 36 分）＋ 填充題 16 格（每題 4 分，共 64 分）。", "scope": "1-1 乘法公式 · 1-2 多項式加減 · 1-3 多項式乘除 · 2-1 平方根"}, {"id": "114-1-2", "year": "114", "n": 2, "pages": 2, "anspages": 0, "src": "none", "choice": null, "note": "這一卷沒有解答檔，只提供原卷。", "scope": "2-2 根式的運算 · 3-1 因式分解"}, {"id": "114-1-3", "year": "114", "n": 3, "pages": 2, "anspages": 1, "src": "official", "choice": {"label": "選擇題", "key": "CAABADCCBCABDBDADBBCDCABD"}, "note": "全卷 25 題選擇。", "scope": "4-1 一元二次方程式 · 5-1 統計資料處理"}];
+var LBL={"official": ["官方解答", "sc-ok", "學校提供的解答檔，<strong>填充題也在裡面</strong>——按「看官方解答」展開對照。"], "self": ["選擇題自行解出", "sc-warn", "🔴 這一卷<strong>沒有官方解答檔</strong>。單選題的答案是本站逐題自己算出來的（已複核），但<strong>填充題沒有答案可對</strong>，只能自己算完再找老師確認。"], "none": ["無解答", "sc-none", "🔴 這一卷<strong>沒有官方解答檔</strong>，而且填充題佔一半以上，所以這裡<strong>只提供原卷</strong>。之後拿得到解答再補上。"]};
+var cards=document.getElementById("cards"), panel=document.getElementById("panel"), cur=null;
+
+cards.innerHTML=P.map(function(p,i){
+  var L=LBL[p.src];
+  return '<button class="pcard" data-i="'+i+'">'+
+    '<b>'+p.year+' 學年度 · 第 '+p.n+' 次段考</b>'+
+    '<div class="sc">數學科　·　原卷 '+p.pages+' 頁'+
+      (p.choice?'　·　選擇 '+p.choice.key.length+' 題可對答案':'')+'<br>'+p.scope+'</div>'+
+    '<span class="badge '+L[1]+'">'+L[0]+'</span></button>';
+}).join("");
+
+cards.querySelectorAll(".pcard").forEach(function(b){
+  b.addEventListener("click",function(){ open(+b.dataset.i); });
+});
+
+function open(i){
+  cur=P[i];
+  cards.querySelectorAll(".pcard").forEach(function(b,j){b.classList.toggle("on",i===j)});
+  var L=LBL[cur.src], pg="";
+  for(var k=1;k<=cur.pages;k++)
+    pg+='<img loading="lazy" src="exam/'+cur.id+'_p'+k+'.jpg" alt="'+cur.id+' 原卷第 '+k+' 頁">';
+
+  var html='<div class="pmeta"><h3>'+cur.year+' 學年度 第 '+cur.n+' 次段考　·　數學科</h3>'+
+    '<div class="row">範圍：'+cur.scope+'</div>'+
+    '<div class="row">'+cur.note+'</div>'+
+    '<div class="row" style="margin-top:8px"><span class="badge '+L[1]+'">'+L[0]+'</span>　'+L[2]+'</div></div>'+
+    '<div class="pages">'+pg+'</div>';
+
+  if(cur.choice){
+    var rows="";
+    for(var q=0;q<cur.choice.key.length;q++){
+      var bs="";
+      for(var c=0;c<4;c++){var ch="ABCD"[c];
+        bs+='<button data-q="'+q+'" data-c="'+ch+'">'+ch+'</button>';}
+      rows+='<div class="row" id="r'+q+'"><span class="no">'+(q+1)+'</span><span class="bs">'+bs+'</span></div>';
+    }
+    html+='<div class="sheet"><h3>答案卡　<span style="font-size:14px;font-weight:400;color:var(--ink2)">'
+      +cur.choice.label+'</span></h3>'+
+      '<div class="hint">題號是<strong>該大題裡的編號</strong>，不是整張卷的流水號。點一下選、再點一下取消。</div>'+
+      '<div class="rows">'+rows+'</div>'+
+      '<div class="acts"><button class="go" id="go">交卷對答案</button>'+
+      '<button class="ghost" id="clr">清除這一卷的作答</button>'+
+      '<span class="dim" style="font-size:13px" id="cnt"></span></div>'+
+      '<div class="score" id="score"></div></div>';
+  }
+
+  if(cur.anspages>0){
+    var ag="";
+    for(var a=1;a<=cur.anspages;a++)
+      ag+='<img loading="lazy" src="exam/'+cur.id+'_ans'+a+'.jpg" alt="'+cur.id+' 官方解答第 '+a+' 頁">';
+    html+='<details class="ans"><summary>看官方解答（含填充題）</summary>'+
+      '<div class="inner"><p>學校公布的原始解答，'+cur.anspages+' 頁。'+
+      '先自己算完再打開——<strong>看過答案再回頭想，通常什麼都留不下來。</strong></p>'+
+      '<div class="pages">'+ag+'</div></div></details>';
+  } else {
+    html+='<div class="notice"><p>'+L[2]+'</p></div>';
+  }
+
+  panel.innerHTML=html;
+  if(cur.choice) wire();
+  panel.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function KEY(){return "jhs8m-exam-"+cur.id}
+function load(){try{return JSON.parse(localStorage.getItem(KEY())||"{}")}catch(e){return{}}}
+function save(s){try{localStorage.setItem(KEY(),JSON.stringify(s))}catch(e){}}
+
+function wire(){
+  var st=load(), graded=false, K=cur.choice.key;
+  function paint(){
+    for(var q=0;q<K.length;q++){
+      var picked=st[q]||"";
+      var row=document.getElementById("r"+q);
+      row.classList.toggle("done",picked.length>0);
+      row.querySelectorAll("button").forEach(function(b){
+        b.className = picked===b.dataset.c ? "pick" : "";
+      });
+    }
+    var n=0; for(var k in st) if(st[k]) n++;
+    document.getElementById("cnt").textContent="已作答 "+n+" / "+K.length+" 題";
+  }
+  panel.querySelectorAll(".bs button").forEach(function(b){
+    b.addEventListener("click",function(){
+      if(graded)return;
+      var q=b.dataset.q, c=b.dataset.c;
+      st[q] = (st[q]===c) ? "" : c;
+      save(st); paint();
+    });
+  });
+  document.getElementById("clr").addEventListener("click",function(){
+    try{localStorage.removeItem(KEY())}catch(e){}
+    st={}; graded=false;
+    document.getElementById("score").classList.remove("show");
+    document.getElementById("go").disabled=false;
+    paint();
+  });
+  document.getElementById("go").addEventListener("click",function(){
+    graded=true; this.disabled=true;
+    var right=0, wrong=[];
+    for(var q=0;q<K.length;q++){
+      var ans=K[q], got=st[q]||"";
+      if(got===ans)right++; else wrong.push((q+1)+"（正解 "+ans+"）");
+      var row=document.getElementById("r"+q);
+      row.querySelectorAll("button").forEach(function(b){
+        var c=b.dataset.c;
+        b.className = (got===c) ? (c===ans?"ok":"bad") : (c===ans?"miss":"");
+      });
+    }
+    var pct=Math.round(right/K.length*100);
+    var s=document.getElementById("score");
+    s.className="score show";
+    s.innerHTML='<p class="big">答對 '+right+' / '+K.length+' 題　<span class="dim" style="font-size:16px">'+pct+'%</span></p>'+
+      (wrong.length? '<div class="wrongs"><b>錯的題號：</b>'+wrong.join("、")+'</div>'
+                   : '<div class="wrongs">全對。</div>')+
+      '<p class="dim" style="font-size:13.5px;margin-top:14px">'+
+      '這只是<strong>選擇題</strong>的成績，填充題與挑戰題請對照官方解答。<br>'+
+      '綠色圈＝正解、紅色＝你選錯的、空心綠框＝你沒選到的正解。</p>';
+    s.scrollIntoView({behavior:"smooth",block:"nearest"});
+  });
+  paint();
+}
+
+open(6);   // 預設開 114 學年度第 1 次段考
+})();
+</script>
+</body>
+</html>

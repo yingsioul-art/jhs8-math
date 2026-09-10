@@ -10,7 +10,7 @@
 body{margin:0;background:var(--paper);color:var(--ink);
   font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   font-size:17px;line-height:1.85}
-.wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 80px}
 header{padding:64px 0 30px;border-bottom:2px solid var(--ink)}
 .kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:14px}
 h1{font-size:32px;line-height:1.3;margin:0 0 16px}
@@ -53,6 +53,21 @@ footer a{color:var(--teal)}
 .steps li::before{content:counter(t);position:absolute;left:0;top:7px;width:24px;height:24px;
   background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;
   justify-content:center;font-size:12px;font-weight:700}
+
+/* ── 入口方塊（2026-09-10 改版：原本是一長串卡片，改成格線） ── */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:14px;margin:0 0 14px}
+.tiles a.unit,.tiles .soon{display:flex;flex-direction:column;margin-bottom:0;padding:19px 21px}
+.tiles .u-t{font-size:18.5px;margin-bottom:7px}
+.tiles .u-d{font-size:14.5px;line-height:1.72;margin-bottom:12px;flex:1}
+.tiles .u-m{margin-top:auto}
+.tiles .tag{font-size:11.5px;padding:2px 9px}
+details.fold{background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:14px 20px;margin:24px 0}
+details.fold>summary{cursor:pointer;font-size:15px;font-weight:700;color:var(--accent)}
+details.fold[open]>summary{margin-bottom:10px}
+details.fold .howto,details.fold .why{border:0;padding:0;margin:14px 0 0;background:transparent}
+@media(max-width:560px){.tiles{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -64,6 +79,8 @@ footer a{color:var(--teal)}
   <p class="dim">數學不是算得快的人贏，是<em>知道哪一題不用算</em>的人贏。這裡每一節都先丟一題「硬算會來不及」的會考題，讓你找出出題老師藏起來的那條捷徑——公式是最後才登場的。</p>
 </header>
 
+<details class="fold">
+  <summary>這個網站怎麼用？（第一次來再看就好）</summary>
 <div class="howto">
   <h3>這個網站怎麼用</h3>
   <p><strong>它不是題庫。</strong>每一課都是一條完整的路，從一個問題走到一個答案，中間有很多可以自己動手拉、拖、拆的地方。一課大約 20–30 分鐘。</p>
@@ -91,15 +108,16 @@ footer a{color:var(--teal)}
   <p>· 每一段<strong>要答完才會解鎖下一段</strong>。不是要卡你，是不想讓你跳過「自己想一想」那一步。<br>
   · 進度會自己存著，隨時可以關掉，下次打開還在原地。</p>
 </div>
-
 <div class="why">
   <p style="font-size:15px;color:var(--ink2);margin-bottom:12px"><strong style="color:var(--ink)">為什麼題目都附「全國有多少人選錯」？</strong></p>
   <p style="font-size:15.5px">因為在數學裡，錯的選項幾乎都是<em>某一種想法</em>造成的結果——不是隨機猜的。知道全國有 18% 的人被同一個外表騙走，比知道正確答案有用得多。</p>
   <p style="font-size:15.5px;margin-top:12px">數學科的官方試題分析連<strong>四個選項的百分比</strong>都公布了，所以這裡的每一根長條都是真實數據，不是估的。</p>
 </div>
+</details>
 
 <h2>單元　·　照課本章節順序</h2>
 
+<div class="tiles">
 <a class="unit" href="multiply.html">
   <div class="u-ch">①　第 1 章 · 1-1 乘法公式</div>
   <div class="u-t">不要算，先看</div>
@@ -109,6 +127,7 @@ footer a{color:var(--teal)}
     <span class="tag">剪貼證明</span><span class="tag">會考 114-10</span>
   </div>
 </a>
+</div>
 
 <a class="hwcard" href="multiply.html#hw">
   <div class="hw-k">回家作業　·　熟練 ④ ⑤　錯題檢討</div>
@@ -117,6 +136,7 @@ footer a{color:var(--teal)}
   同一條公式，順著用你會，反著用還沒開始——這一區把起手式拆給你看。<span class="tag" style="margin-left:6px">8 題</span></div>
 </a>
 
+<div class="tiles">
 <a class="unit" href="polynomial.html">
   <div class="u-ch">②　第 1 章 · 1-2 多項式與其加減運算</div>
   <div class="u-t">先排整齊，再算</div>
@@ -126,7 +146,6 @@ footer a{color:var(--teal)}
     <span class="tag">會考 114-02</span><span class="tag">下一節的地基</span>
   </div>
 </a>
-
 <a class="unit" href="division.html">
   <div class="u-ch">③　第 1 章 · 1-3 多項式的乘除運算</div>
   <div class="u-t">什麼時候可以停下來</div>
@@ -136,7 +155,6 @@ footer a{color:var(--teal)}
     <span class="tag">會考 111-02</span><span class="tag">13 年考 5 題</span>
   </div>
 </a>
-
 <a class="unit" href="sqrt.html">
   <div class="u-ch">④　第 2 章 · 2-1 平方根與近似值</div>
   <div class="u-t">把它夾在兩個整數中間</div>
@@ -146,10 +164,12 @@ footer a{color:var(--teal)}
     <span class="tag">會考 111-06</span><span class="tag">最會分人的一題</span>
   </div>
 </a>
+</div>
 
 
 <h2>段考　·　你們學校真正考過的卷</h2>
 
+<div class="tiles">
 <a class="unit" href="exam.html">
   <div class="u-ch">整卷模擬　·　112～114 學年度</div>
   <div class="u-t">整張考卷，連填充題一起</div>
@@ -159,6 +179,7 @@ footer a{color:var(--teal)}
     <span class="tag">官方解答 16 頁</span><span class="tag">進度自動存</span>
   </div>
 </a>
+</div>
 
 <footer>
   題目、通過率、鑑別度與選項百分比引自國家教育研究院歷年國中教育會考數學科試題及官方試題分析。<br>

@@ -186,6 +186,27 @@ details.pre .bd p:last-child{margin:0}
   border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:28px}
 footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
 </style>
+<style id="sitenav-css">
+.sitenav{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+ padding:10px 0 12px;margin:0 0 6px;border-bottom:1px solid rgba(0,0,0,.08);font-size:13.5px;scrollbar-width:none}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav a{flex:0 0 auto;text-decoration:none;color:#4b5563;background:#fff;border:1px solid rgba(0,0,0,.12);
+ border-radius:99px;padding:4px 12px;line-height:1.6;white-space:nowrap}
+.sitenav a:hover{border-color:#4338ca;color:#4338ca}
+.sitenav a.home{font-weight:700;color:#4338ca;border-color:#4338ca;background:#fff}
+.sitenav a.now{background:#4338ca;color:#fff;border-color:#4338ca;font-weight:700}
+.sitenav .sep{flex:0 0 auto;color:#9ca3af;padding:0 2px}
+.sitenav-b{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:34px 0 8px}
+.sitenav-b a{text-decoration:none;color:#374151;background:#fff;border:1px solid rgba(0,0,0,.14);border-radius:12px;
+ padding:12px 14px;line-height:1.5;font-size:14.5px;display:flex;flex-direction:column;justify-content:center}
+.sitenav-b a:hover{border-color:#4338ca;color:#4338ca}
+.sitenav-b a small{font-size:11.5px;color:#9ca3af;letter-spacing:.08em}
+.sitenav-b a.next{text-align:left}
+.sitenav-b a.homeb{justify-content:center;text-align:center;font-weight:700;color:#4338ca;border-color:#4338ca}
+.sitenav-b span{display:block}
+@media(max-width:640px){.sitenav{flex-wrap:wrap;overflow:visible;gap:6px 5px;font-size:13px}.sitenav a{padding:3px 10px}}
+@media(max-width:520px){.sitenav-b{grid-template-columns:1fr 1fr}.sitenav-b a.homeb{grid-column:1/-1;order:-1}}
+</style>
 </head>
 <body>
 
@@ -195,6 +216,10 @@ footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
 </div></div>
 
 <div class="wrap">
+
+<!-- SITENAV:top 由 _add_site_nav.py 產生，勿手改 -->
+<nav class="sitenav" aria-label="站內導覽"><a class="home" href="index.html">八年級數學自學站</a><span class="sep">·</span><a class="" href="multiply.html">1-1 乘法公式</a><a class="now" href="polynomial.html">1-2 多項式加減</a><a class="" href="division.html">1-3 多項式乘除</a><a class="" href="sqrt.html">2-1 平方根</a><span class="sep">·</span><a class="" href="exam-sections.html">段考・照節次練</a><a class="" href="exam.html">段考・整卷模擬</a></nav>
+<!-- /SITENAV:top -->
 
 <header>
   <div class="kicker">八年級上 · 第一章 1-2 多項式與其加減運算</div>
@@ -597,6 +622,10 @@ document.getElementById("mqrst").addEventListener("click",function(){
 })();
 </script>
 <!-- == MORE-Q END == -->
+
+<!-- SITENAV:bottom 由 _add_site_nav.py 產生，勿手改 -->
+<div class="sitenav-b"><a class="prev" href="multiply.html"><small>← 上一頁</small><span>1-1 乘法公式</span></a><a class="homeb" href="index.html">回八年級首頁</a><a class="next" href="division.html"><small>下一頁 →</small><span>1-3 多項式乘除</span></a></div>
+<!-- /SITENAV:bottom -->
 
 <footer>
   課本練習題取自八年級上冊 1-2 的隨堂練習與重點整理自我檢核，僅使用題目的數字與問法，未複製課本文字與圖片。<br>

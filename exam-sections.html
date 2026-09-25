@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>照課本節次練段考 · 八上（第三冊）</title>
+<style>
+:root{--paper:#f7f8f5;--ink:#20261f;--ink2:#525c50;--line:#d8ded4;--accent:#4338ca;
+ --ok:#1f7a4d;--no:#b3402f;--warm:#b5762a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+ font:16px/1.85 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:26px 20px 90px}
+a.back{display:inline-block;color:var(--ink2);text-decoration:none;font-size:14px}
+a.back:hover{color:var(--accent)}
+header{text-align:center;padding:12px 0 4px}
+.kick{font-size:12px;letter-spacing:.18em;color:var(--accent);font-weight:700}
+h1{font-size:25px;margin:.25em 0 .3em;line-height:1.5}
+.sub{color:var(--ink2);font-size:14.5px}
+.sub b{color:var(--ink)}
+.bar{position:sticky;top:0;z-index:9;background:rgba(247,248,245,.94);backdrop-filter:blur(6px);
+ border-bottom:1px solid var(--line);margin:18px -20px 0;padding:9px 20px;display:flex;
+ align-items:center;gap:12px;font-size:14px}
+.bar .tr{flex:1;height:8px;background:#e9ece6;border-radius:99px;overflow:hidden}
+.bar .fl{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .4s}
+.bar b{color:var(--accent);font-variant-numeric:tabular-nums}
+.tiny{font:inherit;font-size:13.5px;cursor:pointer;background:#fff;border:1px solid var(--line);
+ border-radius:8px;padding:6px 14px;color:var(--ink2);text-decoration:none;display:inline-block}
+.tiny:hover{border-color:var(--accent);color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:22px}
+a.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);
+ border-radius:13px;padding:15px 17px;transition:.14s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 5px 16px rgba(0,0,0,.06)}
+a.card .cn{font-size:16.5px;font-weight:700;line-height:1.5}
+a.card .cp{font-size:12.5px;color:#fff;background:var(--accent);border-radius:99px;padding:2px 10px;
+ display:inline-block;margin-top:7px}
+a.card .cm{font-size:13px;color:var(--ink2);margin-top:9px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+a.card .pr{flex:1;min-width:72px;height:6px;background:#e9ece6;border-radius:99px;overflow:hidden}
+a.card .pr i{display:block;height:100%;width:0;background:var(--ok);border-radius:99px}
+a.card .dn{color:var(--ok);font-weight:700}
+.q{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px 12px;margin:14px 0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-bottom:8px}
+.qn{display:inline-block;min-width:26px;height:26px;line-height:26px;text-align:center;font-size:13px;
+ font-weight:700;color:#fff;background:var(--ink2);border-radius:99px}
+.badge{font-size:11.5px;border:1px solid var(--line);border-radius:99px;padding:1px 9px}
+.badge.un{border-color:#e8d5b0;background:#fdf6ea;color:#8a5717}
+.shot{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:9px;
+ background:#fff;padding:6px}
+/* 所有裁圖用同一比例（--w＝相對整頁寬的百分比），字才不會一題大一題小；手機上整頁寬折合 660px，可左右滑 */
+.shot img{display:block;height:auto;width:calc(var(--w) * 1%);max-width:none}
+@media(max-width:640px){.shot img{width:calc(var(--w) * 6.6px)}}
+.shot.wide img{width:calc(var(--w) * 12px)}
+.tools{display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap}
+.opts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.opt{font:inherit;font-size:15px;font-weight:700;cursor:pointer;background:#fbfbf9;border:1.5px solid var(--line);
+ border-radius:9px;padding:7px 0;width:64px;text-align:center;transition:.12s}
+.opt:hover:not(.done){border-color:var(--accent);background:#fff}
+.opt.done{cursor:default}
+.opt.right{border-color:var(--ok);background:#f0f8f3;color:var(--ok)}
+.opt.wrong{border-color:var(--no);background:#fdf2f0;color:var(--no)}
+.reveal{font:inherit;font-size:14.5px;cursor:pointer;background:#fff;border:1.5px solid var(--accent);
+ color:var(--accent);border-radius:9px;padding:7px 16px;margin-top:10px}
+.reveal:disabled{opacity:.45;cursor:default}
+.ans{display:none;margin-top:10px;font-size:15.5px}
+.ans.on{display:block;animation:up .3s ease}
+.ans .a{font-size:19px;font-weight:700;color:var(--accent)}
+.ans .a .fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+ line-height:1.15;font-size:.85em;margin:0 2px}
+.ans .a .fr span:first-child{border-bottom:1.5px solid currentColor;padding:0 3px}
+.ans .a .fr span:last-child{padding:0 3px}
+.self{display:flex;gap:8px;margin-top:8px;align-items:center;font-size:14px;color:var(--ink2);flex-wrap:wrap}
+.self button{font:inherit;font-size:14px;cursor:pointer;border:1.5px solid var(--line);background:#fff;
+ border-radius:9px;padding:5px 14px}
+.self button.ok.on{border-color:var(--ok);background:#f0f8f3;color:var(--ok)}
+.self button.ng.on{border-color:var(--no);background:#fdf2f0;color:var(--no)}
+.fb{font-size:14px;margin-top:8px;display:none}
+.fb.on{display:block}
+.fb.y{color:var(--ok)}.fb.n{color:var(--no)}
+.why{display:none;margin-top:10px;background:#fdf6ea;border:1px solid #e8d5b0;border-radius:11px;
+ padding:11px 15px;font-size:14.5px;line-height:1.8}
+.why.on{display:block;animation:up .3s ease}
+.why sup{font-size:.7em}
+.ans .a sup{font-size:.65em}
+@keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.note{background:#fdf6ea;border:1px solid #e8d5b0;border-radius:13px;padding:16px 19px;margin:26px 0 0;font-size:14.5px}
+.note h3{margin:.1em 0 .45em;font-size:16px;color:#8a5717}
+.note p{margin:.35em 0}
+.nav2{display:flex;justify-content:space-between;gap:10px;margin-top:26px;flex-wrap:wrap}
+.secline{font-size:13.5px;color:var(--ink2);margin:22px 0 -4px;letter-spacing:.06em}
+footer{text-align:center;color:var(--ink2);font-size:13px;margin-top:40px;line-height:1.9}
+@media(max-width:520px){.wrap{padding:14px 13px 70px}h1{font-size:21px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a class="back" href="index.html">← 回八年級數學自學站</a>
+
+<header>
+  <div class="kick">照課本節次練　·　八上（第三冊）　·　第一次段考範圍</div>
+  <h1>一節一節，用學校真正考過的題目練</h1>
+  <div class="sub">段考考的是<b>這一節教了什麼</b>。下面每一節一個入口——<b>今天老師教到哪，就點哪一節</b>。</div>
+</header>
+
+<div class="bar">
+  <span>總進度</span><div class="tr"><div class="fl" id="pf"></div></div>
+  <span><b id="pd">0</b> / 86 題</span>
+  <button class="tiny" id="rst">全部清除</button>
+</div>
+
+<div class="grid"><a class="card" href="ex-1-1.html" data-ids="g8-112-s1q1,g8-112-s1q2,g8-112-s1q3,g8-112-s2q1,g8-112-s2q2,g8-112-s2q3,g8-112-s2q4,g8-112-s3q1,g8-112-s3q3,g8-113-s1q1,g8-113-s1q2,g8-113-s1q3,g8-113-s3q1,g8-113-s3q2,g8-114-s1q1,g8-114-s1q2,g8-114-s1q4,g8-114-s1q12,g8-114-s2q1,g8-114-s2q2,g8-114-s2q3,g8-114-s2q4"><div class="cn">1-1 乘法公式</div><div class="cp">課本 p.6–21</div><div class="cm"><span>22 題：選擇 8、填充 14</span></div><div class="cm"><span class="pr"><i></i></span><span class="dn">0 / 22</span></div></a>
+<a class="card" href="ex-1-2.html" data-ids="g8-112-s1q4,g8-112-s1q5,g8-112-s1q6,g8-112-s2q5,g8-112-s2q6,g8-112-s2q7,g8-113-s1q4,g8-113-s1q5,g8-113-s1q6,g8-113-s2q1,g8-113-s2q2,g8-113-s3q3,g8-113-s3q4,g8-114-s1q3,g8-114-s1q5,g8-114-s1q6,g8-114-s2q5,g8-114-s2q6,g8-114-s2q7"><div class="cn">1-2 多項式與其加減運算</div><div class="cp">課本 p.22–34</div><div class="cm"><span>19 題：選擇 8、填充 11</span></div><div class="cm"><span class="pr"><i></i></span><span class="dn">0 / 19</span></div></a>
+<a class="card" href="ex-1-3.html" data-ids="g8-112-s1q7,g8-112-s1q8,g8-112-s1q9,g8-112-s2q8,g8-112-s2q9,g8-112-s2q10,g8-112-s2q11,g8-112-s3q2,g8-113-s1q7,g8-113-s1q8,g8-113-s1q9,g8-113-s3q5,g8-113-s3q6,g8-113-s3q7,g8-113-s3q11,g8-113-s3q12,g8-114-s1q7,g8-114-s1q11,g8-114-s2q8,g8-114-s2q9,g8-114-s2q10,g8-114-s2q11,g8-114-s2q16"><div class="cn">1-3 多項式的乘除運算</div><div class="cp">課本 p.35–51</div><div class="cm"><span>23 題：選擇 6、填充 17</span></div><div class="cm"><span class="pr"><i></i></span><span class="dn">0 / 23</span></div></a>
+<a class="card" href="ex-2-1.html" data-ids="g8-112-s1q10,g8-112-s1q11,g8-112-s1q12,g8-112-s2q12,g8-112-s2q13,g8-112-s2q14,g8-112-s3q4,g8-113-s1q10,g8-113-s1q11,g8-113-s1q12,g8-113-s2q3,g8-113-s2q4,g8-113-s3q8,g8-113-s3q9,g8-113-s3q10,g8-114-s1q8,g8-114-s1q9,g8-114-s1q10,g8-114-s2q12,g8-114-s2q13,g8-114-s2q14,g8-114-s2q15"><div class="cn">2-1 平方根與近似值</div><div class="cp">課本 p.58–</div><div class="cm"><span>22 題：選擇 8、填充 14</span></div><div class="cm"><span class="pr"><i></i></span><span class="dn">0 / 22</span></div></a></div>
+
+<div class="note">
+  <h3>關於這些題目</h3>
+  <p>題目取自 <b>112、113、114 三個學年</b>的八年級第一次段考數學科試卷，共 <b>86 題</b>（選擇 30 題、填充 56 題），
+  每一題都是<b>原卷直接裁下來的圖</b>，不重打——分數、指數、根號、附圖都跟考卷上一模一樣。</p>
+  <p>題目照<b>課本的節次</b>重新歸位；卷子原本的大題順序不代表課本的順序。同一節裡照「學年 → 大題 → 題號」排。</p>
+  <p><b>選擇題</b>點 A–D 當場對答案；<b>填充題</b>自己算完再按「看答案」，然後點「我答對了／我答錯了」記進度。答完會展開一小段解析。</p>
+  <p>🔴 <b>114 學年那份卷學校沒有公布解答</b>，28 題的答案是本站自己解的，頁面上都標了「非官方」——若與老師講的不同，以老師為準。
+  另有幾題官方解答與本站計算不一致，解析裡寫明了兩邊各是什麼，請找老師確認。</p>
+  <p>手機上看不清楚可以按每一題的「放大」，或在圖上左右滑動。</p>
+</div>
+
+<footer>段考試題取自新北市立丹鳳高級中學 112–114 學年度八年級第一次段考數學科試卷（原卷裁圖）<br>依課本節次重新歸類　·　僅供個人學習、非商業使用</footer>
+</div>
+<script>
+(function(){
+"use strict";
+var KEY="jhs8math-exam-v1", st={};
+try{st=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){st={}}
+var done=0, all=0;
+document.querySelectorAll("a.card").forEach(function(c){
+  var ids=(c.dataset.ids||"").split(",").filter(Boolean);
+  var n=ids.filter(function(i){return st[i]}).length;
+  done+=n; all+=ids.length;
+  var bar=c.querySelector(".pr i"); if(bar) bar.style.width=(ids.length?n/ids.length*100:0)+"%";
+  var tx=c.querySelector(".dn"); if(tx) tx.textContent = n+" / "+ids.length;
+});
+var pd=document.getElementById("pd"); if(pd) pd.textContent=done;
+var pf=document.getElementById("pf"); if(pf) pf.style.width=(all?done/all*100:0)+"%";
+var rst=document.getElementById("rst");
+if(rst) rst.addEventListener("click",function(){ try{localStorage.removeItem(KEY)}catch(e){} location.reload(); });
+})();
+</script>
+</body>
+</html>

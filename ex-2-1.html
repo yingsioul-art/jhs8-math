@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2-1 平方根與近似值 · 段考題 · 八上（第三冊）</title>
+<style>
+:root{--paper:#f7f8f5;--ink:#20261f;--ink2:#525c50;--line:#d8ded4;--accent:#4338ca;
+ --ok:#1f7a4d;--no:#b3402f;--warm:#b5762a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+ font:16px/1.85 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:26px 20px 90px}
+a.back{display:inline-block;color:var(--ink2);text-decoration:none;font-size:14px}
+a.back:hover{color:var(--accent)}
+header{text-align:center;padding:12px 0 4px}
+.kick{font-size:12px;letter-spacing:.18em;color:var(--accent);font-weight:700}
+h1{font-size:25px;margin:.25em 0 .3em;line-height:1.5}
+.sub{color:var(--ink2);font-size:14.5px}
+.sub b{color:var(--ink)}
+.bar{position:sticky;top:0;z-index:9;background:rgba(247,248,245,.94);backdrop-filter:blur(6px);
+ border-bottom:1px solid var(--line);margin:18px -20px 0;padding:9px 20px;display:flex;
+ align-items:center;gap:12px;font-size:14px}
+.bar .tr{flex:1;height:8px;background:#e9ece6;border-radius:99px;overflow:hidden}
+.bar .fl{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .4s}
+.bar b{color:var(--accent);font-variant-numeric:tabular-nums}
+.tiny{font:inherit;font-size:13.5px;cursor:pointer;background:#fff;border:1px solid var(--line);
+ border-radius:8px;padding:6px 14px;color:var(--ink2);text-decoration:none;display:inline-block}
+.tiny:hover{border-color:var(--accent);color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:22px}
+a.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);
+ border-radius:13px;padding:15px 17px;transition:.14s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 5px 16px rgba(0,0,0,.06)}
+a.card .cn{font-size:16.5px;font-weight:700;line-height:1.5}
+a.card .cp{font-size:12.5px;color:#fff;background:var(--accent);border-radius:99px;padding:2px 10px;
+ display:inline-block;margin-top:7px}
+a.card .cm{font-size:13px;color:var(--ink2);margin-top:9px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+a.card .pr{flex:1;min-width:72px;height:6px;background:#e9ece6;border-radius:99px;overflow:hidden}
+a.card .pr i{display:block;height:100%;width:0;background:var(--ok);border-radius:99px}
+a.card .dn{color:var(--ok);font-weight:700}
+.q{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px 12px;margin:14px 0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-bottom:8px}
+.qn{display:inline-block;min-width:26px;height:26px;line-height:26px;text-align:center;font-size:13px;
+ font-weight:700;color:#fff;background:var(--ink2);border-radius:99px}
+.badge{font-size:11.5px;border:1px solid var(--line);border-radius:99px;padding:1px 9px}
+.badge.un{border-color:#e8d5b0;background:#fdf6ea;color:#8a5717}
+.shot{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:9px;
+ background:#fff;padding:6px}
+/* 所有裁圖用同一比例（--w＝相對整頁寬的百分比），字才不會一題大一題小；手機上整頁寬折合 660px，可左右滑 */
+.shot img{display:block;height:auto;width:calc(var(--w) * 1%);max-width:none}
+@media(max-width:640px){.shot img{width:calc(var(--w) * 6.6px)}}
+.shot.wide img{width:calc(var(--w) * 12px)}
+.tools{display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap}
+.opts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.opt{font:inherit;font-size:15px;font-weight:700;cursor:pointer;background:#fbfbf9;border:1.5px solid var(--line);
+ border-radius:9px;padding:7px 0;width:64px;text-align:center;transition:.12s}
+.opt:hover:not(.done){border-color:var(--accent);background:#fff}
+.opt.done{cursor:default}
+.opt.right{border-color:var(--ok);background:#f0f8f3;color:var(--ok)}
+.opt.wrong{border-color:var(--no);background:#fdf2f0;color:var(--no)}
+.reveal{font:inherit;font-size:14.5px;cursor:pointer;background:#fff;border:1.5px solid var(--accent);
+ color:var(--accent);border-radius:9px;padding:7px 16px;margin-top:10px}
+.reveal:disabled{opacity:.45;cursor:default}
+.ans{display:none;margin-top:10px;font-size:15.5px}
+.ans.on{display:block;animation:up .3s ease}
+.ans .a{font-size:19px;font-weight:700;color:var(--accent)}
+.ans .a .fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+ line-height:1.15;font-size:.85em;margin:0 2px}
+.ans .a .fr span:first-child{border-bottom:1.5px solid currentColor;padding:0 3px}
+.ans .a .fr span:last-child{padding:0 3px}
+.self{display:flex;gap:8px;margin-top:8px;align-items:center;font-size:14px;color:var(--ink2);flex-wrap:wrap}
+.self button{font:inherit;font-size:14px;cursor:pointer;border:1.5px solid var(--line);background:#fff;
+ border-radius:9px;padding:5px 14px}
+.self button.ok.on{border-color:var(--ok);background:#f0f8f3;color:var(--ok)}
+.self button.ng.on{border-color:var(--no);background:#fdf2f0;color:var(--no)}
+.fb{font-size:14px;margin-top:8px;display:none}
+.fb.on{display:block}
+.fb.y{color:var(--ok)}.fb.n{color:var(--no)}
+.why{display:none;margin-top:10px;background:#fdf6ea;border:1px solid #e8d5b0;border-radius:11px;
+ padding:11px 15px;font-size:14.5px;line-height:1.8}
+.why.on{display:block;animation:up .3s ease}
+.why sup{font-size:.7em}
+.ans .a sup{font-size:.65em}
+@keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.note{background:#fdf6ea;border:1px solid #e8d5b0;border-radius:13px;padding:16px 19px;margin:26px 0 0;font-size:14.5px}
+.note h3{margin:.1em 0 .45em;font-size:16px;color:#8a5717}
+.note p{margin:.35em 0}
+.nav2{display:flex;justify-content:space-between;gap:10px;margin-top:26px;flex-wrap:wrap}
+.secline{font-size:13.5px;color:var(--ink2);margin:22px 0 -4px;letter-spacing:.06em}
+footer{text-align:center;color:var(--ink2);font-size:13px;margin-top:40px;line-height:1.9}
+@media(max-width:520px){.wrap{padding:14px 13px 70px}h1{font-size:21px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a class="back" href="exam-sections.html">← 回節次目錄</a>
+
+<header>
+  <div class="kick">照課本節次練段考　·　課本 p.58–</div>
+  <h1>2-1 平方根與近似值</h1>
+  <div class="sub">這一節有 <b>22</b> 題（三個學年的第一次段考）　·　先看完課本這一節，<a href="sqrt.html" style="color:var(--accent)">教材在這裡</a></div>
+</header>
+
+<div class="bar">
+  <span>本節進度</span><div class="tr"><div class="fl" id="pf"></div></div>
+  <span><b id="pd">0</b> / 22 題</span>
+  <button class="tiny" id="rst">清除本節</button>
+</div>
+
+<div class="q" id="g8-112-s1q10" data-typ="F" data-ans=""><div class="qh"><span class="qn">1</span><span>112 學年第 1 次段考　·　基本題 第 10 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-112_s1q10.png" alt="原卷第 10 題" loading="lazy" style="--w:32.4"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">15</span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div></div><div class="q" id="g8-112-s1q11" data-typ="F" data-ans=""><div class="qh"><span class="qn">2</span><span>112 學年第 1 次段考　·　基本題 第 11 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-112_s1q11.png" alt="原卷第 11 題" loading="lazy" style="--w:35.9"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">±14</span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div><div class="why">平方根有兩個。</div></div><div class="q" id="g8-112-s1q12" data-typ="F" data-ans=""><div class="qh"><span class="qn">3</span><span>112 學年第 1 次段考　·　基本題 第 12 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-112_s1q12.png" alt="原卷第 12 題" loading="lazy" style="--w:37.1"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">64</span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div></div><div class="q" id="g8-112-s2q12" data-typ="C" data-ans="B"><div class="qh"><span class="qn">4</span><span>112 學年第 1 次段考　·　單選題 第 12 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-112_s2q12.png" alt="原卷第 12 題" loading="lazy" style="--w:96.6"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><div class="opts"><button class="opt" data-k="A">A</button><button class="opt" data-k="B">B</button><button class="opt" data-k="C">C</button><button class="opt" data-k="D">D</button></div><div class="fb"></div><div class="why">52.3<sup>2</sup>＝2735.29＜2740＜52.4<sup>2</sup>＝2745.76，且更靠近 52.3。</div></div><div class="q" id="g8-112-s2q13" data-typ="C" data-ans="C"><div class="qh"><span class="qn">5</span><span>112 學年第 1 次段考　·　單選題 第 13 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-112_s2q13.png" alt="原卷第 13 題" loading="lazy" style="--w:63.8"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><div class="opts"><button class="opt" data-k="A">A</button><button class="opt" data-k="B">B</button><button class="opt" data-k="C">C</button><button class="opt" data-k="D">D</button></div><div class="fb"></div><div class="why">17<sup>2</sup>＝289＜300＜18<sup>2</sup>＝324。</div></div><div class="q" id="g8-112-s2q14" data-typ="C" data-ans="B"><div class="qh"><span class="qn">6</span><span>112 學年第 1 次段考　·　單選題 第 14 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-112_s2q14.png" alt="原卷第 14 題" loading="lazy" style="--w:63.8"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><div class="opts"><button class="opt" data-k="A">A</button><button class="opt" data-k="B">B</button><button class="opt" data-k="C">C</button><button class="opt" data-k="D">D</button></div><div class="fb"></div><div class="why">2a＋8＝16 → a＝4；3a＋b＋1＝25 → b＝12；4a＋7b＝100 → ±10。</div></div><div class="q" id="g8-112-s3q4" data-typ="F" data-ans=""><div class="qh"><span class="qn">7</span><span>112 學年第 1 次段考　·　挑戰題 第 4 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-112_s3q4.png" alt="原卷第 4 題" loading="lazy" style="--w:59.2"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">11、13、17、31</span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div><div class="why">120＋m<sup>2</sup>＝a<sup>2</sup> → (a−m)(a＋m)＝120，兩因數同奇偶：m＝1、7、13、29。</div></div><div class="q" id="g8-113-s1q10" data-typ="F" data-ans=""><div class="qh"><span class="qn">8</span><span>113 學年第 1 次段考　·　基本題 第 10 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-113_s1q10.png" alt="原卷第 10 題" loading="lazy" style="--w:88.5"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">13</span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div><div class="why">根號裡先算 (−13)<sup>2</sup>＝169。</div></div><div class="q" id="g8-113-s1q11" data-typ="F" data-ans=""><div class="qh"><span class="qn">9</span><span>113 學年第 1 次段考　·　基本題 第 11 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-113_s1q11.png" alt="原卷第 11 題" loading="lazy" style="--w:88.8"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">42</span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div><div class="why">2×3×7。</div></div><div class="q" id="g8-113-s1q12" data-typ="F" data-ans=""><div class="qh"><span class="qn">10</span><span>113 學年第 1 次段考　·　基本題 第 12 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-113_s1q12.png" alt="原卷第 12 題" loading="lazy" style="--w:88.5"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a"><span class="fr"><span>7</span><span>2</span></span></span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div><div class="why">12<span class="fr"><span>1</span><span>4</span></span>＝<span class="fr"><span>49</span><span>4</span></span>。官方解答這一格是圖片，本站依計算寫出。</div></div><div class="q" id="g8-113-s2q3" data-typ="C" data-ans="B"><div class="qh"><span class="qn">11</span><span>113 學年第 1 次段考　·　選擇題 第 3 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-113_s2q3.png" alt="原卷第 3 題" loading="lazy" style="--w:89.1"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><div class="opts"><button class="opt" data-k="A">A</button><button class="opt" data-k="B">B</button><button class="opt" data-k="C">C</button><button class="opt" data-k="D">D</button></div><div class="fb"></div><div class="why">13<sup>2</sup>＝169＜179＜14<sup>2</sup>＝196。</div></div><div class="q" id="g8-113-s2q4" data-typ="C" data-ans="A"><div class="qh"><span class="qn">12</span><span>113 學年第 1 次段考　·　選擇題 第 4 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-113_s2q4.png" alt="原卷第 4 題" loading="lazy" style="--w:75.3"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><div class="opts"><button class="opt" data-k="A">A</button><button class="opt" data-k="B">B</button><button class="opt" data-k="C">C</button><button class="opt" data-k="D">D</button></div><div class="fb"></div><div class="why">只有丁對。甲：0.2<sup>2</sup>＝0.04≠0.4；乙：a＝841，是 29 與 −29 的平方；丙：負數沒有平方根；戊：30 的平方根是 ±√30，只是不是有理數。</div></div><div class="q" id="g8-113-s3q8" data-typ="F" data-ans=""><div class="qh"><span class="qn">13</span><span>113 學年第 1 次段考　·　填充題 第 8 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-113_s3q8.png" alt="原卷第 8 題" loading="lazy" style="--w:87.8"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">±<span class="fr"><span>9</span><span>4</span></span></span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div><div class="why">官方解答這一格是圖片，本站依計算寫出。</div></div><div class="q" id="g8-113-s3q9" data-typ="F" data-ans=""><div class="qh"><span class="qn">14</span><span>113 學年第 1 次段考　·　填充題 第 9 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-113_s3q9.png" alt="原卷第 9 題" loading="lazy" style="--w:62.2"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">−4</span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div><div class="why">2a−1＝9 → a＝5；3a＋b−1＝16 → b＝2；2a＋3b＝16。</div></div><div class="q" id="g8-113-s3q10" data-typ="F" data-ans=""><div class="qh"><span class="qn">15</span><span>113 學年第 1 次段考　·　填充題 第 10 題</span><span class="badge">官方解答</span></div><div class="shot"><img src="exam/q/g8-113_s3q10.png" alt="原卷第 10 題" loading="lazy" style="--w:91.3"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">6.3</span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div><div class="why">6.3<sup>2</sup>＝39.69、6.35<sup>2</sup>＝40.3225 → √40 在 6.3 與 6.35 之間，四捨五入到小數第 1 位是 6.3。</div></div><div class="q" id="g8-114-s1q8" data-typ="C" data-ans="B"><div class="qh"><span class="qn">16</span><span>114 學年第 1 次段考　·　單選題 第 8 題</span><span class="badge un">非官方・本站自解</span></div><div class="shot"><img src="exam/q/g8-114_s1q8.png" alt="原卷第 8 題" loading="lazy" style="--w:62.2"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><div class="opts"><button class="opt" data-k="A">A</button><button class="opt" data-k="B">B</button><button class="opt" data-k="C">C</button><button class="opt" data-k="D">D</button></div><div class="fb"></div><div class="why">(A) 0.3<sup>2</sup>＝0.09；(C) 邊長是面積的平方根，反了；(D) −16 沒有平方根。</div></div><div class="q" id="g8-114-s1q9" data-typ="C" data-ans="D"><div class="qh"><span class="qn">17</span><span>114 學年第 1 次段考　·　單選題 第 9 題</span><span class="badge un">非官方・本站自解</span></div><div class="shot"><img src="exam/q/g8-114_s1q9.png" alt="原卷第 9 題" loading="lazy" style="--w:54.5"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><div class="opts"><button class="opt" data-k="A">A</button><button class="opt" data-k="B">B</button><button class="opt" data-k="C">C</button><button class="opt" data-k="D">D</button></div><div class="fb"></div><div class="why">(D) √(16/9)＝4/3 ✓。(A) √4<sup>6</sup>＝4<sup>3</sup>；(B) √(40/9)≠8/3；(C) 負數沒有平方根。</div></div><div class="q" id="g8-114-s1q10" data-typ="C" data-ans="B"><div class="qh"><span class="qn">18</span><span>114 學年第 1 次段考　·　單選題 第 10 題</span><span class="badge un">非官方・本站自解</span></div><div class="shot"><img src="exam/q/g8-114_s1q10.png" alt="原卷第 10 題" loading="lazy" style="--w:50.8"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><div class="opts"><button class="opt" data-k="A">A</button><button class="opt" data-k="B">B</button><button class="opt" data-k="C">C</button><button class="opt" data-k="D">D</button></div><div class="fb"></div><div class="why">78<sup>2</sup>＝6084＜6174＜79<sup>2</sup>＝6241。</div></div><div class="q" id="g8-114-s2q12" data-typ="F" data-ans=""><div class="qh"><span class="qn">19</span><span>114 學年第 1 次段考　·　填充題 第 12 題</span><span class="badge un">非官方・本站自解</span></div><div class="shot"><img src="exam/q/g8-114_s2q12.png" alt="原卷第 12 題" loading="lazy" style="--w:24.0"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">−30</span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div></div><div class="q" id="g8-114-s2q13" data-typ="F" data-ans=""><div class="qh"><span class="qn">20</span><span>114 學年第 1 次段考　·　填充題 第 13 題</span><span class="badge un">非官方・本站自解</span></div><div class="shot"><img src="exam/q/g8-114_s2q13.png" alt="原卷第 13 題" loading="lazy" style="--w:32.4"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">9</span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div><div class="why">4a＋13＝49。</div></div><div class="q" id="g8-114-s2q14" data-typ="F" data-ans=""><div class="qh"><span class="qn">21</span><span>114 學年第 1 次段考　·　填充題 第 14 題</span><span class="badge un">非官方・本站自解</span></div><div class="shot"><img src="exam/q/g8-114_s2q14.png" alt="原卷第 14 題" loading="lazy" style="--w:39.1"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">±√19</span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div><div class="why">2a−1＝25 → a＝13；3a＋b−1＝49 → b＝11；4a−3b＝19。</div></div><div class="q" id="g8-114-s2q15" data-typ="F" data-ans=""><div class="qh"><span class="qn">22</span><span>114 學年第 1 次段考　·　填充題 第 15 題</span><span class="badge un">非官方・本站自解</span></div><div class="shot"><img src="exam/q/g8-114_s2q15.png" alt="原卷第 15 題" loading="lazy" style="--w:41.7"></div><div class="tools"><button class="tiny zoom">放大</button><span style="font-size:12.5px;color:#8a8378">看不清楚可以放大，或左右滑動</span></div><button class="reveal">看答案</button><div class="ans"><span class="a">39 或 45</span><div class="self">自己對一下：<button class="ok" data-m="ok">我答對了</button><button class="ng" data-m="ng">我答錯了</button></div></div><div class="why">設 a＝p、b＝p＋4：p(p＋4)＋4＝(p＋2)<sup>2</sup> → c＝p＋2。35＜c＜50 且 p、p＋4 都是質數：p＝37（41 ✓）或 43（47 ✓）。</div></div>
+
+<div class="nav2"><a class="tiny" href="ex-1-3.html">← 1-3 多項式的乘除運算</a><span></span></div>
+<div style="text-align:center;margin-top:22px"><a class="back" href="exam-sections.html">← 回節次目錄</a></div>
+
+<footer>段考試題取自新北市立丹鳳高級中學 112–114 學年度八年級第一次段考數學科試卷（原卷裁圖）<br>依課本節次重新歸類　·　僅供個人學習、非商業使用</footer>
+</div>
+<script>
+(function(){
+"use strict";
+var KEY="jhs8math-exam-v1", st={};
+try{st=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){st={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+var TOTAL=22;
+function prog(){
+  var n=0; document.querySelectorAll(".q").forEach(function(b){ if(st[b.id]) n++; });
+  var pd=document.getElementById("pd"); if(pd) pd.textContent=n;
+  var pf=document.getElementById("pf"); if(pf) pf.style.width=(TOTAL?n/TOTAL*100:0)+"%";
+}
+function paintChoice(box,pick){
+  var ans=box.dataset.ans, fb=box.querySelector(".fb");
+  box.querySelectorAll(".opt").forEach(function(b){
+    b.classList.add("done");
+    if(b.dataset.k===ans) b.classList.add("right");
+    if(b.dataset.k===pick && pick!==ans) b.classList.add("wrong");
+  });
+  fb.className="fb on "+(pick===ans?"y":"n");
+  fb.textContent = pick===ans ? "答對了" : ("答案是 "+ans+"　·　你選的是 "+pick);
+  var why=box.querySelector(".why"); if(why) why.classList.add("on");
+}
+function paintFill(box,mark){
+  box.querySelector(".ans").classList.add("on");
+  var why=box.querySelector(".why"); if(why) why.classList.add("on");
+  var rv=box.querySelector(".reveal"); if(rv) rv.disabled=true;
+  box.querySelectorAll(".self button").forEach(function(b){
+    b.classList.toggle("on", b.dataset.m===mark);
+  });
+}
+document.querySelectorAll(".q").forEach(function(box){
+  box.querySelectorAll(".opt").forEach(function(b){
+    b.addEventListener("click",function(){
+      if(box.dataset.locked) return;
+      box.dataset.locked="1"; st[box.id]=b.dataset.k; save(); paintChoice(box,b.dataset.k); prog();
+    });
+  });
+  var rv=box.querySelector(".reveal");
+  if(rv) rv.addEventListener("click",function(){ paintFill(box,""); });
+  box.querySelectorAll(".self button").forEach(function(b){
+    b.addEventListener("click",function(){
+      st[box.id]=b.dataset.m; save(); paintFill(box,b.dataset.m); prog();
+    });
+  });
+  var zb=box.querySelector(".zoom");
+  if(zb) zb.addEventListener("click",function(){
+    var s=box.querySelector(".shot"); s.classList.toggle("wide");
+    zb.textContent = s.classList.contains("wide") ? "縮小" : "放大";
+  });
+  if(st[box.id]){
+    if(box.dataset.typ==="C"){ box.dataset.locked="1"; paintChoice(box,st[box.id]); }
+    else paintFill(box,st[box.id]);
+  }
+});
+prog();
+var rst=document.getElementById("rst");
+if(rst) rst.addEventListener("click",function(){
+  document.querySelectorAll(".q").forEach(function(b){ delete st[b.id]; });
+  save(); location.reload();
+});
+})();
+</script>
+</body>
+</html>

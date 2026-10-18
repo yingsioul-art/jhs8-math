@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>根式的運算｜八上 2-2</title>
+<style>
+:root{
+  --paper:#f8f7f4; --ink:#232026; --ink2:#57525e; --line:#dcd8e0;
+  --accent:#4338ca; --accent-soft:#eeedfb;
+  --teal:#0f6b63; --teal-soft:#e6f2f0;
+  --blue:#1d5b79; --blue-soft:#e8f1f5;
+  --green:#15803d; --green-soft:#e9f5ec;
+  --red:#b03030; --red-soft:#fdeeee;
+  --shadow:0 1px 2px rgba(35,32,38,.06),0 8px 24px rgba(35,32,38,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:17px;line-height:1.85;letter-spacing:.01em}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 120px}
+
+header{padding:56px 0 28px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:14px}
+h1{font-size:34px;line-height:1.3;margin:0 0 14px;letter-spacing:-.01em}
+.sub{color:var(--ink2);font-size:15px;margin:0}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.tag{font-size:12px;padding:4px 11px;border:1px solid var(--line);border-radius:99px;color:var(--ink2);background:#fff}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(247,248,245,.95);
+  border-bottom:1px solid var(--line);margin:0 -20px 0;padding:10px 20px}
+.bar-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.track{flex:1;height:5px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.bar b{font-size:12px;color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+.step{font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.step .n{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;
+  width:20px;height:20px;line-height:20px;text-align:center;margin-right:8px;letter-spacing:0}
+h2{font-size:25px;line-height:1.4;margin:0 0 20px;letter-spacing:-.01em}
+h3{font-size:19px;margin:34px 0 12px}
+h4{font-size:16.5px;margin:24px 0 8px;color:var(--teal)}
+p{margin:0 0 18px}
+.lead{font-size:19px;line-height:1.9}
+.dim{color:var(--ink2)}
+.big{font-size:22px;font-weight:700;line-height:1.6;margin:26px 0}
+em{font-style:normal;background:linear-gradient(transparent 62%,#bfe6c9 62%);font-weight:600;padding:0 1px}
+.eq{font-family:"Cambria","Times New Roman",Georgia,serif;font-size:1.06em;font-variant-numeric:tabular-nums}
+.eq sup{font-size:.68em;vertical-align:super;line-height:0}
+.eq.blk{display:block;text-align:center;font-size:21px;margin:20px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  font-size:.82em;line-height:1.15;margin:0 2px}
+.frac span:first-child{border-bottom:1.3px solid currentColor;padding:0 4px}
+.hl{background:#fff3c4;border-radius:3px;padding:0 3px}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:24px 0;box-shadow:var(--shadow)}
+.quote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 20px;border-radius:0 10px 10px 0;margin:24px 0}
+.quote p:last-child{margin:0}
+.note{background:var(--blue-soft);border:1px solid #cfe0e8;border-radius:12px;padding:18px 20px;margin:24px 0;font-size:16px}
+.note p:last-child{margin:0}
+.note b{color:var(--blue)}
+.aside{background:#fdf8e8;border:1px dashed #e3d5a4;border-radius:12px;padding:16px 18px;margin:24px 0;font-size:15px;color:#5c4d20}
+.aside p:last-child{margin:0}
+
+.fcard{background:#fff;border:2px solid var(--accent);border-radius:14px;padding:20px;margin:16px 0;box-shadow:var(--shadow)}
+.fcard .fname{font-size:13px;letter-spacing:.14em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.fcard .fbody{font-size:21px;text-align:center;margin:10px 0 14px;font-family:"Cambria",Georgia,serif}
+.fcard .fsay{font-size:15.5px;color:var(--ink2);line-height:1.75;margin:0}
+.fcard .fsay strong{color:var(--ink)}
+
+.q{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:24px;margin:26px 0;box-shadow:var(--shadow)}
+.q-src{font-size:12px;letter-spacing:.12em;color:var(--accent);font-weight:700;margin-bottom:12px}
+.q-body{font-size:16.5px;line-height:1.9;margin-bottom:20px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;gap:12px;align-items:center;padding:14px 16px;border:1.5px solid var(--line);
+  border-radius:11px;cursor:pointer;background:#fff;font-size:16px;line-height:1.7;
+  transition:border-color .15s,background .15s;text-align:left;width:100%;font-family:inherit;color:inherit}
+.opt:hover:not(.locked){border-color:var(--ink2);background:#fbfcfa}
+.opt .k{font-weight:700;flex-shrink:0;width:22px;color:var(--ink2)}
+.opt.picked{border-color:var(--ink);border-width:2px}
+.opt.right{border-color:var(--green);background:var(--green-soft)}
+.opt.right .k{color:var(--green)}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.opt.wrong .k{color:var(--red)}
+.opt.locked{cursor:default}
+.fb{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);font-size:16px;display:none}
+.fb.show{display:block;animation:rise .45s ease}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.fb h4{margin:0 0 8px;font-size:15px;letter-spacing:.06em;color:inherit}
+.fb p:last-child{margin:0}
+
+.locked-zone{opacity:.3;pointer-events:none;filter:blur(4px) saturate(.2);user-select:none}
+.revealed{animation:reveal .6s ease both}
+@keyframes reveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.prac{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:22px;margin:26px 0;box-shadow:var(--shadow)}
+.prac-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+  font-size:13px;color:var(--ink2);font-weight:600;gap:10px;flex-wrap:wrap}
+.prac-top .src{color:var(--teal);letter-spacing:.08em}
+.dots{display:flex;gap:5px;margin-bottom:16px;flex-wrap:wrap}
+.dot{width:22px;height:6px;border-radius:99px;background:var(--line);transition:background .3s}
+.dot.done{background:var(--green)}
+.dot.now{background:var(--teal)}
+.prac-q{font-size:17.5px;line-height:2;margin-bottom:8px}
+.prac-hint{font-size:14.5px;color:var(--ink2);margin-bottom:16px;line-height:1.7}
+.prac-fb{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15.5px;line-height:1.8;display:none}
+.prac-fb.show{display:block;animation:rise .3s ease}
+.prac-fb.ok{background:var(--green-soft);border:1px solid #b7ddc3}
+.prac-fb.no{background:var(--red-soft);border:1px solid #edc4c4}
+
+.btn{padding:9px 18px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+  border-radius:99px;cursor:pointer;font-size:14.5px;font-family:inherit;font-weight:600;transition:opacity .15s}
+.btn:hover{opacity:.86}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn:disabled{opacity:.35;cursor:default}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+.lab{background:linear-gradient(#fff,#fbfcfa);border:1px solid var(--line);border-radius:16px;
+  padding:22px;margin:26px 0;box-shadow:var(--shadow)}
+.lab-t{font-size:12px;letter-spacing:.18em;color:var(--blue);font-weight:700;margin-bottom:16px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{padding:7px 14px;border:1.5px solid var(--line);background:#fff;border-radius:99px;
+  cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink2);transition:all .15s}
+.chip:hover{border-color:var(--ink2)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--accent);height:26px}
+.slider-lab{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);margin:6px 0 2px}
+.readout{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.pill{flex:1;min-width:106px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.pill .lb{font-size:12.5px;color:var(--ink2)}
+.pill .vl{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.pill.hi{background:var(--accent-soft);border-color:#b7ddc3}
+.pill.hi .vl{color:var(--accent)}
+.verdict{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15px;line-height:1.7;
+  background:var(--blue-soft);border:1px solid #cfe0e8}
+.verdict.good{background:var(--green-soft);border-color:#b7ddc3}
+.verdict.warn{background:#fdf8e8;border-color:#e3d5a4}
+
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15px;background:#fff;
+  border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#eef1eb;font-weight:700;font-size:13.5px;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:24px -20px;padding:0 20px}
+.scroll table{margin:0;min-width:460px}
+
+.flow{counter-reset:s;list-style:none;padding:0;margin:14px 0 0}
+.flow li{counter-increment:s;position:relative;padding:7px 0 7px 40px;font-size:15.5px;line-height:1.7}
+.flow li::before{content:counter(s);position:absolute;left:0;top:8px;width:25px;height:25px;
+  background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:12.5px;font-weight:700}
+details.pre{background:#fff;border:1px solid var(--line);border-radius:11px;margin-bottom:9px;overflow:hidden}
+details.pre summary{padding:13px 16px;cursor:pointer;font-size:16px;font-weight:600;list-style:none;
+  display:flex;align-items:center;gap:10px}
+details.pre summary::-webkit-details-marker{display:none}
+details.pre summary::before{content:"?";flex-shrink:0;width:22px;height:22px;border-radius:50%;
+  background:var(--line);color:var(--ink2);display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700}
+details.pre[open] summary::before{content:"\2713";background:var(--green);color:#fff}
+details.pre[open] summary{border-bottom:1px solid var(--line)}
+details.pre .bd{padding:14px 16px;font-size:15.5px;line-height:1.8;color:var(--ink2)}
+details.pre .bd strong{color:var(--ink)}
+details.pre .bd p{margin:0 0 10px}
+details.pre .bd p:last-child{margin:0}
+
+.done{text-align:center;padding:52px 0 20px}
+.done h2{font-size:27px}
+.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:9px 18px;
+  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:28px}
+footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
+svg{max-width:100%;height:auto;display:block}
+
+/* 原始考題下載 */
+.dl{background:#fff;border:2px solid var(--accent);border-radius:14px;padding:20px 22px;margin:24px 0;text-align:left}
+.dl h4{margin:0 0 8px;font-size:17px;color:var(--ink)}
+.dl p{font-size:15px;line-height:1.8;margin:0 0 14px;color:var(--ink2)}
+.dl a.get{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+  text-decoration:none;padding:11px 20px;border-radius:99px;font-size:15px;font-weight:700;
+  transition:opacity .15s}
+.dl a.get:hover{opacity:.86}
+.dl .meta{font-size:13px;color:var(--ink2);margin:10px 0 0}
+
+/* 完整解法步驟 */
+.sol{margin:20px 0}
+.sstep{display:flex;gap:14px;margin-bottom:20px}
+.sn{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-top:2px}
+.sb{flex:1;min-width:0}
+.sb h4{margin:2px 0 8px;font-size:17px;color:var(--ink)}
+.sb p{font-size:15.5px;line-height:1.85;margin:0 0 10px}
+.sb p:last-child{margin:0}
+.sb p.warn{background:#fdf8e8;border-left:3px solid #e3d5a4;padding:8px 12px;border-radius:0 8px 8px 0;font-size:14.5px}
+
+
+.rad{border-top:1.3px solid currentColor;padding:0 3px 0 1px;margin-left:-1px}
+.frac .rad{border-top-width:1px}
+.fac{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:12px 0 6px}
+.fac span{min-width:38px;height:38px;padding:0 8px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:Cambria,Georgia,serif;font-weight:700;font-size:16px}
+.fac .pair{background:var(--accent-soft);border:1.5px solid #c9c5f0;color:var(--accent)}
+.fac .single{background:#fdf2e3;border:1.5px solid #ecd3ad;color:#a15c07}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 4px}
+.cmp div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+.cmp b{display:block;font-family:Cambria,Georgia,serif;font-size:22px}
+.cmp small{color:var(--ink2);font-size:13px}
+
+</style>
+<style id="sitenav-css">
+.sitenav{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+ padding:10px 0 12px;margin:0 0 6px;border-bottom:1px solid rgba(0,0,0,.08);font-size:13.5px;scrollbar-width:none}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav a{flex:0 0 auto;text-decoration:none;color:#4b5563;background:#fff;border:1px solid rgba(0,0,0,.12);
+ border-radius:99px;padding:4px 12px;line-height:1.6;white-space:nowrap}
+.sitenav a:hover{border-color:#4338ca;color:#4338ca}
+.sitenav a.home{font-weight:700;color:#4338ca;border-color:#4338ca;background:#fff}
+.sitenav a.now{background:#4338ca;color:#fff;border-color:#4338ca;font-weight:700}
+.sitenav .sep{flex:0 0 auto;color:#9ca3af;padding:0 2px}
+.sitenav-b{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:34px 0 8px}
+.sitenav-b a{text-decoration:none;color:#374151;background:#fff;border:1px solid rgba(0,0,0,.14);border-radius:12px;
+ padding:12px 14px;line-height:1.5;font-size:14.5px;display:flex;flex-direction:column;justify-content:center}
+.sitenav-b a:hover{border-color:#4338ca;color:#4338ca}
+.sitenav-b a small{font-size:11.5px;color:#9ca3af;letter-spacing:.08em}
+.sitenav-b a.next{text-align:left}
+.sitenav-b a.homeb{justify-content:center;text-align:center;font-weight:700;color:#4338ca;border-color:#4338ca}
+.sitenav-b span{display:block}
+@media(max-width:640px){.sitenav{flex-wrap:wrap;overflow:visible;gap:6px 5px;font-size:13px}.sitenav a{padding:3px 10px}}
+@media(max-width:520px){.sitenav-b{grid-template-columns:1fr 1fr}.sitenav-b a.homeb{grid-column:1/-1;order:-1}}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="bar-inner">
+  <b id="pnum">0 / 19</b>
+  <div class="track"><div class="fill" id="pfill"></div></div>
+</div></div>
+
+<div class="wrap">
+
+<!-- SITENAV:top 由 _add_site_nav.py 產生，勿手改 -->
+<nav class="sitenav" aria-label="站內導覽"><a class="home" href="index.html">八年級數學自學站</a><span class="sep">·</span><a class="" href="multiply.html">1-1 乘法公式</a><a class="" href="polynomial.html">1-2 多項式加減</a><a class="" href="division.html">1-3 多項式乘除</a><a class="" href="sqrt.html">2-1 平方根</a><a class="now" href="radical.html">2-2 根式運算</a><span class="sep">·</span><a class="" href="exam-sections.html">段考・照節次練</a><a class="" href="exam.html">段考・整卷模擬</a></nav>
+<!-- /SITENAV:top -->
+
+<header>
+  <div class="kicker">八年級上 · 第二章 2-2 根式的運算</div>
+  <h1>根號裡面能搬什麼出來</h1>
+  <p class="sub"><span class='eq'>√<span class="rad">48</span>＝4√<span class="rad">3</span></span>、<span class='eq'><span class="frac"><span>1</span><span>√<span class="rad">2</span></span></span>＝<span class="frac"><span>√<span class="rad">2</span></span><span>2</span></span></span>——整節 2-2 其實只有兩個動作：<strong>把平方數搬出根號、把根號趕出分母</strong>。<br>還有一個全國很多人都踩過的陷阱：<span class='eq'>√<span class="rad">9</span>＋√<span class="rad">16</span></span> 不等於 <span class='eq'>√<span class="rad">25</span></span>。</p>
+  <div class="meta">
+    <span class="tag">課本 p.75–93</span>
+    <span class="tag">課本練習 10 題</span>
+    <span class="tag">會考挑戰 9 題</span>
+    <span class="tag">約 40 分鐘</span>
+  </div>
+</header>
+
+<!-- ══ 開始之前 ══ -->
+<section>
+  <div class="step">開始之前</div>
+  <h2>這一課會怎麼走</h2>
+  <div class="card">
+    <ol class="flow">
+      <li><strong>先把五件事認熟</strong>：根式的乘除、最簡根式、分母有理化、同類方根、四則運算</li>
+      <li><strong>兩個實驗</strong>：把根號裡的平方數搬出來；<span class='eq'>√<span class="rad">a</span>＋√<span class="rad">b</span></span> 和 <span class='eq'>√<span class="rad">a＋b</span></span> 到底差多少</li>
+      <li>沒有計算機的年代，為什麼一定要把根號趕出分母</li>
+      <li><strong>用課本的隨堂練習動手做</strong>（10 題）</li>
+      <li>重點整理，最後是<strong>會考挑戰 9 題</strong></li>
+    </ol>
+  </div>
+  <h3>先確認你知道這些</h3>
+
+  <details class="pre"><summary>2-1 的平方根：√<span class="rad">49</span>＝7、平方表</summary><div class="bd">
+    <p><span class="eq">√<span class="rad">a</span></span> 是「自己乘自己會得到 a」的正數。<span class="eq">√<span class="rad">49</span>＝7</span>，因為 <span class="eq">7×7＝49</span>。</p>
+    <p>這一課要一直把根號裡的數拆成「平方數 × 別的數」，所以 <strong>4、9、16、25、36、49、64、81、100、121、144</strong> 要一眼認得。忘了先回 <a href="sqrt.html" style="color:var(--accent);font-weight:700">2-1</a>。</p>
+  </div></details>
+  <details class="pre"><summary>1-1 的乘法公式：平方差、和的平方</summary><div class="bd">
+    <p><span class="eq">(a＋b)(a−b)＝a<sup>2</sup>−b<sup>2</sup></span>、<span class="eq">(a±b)<sup>2</sup>＝a<sup>2</sup>±2ab＋b<sup>2</sup></span>。</p>
+    <p>這一課最後兩個例題（p.88–89）就是把 a、b 換成根號。忘了先回 <a href="multiply.html" style="color:var(--accent);font-weight:700">1-1</a>。</p>
+  </div></details>
+
+</section>
+
+<!-- ══ 1 概念 ══ -->
+<section>
+  <div class="step"><span class="n">1</span>這一節在教什麼</div>
+
+  <h2>五件事，先認熟</h2>
+
+  <div class="fcard">
+    <div class="fname">① 根式的乘法與除法（課本 p.75–78）</div>
+    <div class="fbody">√<span class="rad">a</span> × √<span class="rad">b</span> ＝ √<span class="rad">a×b</span>　　<span class="frac"><span>√<span class="rad">a</span></span><span>√<span class="rad">b</span></span></span> ＝ √<span class="rad"><span class="frac"><span>a</span><span>b</span></span></span></div>
+    <p class="fsay">a、b 都不是負數（除法時 b 不能是 0）。例：<span class="eq">√<span class="rad">2</span>×√<span class="rad">3</span>＝√<span class="rad">6</span></span>、<span class="eq">√<span class="rad">35</span>÷√<span class="rad">5</span>＝√<span class="rad">7</span></span>。<br>
+    根號外面的數照一般乘法算：<span class="eq">7√<span class="rad">2</span>×5√<span class="rad">2</span>＝35×√<span class="rad">2</span>×√<span class="rad">2</span>＝35×2＝70</span>（課本例 2）。<br>
+    📌 <span class="eq">5√<span class="rad">3</span></span> 的意思是 <span class="eq">5×√<span class="rad">3</span></span>，乘號省略不寫。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">② 最簡根式（課本 p.79–80）</div>
+    <div class="fbody">a√<span class="rad">b</span>：b 裡面沒有平方數可以再搬出來</div>
+    <p class="fsay"><span class="eq">√<span class="rad">48</span>＝√<span class="rad">16×3</span>＝√<span class="rad">16</span>×√<span class="rad">3</span>＝4√<span class="rad">3</span></span>。<br>
+    不是最簡根式的三種情形：<strong>根號裡還有平方數</strong>（√<span class="rad">12</span>）、<strong>分母有根號</strong>（<span class="frac"><span>1</span><span>√<span class="rad">5</span></span></span>）、<strong>根號裡是分數或小數</strong>（√<span class="rad">0.1</span>）。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">③ 分母有理化（課本 p.81–82）</div>
+    <div class="fbody"><span class="frac"><span>b</span><span>√<span class="rad">a</span></span></span> ＝ <span class="frac"><span>b×√<span class="rad">a</span></span><span>√<span class="rad">a</span>×√<span class="rad">a</span></span></span> ＝ <span class="frac"><span>b√<span class="rad">a</span></span><span>a</span></span></div>
+    <p class="fsay">分子分母同乘 <span class="eq">√<span class="rad">a</span></span>，分母的 <span class="eq">√<span class="rad">a</span>×√<span class="rad">a</span>＝a</span> 就沒有根號了。<br>
+    例：<span class="eq"><span class="frac"><span>5</span><span>√<span class="rad">12</span></span></span>＝<span class="frac"><span>5</span><span>2√<span class="rad">3</span></span></span>＝<span class="frac"><span>5√<span class="rad">3</span></span><span>6</span></span></span>——<strong>先化簡再有理化</strong>，數字比較小。<br>
+    根號裡是小數或分數：先化成分數再做。<span class="eq">√<span class="rad">0.8</span>＝√<span class="rad"><span class="frac"><span>4</span><span>5</span></span></span>＝<span class="frac"><span>2</span><span>√<span class="rad">5</span></span></span>＝<span class="frac"><span>2√<span class="rad">5</span></span><span>5</span></span></span>（例 6）。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">④ 同類方根與加減（課本 p.83–85）</div>
+    <div class="fbody">4√<span class="rad">6</span> − 3√<span class="rad">6</span> ＝ (4−3)√<span class="rad">6</span> ＝ √<span class="rad">6</span></div>
+    <p class="fsay">化成最簡根式後，<strong>根號裡的數一樣</strong>，就是同類方根，才能合併——就像 <span class="eq">4y−3y＝y</span>。<br>
+    看起來不一樣的，常常化簡後就一樣了：<span class="eq">3√<span class="rad">2</span>＋√<span class="rad">8</span>＝3√<span class="rad">2</span>＋2√<span class="rad">2</span>＝5√<span class="rad">2</span></span>（例 8）。<br>
+    ⚠️ <span class="eq">√<span class="rad">2</span>＋√<span class="rad">3</span></span> 不能再合併，答案就寫這樣。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">⑤ 四則運算與乘法公式（課本 p.86–89）</div>
+    <div class="fbody"><span class="frac"><span>1</span><span>√<span class="rad">3</span>−√<span class="rad">2</span></span></span> ＝ <span class="frac"><span>√<span class="rad">3</span>＋√<span class="rad">2</span></span><span>(√<span class="rad">3</span>)<sup>2</sup>−(√<span class="rad">2</span>)<sup>2</sup></span></span> ＝ √<span class="rad">3</span>＋√<span class="rad">2</span></div>
+    <p class="fsay">分配律、乘法公式對根號一樣成立：<span class="eq">(√<span class="rad">3</span>＋2√<span class="rad">2</span>)<sup>2</sup>＝3＋4√<span class="rad">6</span>＋8＝11＋4√<span class="rad">6</span></span>（例 11）。<br>
+    分母是 <span class="eq">√<span class="rad">a</span>−√<span class="rad">b</span></span> 時，分子分母同乘 <span class="eq">√<span class="rad">a</span>＋√<span class="rad">b</span></span>，用平方差公式把根號消掉（例 12）。</p>
+  </div>
+
+  <h3>先玩一下：把平方數搬出根號</h3>
+  <p>拉動滑桿選一個數。<strong>成對的質數可以搬到根號外面變成一個，落單的只能留在裡面。</strong></p>
+  <div class="lab">
+    <div class="lab-t">實驗一 ── 最簡根式化簡器</div>
+    <div class="slider-lab"><span>根號裡的數</span><span id="ln">48</span></div>
+    <input type="range" id="sn" min="2" max="300" value="48">
+    <div class="fac" id="fac"></div>
+    <div class="eqline" id="seq" style="font-family:Cambria,Georgia,serif;font-size:20px;font-weight:700;text-align:center;padding:12px;background:#fff;border:1px solid var(--line);border-radius:10px;margin:12px 0 4px"></div>
+    <div class="verdict" id="vsimp"></div>
+  </div>
+
+</section>
+
+<!-- ══ 2 歷史 ══ -->
+<section>
+  <div class="step"><span class="n">2</span>為什麼要把根號趕出分母</div>
+
+  <h2>沒有計算機的時候，除法很貴</h2>
+  <p class="lead">課本一直要你把 <span class="eq"><span class="frac"><span>1</span><span>√<span class="rad">2</span></span></span></span> 寫成 <span class="eq"><span class="frac"><span>√<span class="rad">2</span></span><span>2</span></span></span>。兩個明明一樣大，為什麼後面那個比較「簡」？</p>
+  <p>想像你在 1950 年，手上只有紙、筆，和一本寫著 <span class="eq">√<span class="rad">2</span>≈1.41421</span> 的數表。現在要算 <span class="eq"><span class="frac"><span>1</span><span>√<span class="rad">2</span></span></span></span> 是多少：</p>
+  <div class="card">
+    <p><strong>寫法一</strong>　<span class="eq">1 ÷ 1.41421</span>：要做<em>除數有六位數</em>的長除法，一位一位試商。</p>
+    <p style="margin:0"><strong>寫法二</strong>　<span class="eq">1.41421 ÷ 2</span>：心算就好，<strong>0.707105</strong>。</p>
+  </div>
+  <p>同一個數，換個寫法，工作量差了十倍。<strong>分母有理化不是為了好看，是為了好算。</strong>所以課本才把「分母沒有根號」放進最簡根式的條件。</p>
+  <div class="aside"><p>📌 同樣的道理：<span class="eq">√<span class="rad">48</span></span> 寫成 <span class="eq">4√<span class="rad">3</span></span>，查表只要查 √3 這一個數，再乘 4。一本數表只要收 √2、√3、√5、√6、√7…這些「最簡的」，就能算所有根號。</p></div>
+
+  <h3>根號這個符號，是一個被拉長的 r</h3>
+  <p>拉丁文的「根」是 <em>radix</em>。中世紀的人寫平方根，就在數字前面寫一個 r。1525 年，德國人魯道夫（Christoff Rudolff）在他的代數書裡把它寫成一個小勾，就是今天 <strong>√</strong> 的前身。</p>
+  <p>可是只有勾，看不出根號管到哪裡：<span class="eq">√2＋3</span> 是 <span class="eq">√<span class="rad">2</span>＋3</span> 還是 <span class="eq">√<span class="rad">2＋3</span></span>？1637 年，法國的笛卡兒（René Descartes）在勾的後面加了<strong>一條橫線</strong>，蓋到哪裡就管到哪裡。</p>
+  <div class="quote"><p><strong>所以寫根號時，那條橫線要畫到最後一個數字。</strong>很多計算錯誤，其實是橫線畫太短。</p></div>
+
+  <h3>再玩一下：根號可以分開，什麼時候不行</h3>
+  <p>選「乘」或「加」，調整 a 和 b，比比看左右兩邊。<strong>乘法每次都一樣；加法幾乎每次都不一樣。</strong></p>
+  <div class="lab">
+    <div class="lab-t">實驗二 ── 根號能不能拆開</div>
+    <div class="chips" id="opc">
+      <button class="chip on" data-o="mul">乘：√<span class="rad">a</span>×√<span class="rad">b</span></button>
+      <button class="chip" data-o="add">加：√<span class="rad">a</span>＋√<span class="rad">b</span></button>
+    </div>
+    <div class="slider-lab"><span>a</span><span id="la">9</span></div>
+    <input type="range" id="sa" min="0" max="50" value="9">
+    <div class="slider-lab"><span>b</span><span id="lb">16</span></div>
+    <input type="range" id="sb" min="0" max="50" value="16">
+    <div class="cmp"><div><small id="cl"></small><b id="vl"></b></div><div><small id="cr"></small><b id="vr"></b></div></div>
+    <div class="verdict" id="vop"></div>
+  </div>
+
+</section>
+
+<!-- ══ 3 課本練習 ══ -->
+<section>
+  <div class="step"><span class="n">3</span>動手練</div>
+  <h2>照課本的順序，一題一題來</h2>
+  <p>下面 10 題<strong>全部出自課本 2-2 的隨堂練習</strong>，順序照課本：<em>乘除 → 最簡根式 → 分母有理化 → 同類方根 → 加減 → 四則與乘法公式</em>。</p>
+  <div class="prac">
+    <div class="prac-top"><span class="src" id="pSrc"></span><span id="pNo"></span></div>
+    <div class="dots" id="pDots"></div>
+    <div class="prac-q" id="pQ"></div>
+    <div class="prac-hint" id="pHint"></div>
+    <div class="opts" id="pOpts"></div>
+    <div class="prac-fb" id="pFb"></div>
+    <div class="btnrow"><button class="btn" id="pNext" disabled>下一題</button></div>
+  </div>
+</section>
+
+<!-- ══ 4 重點整理 ══ -->
+<section class="locked-zone" id="z4">
+  <div class="step"><span class="n">4</span>重點整理</div>
+
+  <h2>整節 2-2 收成一張表</h2>
+  <div class="scroll"><table>
+    <tr><th style="width:84px">課本位置</th><th>先備知識</th><th>2-2 新學的</th></tr>
+    <tr><td><b>主題 1</b><br>p.75–82<br>根式的乘除與化簡</td><td>2-1 平方根<br>質因數分解</td><td><span class="eq">√<span class="rad">a</span>×√<span class="rad">b</span>＝√<span class="rad">ab</span></span>、<span class="eq"><span class="frac"><span>√<span class="rad">a</span></span><span>√<span class="rad">b</span></span></span>＝√<span class="rad"><span class="frac"><span>a</span><span>b</span></span></span></span><br>最簡根式三條件<br>分母有理化：同乘 <span class="eq">√<span class="rad">a</span></span></td></tr>
+    <tr><td><b>主題 2</b><br>p.83–89<br>根式的四則運算</td><td>一元一次式的同類項<br>1-1 乘法公式</td><td>同類方根才能加減<br>分配律、乘法公式照用<br>分母 <span class="eq">√<span class="rad">a</span>±√<span class="rad">b</span></span>：同乘 <span class="eq">√<span class="rad">a</span>∓√<span class="rad">b</span></span></td></tr>
+  </table></div>
+  <h3>三個最容易錯的地方（課本 p.93 挑錯題就是前兩個）</h3>
+  <div class="card"><p><strong>① 根號裡直接加減</strong></p><p style="margin-bottom:0"><span class="eq">√<span class="rad">a</span>−√<span class="rad">b</span></span> 不能寫成 <span class="eq">√<span class="rad">a−b</span></span>。<span class="eq">√<span class="rad">9</span>−√<span class="rad">4</span>＝3−2＝1</span>，但 <span class="eq">√<span class="rad">9−4</span>＝√<span class="rad">5</span></span>。<em>乘除可以合併，加減不行。</em></p></div>
+  <div class="card"><p><strong>② 帶分數拆開開根號</strong></p><p style="margin-bottom:0"><span class="eq">√<span class="rad">16<span class="frac"><span>1</span><span>9</span></span></span></span> 不是 <span class="eq">4<span class="frac"><span>1</span><span>3</span></span></span>（因為 <span class="eq">(4<span class="frac"><span>1</span><span>3</span></span>)<sup>2</sup>＝18<span class="frac"><span>7</span><span>9</span></span></span>）。要先化成假分數：<span class="eq">√<span class="rad"><span class="frac"><span>145</span><span>9</span></span></span>＝<span class="frac"><span>√<span class="rad">145</span></span><span>3</span></span></span>。</p></div>
+  <div class="card"><p><strong>③ 化簡沒化完、有理化只乘一半</strong></p><p style="margin-bottom:0"><span class="eq">2√<span class="rad">20</span></span> 裡還有 4；<span class="eq"><span class="frac"><span>3</span><span>√<span class="rad">2</span></span></span></span> 分子乘了 √<span class="rad">2</span> 分母也要乘。<em>寫完答案，再用最簡根式三條件檢查一次。</em></p></div>
+
+</section>
+
+<!-- ══ 5 會考挑戰 ══ -->
+<section class="locked-zone" id="z5">
+  <div class="step"><span class="n">5</span>會考挑戰</div>
+  <h2>同樣的東西，考場上怎麼問</h2>
+
+  <p>會考 103～115 年，題庫標成 2-2 的有 10 題；逐題看過後，<strong>其中 2 題其實沒有根號</strong>（107-02 是分數、109-02 是指數），另外補進一題被標錯章的 108-05，共 <strong>9 題</strong>。順序照課本：化簡 → 加減乘除 → 分母有理化。</p>
+  <div class="aside"><p>📌 這 9 題大多是會考前 10 題，通過率七成以上——<strong>會的人幾乎都拿到，所以錯一題就落後很多人</strong>。有官方選項百分比的（112、113、114 年）會告訴你全國有多少人選錯。</p></div>
+
+
+  <div class="q">
+    <div class="q-src">會考 112 年 第 4 題</div>
+    <div class="q-body">化簡 <b class='eq'>√<span class="rad">135</span></b> 的結果為下列何者？</div>
+    <div class="opts" data-q="0" data-ans="C">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>3√<span class="rad">5</span></span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>27√<span class="rad">5</span></span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'>3√<span class="rad">15</span></span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'>9√<span class="rad">15</span></span></span></button>
+    </div>
+    <div class="fb" id="fb0"></div>
+  </div>
+
+  <div class="locked-zone" id="zq1">
+  <div class="q">
+    <div class="q-src">會考 115 年 第 3 題</div>
+    <div class="q-body">若 <b class='eq'>√<span class="rad">504</span></b> 的最簡根式為 <b class='eq'>a√<span class="rad">b</span></b>，則 <b class='eq'>a＋b</b> 之值為何？</div>
+    <div class="opts" data-q="1" data-ans="C">
+      <button class="opt" data-k="A"><span class="k">A</span><span>13</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span>19</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span>20</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span>50</span></button>
+    </div>
+    <div class="fb" id="fb1"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="zq2">
+  <div class="q">
+    <div class="q-src">會考 108 年 第 5 題</div>
+    <div class="q-body">若 <b class='eq'>√<span class="rad">44</span>＝2√<span class="rad">a</span></b>，<b class='eq'>√<span class="rad">54</span>＝3√<span class="rad">b</span></b>，則 <b class='eq'>a＋b</b> 之值為何？</div>
+    <div class="opts" data-q="2" data-ans="B">
+      <button class="opt" data-k="A"><span class="k">A</span><span>13</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span>17</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span>24</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span>40</span></button>
+    </div>
+    <div class="fb" id="fb2"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="zq3">
+  <div class="q">
+    <div class="q-src">會考 110 年 第 6 題</div>
+    <div class="q-body">下列等式何者<b>不成立</b>？</div>
+    <div class="opts" data-q="3" data-ans="C">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>4√<span class="rad">3</span>＋2√<span class="rad">3</span>＝6√<span class="rad">3</span></span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>4√<span class="rad">3</span>−2√<span class="rad">3</span>＝2√<span class="rad">3</span></span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'>4√<span class="rad">3</span>×2√<span class="rad">3</span>＝8√<span class="rad">3</span></span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'>4√<span class="rad">3</span>÷2√<span class="rad">3</span>＝2</span></span></button>
+    </div>
+    <div class="fb" id="fb3"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="zq4">
+  <div class="q">
+    <div class="q-src">會考 114 年 第 8 題</div>
+    <div class="q-body">計算 <b class='eq'>(2√<span class="rad">3</span>＋√<span class="rad">6</span>)×√<span class="rad">2</span></b> 的結果，與下列何者相同？</div>
+    <div class="opts" data-q="4" data-ans="C">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>4√<span class="rad">3</span></span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>6√<span class="rad">3</span></span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'>2√<span class="rad">3</span>＋2√<span class="rad">6</span></span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'>4√<span class="rad">3</span>＋2√<span class="rad">6</span></span></span></button>
+    </div>
+    <div class="fb" id="fb4"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="zq5">
+  <div class="q">
+    <div class="q-src">會考 109 年 第 4 題</div>
+    <div class="q-body">算式 <b class='eq'>√<span class="rad">2</span>×(√<span class="rad">48</span>−√<span class="rad">12</span>)</b> 之值為何？</div>
+    <div class="opts" data-q="5" data-ans="B">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>6√<span class="rad">2</span></span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>2√<span class="rad">6</span></span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'>2√<span class="rad">21</span></span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'>4√<span class="rad">6</span>−2√<span class="rad">3</span></span></span></button>
+    </div>
+    <div class="fb" id="fb5"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="zq6">
+  <div class="q">
+    <div class="q-src">會考 103 年 第 1 題</div>
+    <div class="q-body">算式 <b class='eq'>(√<span class="rad">6</span>＋√<span class="rad">10</span>×√<span class="rad">15</span>)×√<span class="rad">3</span></b> 之值為何？</div>
+    <div class="opts" data-q="6" data-ans="D">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>2√<span class="rad">42</span></span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>12√<span class="rad">5</span></span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'>12√<span class="rad">13</span></span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'>18√<span class="rad">2</span></span></span></button>
+    </div>
+    <div class="fb" id="fb6"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="zq7">
+  <div class="q">
+    <div class="q-src">會考 107 年 第 7 題</div>
+    <div class="q-body">算式 <b class='eq'>√<span class="rad">6</span>×(<span class="frac"><span>1</span><span>√<span class="rad">3</span></span></span>−1)</b> 之值為何？</div>
+    <div class="opts" data-q="7" data-ans="A">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>√<span class="rad">2</span>−√<span class="rad">6</span></span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>√<span class="rad">2</span>−1</span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'>2−√<span class="rad">6</span></span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'>1</span></span></button>
+    </div>
+    <div class="fb" id="fb7"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="zq8">
+  <div class="q">
+    <div class="q-src">會考 113 年 第 11 題</div>
+    <div class="q-body">將 <b class='eq'><span class="frac"><span>9</span><span>4−√<span class="rad">7</span></span></span></b> 化簡為 <b class='eq'>a＋b√<span class="rad">7</span></b>，其中 a、b 為整數，求 <b class='eq'>a＋b</b> 之值為何？</div>
+    <div class="opts" data-q="8" data-ans="A">
+      <button class="opt" data-k="A"><span class="k">A</span><span>5</span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span>3</span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span>−9</span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span>−15</span></button>
+    </div>
+    <div class="fb" id="fb8"></div>
+  </div>
+  </div>
+</section>
+
+<!-- ══ 結案 ══ -->
+<section class="locked-zone" id="z6">
+  <div class="done">
+    <h2>2-2 走完了</h2>
+    <p class="dim">根式的乘除、最簡根式、分母有理化、同類方根、四則與乘法公式——2-2 全部走完了。</p>
+  </div>
+
+  <div class="quote">
+    <p><strong>2-2 回頭看：</strong></p>
+    <p>整節只有兩個動作：<em>把平方數搬出根號</em>（化成最簡根式）、<em>把根號趕出分母</em>（有理化）。做完這兩件事，同類方根才看得出來，加減才能合併。</p>
+  </div>
+  <div class="dl">
+    <h4>📄 這一節的會考原題（PDF）</h4>
+    <p>上面的題目在網頁上是重新排版過的。這份 PDF 是<strong>原本考卷上的樣子</strong>——官方排版、原始選項。</p>
+    <p>建議：印出來，<strong>限時 12 分鐘</strong>做完，再對答案。</p>
+    <a class="get" href="pdf/radical_exam.pdf" download>下載原始考題 PDF</a>
+    <p class="meta">9 題 · 112-04、115-03、108-05、110-06、114-08、109-04、103-01、107-07、113-11 · 取自國中教育會考正式試題</p>
+  </div>
+
+  <div class="card">
+    <p><strong>2-2 完成。</strong>回到<a href="index.html" style="color:var(--accent);font-weight:700">單元列表</a>，或用 <a href="exam-sections.html" style="color:var(--accent);font-weight:700">段考・照節次練</a> 練學校的考卷。<br>
+    下一節 2-3 畢氏定理的課本照片還沒拍，拍好以後接著做。</p>
+  </div>
+  <div class="btnrow" style="justify-content:center;margin-top:26px">
+    <a class="btn ghost" href="index.html" style="text-decoration:none">回到單元列表</a>
+  </div>
+  <div style="text-align:center"><button class="reset" id="rst">清除這一課的進度，重新做一次</button></div>
+</section>
+
+<!-- SITENAV:bottom 由 _add_site_nav.py 產生，勿手改 -->
+<div class="sitenav-b"><a class="prev" href="sqrt.html"><small>← 上一頁</small><span>2-1 平方根</span></a><a class="homeb" href="index.html">回八年級首頁</a><a class="next" href="exam-sections.html"><small>下一頁 →</small><span>段考・照節次練</span></a></div>
+<!-- /SITENAV:bottom -->
+
+<footer>
+  國中數學八上自學站 · 第二章 2-2 根式的運算<br>
+  課本例題與隨堂練習取自康軒版第三冊；會考題取自國中教育會考正式試題<br>
+  <a href="index.html" style="color:var(--accent)">單元列表</a> ·
+  <a href="https://yingsioul-art.github.io/jhs7-math/" style="color:var(--accent)">七上數學</a> ·
+  <a href="https://yingsioul-art.github.io/jhs8-science/" style="color:var(--accent)">八上自然</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+const KEY="jhs8-radical-v1", NQ=9;
+const PRAC=[
+ {
+  "src": "課本 p.77 例 2 隨堂 (3)",
+  "q": "計算 <b class='eq'>3√<span class=\"rad\">6</span> × 4√<span class=\"rad\">6</span></b>",
+  "hint": "外面的數和外面的數乘、根號和根號乘。√<span class=\"rad\">6</span>×√<span class=\"rad\">6</span> 是多少？",
+  "o": [
+   "72",
+   "12√<span class=\"rad\">6</span>",
+   "12√<span class=\"rad\">36</span>",
+   "144"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>3×4×√<span class=\"rad\">6</span>×√<span class=\"rad\">6</span>＝12×6＝72</span><br>⚠️ <span class='eq'>12√<span class=\"rad\">36</span></span> 算到一半：<span class='eq'>√<span class=\"rad\">36</span>＝6</span>，還要再乘。<span class='eq'>12√<span class=\"rad\">6</span></span> 是把 √<span class=\"rad\">6</span>×√<span class=\"rad\">6</span> 當成 √<span class=\"rad\">6</span>。"
+ },
+ {
+  "src": "課本 p.78 例 3 隨堂 (1)",
+  "q": "計算 <b class='eq'>√<span class=\"rad\">98</span> ÷ √<span class=\"rad\">14</span></b>",
+  "hint": "兩個根號相除，可以合成一個根號：√<span class=\"rad\">98÷14</span>。",
+  "o": [
+   "√<span class=\"rad\">7</span>",
+   "7",
+   "√<span class=\"rad\">84</span>",
+   "7√<span class=\"rad\">2</span>"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>√<span class=\"rad\">98</span>÷√<span class=\"rad\">14</span>＝√<span class=\"rad\">98÷14</span>＝√<span class=\"rad\">7</span></span><br>⚠️ 答 7 是忘了根號還在；√<span class=\"rad\">84</span> 是把除號當成減號。"
+ },
+ {
+  "src": "課本 p.79 隨堂練習",
+  "q": "下列哪一個是<b>最簡根式</b>？",
+  "hint": "三個檢查：根號裡還有沒有平方數？分母有沒有根號？根號裡是不是分數或小數？",
+  "o": [
+   "−√<span class=\"rad\">42</span>",
+   "√<span class=\"rad\">18</span>",
+   "<span class=\"frac\"><span>7</span><span>√<span class=\"rad\">2</span></span></span>",
+   "√<span class=\"rad\">2.7</span>"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>42＝2×3×7</span>，沒有成對的質數 → 是最簡根式（前面的負號沒關係）。<br>其他三個：<span class='eq'>√<span class=\"rad\">18</span>＝3√<span class=\"rad\">2</span></span>（裡面有 9）、<span class='eq'><span class=\"frac\"><span>7</span><span>√<span class=\"rad\">2</span></span></span></span>（分母有根號）、<span class='eq'>√<span class=\"rad\">2.7</span></span>（根號裡是小數）。"
+ },
+ {
+  "src": "課本 p.80 例 4 隨堂 (2)",
+  "q": "把 <b class='eq'>√<span class=\"rad\">80</span></b> 化為最簡根式。",
+  "hint": "80 裡面最大的平方數是多少？試試 16。",
+  "o": [
+   "4√<span class=\"rad\">5</span>",
+   "2√<span class=\"rad\">20</span>",
+   "16√<span class=\"rad\">5</span>",
+   "8√<span class=\"rad\">10</span>"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>√<span class=\"rad\">80</span>＝√<span class=\"rad\">16×5</span>＝4√<span class=\"rad\">5</span></span><br>⚠️ <span class='eq'>2√<span class=\"rad\">20</span></span> 沒錯但<b>沒化完</b>：20 裡還有 4，<span class='eq'>2√<span class=\"rad\">20</span>＝2×2√<span class=\"rad\">5</span>＝4√<span class=\"rad\">5</span></span>。<br>⚠️ 16√<span class=\"rad\">5</span> 是把 16 直接搬出來，忘了開根號。"
+ },
+ {
+  "src": "課本 p.81 例 5 隨堂 (2)",
+  "q": "把 <b class='eq'><span class=\"frac\"><span>3</span><span>√<span class=\"rad\">32</span></span></span></b> 化為最簡根式。",
+  "hint": "先把分母 √<span class=\"rad\">32</span> 化簡成 4√<span class=\"rad\">2</span>，再分子分母同乘 √<span class=\"rad\">2</span>。",
+  "o": [
+   "<span class=\"frac\"><span>3√<span class=\"rad\">2</span></span><span>8</span></span>",
+   "<span class=\"frac\"><span>3√<span class=\"rad\">2</span></span><span>4</span></span>",
+   "<span class=\"frac\"><span>3√<span class=\"rad\">2</span></span><span>16</span></span>",
+   "<span class=\"frac\"><span>4√<span class=\"rad\">2</span></span><span>3</span></span>"
+  ],
+  "a": 0,
+  "why": "<span class='eq'><span class=\"frac\"><span>3</span><span>√<span class=\"rad\">32</span></span></span>＝<span class=\"frac\"><span>3</span><span>4√<span class=\"rad\">2</span></span></span>＝<span class=\"frac\"><span>3×√<span class=\"rad\">2</span></span><span>4√<span class=\"rad\">2</span>×√<span class=\"rad\">2</span></span></span>＝<span class=\"frac\"><span>3√<span class=\"rad\">2</span></span><span>8</span></span></span><br>⚠️ <span class=\"frac\"><span>3√<span class=\"rad\">2</span></span><span>4</span></span> 是分子乘了 √<span class=\"rad\">2</span>、分母卻沒乘。分子分母<b>一定要乘同一個數</b>。"
+ },
+ {
+  "src": "課本 p.83 隨堂練習",
+  "q": "下列哪一個<b>不是</b> <span class='eq'>√<span class=\"rad\">6</span></span> 的同類方根？",
+  "hint": "每一個都先化成最簡根式，看根號裡是不是 6。",
+  "o": [
+   "<span class=\"frac\"><span>2</span><span>√<span class=\"rad\">3</span></span></span>",
+   "√<span class=\"rad\">24</span>",
+   "√<span class=\"rad\"><span class=\"frac\"><span>2</span><span>3</span></span></span>",
+   "√<span class=\"rad\">0.06</span>"
+  ],
+  "a": 0,
+  "why": "<span class='eq'><span class=\"frac\"><span>2</span><span>√<span class=\"rad\">3</span></span></span>＝<span class=\"frac\"><span>2√<span class=\"rad\">3</span></span><span>3</span></span></span>，根號裡是 3，不是 6。<br>其他三個化簡後都是 √<span class=\"rad\">6</span> 的倍數：<span class='eq'>√<span class=\"rad\">24</span>＝2√<span class=\"rad\">6</span></span>、<span class='eq'>√<span class=\"rad\"><span class=\"frac\"><span>2</span><span>3</span></span></span>＝<span class=\"frac\"><span>√<span class=\"rad\">6</span></span><span>3</span></span></span>、<span class='eq'>√<span class=\"rad\">0.06</span>＝<span class=\"frac\"><span>√<span class=\"rad\">6</span></span><span>10</span></span></span>。<br>📌 看起來不像，化簡後才知道是不是同類。"
+ },
+ {
+  "src": "課本 p.85 例 8 隨堂 (3)",
+  "q": "化簡 <b class='eq'>√<span class=\"rad\">12</span>＋√<span class=\"rad\">18</span>−√<span class=\"rad\">27</span>＋√<span class=\"rad\">50</span></b>",
+  "hint": "四個都先化成最簡根式，再把同類方根放在一起。",
+  "o": [
+   "8√<span class=\"rad\">2</span>−√<span class=\"rad\">3</span>",
+   "8√<span class=\"rad\">2</span>＋√<span class=\"rad\">3</span>",
+   "√<span class=\"rad\">53</span>",
+   "7√<span class=\"rad\">5</span>"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>2√<span class=\"rad\">3</span>＋3√<span class=\"rad\">2</span>−3√<span class=\"rad\">3</span>＋5√<span class=\"rad\">2</span>＝(3＋5)√<span class=\"rad\">2</span>＋(2−3)√<span class=\"rad\">3</span>＝8√<span class=\"rad\">2</span>−√<span class=\"rad\">3</span></span><br>⚠️ √<span class=\"rad\">53</span> 是把根號裡直接加減（12＋18−27＋50），這是全章最常見的錯。"
+ },
+ {
+  "src": "課本 p.87 例 10 隨堂 (2)",
+  "q": "化簡 <b class='eq'>(1＋√<span class=\"rad\">2</span>)(√<span class=\"rad\">6</span>−√<span class=\"rad\">3</span>)</b>",
+  "hint": "像 (a＋b)(c−d) 一樣展開成四項，再把 √<span class=\"rad\">12</span> 化簡。",
+  "o": [
+   "√<span class=\"rad\">3</span>",
+   "√<span class=\"rad\">6</span>−√<span class=\"rad\">3</span>",
+   "2√<span class=\"rad\">6</span>−√<span class=\"rad\">3</span>",
+   "√<span class=\"rad\">3</span>＋2√<span class=\"rad\">6</span>"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>√<span class=\"rad\">6</span>−√<span class=\"rad\">3</span>＋√<span class=\"rad\">12</span>−√<span class=\"rad\">6</span>＝√<span class=\"rad\">6</span>−√<span class=\"rad\">3</span>＋2√<span class=\"rad\">3</span>−√<span class=\"rad\">6</span>＝√<span class=\"rad\">3</span></span><br>📌 四項裡 √<span class=\"rad\">6</span> 一正一負抵銷，<b>展開完一定要整理同類方根</b>。"
+ },
+ {
+  "src": "課本 p.88 例 11 隨堂 (2)",
+  "q": "利用乘法公式化簡 <b class='eq'>(√<span class=\"rad\">2</span>−2√<span class=\"rad\">3</span>)<sup>2</sup></b>",
+  "hint": "(a−b)² ＝ a² − 2ab ＋ b²，a＝√<span class=\"rad\">2</span>、b＝2√<span class=\"rad\">3</span>。",
+  "o": [
+   "14−4√<span class=\"rad\">6</span>",
+   "−10",
+   "14",
+   "14＋4√<span class=\"rad\">6</span>"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>(√<span class=\"rad\">2</span>)<sup>2</sup>−2×√<span class=\"rad\">2</span>×2√<span class=\"rad\">3</span>＋(2√<span class=\"rad\">3</span>)<sup>2</sup>＝2−4√<span class=\"rad\">6</span>＋12＝14−4√<span class=\"rad\">6</span></span><br>⚠️ 14 是漏了中間項 −2ab；−10 是把 (a−b)² 當成 a²−b²。<b>這兩個錯在 1-1 就出現過。</b>"
+ },
+ {
+  "src": "課本 p.89 例 12 隨堂 (2)",
+  "q": "把 <b class='eq'><span class=\"frac\"><span>√<span class=\"rad\">2</span></span><span>√<span class=\"rad\">5</span>＋1</span></span></b> 的分母有理化。",
+  "hint": "分母是 √<span class=\"rad\">5</span>＋1，分子分母同乘 √<span class=\"rad\">5</span>−1，分母用平方差：(√<span class=\"rad\">5</span>)²−1²。",
+  "o": [
+   "<span class=\"frac\"><span>√<span class=\"rad\">10</span>−√<span class=\"rad\">2</span></span><span>4</span></span>",
+   "<span class=\"frac\"><span>√<span class=\"rad\">10</span>−√<span class=\"rad\">2</span></span><span>6</span></span>",
+   "<span class=\"frac\"><span>√<span class=\"rad\">2</span></span><span>6</span></span>",
+   "<span class=\"frac\"><span>√<span class=\"rad\">10</span>＋√<span class=\"rad\">2</span></span><span>4</span></span>"
+  ],
+  "a": 0,
+  "why": "<span class='eq'><span class=\"frac\"><span>√<span class=\"rad\">2</span>(√<span class=\"rad\">5</span>−1)</span><span>(√<span class=\"rad\">5</span>＋1)(√<span class=\"rad\">5</span>−1)</span></span>＝<span class=\"frac\"><span>√<span class=\"rad\">10</span>−√<span class=\"rad\">2</span></span><span>5−1</span></span>＝<span class=\"frac\"><span>√<span class=\"rad\">10</span>−√<span class=\"rad\">2</span></span><span>4</span></span></span><br>⚠️ 分母是 6 的，是把 (√<span class=\"rad\">5</span>＋1)² 展開錯或乘了 √<span class=\"rad\">5</span>＋1；要用<b>正負號相反</b>的那一個。<b>十題做完了。</b>"
+ }
+];
+const FB={
+ "0": {
+  "A": [
+   "15 被拆掉了",
+   "<p><span class='eq'>135＝9×15</span>，9 搬出來變 3，15 要留在裡面。3√<span class=\"rad\">5</span> 只等於 √<span class=\"rad\">45</span>。全國 4.7% 選這個。</p>"
+  ],
+  "B": [
+   "27 不是平方數",
+   "<p><span class='eq'>135＝27×5</span>，但 27 不是平方數，不能直接搬出去。27＝9×3，<strong>只有 9 能出去</strong>。全國 8.3% 選這個。</p>"
+  ],
+  "C": [
+   "對了",
+   "<p><span class='eq'>√<span class=\"rad\">135</span>＝√<span class=\"rad\">9×15</span>＝3√<span class=\"rad\">15</span></span>。全國通過率 79.7%。</p><p>📌 檢查：15＝3×5，沒有平方數了，是最簡根式。</p>"
+  ],
+  "D": [
+   "9 搬出去要開根號",
+   "<p>9 從根號裡搬出來會變成 <span class='eq'>√<span class=\"rad\">9</span>＝3</span>，不是 9。9√<span class=\"rad\">15</span> 其實是 √<span class=\"rad\">1215</span>。全國 7.1% 選這個。</p>"
+  ]
+ },
+ "1": {
+  "A": [
+   "驗算一下",
+   "<p>不管怎麼拆，<strong>a²×b 一定要等於 504</strong>。13 如果是 6＋7，<span class='eq'>36×7＝252</span>，只有一半。</p><p>正確：<span class='eq'>504＝2<sup>3</sup>×3<sup>2</sup>×7＝36×14</span> → <span class='eq'>6√<span class=\"rad\">14</span></span>，a＋b＝20。</p>"
+  ],
+  "B": [
+   "驗算一下",
+   "<p>用 a²×b＝504 檢查你的 a 和 b。<span class='eq'>504＝36×14</span>，所以 a＝6、b＝14。</p>"
+  ],
+  "C": [
+   "對了",
+   "<p><span class='eq'>504＝2×2×2×3×3×7</span>：成對的 2 和 3 搬出來得 6，剩下 2×7＝14 → <span class='eq'>6√<span class=\"rad\">14</span></span>，6＋14＝20。</p>"
+  ],
+  "D": [
+   "36 要開根號",
+   "<p>50＝36＋14：拆對了，可是 36 搬出根號要變成 6。</p>"
+  ]
+ },
+ "2": {
+  "A": [
+   "再拆一次",
+   "<p><span class='eq'>44＝4×11</span> → 2√<span class=\"rad\">11</span>，a＝11；<span class='eq'>54＝9×6</span> → 3√<span class=\"rad\">6</span>，b＝6。a＋b＝17。</p>"
+  ],
+  "B": [
+   "對了",
+   "<p>2 是 √<span class=\"rad\">4</span>、3 是 √<span class=\"rad\">9</span>：<span class='eq'>44÷4＝11</span>、<span class='eq'>54÷9＝6</span>，11＋6＝17。</p>"
+  ],
+  "C": [
+   "再拆一次",
+   "<p>檢查：<span class='eq'>(2√<span class=\"rad\">a</span>)<sup>2</sup>＝4a</span> 要等於 44，所以 a＝11；<span class='eq'>9b＝54</span>，b＝6。</p>"
+  ],
+  "D": [
+   "2 和 3 是開過根號的",
+   "<p>40＝22＋18，是用 44÷2、54÷3。可是 2 搬進根號裡要變回 <strong>4</strong>，3 要變回 <strong>9</strong>：<span class='eq'>44÷4＝11</span>、<span class='eq'>54÷9＝6</span>。</p>"
+  ]
+ },
+ "3": {
+  "A": [
+   "這個成立",
+   "<p>同類方根相加，像 <span class='eq'>4y＋2y＝6y</span>。題目要找<strong>不成立</strong>的。</p>"
+  ],
+  "B": [
+   "這個成立",
+   "<p>同類方根相減，像 <span class='eq'>4y−2y＝2y</span>。題目要找不成立的。</p>"
+  ],
+  "C": [
+   "對了",
+   "<p><span class='eq'>4×2×√<span class=\"rad\">3</span>×√<span class=\"rad\">3</span>＝8×3＝24</span>，不是 8√<span class=\"rad\">3</span>。</p><p>📌 乘法和加法不一樣：<strong>√<span class=\"rad\">3</span>×√<span class=\"rad\">3</span> 會變成 3，根號消失了</strong>。很多人把它當成 y×y 還是 y。</p>"
+  ],
+  "D": [
+   "這個成立",
+   "<p><span class='eq'>4√<span class=\"rad\">3</span>÷2√<span class=\"rad\">3</span>＝<span class=\"frac\"><span>4</span><span>2</span></span>×<span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>√<span class=\"rad\">3</span></span></span>＝2×1＝2</span>。</p>"
+  ]
+ },
+ "4": {
+  "A": [
+   "不是同類方根不能合併",
+   "<p>展開得 <span class='eq'>2√<span class=\"rad\">6</span>＋2√<span class=\"rad\">3</span></span>，根號裡一個 6、一個 3，<strong>不能加成一項</strong>。全國 6.7% 選這個。</p>"
+  ],
+  "B": [
+   "不是同類方根不能合併",
+   "<p>2√<span class=\"rad\">6</span> 和 2√<span class=\"rad\">3</span> 不是同類方根，不能合併。全國 8.2% 選這個。</p>"
+  ],
+  "C": [
+   "對了",
+   "<p><span class='eq'>2√<span class=\"rad\">3</span>×√<span class=\"rad\">2</span>＋√<span class=\"rad\">6</span>×√<span class=\"rad\">2</span>＝2√<span class=\"rad\">6</span>＋√<span class=\"rad\">12</span>＝2√<span class=\"rad\">6</span>＋2√<span class=\"rad\">3</span></span>。全國通過率 75.2%。</p><p>📌 √<span class=\"rad\">12</span> 要記得化成 2√<span class=\"rad\">3</span>，選項才對得上。</p>"
+  ],
+  "D": [
+   "再乘一次",
+   "<p><span class='eq'>√<span class=\"rad\">6</span>×√<span class=\"rad\">2</span>＝√<span class=\"rad\">12</span>＝2√<span class=\"rad\">3</span></span>，不是 4√<span class=\"rad\">3</span>。全國 9.7% 選這個——是最多人選的錯誤選項。</p>"
+  ]
+ },
+ "5": {
+  "A": [
+   "根號裡不能直接減",
+   "<p>6√<span class=\"rad\">2</span> 是把 √<span class=\"rad\">48</span>−√<span class=\"rad\">12</span> 當成 <span class='eq'>√<span class=\"rad\">36</span>＝6</span>。<strong>這就是課本 p.93 小妍的錯</strong>。要先化簡：<span class='eq'>4√<span class=\"rad\">3</span>−2√<span class=\"rad\">3</span>＝2√<span class=\"rad\">3</span></span>。</p>"
+  ],
+  "B": [
+   "對了",
+   "<p>括號裡先化簡：<span class='eq'>4√<span class=\"rad\">3</span>−2√<span class=\"rad\">3</span>＝2√<span class=\"rad\">3</span></span>，再乘 √<span class=\"rad\">2</span>：<span class='eq'>2√<span class=\"rad\">6</span></span>。</p>"
+  ],
+  "C": [
+   "再算一次",
+   "<p>括號裡：<span class='eq'>√<span class=\"rad\">48</span>＝4√<span class=\"rad\">3</span></span>、<span class='eq'>√<span class=\"rad\">12</span>＝2√<span class=\"rad\">3</span></span>，相減得 2√<span class=\"rad\">3</span>，乘 √<span class=\"rad\">2</span> 得 2√<span class=\"rad\">6</span>。</p>"
+  ],
+  "D": [
+   "第二項也要乘 √2",
+   "<p>分配律：√<span class=\"rad\">2</span> 要乘給括號裡<strong>每一項</strong>。<span class='eq'>√<span class=\"rad\">2</span>×√<span class=\"rad\">12</span>＝√<span class=\"rad\">24</span>＝2√<span class=\"rad\">6</span></span>，所以是 <span class='eq'>4√<span class=\"rad\">6</span>−2√<span class=\"rad\">6</span>＝2√<span class=\"rad\">6</span></span>。</p>"
+  ]
+ },
+ "6": {
+  "A": [
+   "先乘除後加減",
+   "<p>括號裡要<strong>先算 √<span class=\"rad\">10</span>×√<span class=\"rad\">15</span></strong>：<span class='eq'>√<span class=\"rad\">150</span>＝5√<span class=\"rad\">6</span></span>，再加 √<span class=\"rad\">6</span> 得 6√<span class=\"rad\">6</span>，最後 <span class='eq'>6√<span class=\"rad\">6</span>×√<span class=\"rad\">3</span>＝6√<span class=\"rad\">18</span>＝18√<span class=\"rad\">2</span></span>。</p>"
+  ],
+  "B": [
+   "加法不能進根號",
+   "<p>12√<span class=\"rad\">5</span> 是把 √<span class=\"rad\">6</span>＋√<span class=\"rad\">10</span> 當成 <span class='eq'>√<span class=\"rad\">16</span>＝4</span>，再乘 √<span class=\"rad\">45</span>。兩個錯：<strong>先加後乘</strong>，還有<strong>根號裡直接加</strong>。</p>"
+  ],
+  "C": [
+   "先乘除後加減",
+   "<p>括號裡先算 <span class='eq'>√<span class=\"rad\">10</span>×√<span class=\"rad\">15</span>＝√<span class=\"rad\">150</span>＝5√<span class=\"rad\">6</span></span>，和 √<span class=\"rad\">6</span> 是同類方根：<span class='eq'>6√<span class=\"rad\">6</span></span>。</p>"
+  ],
+  "D": [
+   "對了",
+   "<p><span class='eq'>√<span class=\"rad\">150</span>＝5√<span class=\"rad\">6</span></span> → <span class='eq'>√<span class=\"rad\">6</span>＋5√<span class=\"rad\">6</span>＝6√<span class=\"rad\">6</span></span> → <span class='eq'>6√<span class=\"rad\">18</span>＝6×3√<span class=\"rad\">2</span>＝18√<span class=\"rad\">2</span></span>。</p><p>📌 關鍵是發現 √<span class=\"rad\">150</span> 化簡後和 √<span class=\"rad\">6</span> 是同類方根。</p>"
+  ]
+ },
+ "7": {
+  "A": [
+   "對了",
+   "<p><span class='eq'>√<span class=\"rad\">6</span>×<span class=\"frac\"><span>1</span><span>√<span class=\"rad\">3</span></span></span>＝√<span class=\"rad\"><span class=\"frac\"><span>6</span><span>3</span></span></span>＝√<span class=\"rad\">2</span></span>，<span class='eq'>√<span class=\"rad\">6</span>×(−1)＝−√<span class=\"rad\">6</span></span>。</p>"
+  ],
+  "B": [
+   "−1 也要乘 √6",
+   "<p>分配律：<span class='eq'>√<span class=\"rad\">6</span></span> 要乘給 −1，得 −√<span class=\"rad\">6</span>，不是留著 −1。</p>"
+  ],
+  "C": [
+   "再算第一項",
+   "<p><span class='eq'>√<span class=\"rad\">6</span>÷√<span class=\"rad\">3</span>＝√<span class=\"rad\">2</span></span>，不是 2。根號相除是<strong>根號裡相除</strong>：6÷3＝2，所以是 √<span class=\"rad\">2</span>。</p>"
+  ],
+  "D": [
+   "根號不是約掉",
+   "<p><span class='eq'><span class=\"frac\"><span>√<span class=\"rad\">6</span></span><span>√<span class=\"rad\">3</span></span></span>＝√<span class=\"rad\">2</span></span>，不是 1；而 −1 也要乘 √<span class=\"rad\">6</span>。</p>"
+  ]
+ },
+ "8": {
+  "A": [
+   "對了",
+   "<p>分子分母同乘 <span class='eq'>4＋√<span class=\"rad\">7</span></span>：分母 <span class='eq'>16−7＝9</span>，和分子約掉 → <span class='eq'>4＋√<span class=\"rad\">7</span></span>，a＋b＝4＋1＝5。全國通過率只有 62%。</p>"
+  ],
+  "B": [
+   "要乘正負號相反的那個",
+   "<p>3＝4＋(−1)，也就是答成 <span class='eq'>4−√<span class=\"rad\">7</span></span>。分母是 4−√<span class=\"rad\">7</span>，要乘 <strong>4＋√<span class=\"rad\">7</span></strong>，分子才會變成 9(4＋√<span class=\"rad\">7</span>)。全國 18.2% 選這個——<strong>最多人錯的地方</strong>。</p>"
+  ],
+  "C": [
+   "分母用平方差",
+   "<p><span class='eq'>(4−√<span class=\"rad\">7</span>)(4＋√<span class=\"rad\">7</span>)＝4<sup>2</sup>−(√<span class=\"rad\">7</span>)<sup>2</sup>＝16−7＝9</span>，是正的 9。全國 10.9% 選這個。</p>"
+  ],
+  "D": [
+   "分母用平方差",
+   "<p>分母乘出來是 <span class='eq'>16−7＝9</span>，剛好和分子 9 約掉，得 4＋√<span class=\"rad\">7</span>。全國 8.6% 選這個。</p>"
+  ]
+ }
+};
+
+let state={};
+try{state=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){state={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+const $=(id)=>document.getElementById(id);
+const TOTAL=PRAC.length+NQ;
+
+/* 打散選項順序 —— 正解不會永遠在同一個位置 */
+PRAC.forEach(function(P){
+  var pairs=P.o.map(function(t,i){return {t:t, ok:(i===P.a)};});
+  for(var i=pairs.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),tmp=pairs[i];pairs[i]=pairs[j];pairs[j]=tmp;}
+  P.o=pairs.map(function(x){return x.t;}); P.a=pairs.findIndex(function(x){return x.ok;});
+});
+
+let pi=0, pDone=(state.prac||0);
+function pDots(){
+  $("pDots").innerHTML=PRAC.map((_,i)=>'<span class="dot'+(i<pDone?" done":(i===pi?" now":""))+'"></span>').join("");
+}
+function pRender(){
+  const P=PRAC[pi];
+  $("pSrc").textContent=P.src;
+  $("pNo").textContent="第 "+(pi+1)+" 題 / 共 "+PRAC.length+" 題";
+  $("pQ").innerHTML=P.q; $("pHint").innerHTML=P.hint; pDots();
+  const solved=pi<pDone;
+  $("pOpts").innerHTML=P.o.map((t,i)=>'<button class="opt'+(solved&&i===P.a?" right locked":(solved?" locked":""))+'" data-i="'+i+'"><span class="k">'+"ABCD"[i]+'</span><span>'+t+'</span></button>').join("");
+  const fb=$("pFb");
+  if(solved){fb.className="prac-fb show ok";fb.innerHTML="<b>答對了</b>　"+P.why;$("pNext").disabled=false}
+  else{fb.className="prac-fb";fb.innerHTML="";$("pNext").disabled=true}
+  $("pNext").textContent=pi>=PRAC.length-1?"完成，進入重點整理":"下一題";
+  $("pOpts").querySelectorAll(".opt").forEach(b=>{
+    b.addEventListener("click",()=>{
+      if(b.classList.contains("locked"))return;
+      const i=+b.dataset.i, P=PRAC[pi], fb=$("pFb");
+      if(i===P.a){
+        b.classList.add("right","locked");
+        $("pOpts").querySelectorAll(".opt").forEach(x=>x.classList.add("locked"));
+        fb.className="prac-fb show ok"; fb.innerHTML="<b>答對了</b>　"+P.why;
+        if(pi>=pDone){pDone=pi+1;state.prac=pDone;save();gate()}
+        $("pNext").disabled=false; pDots();
+      }else{
+        b.classList.add("wrong"); fb.className="prac-fb show no";
+        fb.innerHTML="<b>再想一次</b>　"+P.hint+"<br><span style='color:var(--ink2)'>選錯不扣分，直接再選一個。</span>";
+      }
+    });
+  });
+}
+$("pNext").addEventListener("click",()=>{
+  if(pi<PRAC.length-1){pi++;pRender();document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"})}
+  else{unlock("z4");unlock("z5");$("z4").scrollIntoView({behavior:"smooth",block:"start"})}
+});
+
+function qDone(){return Object.keys(state).filter(k=>/^q\d+$/.test(k)).length}
+function paint(){const d=Math.min(state.prac||0,PRAC.length)+qDone();$("pnum").textContent=d+" / "+TOTAL;$("pfill").style.width=(d/TOTAL*100)+"%"}
+function unlock(id){const el=$(id);if(el&&el.classList.contains("locked-zone")){el.classList.remove("locked-zone");el.classList.add("revealed");setTimeout(()=>el.classList.remove("revealed"),700)}}
+function gate(){
+  if((state.prac||0)>=PRAC.length){unlock("z4");unlock("z5")}
+  for(let i=0;i<NQ;i++){if(state["q"+i]!==undefined){unlock("zs"+i);if(i+1<NQ)unlock("zq"+(i+1));else unlock("z6")}}
+  paint();
+}
+document.querySelectorAll(".opts[data-q]").forEach(box=>{
+  const qi=box.dataset.q, ans=box.dataset.ans;
+  box.querySelectorAll(".opt").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      if(box.dataset.locked)return;
+      const k=btn.dataset.k; state["q"+qi]=k; save(); reveal(qi,k,ans,box,true); gate();
+    });
+  });
+});
+function reveal(qi,k,ans,box,scroll){
+  box.dataset.locked="1";
+  box.querySelectorAll(".opt").forEach(b=>{
+    b.classList.add("locked");
+    if(b.dataset.k===k)b.classList.add("picked",k===ans?"right":"wrong");
+    else if(b.dataset.k===ans)b.classList.add("right");
+  });
+  const f=FB[qi][k], fb=$("fb"+qi);
+  fb.innerHTML="<h4 style='color:"+(k===ans?"var(--green)":"var(--red)")+"'>"+f[0]+"</h4>"+f[1];
+  fb.classList.add("show");
+  if(scroll)setTimeout(()=>fb.scrollIntoView({behavior:"smooth",block:"nearest"}),120);
+}
+
+
+/* 實驗一：最簡根式化簡器 */
+function factor(n){const f=[];let d=2;while(n>1){while(n%d===0){f.push(d);n/=d}d++}return f}
+function rt(x){return '√<span class="rad">'+x+'</span>'}
+function simpDraw(){
+  const n=+$("sn").value; $("ln").textContent=n;
+  const f=factor(n), cnt={}; f.forEach(p=>cnt[p]=(cnt[p]||0)+1);
+  let out=1, inn=1, chips=[];
+  Object.keys(cnt).map(Number).sort((a,b)=>a-b).forEach(p=>{
+    const e=cnt[p];
+    for(let k=0;k<Math.floor(e/2);k++){out*=p;chips.push('<span class="pair">'+p+'×'+p+'</span>')}
+    if(e%2){inn*=p;chips.push('<span class="single">'+p+'</span>')}
+  });
+  $("fac").innerHTML=chips.join("");
+  let eq=rt(n)+" ＝ ";
+  if(inn===1)eq+=out; else if(out===1)eq+=rt(n); else eq+=rt((out*out)+"×"+inn)+" ＝ "+out+rt(inn);
+  $("seq").innerHTML=eq;
+  const v=$("vsimp");
+  if(inn===1){v.className="verdict good";v.innerHTML="<strong>"+n+" 是完全平方數</strong>，每個質數都成對，根號整個消失："+rt(n)+"＝"+out+"。"}
+  else if(out===1){v.className="verdict";v.innerHTML="沒有成對的質數，<strong>"+rt(n)+" 已經是最簡根式</strong>，不能再化簡。"}
+  else{v.className="verdict good";v.innerHTML="紫色那 "+(chips.filter(c=>c.indexOf("pair")>0).length)+" 對各搬一個出去，外面是 <strong>"+out+"</strong>；橘色的留在裡面相乘是 <strong>"+inn+"</strong>。"}
+}
+$("sn").addEventListener("input",simpDraw); simpDraw();
+
+/* 實驗二：根號能不能拆開 */
+let op="mul";
+function opDraw(){
+  const a=+$("sa").value,b=+$("sb").value; $("la").textContent=a; $("lb").textContent=b;
+  const f=x=>(Math.round(x*1000)/1000).toString();
+  let L,R2,lt,rtx;
+  if(op==="mul"){L=Math.sqrt(a)*Math.sqrt(b);R2=Math.sqrt(a*b);lt=rt(a)+"×"+rt(b);rtx=rt(a+"×"+b)+"＝"+rt(a*b)}
+  else{L=Math.sqrt(a)+Math.sqrt(b);R2=Math.sqrt(a+b);lt=rt(a)+"＋"+rt(b);rtx=rt(a+"＋"+b)+"＝"+rt(a+b)}
+  $("cl").innerHTML=lt; $("cr").innerHTML=rtx; $("vl").textContent=f(L); $("vr").textContent=f(R2);
+  const v=$("vop"), same=Math.abs(L-R2)<1e-9;
+  if(op==="mul"){v.className="verdict good";v.innerHTML="<strong>一樣。</strong>不管 a、b 是多少，"+rt("a")+"×"+rt("b")+" 都等於 "+rt("a×b")+"——所以乘法可以合成一個根號。"}
+  else if(same){v.className="verdict warn";v.innerHTML="這次剛好一樣，因為 <strong>a 或 b 是 0</strong>。只要兩個都不是 0，就一定不一樣。"}
+  else{v.className="verdict warn";v.innerHTML="<strong>不一樣，左邊大了 "+f(L-R2)+"。</strong>"+rt("a")+"＋"+rt("b")+" 永遠比 "+rt("a＋b")+" 大（a、b 都不是 0 時）——加法<strong>不能</strong>合成一個根號。"}
+}
+document.querySelectorAll("#opc .chip").forEach(c=>c.addEventListener("click",()=>{
+  op=c.dataset.o; document.querySelectorAll("#opc .chip").forEach(x=>x.classList.toggle("on",x===c)); opDraw();
+}));
+["sa","sb"].forEach(id=>$(id).addEventListener("input",opDraw)); opDraw();
+
+
+if(pDone>0&&pDone<PRAC.length)pi=pDone; else if(pDone>=PRAC.length)pi=PRAC.length-1;
+pRender();
+document.querySelectorAll(".opts[data-q]").forEach(box=>{const qi=box.dataset.q,saved=state["q"+qi];if(saved!==undefined)reveal(qi,saved,box.dataset.ans,box,false)});
+gate();
+$("rst").addEventListener("click",()=>{try{localStorage.removeItem(KEY)}catch(e){}location.reload()});
+
+})();
+</script>
+</body>
+</html>

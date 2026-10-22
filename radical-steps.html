@@ -226,51 +226,76 @@ footer{padding:30px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
 
 <header>
   <div class="kicker">八年級上 · 第二章 2-2 根式的運算 · 課本逐題講解</div>
-  <h1>這一步，是乘還是加？</h1>
-  <p class="sub">課本 2-2 的例題和隨堂練習，照課本順序一題一題拆開來。每按一次「下一步」，算式就往下寫一行，旁邊說明<strong>這一步為什麼可以這樣做</strong>。<br>
-  每一行前面都有一個標籤：<span class="tg mul">乘除</span> 是根號可以合成一個的步驟，<span class="tg add">加減</span> 是只有同類方根才能合併的步驟。這一節大部分的錯，都是把這兩種混在一起。</p>
+  <h1>根號，就是正方形的邊長</h1>
+  <p class="sub">這一頁全部用「正方形」來想根號。先記住一句話：<br>
+  <strong><span class="m" data-m="r{9}"></span> 的意思是「面積 9 的正方形，邊有多長」</strong>，答案是 3。<br>
+  後面每一題卡住的時候，都回到這個正方形來想。<br>
+  每一行算式前面有一個小標籤：<span class="tg mul">乘除</span> 代表「兩個根號可以合成一個」；<span class="tg add">加減</span> 代表「要一樣的根號才能加在一起」。這一節大部分的錯，都是把這兩種搞混。</p>
   <div class="toc">
-    <a href="#rules">兩條規則</a><a href="#lab">乘 vs 加 實驗</a><a href="#secA">A 乘除</a><a href="#secB">B 最簡根式</a>
-    <a href="#secC">C 有理化</a><a href="#secD">D 同類方根加減</a><a href="#secE">E 四則與公式</a><a href="#secF">F 挑錯</a><a href="#quiz">判斷 10 題</a>
+    <a href="#what">根號是什麼</a><a href="#rules">乘和加不一樣</a><a href="#lab">動手看</a><a href="#secA">A 乘除</a><a href="#secB">B 化簡</a>
+    <a href="#secC">C 分母有根號</a><a href="#secD">D 加減</a><a href="#secE">E 混在一起</a><a href="#secF">F 挑錯</a><a href="#quiz">判斷 10 題</a>
   </div>
 </header>
 
 <div class="bar"><div class="bar-inner"><span>講解看完</span><div class="track"><div class="fill" id="pfill"></div></div><b id="ptext">0 / 0</b></div></div>
 
-<!-- ══ 0 兩條規則 ══ -->
+<!-- ══ 0 根號是什麼 ══ -->
+<section id="what">
+  <div class="step"><span class="n">0</span>先認識根號</div>
+  <h2>根號＝正方形的邊長</h2>
+  <p>拉下面的拉桿，改變正方形的<strong>面積</strong>，看看<strong>邊長</strong>是多少。</p>
+  <div class="lab">
+    <div class="lab-t">拉拉看 ── 面積和邊長</div>
+    <div><label style="font-size:14px;color:var(--ink2)">正方形的面積 ＝ <b id="sqAt">9</b></label><input type="range" id="sqA" min="1" max="30" value="9"></div>
+    <div class="vis"><svg id="sqSvg" viewBox="0 0 640 260" role="img" aria-label="正方形：面積和邊長"></svg></div>
+    <div class="verdict" id="sqTxt"></div>
+  </div>
+  <div class="note"><p>📌 兩件一定要記住的事：<br>
+  ① <span class="m" data-m="r{9}＝3"></span>：面積 9 的正方形，邊長是 3。<br>
+  ② <span class="m" data-m="r{3}×r{3}＝3"></span>：邊長 <span class="m" data-m="r{3}"></span> 的正方形，邊長乘邊長就是面積，面積是 3。<strong>根號自己乘自己，根號就不見了。</strong></p></div>
+
+  <h3>再看一個：<span class="m" data-m="r{80}"></span> 為什麼可以寫成 <span class="m" data-m="4r{5}"></span>？</h3>
+  <div class="lab">
+    <div class="vis"><svg id="s80" viewBox="0 0 360 290" role="img" aria-label="面積 80 的正方形切成 16 塊面積 5 的小正方形"></svg></div>
+  </div>
+  <p>面積 80 的正方形，可以切成 <strong>4 排、每排 4 塊</strong>，一共 16 塊小正方形，每一塊面積是 5（16×5＝80）。<br>
+  每一塊小正方形的邊長是 <span class="m" data-m="r{5}"></span>，大正方形的一條邊上排了 <strong>4 塊</strong>，所以大正方形的邊長＝4 個 <span class="m" data-m="r{5}"></span>，寫成 <span class="m" data-m="4r{5}"></span>。</p>
+</section>
+
+<!-- ══ 1 兩條規則 ══ -->
 <section id="rules">
-  <div class="step"><span class="n">0</span>先看這一張</div>
+  <div class="step"><span class="n">1</span>先看這一張</div>
   <h2>根號的乘法和加法，規則完全不一樣</h2>
   <div class="rules">
     <div class="rule mul">
-      <div class="rn">乘除：根號可以直接合</div>
-      <div class="rf m" data-m="r{a} × r{b} ＝ r{a×b}"></div>
-      <p>兩個根號相乘，<strong>裡面的數直接相乘</strong>，合成一個根號。<br>
-      常常會乘出平方數，<strong>根號就不見了</strong>：<span class="m" data-m="r{3}×r{3}＝r{9}＝3"></span>。</p>
+      <div class="rn">乘除：兩個根號可以合成一個</div>
+      <div class="rf m" data-m="r{2} × r{3} ＝ r{6}"></div>
+      <p>為什麼？把 <span class="m" data-m="r{2}×r{3}"></span> 自己乘自己：<span class="m" data-m="r{2}×r{2}"></span> 是 2，<span class="m" data-m="r{3}×r{3}"></span> 是 3，合起來 <strong>2×3＝6</strong>。<br>
+      自己乘自己會得到 6，它就是「面積 6 的正方形的邊長」，也就是 <span class="m" data-m="r{6}"></span>。</p>
     </div>
     <div class="rule add">
-      <div class="rn">加減：只有同類才能合</div>
+      <div class="rn">加減：一樣的根號才能加在一起</div>
       <div class="rf m" data-m="2r{3} ＋ 4r{3} ＝ 6r{3}"></div>
-      <p>這裡的 <span class="m" data-m="r{3}"></span> 像一個<strong>單位</strong>（就像 y），<strong>根號裡的 3 不動</strong>，只把外面的個數相加。<br>
-      根號裡的數不一樣，就<strong>不能合併</strong>：<span class="m" data-m="r{2}＋r{3}"></span> 就是答案。</p>
+      <p>把 <span class="m" data-m="r{3}"></span> 想成<strong>一根固定長度的棒子</strong>。2 根加 4 根是 6 根，棒子本身不會變，所以<strong>根號裡的 3 不動</strong>。<br>
+      長度不一樣的棒子不能數在一起：<span class="m" data-m="r{2}＋r{3}"></span> 就是答案。</p>
     </div>
   </div>
-  <p>用 1-2 學過的 <span class="m">y</span> 來想最清楚。把 <span class="m" data-m="r{3}"></span> 當成 <span class="m">y</span>：</p>
+  <p>同兩個數，加起來和乘起來差多少？</p>
   <table class="ytab">
-    <tr><th></th><th>加：<span class="m">2y ＋ 3y</span></th><th>乘：<span class="m">2y × 3y</span></th></tr>
-    <tr><td>代數式</td><td class="cadd m">＝ 5y</td><td class="cmul m">＝ 6y<sup>2</sup></td></tr>
-    <tr><td>y 換成 <span class="m" data-m="r{3}"></span></td><td class="cadd m" data-m="2r{3}＋3r{3} ＝ 5r{3}"></td><td class="cmul m" data-m="2r{3}×3r{3} ＝ 6×(r{3})^2"></td></tr>
-    <tr><td>結果</td><td class="cadd">根號<strong>還在</strong>：<span class="m" data-m="5r{3}"></span></td><td class="cmul"><span class="m" data-m="(r{3})^2＝3"></span>，根號<strong>消失</strong>：<span class="m">18</span></td></tr>
+    <tr><th></th><th>加：<span class="m" data-m="2r{3}＋3r{3}"></span></th><th>乘：<span class="m" data-m="2r{3}×3r{3}"></span></th></tr>
+    <tr><td>想成</td><td class="cadd">一根 <span class="m" data-m="r{3}"></span> 長的棒子，2 根接上 3 根</td><td class="cmul">拼成長方形，切成 2×3＝6 個邊長 <span class="m" data-m="r{3}"></span> 的小正方形</td></tr>
+    <tr><td>算出來</td><td class="cadd">5 根：<span class="m" data-m="5r{3}"></span></td><td class="cmul">每個小正方形面積 3，6×3＝<span class="m">18</span></td></tr>
+    <tr><td>根號</td><td class="cadd"><strong>還在</strong></td><td class="cmul"><strong>不見了</strong></td></tr>
   </table>
-  <div class="note"><p>📌 加法：<strong>y 的個數</strong>相加，y 本身不變。乘法：會出現 <span class="m">y<sup>2</sup></span>，而 <span class="m" data-m="(r{3})^2"></span> 剛好是 3。<br>
-  所以 <span class="m" data-m="4r{3}×2r{3}"></span> 寫成 <span class="m bd" data-m="8r{3}"></span> 是錯的（會考 110 年第 6 題）：那是把乘法當成加法，只算了 4×2，忘了 <span class="m" data-m="r{3}×r{3}＝3"></span>。正確是 <span class="m gd">24</span>。</p></div>
+  <div class="note"><p>📌 一句話：<strong>加法是數棒子，乘法是算面積。</strong><br>
+  所以 <span class="m" data-m="4r{3}×2r{3}"></span> 寫成 <span class="m bd" data-m="8r{3}"></span> 是錯的（會考 110 年第 6 題）：那是只數了 4×2＝8 格，忘了每一格的面積是 3。正確答案是 8×3＝<span class="m gd">24</span>。</p></div>
 </section>
 
 <!-- ══ 實驗 ══ -->
 <section id="lab">
   <div class="step"><span class="n">★</span>動手看</div>
-  <h2>同兩個數，加起來和乘起來差在哪</h2>
-  <p>選一組數，按「播放」。左邊算加法，右邊算乘法；下面的圖是它們的意思：<strong>加法是把線段接起來，數有幾段</strong>；<strong>乘法是圍成長方形，算面積</strong>。</p>
+  <h2>數棒子 vs 算面積</h2>
+  <p>選一組數，按「播放」。左邊算加法，右邊算乘法；下面的圖：<strong>加法是把棒子接起來，數有幾根</strong>；<strong>乘法是拼成長方形，算面積</strong>。</p>
   <div class="lab">
     <div class="lab-t">實驗一 ── 加法和乘法並排算</div>
     <div class="chips" id="labChips"></div>
@@ -279,44 +304,44 @@ footer{padding:30px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
       <div class="col mul"><h4>乘法</h4><div id="labMul"></div></div>
     </div>
     <div class="ybar" id="labY"></div>
-    <div class="vis"><svg id="labSvg" viewBox="0 0 640 380" role="img" aria-label="加法用線段、乘法用面積的對照圖"></svg></div>
+    <div class="vis"><svg id="labSvg" viewBox="0 0 640 380" role="img" aria-label="加法用棒子、乘法用面積的對照圖"></svg></div>
     <div class="btnrow"><button class="btn" id="labPlay">▶ 播放</button><span class="dim" style="font-size:13.5px" id="labHint"></span></div>
   </div>
 
   <h3>為什麼 <span class="m" data-m="r{9}＋r{16}"></span> 不是 <span class="m" data-m="r{25}"></span>？</h3>
-  <p>這是課本 p.93 挑錯題的核心。把 <span class="m" data-m="r{a}"></span> 和 <span class="m" data-m="r{b}"></span> 畫成直角三角形的兩股，斜邊剛好是 <span class="m" data-m="r{a＋b}"></span>（下一節 2-3 畢氏定理會證明）。</p>
+  <p>這是課本 p.93 挑錯題的重點。<span class="m" data-m="r{9}"></span> 是面積 9 的正方形的邊（3），<span class="m" data-m="r{16}"></span> 是面積 16 的正方形的邊（4）。把兩個正方形並排，邊接起來是 3＋4＝7；可是面積 9＋16＝25 的大正方形，邊只有 5。</p>
   <div class="lab">
-    <div class="lab-t">實驗二 ── 走兩股 vs 走斜邊</div>
+    <div class="lab-t">實驗二 ── 兩個正方形的邊接起來 vs 一個大正方形的邊</div>
     <div class="sl">
-      <div><label>a ＝ <b id="tA">9</b></label><input type="range" id="sA" min="1" max="25" value="9"></div>
-      <div><label>b ＝ <b id="tB">16</b></label><input type="range" id="sB" min="1" max="25" value="16"></div>
+      <div><label>左邊正方形面積 ＝ <b id="tA">9</b></label><input type="range" id="sA" min="1" max="25" value="9"></div>
+      <div><label>中間正方形面積 ＝ <b id="tB">16</b></label><input type="range" id="sB" min="1" max="25" value="16"></div>
     </div>
-    <div class="vis"><svg id="triSvg" viewBox="0 0 640 300" role="img" aria-label="直角三角形：兩股長根號a、根號b，斜邊長根號a加b"></svg></div>
+    <div class="vis"><svg id="sq2Svg" viewBox="0 0 640 290" role="img" aria-label="兩個正方形並排，和一個面積相加的大正方形比較邊長"></svg></div>
     <div class="pills">
-      <div class="pill a"><div class="lb">走兩股 <span class="m" data-m="r{a}＋r{b}"></span></div><div class="vl" id="vAdd"></div></div>
-      <div class="pill b"><div class="lb">走斜邊 <span class="m" data-m="r{a＋b}"></span></div><div class="vl" id="vHyp"></div></div>
+      <div class="pill a"><div class="lb">兩個邊接起來 <span class="m" data-m="r{a}＋r{b}"></span></div><div class="vl" id="vAdd"></div></div>
+      <div class="pill b"><div class="lb">大正方形的邊 <span class="m" data-m="r{a＋b}"></span></div><div class="vl" id="vHyp"></div></div>
       <div class="pill c"><div class="lb">乘法 <span class="m" data-m="r{a}×r{b}"></span> 和 <span class="m" data-m="r{a×b}"></span></div><div class="vl" id="vMul"></div></div>
     </div>
-    <div class="btnrow"><button class="btn" id="triPlay">▶ 讓小點走一次</button></div>
+    <div class="btnrow"><button class="btn" id="sq2Play">▶ 播放</button></div>
     <div class="verdict" id="triV"></div>
   </div>
-  <div class="note"><p>不用畫圖也能看出來。用 1-1 的和的平方：<span class="m" data-m="(r{a}＋r{b})^2 ＝ a ＋ 2r{ab} ＋ b"></span>，比 <span class="m" data-m="(r{a＋b})^2 ＝ a＋b"></span> 多了 <span class="m" data-m="2r{ab}"></span>，所以兩個<strong>不可能</strong>相等。<br>
-  乘法就沒有這個問題：<span class="m" data-m="(r{a}×r{b})^2 ＝ a×b"></span>，剛好等於 <span class="m" data-m="(r{ab})^2"></span>，所以每次都成立。</p></div>
+  <div class="note"><p>📌 面積可以相加，<strong>邊長不會跟著這樣加</strong>。所以根號裡的數不能直接相加：<span class="m" data-m="r{9}＋r{16}"></span> 是 7，不是 <span class="m" data-m="r{25}"></span>＝5。<br>
+  乘法就沒有這個問題，<span class="m" data-m="r{a}×r{b}＝r{a×b}"></span> 每次都對（上面「乘除」那張卡說明了為什麼）。</p></div>
 </section>
 
 <!-- ══ 逐題講解 ══ -->
 <section id="steps">
-  <div class="step"><span class="n">1</span>課本逐題講解</div>
+  <div class="step"><span class="n">2</span>課本逐題講解</div>
   <h2>照課本的順序，一題一題拆開</h2>
-  <p>按「下一步」往下寫一行；按「▶ 自動」會一步一步自己播。有 <strong>❓</strong> 的步驟會先問你，答對才往下。點已經寫好的任何一行，可以再看一次那一步的理由。</p>
+  <p>按「下一步」，算式會多寫一行；按「▶ 自動」會自己一步一步播。有 <strong>❓</strong> 的地方會先問你，答對才往下。點已經寫好的任何一行，可以再看一次那一步的說明。</p>
   <div id="wtList"></div>
 </section>
 
 <!-- ══ 判斷 ══ -->
 <section id="quiz">
-  <div class="step"><span class="n">2</span>最後檢查</div>
+  <div class="step"><span class="n">3</span>最後檢查</div>
   <h2>對還是錯？10 題，專抓乘法和加法搞混</h2>
-  <p>每一題都是學生真的會寫出來的式子。先判斷，再看理由。</p>
+  <p>每一題都是同學真的會寫出來的式子。先判斷，再看理由。</p>
   <div class="tf">
     <div class="dots" id="tfDots"></div>
     <div style="text-align:center;font-size:13px;color:var(--ink2)" id="tfNo"></div>
@@ -335,7 +360,6 @@ footer{padding:30px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
   題目依康軒版第三冊 2-2 的例題與隨堂練習順序整理；標「同型」的是同一個觀念的補充題
 </footer>
 </div>
-
 <script>
 (function(){
 "use strict";
@@ -375,11 +399,11 @@ function T(s){return s.replace(/\$([^$]+)\$/g,function(_,x){return'<span class="
 document.querySelectorAll("[data-m]").forEach(function(el){el.innerHTML=M(el.getAttribute("data-m"))});
 
 const TAG={
-  mul:["乘除","乘除：根號可以合成一個"],
-  add:["加減","加減：同類方根才能合"],
-  simp:["化簡","化簡：把平方數搬出根號"],
-  rat:["有理化","有理化：把根號趕出分母"],
-  exp:["展開","展開：分配律／乘法公式"],
+  mul:["乘除","乘除：兩個根號可以合成一個"],
+  add:["加減","加減：一樣的根號才能加在一起"],
+  simp:["化簡","化簡：把能開出來的整數搬到外面"],
+  rat:["有理化","有理化：讓分母的根號不見"],
+  exp:["展開","展開：每一項都要乘到"],
   ans:["答","答案"],
   bad:["✗ 錯","錯在哪裡"],
   chk:["檢查","檢查一下"]
@@ -387,186 +411,185 @@ const TAG={
 
 /* ───────── 課本題目 ───────── */
 const SECS=[
-{id:"secA",h:"A　根式的乘法與除法　課本 p.75–78",d:"乘除是「根號可以合成一個」的那一邊。外面的數跟外面的數算，根號跟根號算。",items:[
+{id:"secA",h:"A　根號的乘法和除法　課本 p.75–78",d:"乘除是「兩個根號可以合成一個」的那一邊。根號外面的數和外面的數算，根號和根號算。",items:[
  {src:"課本 p.75　觀念",q:"為什麼 $r{2}×r{3}＝r{6}$？",steps:[
-   {e:"r{2} × r{3}",w:"先問一件事：$r{6}$ 是什麼意思？——它是「平方以後會得到 6 的正數」。只要 $r{2}×r{3}$ 也是這樣的數，它就是 $r{6}$。"},
-   {t:"chk",e:"(r{2}×r{3})^2 ＝ (r{2}×r{3})×(r{2}×r{3})",w:"把它平方看看。平方就是自己乘自己。"},
-   {t:"mul",e:"＝ h{(r{2}×r{2})}×h{(r{3}×r{3})}",w:"乘法可以任意交換、結合，把一樣的放在一起。"},
-   {t:"mul",e:"＝ h{2} × h{3} ＝ 6",w:"$r{2}×r{2}＝2$、$r{3}×r{3}＝3$：根號自己乘自己，根號就消失了。"},
-   {t:"ans",e:"所以 r{2}×r{3} ＝ g{r{6}}",w:"$r{2}×r{3}$ 是正數，平方是 6，所以它就是 $r{6}$。這就是規則 $r{a}×r{b}＝r{ab}$ 的理由。<br>📌 加法沒辦法這樣證：$(r{2}＋r{3})^2$ 會多出中間項 $2r{6}$，不是 5。"}
- ],trap:"同一招拿去檢查加法：$(r{2}＋r{3})^2＝2＋2r{6}＋3≠5$，所以 $r{2}＋r{3}≠r{5}$。<strong>乘法能合，加法不能合</strong>，理由就在這裡。"},
+   {e:"r{2} × r{3}",w:"先想 $r{6}$ 是什麼：它是「面積 6 的正方形的邊長」，也就是「自己乘自己會等於 6 的數」。只要 $r{2}×r{3}$ 自己乘自己也等於 6，它就是 $r{6}$。"},
+   {t:"chk",e:"(r{2}×r{3})^2 ＝ (r{2}×r{3})×(r{2}×r{3})",w:"把它自己乘自己看看（右上角的小 2 就是「自己乘自己」）。"},
+   {t:"mul",e:"＝ h{(r{2}×r{2})}×h{(r{3}×r{3})}",w:"乘法可以換順序，把一樣的放在一起。"},
+   {t:"mul",e:"＝ h{2} × h{3} ＝ 6",w:"$r{2}×r{2}$ 是邊長 $r{2}$ 的正方形面積，就是 2；$r{3}×r{3}$ 就是 3。2×3＝6。"},
+   {t:"ans",e:"所以 r{2}×r{3} ＝ g{r{6}}",w:"$r{2}×r{3}$ 自己乘自己等於 6，所以它就是 $r{6}$。這就是「根號相乘，裡面直接乘」的理由。<br>📌 加法沒辦法這樣：$r{2}＋r{3}$ 自己乘自己大約是 9.9，不是 5。"}
+ ],trap:"所以：<strong>乘法可以把根號合起來，加法不行</strong>。$r{2}＋r{3}$ 大約是 3.15，$r{5}$ 只有大約 2.24，差很多。"},
 
  {src:"課本 p.77　例 2",q:"計算 $7r{2}×5r{2}$",steps:[
-   {e:"o{7}i{r{2}} × o{5}i{r{2}}",w:"$7r{2}$ 的意思是 $7×r{2}$，中間的乘號省略了。橘色是外面的數，藍色是根號。"},
-   {t:"mul",e:"＝ (o{7}×o{5}) × (i{r{2}}×i{r{2}})",w:"整題都是乘法，可以交換順序：<strong>外面的數跟外面的數乘，根號跟根號乘</strong>。"},
-   {t:"mul",ask:{q:"❓ $r{2}×r{2}$ 會變成什麼？",o:["2","$r{2}$","$2r{2}$"],a:0,no:"$r{2}$ 是「平方會得到 2 的數」，它自己乘自己就是 2。"},e:"＝ h{35} × h{2}",w:"$7×5＝35$；$r{2}×r{2}＝r{4}＝2$，根號消失了。"},
-   {t:"ans",e:"＝ g{70}",w:"答案是 70，<strong>一個沒有根號的整數</strong>。"}
- ],trap:"⚠️ 寫成 $35r{2}$ 是把 $r{2}×r{2}$ 當成 $r{2}$——這是把乘法當成加法（$7r{2}＋5r{2}$ 才會留著 $r{2}$，而且是 $12r{2}$）。"},
+   {e:"o{7}i{r{2}} × o{5}i{r{2}}",w:"$7r{2}$ 就是 $7×r{2}$，中間的乘號省略了。橘色是根號外面的數，藍色是根號。"},
+   {t:"mul",e:"＝ (o{7}×o{5}) × (i{r{2}}×i{r{2}})",w:"全部都是乘法，可以換順序：<strong>外面的數和外面的數乘，根號和根號乘</strong>。"},
+   {t:"mul",ask:{q:"❓ $r{2}×r{2}$ 會變成什麼？",o:["2","$r{2}$","$2r{2}$"],a:0,no:"$r{2}×r{2}$ 是邊長 $r{2}$ 的正方形的面積，面積就是 2。"},e:"＝ h{35} × h{2}",w:"7×5＝35；$r{2}×r{2}＝2$（邊長乘邊長＝面積），根號不見了。"},
+   {t:"ans",e:"＝ g{70}",w:"答案是 70，<strong>沒有根號</strong>。"}
+ ],trap:"⚠️ 寫成 $35r{2}$ 是忘了 $r{2}×r{2}＝2$。只有加法（$7r{2}＋5r{2}＝12r{2}$）根號才會留著。"},
 
  {src:"課本 p.77　例 2 隨堂 (3)",q:"計算 $3r{6}×4r{6}$",steps:[
    {e:"o{3}i{r{6}} × o{4}i{r{6}}"},
    {t:"mul",e:"＝ (o{3}×o{4}) × (i{r{6}}×i{r{6}})",w:"外面乘外面、根號乘根號。"},
-   {t:"mul",e:"＝ h{12} × h{6}",w:"$r{6}×r{6}＝6$。"},
-   {t:"ans",ask:{q:"❓ 乘出來是 72。那 $3r{6}＋4r{6}$ 呢？",o:["$7r{6}$：加法根號還在","也是 72","$12r{6}$"],a:0,no:"加法是數「有幾個 $r{6}$」：3 個加 4 個是 7 個，根號不會消失。"},e:"＝ g{72}",w:"同兩個數：<strong>乘是 72，加是 $7r{6}$</strong>（大約 17.1）。差了四倍多。"}
- ],trap:"⚠️ $12r{36}$ 是算到一半：$r{36}＝6$，要再乘下去。"},
+   {t:"mul",e:"＝ h{12} × h{6}",w:"$r{6}×r{6}＝6$（邊長 $r{6}$ 的正方形，面積是 6）。"},
+   {t:"ans",ask:{q:"❓ 乘出來是 72。那 $3r{6}＋4r{6}$ 呢？",o:["$7r{6}$：加法根號還在","也是 72","$12r{6}$"],a:0,no:"加法是數有幾根 $r{6}$ 的棒子：3 根加 4 根是 7 根，根號不會不見。"},e:"＝ g{72}",w:"同樣兩個數：<strong>乘是 72，加是 $7r{6}$</strong>（大約 17.1），差很多。"}
+ ],trap:"⚠️ 寫 $12r{36}$ 是算到一半：$r{36}＝6$（面積 36 的正方形邊長是 6），要再乘下去。"},
 
  {src:"課本 p.78　例 3 隨堂 (1)",q:"計算 $r{98}÷r{14}$",steps:[
    {e:"r{98} ÷ r{14}"},
-   {t:"mul",e:"＝ r{h{f{98}{14}}}",w:"除法跟乘法一樣，兩個根號可以合成一個：$r{a}÷r{b}＝r{f{a}{b}}$（b 不能是 0）。"},
-   {t:"ans",e:"＝ g{r{7}}",w:"$98÷14＝7$。7 不是平方數，根號留著，答案就是 $r{7}$。"}
- ],trap:"⚠️ 答 7 是忘了根號還在；答 $r{84}$ 是把除號看成減號——<strong>根號裡可以直接除，不能直接減</strong>。"},
+   {t:"mul",e:"＝ r{h{f{98}{14}}}",w:"除法和乘法一樣，兩個根號可以合成一個，裡面直接除（除數不能是 0）。"},
+   {t:"ans",e:"＝ g{r{7}}",w:"98÷14＝7。7 不是某個整數自己乘自己（2×2＝4、3×3＝9，中間沒有 7），所以根號留著，答案是 $r{7}$。"}
+ ],trap:"⚠️ 答 7 是忘了根號還在；答 $r{84}$ 是把除看成減。<strong>根號裡可以直接乘、除，不能直接加、減</strong>。"},
 
  {src:"同型　會考 110 年第 6 題 (D)",q:"計算 $4r{3}÷2r{3}$",steps:[
    {e:"o{4}i{r{3}} ÷ o{2}i{r{3}}"},
    {t:"mul",e:"＝ f{o{4}}{o{2}} × f{i{r{3}}}{i{r{3}}}",w:"除法寫成分數，外面除外面、根號除根號。"},
-   {t:"ans",e:"＝ 2 × 1 ＝ g{2}",w:"一樣的數相除是 1。答案 2，根號消失。<br>📌 同一題的 (C) $4r{3}×2r{3}＝8r{3}$ 是錯的，正確是 $8×3＝24$。"}
+   {t:"ans",e:"＝ 2 × 1 ＝ g{2}",w:"一樣的數相除是 1。答案是 2。<br>📌 同一題的 (C) $4r{3}×2r{3}＝8r{3}$ 是錯的，應該是 8×3＝24。"}
  ]}
 ]},
 
-{id:"secB",h:"B　最簡根式　課本 p.79–80",d:"化簡只用到乘法規則：$r{16×5}＝r{16}×r{5}$。平方數搬出去，剩下的留在裡面。",items:[
+{id:"secB",h:"B　化簡成最簡根式　課本 p.79–80",d:"化簡就是：把根號裡能「開出來」的整數搬到外面。像上面 $r{80}$ 的圖：面積 80 的正方形切成 16 塊面積 5 的小正方形，邊長就是 4 個 $r{5}$。",items:[
  {src:"課本 p.80　例 4 隨堂 (2)",q:"把 $r{80}$ 化為最簡根式",steps:[
    {e:"r{80}"},
-   {t:"simp",e:"＝ r{2×2×2×2×5}",w:"先做質因數分解：$80＝2^4×5$。"},
-   {t:"simp",e:"＝ r{h{(2×2)}×h{(2×2)}×5}",w:"一樣的質因數兩個兩個配成一對，一對就是一個平方數。5 落單。"},
-   {t:"mul",e:"＝ r{2×2} × r{2×2} × r{5}",w:"用乘法規則<strong>倒過來</strong>：一個根號可以拆成幾個根號相乘，$r{ab}＝r{a}×r{b}$。"},
-   {t:"simp",ask:{q:"❓ $r{2×2}$ 搬出根號，外面是多少？",o:["2","4","2×2，兩個都要寫"],a:0,no:"$r{2×2}＝r{4}＝2$：一對進去，只出來一個。"},e:"＝ h{2} × h{2} × r{5}",w:"每一對搬出來變一個 2。"},
-   {t:"ans",e:"＝ g{4r{5}}",w:"5 沒有平方因數了，$4r{5}$ 是最簡根式。"}
- ],trap:"⚠️ $16r{5}$：把 16 直接搬出來，忘了開根號（$r{16}＝4$）。⚠️ $2r{20}$：沒化完，20 裡還有 4。"},
+   {t:"simp",e:"＝ r{2×2×2×2×5}",w:"先把 80 拆成質因數：80＝2×2×2×2×5。"},
+   {t:"simp",e:"＝ r{h{(2×2)}×h{(2×2)}×5}",w:"兩個一樣的配成一對：2×2 是一對，再一對；5 落單。"},
+   {t:"mul",e:"＝ r{2×2} × r{2×2} × r{5}",w:"一個根號可以拆成幾個根號相乘（乘法規則倒過來用）。"},
+   {t:"simp",ask:{q:"❓ $r{2×2}$ 搬出根號，外面是多少？",o:["2","4","2×2，兩個都要寫"],a:0,no:"$r{2×2}＝r{4}＝2$：面積 4 的正方形，邊長是 2。一對進去，只出來一個。"},e:"＝ h{2} × h{2} × r{5}",w:"每一對搬出來，變成一個 2。"},
+   {t:"ans",e:"＝ g{4r{5}}",w:"2×2＝4，答案 $4r{5}$。5 已經沒有可以配對的數，這就是最簡根式（最簡單的寫法）。"}
+ ],trap:"⚠️ $16r{5}$：16 搬出來時忘了變成 4（$r{16}＝4$）。⚠️ $2r{20}$：還沒化完，20 裡還有 4＝2×2。"},
 
  {src:"課本 p.79　隨堂練習",q:"$−r{42}$、$r{18}$、$f{7}{r{2}}$、$r{2.7}$ 哪一個是最簡根式？",steps:[
-   {e:"最簡根式三條件：根號裡沒有平方數、分母沒有根號、根號裡不是分數或小數",w:"一個一個用這三條檢查。"},
-   {t:"simp",e:"r{18} ＝ r{h{9}×2} ＝ 3r{2}　b{✗}",w:"18 裡面有平方數 9，還能搬出來。"},
-   {t:"rat",e:"f{7}{r{2}}　b{✗}",w:"分母有根號，不是最簡根式（要有理化成 $f{7r{2}}{2}$）。"},
-   {t:"chk",e:"r{2.7}　b{✗}",w:"根號裡是小數，不是最簡根式。"},
-   {t:"ans",e:"−r{42}：42 ＝ 2×3×7　g{✓}",w:"42 的質因數 2、3、7 都只有一個，沒有成對，所以 $−r{42}$ 是最簡根式。前面的負號沒有關係。"}
+   {e:"最簡根式要符合三件事：① 根號裡沒有能配對開出來的數　② 分母沒有根號　③ 根號裡不是分數或小數",w:"一個一個檢查。"},
+   {t:"simp",e:"r{18} ＝ r{h{9}×2} ＝ 3r{2}　b{✗}",w:"18＝9×2，9＝3×3 可以開出來，變成 $3r{2}$，所以還不是最簡。"},
+   {t:"rat",e:"f{7}{r{2}}　b{✗}",w:"分母有根號，不算最簡（要改寫成 $f{7r{2}}{2}$）。"},
+   {t:"chk",e:"r{2.7}　b{✗}",w:"根號裡是小數，不算最簡。"},
+   {t:"ans",e:"−r{42}：42 ＝ 2×3×7　g{✓}",w:"42＝2×3×7，沒有兩個一樣的數可以配對，所以 $−r{42}$ 是最簡根式。前面的負號沒關係。"}
  ]}
 ]},
 
-{id:"secC",h:"C　分母有理化　課本 p.81–82",d:"分子分母同乘一個根號，用乘法讓 $r{a}×r{a}＝a$——乘法會把根號吃掉，這正是有理化在利用的事。",items:[
+{id:"secC",h:"C　分母有根號：有理化　課本 p.81–82",d:"分母有根號不好算，要想辦法讓它變成整數。方法：分子、分母同時乘同一個根號，利用 $r{a}×r{a}＝a$（邊長乘邊長＝面積）讓根號不見。分子分母乘一樣的數，分數的大小不變。",items:[
  {src:"課本 p.81",q:"把 $f{5}{r{12}}$ 的分母有理化",steps:[
    {e:"f{5}{r{12}}"},
-   {t:"simp",e:"＝ f{5}{h{2r{3}}}",w:"先把分母化簡：$r{12}＝r{4×3}＝2r{3}$。先化簡，後面的數字比較小。"},
-   {t:"rat",ask:{q:"❓ 分子分母要同乘什麼，分母的根號才會不見？",o:["$r{3}$，分子分母都乘","只有分母乘 $r{3}$","分子分母都乘 3"],a:0,no:"只乘分母會改變分數的大小；乘 3 的話根號還在。分子分母同乘 $r{3}$，等於乘以 $f{r{3}}{r{3}}＝1$。"},e:"＝ f{5×h{r{3}}}{2r{3}×h{r{3}}}",w:"分子分母同乘 $r{3}$，等於乘以 1，大小不變。"},
-   {t:"mul",e:"＝ f{5r{3}}{2×h{3}}",w:"$r{3}×r{3}＝3$：乘法把分母的根號消掉了。"},
+   {t:"simp",e:"＝ f{5}{h{2r{3}}}",w:"先化簡分母：$r{12}＝r{4×3}＝2r{3}$，數字變小比較好算。"},
+   {t:"rat",ask:{q:"❓ 分子分母要同乘什麼，分母的根號才會不見？",o:["$r{3}$，分子分母都乘","只有分母乘 $r{3}$","分子分母都乘 3"],a:0,no:"只乘分母，分數的大小就變了；乘 3 的話根號還在。分子分母都乘 $r{3}$，就像乘以 1，大小不變。"},e:"＝ f{5×h{r{3}}}{2r{3}×h{r{3}}}",w:"分子分母都乘 $r{3}$，就像乘以 1，大小不變。"},
+   {t:"mul",e:"＝ f{5r{3}}{2×h{3}}",w:"$r{3}×r{3}＝3$，分母的根號不見了。"},
    {t:"ans",e:"＝ g{f{5r{3}}{6}}",w:"分母沒有根號了。"}
  ]},
 
  {src:"課本 p.81　例 5 隨堂 (2)",q:"把 $f{3}{r{32}}$ 化為最簡根式",steps:[
    {e:"f{3}{r{32}}"},
    {t:"simp",e:"＝ f{3}{h{4r{2}}}",w:"$r{32}＝r{16×2}＝4r{2}$。"},
-   {t:"rat",e:"＝ f{3×h{r{2}}}{4r{2}×h{r{2}}}",w:"分子分母同乘 $r{2}$。"},
+   {t:"rat",e:"＝ f{3×h{r{2}}}{4r{2}×h{r{2}}}",w:"分子分母都乘 $r{2}$。"},
    {t:"mul",e:"＝ f{3r{2}}{4×h{2}}",w:"$r{2}×r{2}＝2$。"},
-   {t:"ans",e:"＝ g{f{3r{2}}{8}}",w:"$4×2＝8$。"}
- ],trap:"⚠️ $f{3r{2}}{4}$：分子乘了 $r{2}$，分母的 $r{2}×r{2}$ 卻沒算進去。分子分母一定要乘同一個數。"},
+   {t:"ans",e:"＝ g{f{3r{2}}{8}}",w:"4×2＝8。"}
+ ],trap:"⚠️ $f{3r{2}}{4}$：分子乘了 $r{2}$，分母卻忘了乘。分子分母一定要乘一樣的數。"},
 
  {src:"課本 p.82　例 6",q:"把 $r{0.8}$ 化為最簡根式",steps:[
-   {e:"r{0.8}",w:"根號裡是小數，先化成分數。"},
+   {e:"r{0.8}",w:"根號裡是小數，先改成分數。"},
    {t:"simp",e:"＝ r{f{8}{10}} ＝ r{h{f{4}{5}}}",w:"$0.8＝f{8}{10}＝f{4}{5}$，先約分。"},
-   {t:"mul",e:"＝ f{r{4}}{r{5}} ＝ f{h{2}}{r{5}}",w:"除法規則倒過來用：$r{f{a}{b}}＝f{r{a}}{r{b}}$。$r{4}＝2$。"},
-   {t:"rat",e:"＝ f{2×r{5}}{r{5}×r{5}}",w:"分母有根號，分子分母同乘 $r{5}$。"},
+   {t:"mul",e:"＝ f{r{4}}{r{5}} ＝ f{h{2}}{r{5}}",w:"分數的根號可以分開：分子、分母各自開根號。$r{4}＝2$。"},
+   {t:"rat",e:"＝ f{2×r{5}}{r{5}×r{5}}",w:"分母有根號，分子分母都乘 $r{5}$。"},
    {t:"ans",e:"＝ g{f{2r{5}}{5}}",w:"$r{5}×r{5}＝5$。"}
  ]}
 ]},
 
-{id:"secD",h:"D　同類方根與加減　課本 p.83–85",d:"加減是「只有同類才能合」的那一邊。根號是單位，根號裡的數不動。",items:[
+{id:"secD",h:"D　一樣的根號才能加減（同類方根）　課本 p.83–85",d:"加減的時候，把根號想成一根一根的棒子：一樣長的棒子才能數在一起，根號裡的數不動。",items:[
  {src:"課本 p.83",q:"計算 $4r{6}−3r{6}$",steps:[
-   {e:"o{4}i{r{6}} − o{3}i{r{6}}",w:"兩項的根號裡都是 6，是<strong>同類方根</strong>。"},
-   {t:"add",ask:{q:"❓ 根號裡的 6 要不要也相減？",o:["不用，$r{6}$ 是單位，不動","要，變成 $r{6−6}＝0$","要，變成 $r{4×6−3×6}$"],a:0,no:"想成 $4y−3y$：y 不會變成 0，只有 y 的個數在減。"},e:"＝ (o{4}−o{3})i{r{6}}",w:"像 $4y−3y＝(4−3)y$：把 $r{6}$ 當成 y，只有外面的個數相減。"},
-   {t:"ans",e:"＝ g{r{6}}",w:"1 個 $r{6}$ 就寫 $r{6}$。"}
+   {e:"o{4}i{r{6}} − o{3}i{r{6}}",w:"兩項的根號裡都是 6，是一樣長的棒子，課本叫「<strong>同類方根</strong>」。"},
+   {t:"add",ask:{q:"❓ 根號裡的 6 要不要也相減？",o:["不用，$r{6}$ 是棒子，棒子本身不變","要，變成 $r{6−6}＝0$","要，變成 $r{4×6−3×6}$"],a:0,no:"4 根棒子拿走 3 根，剩 1 根。棒子還是原來那一種，不會變成 0。"},e:"＝ (o{4}−o{3})i{r{6}}",w:"4 根 $r{6}$ 拿走 3 根，只有「根數」在減。"},
+   {t:"ans",e:"＝ g{r{6}}",w:"剩 1 根 $r{6}$，寫成 $r{6}$。"}
  ]},
 
  {src:"課本 p.83　隨堂練習",q:"$2r{3}$、$r{24}$、$r{f{2}{3}}$、$r{0.06}$ 哪一個<strong>不是</strong> $r{6}$ 的同類方根？",steps:[
-   {e:"先全部化成最簡根式，再看根號裡是不是 6",w:"看起來不像的，化簡後常常是同類；看起來像的，也可能不是。"},
+   {e:"先全部化成最簡根式，再看根號裡是不是 6",w:"看起來不像的，化簡後可能一樣；看起來像的，也可能不一樣。"},
    {t:"simp",e:"r{24} ＝ r{4×6} ＝ 2r{6}　g{同類}"},
    {t:"rat",e:"r{f{2}{3}} ＝ f{r{2}}{r{3}} ＝ f{r{2}×r{3}}{r{3}×r{3}} ＝ f{r{6}}{3}　g{同類}"},
    {t:"simp",e:"r{0.06} ＝ r{f{6}{100}} ＝ f{r{6}}{10}　g{同類}"},
-   {t:"ans",e:"2r{3}　b{不是}",w:"$2r{3}$ 已經是最簡根式，根號裡是 3，不是 6——跟 $r{6}$ 不能加減合併。"}
+   {t:"ans",e:"2r{3}　b{不是}",w:"$2r{3}$ 根號裡是 3，不是 6，是不一樣長的棒子，不能和 $r{6}$ 加在一起。"}
  ]},
 
  {src:"課本 p.85　例 8",q:"計算 $3r{2}＋r{8}$",steps:[
    {e:"3r{2} ＋ r{8}"},
-   {t:"add",ask:{q:"❓ $r{2}$ 和 $r{8}$ 現在能合併嗎？",o:["先把 $r{8}$ 化簡再看","不行，根號裡不一樣就永遠不行","可以，$r{2}＋r{8}＝r{10}$"],a:0,no:"$r{8}$ 還不是最簡根式，化簡後可能就跟 $r{2}$ 同類了。而根號裡直接相加（$r{10}$）是不行的。"},e:"3r{2} ＋ r{8}",w:"判斷能不能合併之前，<strong>一定要先化成最簡根式</strong>。"},
-   {t:"simp",e:"＝ 3r{2} ＋ h{2r{2}}",w:"$r{8}＝r{4×2}＝2r{2}$。現在兩項都是 $r{2}$，同類了。"},
-   {t:"add",e:"＝ (3＋2)r{2}",w:"3 個 $r{2}$ 加 2 個 $r{2}$。"},
+   {t:"add",ask:{q:"❓ $r{2}$ 和 $r{8}$ 現在能加在一起嗎？",o:["先把 $r{8}$ 化簡再看","不行，根號裡不一樣就永遠不行","可以，$r{2}＋r{8}＝r{10}$"],a:0,no:"$r{8}$ 還能化簡，化簡後可能就和 $r{2}$ 一樣了。而根號裡直接相加（$r{10}$）是錯的。"},e:"3r{2} ＋ r{8}",w:"要判斷能不能加，<strong>一定要先化簡</strong>。"},
+   {t:"simp",e:"＝ 3r{2} ＋ h{2r{2}}",w:"$r{8}＝r{4×2}＝2r{2}$。現在兩項都是 $r{2}$ 了。"},
+   {t:"add",e:"＝ (3＋2)r{2}",w:"3 根 $r{2}$ 加 2 根 $r{2}$。"},
    {t:"ans",e:"＝ g{5r{2}}"}
- ],trap:"⚠️ $r{10}$ 是把根號裡直接相加。驗算：$r{10}≈3.16$，但 $3r{2}＋r{8}≈4.24＋2.83＝7.07$。"},
+ ],trap:"⚠️ $r{10}$ 是把根號裡直接相加。驗算：$r{10}$ 大約 3.16，但 $3r{2}＋r{8}$ 大約 4.24＋2.83＝7.07。"},
 
  {src:"課本 p.85　例 8 隨堂 (3)",q:"化簡 $r{12}＋r{18}−r{27}＋r{50}$",steps:[
-   {e:"r{12} ＋ r{18} − r{27} ＋ r{50}",w:"四項都不是最簡根式，先各自化簡。"},
-   {t:"simp",e:"＝ h{2r{3}} ＋ h{3r{2}} − h{3r{3}} ＋ h{5r{2}}",w:"$12＝4×3$、$18＝9×2$、$27＝9×3$、$50＝25×2$。"},
-   {t:"add",e:"＝ (3r{2} ＋ 5r{2}) ＋ (2r{3} − 3r{3})",w:"把同類方根排在一起，正負號跟著那一項走。"},
-   {t:"add",e:"＝ 8r{2} ＋ (−1)r{3}",w:"$r{2}$ 的：3＋5＝8；$r{3}$ 的：2−3＝−1。"},
-   {t:"ans",ask:{q:"❓ $8r{2}−r{3}$ 還能再合併嗎？",o:["不能，$r{2}$ 和 $r{3}$ 不同類","可以，＝ $7r{5}$","可以，＝ $r{128−3}$"],a:0,no:"不同類方根不能合併，就像 $8x−y$ 不能再合。"},e:"＝ g{8r{2} − r{3}}",w:"不同類，答案就停在這裡。"}
- ],trap:"⚠️ 根號裡直接加減：$r{12＋18−27＋50}＝r{53}$——這是全章最常見的錯。"},
+   {e:"r{12} ＋ r{18} − r{27} ＋ r{50}",w:"四項都還能化簡，先各自化簡。"},
+   {t:"simp",e:"＝ h{2r{3}} ＋ h{3r{2}} − h{3r{3}} ＋ h{5r{2}}",w:"12＝4×3、18＝9×2、27＝9×3、50＝25×2。4、9、25 都可以開出來（2、3、5）。"},
+   {t:"add",e:"＝ (3r{2} ＋ 5r{2}) ＋ (2r{3} − 3r{3})",w:"把一樣的根號排在一起，正負號跟著那一項走。"},
+   {t:"add",e:"＝ 8r{2} ＋ (−1)r{3}",w:"$r{2}$ 的：3＋5＝8 根；$r{3}$ 的：2−3＝−1 根。"},
+   {t:"ans",ask:{q:"❓ $8r{2}−r{3}$ 還能再合在一起嗎？",o:["不能，$r{2}$ 和 $r{3}$ 不一樣","可以，＝ $7r{5}$","可以，＝ $r{128−3}$"],a:0,no:"$r{2}$ 和 $r{3}$ 長度不同，就像 8 支鉛筆和 1 塊橡皮擦，不能說成「7 個什麼」。"},e:"＝ g{8r{2} − r{3}}",w:"不一樣的根號，答案就停在這裡。"}
+ ],trap:"⚠️ 根號裡直接加減：$r{12＋18−27＋50}＝r{53}$——這是這一章最常見的錯。"},
 
  {src:"同型　課本 p.85 提醒",q:"$r{2}＋r{3}$ 為什麼不能寫成 $r{5}$？",steps:[
-   {e:"r{2} ＋ r{3}",w:"根號裡不一樣，又都已經是最簡根式，所以不是同類方根。"},
-   {t:"chk",e:"≈ 1.414 ＋ 1.732 ≈ 3.146",w:"用 2-1 學過的近似值估一下。"},
-   {t:"bad",e:"r{5} ≈ 2.236",w:"$r{5}$ 只有 2.236，比 3.146 小很多，兩個根本不相等。"},
-   {t:"ans",e:"答案就寫 g{r{2} ＋ r{3}}",w:"不能合併的時候，<strong>停下來就是答案</strong>，不用硬湊。"}
+   {e:"r{2} ＋ r{3}",w:"根號裡不一樣，也都不能再化簡了，所以不是同一種棒子。"},
+   {t:"chk",e:"≈ 1.414 ＋ 1.732 ≈ 3.146",w:"用 2-1 學過的大約值估一下。"},
+   {t:"bad",e:"r{5} ≈ 2.236",w:"$r{5}$ 只有 2.236，比 3.146 小很多，兩個不相等。"},
+   {t:"ans",e:"答案就寫 g{r{2} ＋ r{3}}",w:"不能合的時候，<strong>停下來就是答案</strong>，不用硬湊。"}
  ]}
 ]},
 
-{id:"secE",h:"E　四則運算與乘法公式　課本 p.86–89",d:"同一題裡乘法和加法都會出現：乘的步驟根號可以合，加的步驟只合同類。每一行看清楚現在是哪一種。",items:[
+{id:"secE",h:"E　乘法和加法混在一起　課本 p.86–89",d:"同一題裡乘法和加法都會出現。每寫一行，先問自己：<strong>現在是乘，還是加？</strong>",items:[
  {src:"課本 p.87　例 10 隨堂 (2)",q:"化簡 $(1＋r{2})(r{6}−r{3})$",steps:[
    {e:"(1 ＋ r{2})(r{6} − r{3})"},
-   {t:"exp",e:"＝ 1×r{6} − 1×r{3} ＋ r{2}×r{6} − r{2}×r{3}",w:"跟 $(a＋b)(c−d)＝ac−ad＋bc−bd$ 一樣，前面每一項乘後面每一項，四項。"},
-   {t:"mul",e:"＝ r{6} − r{3} ＋ h{r{12}} − h{r{6}}",w:"<strong>乘法步驟</strong>：根號直接合，$r{2}×r{6}＝r{12}$、$r{2}×r{3}＝r{6}$。"},
-   {t:"simp",e:"＝ r{6} − r{3} ＋ h{2r{3}} − r{6}",w:"$r{12}＝2r{3}$。"},
-   {t:"add",ask:{q:"❓ 現在哪些可以合併？",o:["$r{6}$ 和 $−r{6}$；$−r{3}$ 和 $2r{3}$","四項全部合成 $r{6−3＋12−6}$","都不能合併"],a:0,no:"<strong>加法步驟</strong>只合同類：$r{6}$ 跟 $r{6}$ 一組，$r{3}$ 跟 $r{3}$ 一組。"},e:"＝ (r{6} − r{6}) ＋ (−r{3} ＋ 2r{3})",w:"<strong>加法步驟</strong>：只有同類方根放在一起。"},
-   {t:"ans",e:"＝ 0 ＋ r{3} ＝ g{r{3}}",w:"$r{6}$ 一正一負抵銷；$−1＋2＝1$ 個 $r{3}$。"}
- ],trap:"📌 這一題四行裡，第 3 行是乘（根號合成一個），第 5 行是加（只合同類）。<strong>同一題兩種規則都會用到</strong>，每一步先問自己：現在是乘還是加？"},
+   {t:"exp",e:"＝ 1×r{6} − 1×r{3} ＋ r{2}×r{6} − r{2}×r{3}",w:"前面每一項都要乘後面每一項，一共 4 項（就像分配律）。"},
+   {t:"mul",e:"＝ r{6} − r{3} ＋ h{r{12}} − h{r{6}}",w:"<strong>這一步是乘法</strong>：根號可以合成一個，$r{2}×r{6}＝r{12}$、$r{2}×r{3}＝r{6}$。"},
+   {t:"simp",e:"＝ r{6} − r{3} ＋ h{2r{3}} − r{6}",w:"$r{12}＝r{4×3}＝2r{3}$。"},
+   {t:"add",ask:{q:"❓ 現在哪些可以合在一起？",o:["$r{6}$ 和 $−r{6}$；$−r{3}$ 和 $2r{3}$","四項全部合成 $r{6−3＋12−6}$","都不能合"],a:0,no:"<strong>這一步是加法</strong>，只有一樣的根號能合：$r{6}$ 和 $r{6}$ 一組，$r{3}$ 和 $r{3}$ 一組。"},e:"＝ (r{6} − r{6}) ＋ (−r{3} ＋ 2r{3})",w:"<strong>這一步是加法</strong>：一樣的根號放在一起。"},
+   {t:"ans",e:"＝ 0 ＋ r{3} ＝ g{r{3}}",w:"$r{6}$ 一正一負抵消；−1＋2＝1 根 $r{3}$。"}
+ ],trap:"📌 這一題第 2 行是乘（根號合成一個），第 4 行是加（只合一樣的）。<strong>同一題兩種規則都會用到</strong>，每一步先問自己：現在是乘還是加？"},
 
  {src:"課本 p.88　例 11",q:"利用乘法公式化簡 $(r{3}＋2r{2})^2$",steps:[
-   {e:"(r{3} ＋ 2r{2})^2",w:"1-1 的和的平方：$(a＋b)^2＝a^2＋2ab＋b^2$，這裡 $a＝r{3}$、$b＝2r{2}$。"},
-   {t:"exp",ask:{q:"❓ 可以直接寫成 $(r{3})^2＋(2r{2})^2$ 嗎？",o:["不行，中間還有 $2ab$","可以，平方分別算就好"],a:0,no:"$(a＋b)^2≠a^2＋b^2$，這是 1-1 就出現過的錯，中間項 $2ab$ 不能漏。"},e:"＝ (r{3})^2 ＋ h{2×r{3}×2r{2}} ＋ (2r{2})^2"},
-   {t:"mul",e:"＝ 3 ＋ h{4r{6}} ＋ h{8}",w:"$(r{3})^2＝3$；$2×r{3}×2r{2}＝4r{6}$；$(2r{2})^2＝2^2×(r{2})^2＝4×2＝8$。"},
-   {t:"add",e:"＝ (3 ＋ 8) ＋ 4r{6}",w:"3 和 8 是同類（都是整數），可以加；$4r{6}$ 跟整數不同類。"},
-   {t:"ans",e:"＝ g{11 ＋ 4r{6}}",w:"不能再合成 $15r{6}$——整數和 $r{6}$ 不同類。"}
+   {e:"(r{3} ＋ 2r{2})^2",w:"(a＋b) 自己乘自己＝a×a＋2×a×b＋b×b（1-1 學過的公式）。這裡 a 是 $r{3}$、b 是 $2r{2}$。"},
+   {t:"exp",ask:{q:"❓ 可以直接寫成 $(r{3})^2＋(2r{2})^2$ 嗎？",o:["不行，中間還有 2×a×b","可以，各自乘自己就好"],a:0,no:"中間的 2×a×b 不能漏掉，這是 1-1 就出現過的錯。"},e:"＝ (r{3})^2 ＋ h{2×r{3}×2r{2}} ＋ (2r{2})^2"},
+   {t:"mul",e:"＝ 3 ＋ h{4r{6}} ＋ h{8}",w:"$(r{3})^2＝3$；$2×r{3}×2r{2}＝4r{6}$；$(2r{2})^2＝2×2×r{2}×r{2}＝4×2＝8$。"},
+   {t:"add",e:"＝ (3 ＋ 8) ＋ 4r{6}",w:"3 和 8 都是整數，可以加；$4r{6}$ 和整數不是同一種。"},
+   {t:"ans",e:"＝ g{11 ＋ 4r{6}}",w:"不能再合成 $15r{6}$——整數和 $r{6}$ 不是同一種東西。"}
  ]},
 
  {src:"課本 p.88　例 11 隨堂 (2)",q:"利用乘法公式化簡 $(r{2}−2r{3})^2$",steps:[
-   {e:"(r{2} − 2r{3})^2",w:"差的平方：$(a−b)^2＝a^2−2ab＋b^2$。"},
+   {e:"(r{2} − 2r{3})^2",w:"(a−b) 自己乘自己＝a×a−2×a×b＋b×b。"},
    {t:"exp",e:"＝ (r{2})^2 − h{2×r{2}×2r{3}} ＋ (2r{3})^2"},
-   {t:"mul",e:"＝ 2 − h{4r{6}} ＋ h{12}",w:"$(2r{3})^2＝4×3＝12$。"},
-   {t:"ans",e:"＝ g{14 − 4r{6}}",w:"$2＋12＝14$。"}
- ],trap:"⚠️ 14：漏了中間項；⚠️ −10：把 $(a−b)^2$ 當成 $a^2−b^2$。"},
+   {t:"mul",e:"＝ 2 − h{4r{6}} ＋ h{12}",w:"$(2r{3})^2＝2×2×3＝12$。"},
+   {t:"ans",e:"＝ g{14 − 4r{6}}",w:"2＋12＝14。"}
+ ],trap:"⚠️ 寫 14：漏了中間那一項；⚠️ 寫 −10：把公式記錯成 a×a−b×b。"},
 
  {src:"課本 p.89　例 12",q:"把 $f{1}{r{3}−r{2}}$ 的分母有理化",steps:[
    {e:"f{1}{r{3} − r{2}}",w:"分母是兩項相減，只乘 $r{3}$ 消不乾淨。"},
-   {t:"rat",ask:{q:"❓ 分子分母要同乘什麼？",o:["$r{3}＋r{2}$","$r{3}−r{2}$","$r{3}$"],a:0,no:"要用平方差 $(a−b)(a＋b)＝a^2−b^2$：配上<strong>正負號相反</strong>的那一個，平方會把兩個根號都消掉。"},e:"＝ f{1×h{(r{3}＋r{2})}}{(r{3}−r{2})h{(r{3}＋r{2})}}",w:"同乘 $r{3}＋r{2}$，等於乘以 1。"},
+   {t:"rat",ask:{q:"❓ 分子分母要同乘什麼？",o:["$r{3}＋r{2}$","$r{3}−r{2}$","$r{3}$"],a:0,no:"要用平方差公式 (a−b)(a＋b)＝a×a−b×b：乘上<strong>中間符號相反</strong>的那一個，兩個根號都會不見。"},e:"＝ f{1×h{(r{3}＋r{2})}}{(r{3}−r{2})h{(r{3}＋r{2})}}",w:"分子分母都乘 $r{3}＋r{2}$，就像乘以 1。"},
    {t:"exp",e:"＝ f{r{3}＋r{2}}{(r{3})^2 − (r{2})^2}",w:"分母用平方差公式。"},
-   {t:"mul",e:"＝ f{r{3}＋r{2}}{h{3 − 2}}",w:"$(r{3})^2＝3$、$(r{2})^2＝2$：平方把根號吃掉了。"},
-   {t:"ans",e:"＝ g{r{3} ＋ r{2}}",w:"分母是 1，直接不寫。"}
+   {t:"mul",e:"＝ f{r{3}＋r{2}}{h{3 − 2}}",w:"$(r{3})^2＝3$、$(r{2})^2＝2$，根號都不見了。"},
+   {t:"ans",e:"＝ g{r{3} ＋ r{2}}",w:"分母是 1，可以不寫。"}
  ]},
 
  {src:"課本 p.89　例 12 隨堂 (2)",q:"把 $f{r{2}}{r{5}＋1}$ 的分母有理化",steps:[
    {e:"f{r{2}}{r{5} ＋ 1}"},
-   {t:"rat",e:"＝ f{r{2}h{(r{5}−1)}}{(r{5}＋1)h{(r{5}−1)}}",w:"分母是 $r{5}＋1$，同乘正負號相反的 $r{5}−1$。"},
-   {t:"mul",e:"＝ f{h{r{10} − r{2}}}{h{5 − 1}}",w:"分子用分配律：$r{2}×r{5}＝r{10}$、$r{2}×1＝r{2}$；分母平方差：$5−1$。"},
-   {t:"ans",e:"＝ g{f{r{10} − r{2}}{4}}",w:"分子 $r{10}$ 和 $r{2}$ 不同類，不能合併，就停在這裡。"}
- ],trap:"⚠️ 分母算成 6 的：是乘了 $r{5}＋1$（正負號相同），變成 $(r{5}＋1)^2$。"}
+   {t:"rat",e:"＝ f{r{2}h{(r{5}−1)}}{(r{5}＋1)h{(r{5}−1)}}",w:"分母是 $r{5}＋1$，分子分母都乘中間符號相反的 $r{5}−1$。"},
+   {t:"mul",e:"＝ f{h{r{10} − r{2}}}{h{5 − 1}}",w:"分子：$r{2}×r{5}＝r{10}$、$r{2}×1＝r{2}$；分母：5−1。"},
+   {t:"ans",e:"＝ g{f{r{10} − r{2}}{4}}",w:"$r{10}$ 和 $r{2}$ 不一樣，不能合，就停在這裡。"}
+ ],trap:"⚠️ 分母算成 6 的：是乘了符號一樣的 $r{5}＋1$，結果分母變成 $6＋2r{5}$，根號沒有消掉。"}
 ]},
 
-{id:"secF",h:"F　課本 p.93 挑錯題型",d:"錯的寫法先寫出來，再一步一步找出是哪一行出事。",items:[
+{id:"secF",h:"F　課本 p.93 挑錯題型",d:"先把錯的寫法寫出來，再一步一步找出哪一行出錯。",items:[
  {src:"課本 p.93　挑錯題型",q:"有人這樣算：$r{48}−r{12}＝r{36}＝6$。錯在哪？",steps:[
    {e:"r{48} − r{12}"},
-   {t:"bad",e:"b{＝ r{48 − 12} ＝ r{36} ＝ 6}",w:"錯在第一步：<strong>把根號裡直接相減</strong>。根號裡可以直接乘除，<strong>不能直接加減</strong>。"},
-   {t:"simp",e:"重算：＝ h{4r{3}} − h{2r{3}}",w:"減法要先化成最簡根式，看是不是同類方根。$r{48}＝r{16×3}$、$r{12}＝r{4×3}$。"},
-   {t:"add",e:"＝ (4 − 2)r{3} ＝ g{2r{3}}",w:"同類方根，外面的個數相減。"},
-   {t:"chk",e:"2r{3} ≈ 3.46，不是 6",w:"用近似值檢查：$r{48}≈6.93$、$r{12}≈3.46$，相減約 3.46。"}
+   {t:"bad",e:"b{＝ r{48 − 12} ＝ r{36} ＝ 6}",w:"錯在第一步：<strong>把根號裡直接相減</strong>。根號裡可以直接乘、除，<strong>不能直接加、減</strong>。"},
+   {t:"simp",e:"重算：＝ h{4r{3}} − h{2r{3}}",w:"先化簡，看看是不是一樣的根號：$r{48}＝r{16×3}＝4r{3}$、$r{12}＝r{4×3}＝2r{3}$。"},
+   {t:"add",e:"＝ (4 − 2)r{3} ＝ g{2r{3}}",w:"一樣的根號：4 根拿走 2 根，剩 2 根。"},
+   {t:"chk",e:"2r{3} ≈ 3.46，不是 6",w:"用大約值檢查：$r{48}$ 大約 6.93、$r{12}$ 大約 3.46，相減大約 3.46。"}
  ]},
 
  {src:"課本 p.93　挑錯題型",q:"有人這樣算：$r{16f{1}{9}}＝4f{1}{3}$。錯在哪？",steps:[
-   {e:"r{16f{1}{9}}",w:"$16f{1}{9}$ 是帶分數，意思是 $16＋f{1}{9}$——<strong>是加法</strong>。"},
-   {t:"bad",e:"b{＝ r{16} ＋ r{f{1}{9}} ＝ 4f{1}{3}}",w:"錯的寫法等於把 $r{16＋f{1}{9}}$ 拆成 $r{16}＋r{f{1}{9}}$——<strong>根號不能對加法拆開</strong>。"},
-   {t:"chk",e:"(4f{1}{3})^2 ＝ (f{13}{3})^2 ＝ f{169}{9} ＝ 18f{7}{9}",w:"驗算：平方回去不是 $16f{1}{9}$，所以一定錯。"},
-   {t:"simp",e:"重算：16f{1}{9} ＝ h{f{145}{9}}",w:"先化成假分數：$16×9＋1＝145$。"},
-   {t:"mul",e:"r{f{145}{9}} ＝ f{r{145}}{r{9}} ＝ g{f{r{145}}{3}}",w:"根號<strong>可以</strong>對除法拆開：分子分母各自開根號。$145＝5×29$，沒有平方數了。"}
- ],trap:"📌 一句話記：根號遇到<strong>乘、除</strong>可以拆開或合併；遇到<strong>加、減</strong>不行。"}
+   {e:"r{16f{1}{9}}",w:"$16f{1}{9}$ 是帶分數，意思是 $16＋f{1}{9}$——<strong>裡面藏著加法</strong>。"},
+   {t:"bad",e:"b{＝ r{16} ＋ r{f{1}{9}} ＝ 4f{1}{3}}",w:"錯的寫法把 $r{16＋f{1}{9}}$ 拆成 $r{16}＋r{f{1}{9}}$——<strong>根號遇到加法不能拆開</strong>。"},
+   {t:"chk",e:"(4f{1}{3})^2 ＝ (f{13}{3})^2 ＝ f{169}{9} ＝ 18f{7}{9}",w:"驗算：$4f{1}{3}$ 自己乘自己是 $18f{7}{9}$，不是 $16f{1}{9}$，所以一定錯。"},
+   {t:"simp",e:"重算：16f{1}{9} ＝ h{f{145}{9}}",w:"先改成假分數：16×9＋1＝145。"},
+   {t:"mul",e:"r{f{145}{9}} ＝ f{r{145}}{r{9}} ＝ g{f{r{145}}{3}}",w:"根號遇到除法<strong>可以</strong>拆開：分子、分母各自開根號。145＝5×29，沒有能配對的數了。"}
+ ],trap:"📌 一句話記：根號遇到<strong>乘、除</strong>，可以拆開或合起來；遇到<strong>加、減</strong>，不行。"}
 ]}
 ];
-
 /* ───────── 逐題講解播放器 ───────── */
 const list=document.getElementById("wtList");
 const ALL=[];
@@ -675,24 +698,73 @@ function prog(){
 }
 prog();
 
+const NS="http://www.w3.org/2000/svg";
+function E(tag,at,txt){const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e}
+function vw(svgEl){return Math.max(320,Math.min(640,(svgEl.parentNode.clientWidth||640)-12))}
+
+/* ───────── 0：面積和邊長 ───────── */
+const sqA=document.getElementById("sqA"),sqSvg=document.getElementById("sqSvg"),sqTxt=document.getElementById("sqTxt");
+function drawSq0(){
+  const a=+sqA.value,r=Math.sqrt(a),n=Math.round(r),perfect=n*n===a;
+  document.getElementById("sqAt").textContent=a;
+  const VW=vw(sqSvg),s=Math.min(200/Math.sqrt(30),(VW-170)/Math.sqrt(30)),side=r*s,x=40,base=225,y=base-side;
+  while(sqSvg.firstChild)sqSvg.removeChild(sqSvg.firstChild);
+  sqSvg.setAttribute("viewBox","0 0 "+VW+" 260");
+  sqSvg.appendChild(E("rect",{x:x,y:y,width:side,height:side,fill:"#eeedfb",stroke:"#4338ca","stroke-width":2.5}));
+  if(perfect&&n>1){for(let k=1;k<n;k++){
+    sqSvg.appendChild(E("line",{x1:x+k*s,y1:y,x2:x+k*s,y2:base,stroke:"#a8a2e6","stroke-width":1}));
+    sqSvg.appendChild(E("line",{x1:x,y1:y+k*s,x2:x+side,y2:y+k*s,stroke:"#a8a2e6","stroke-width":1}));
+  }}
+  sqSvg.appendChild(E("text",{x:x+side/2,y:y+side/2+6,"text-anchor":"middle","font-size":side<60?13:17,"font-weight":700,fill:"#4338ca"},"面積 "+a));
+  sqSvg.appendChild(E("text",{x:x+side/2,y:base+24,"text-anchor":"middle","font-size":15,"font-weight":700,fill:"#15803d","font-family":"Cambria,Georgia,serif"},
+    perfect?"邊長 "+n:"邊長 √"+a+" ≈ "+r.toFixed(2)));
+  const tx=x+side+20;
+  const L=perfect?["一排 "+n+" 格，排 "+n+" 排","邊長 "+n+"，所以 √"+a+" ＝ "+n]:
+    ["邊長不是整數","大約 "+r.toFixed(2)+"，寫不完","就直接寫成 √"+a];
+  L.forEach(function(l,k){sqSvg.appendChild(E("text",{x:tx,y:base-side/2-10+k*24,"font-size":15,fill:k===L.length-1?"#4338ca":"#57525e","font-weight":k===L.length-1?700:400},l))});
+  if(perfect){
+    sqTxt.innerHTML="面積 "+a+" 的正方形：一排 "+n+" 格、排 "+n+" 排，邊長是 "+n+"。所以 <span class='m'>"+M("r{"+a+"}")+"</span> ＝ <b>"+n+"</b>。";
+  }else{
+    const lo=Math.floor(r),hi=lo+1;
+    sqTxt.innerHTML="面積 "+a+" 的正方形：邊長不是整數。"+lo+"×"+lo+"＝"+(lo*lo)+" 太小、"+hi+"×"+hi+"＝"+(hi*hi)+" 太大，所以邊長在 "+lo+" 和 "+hi+" 中間，大約 "+r.toFixed(2)+"。這個數寫不完，就直接寫成 <span class='m'>"+M("r{"+a+"}")+"</span>。";
+  }
+}
+sqA.addEventListener("input",drawSq0);
+drawSq0();
+
+/* ───────── 0：√80 切成 16 塊 ───────── */
+(function(){
+  const g=document.getElementById("s80"),c=48,x=40,y=20;
+  for(let r=0;r<4;r++)for(let k=0;k<4;k++){
+    g.appendChild(E("rect",{x:x+k*c,y:y+r*c,width:c,height:c,fill:(r+k)%2?"#eeedfb":"#e1defa",stroke:"#4338ca","stroke-width":1.2}));
+    g.appendChild(E("text",{x:x+k*c+c/2,y:y+r*c+c/2+5,"text-anchor":"middle","font-size":14,fill:"#4338ca"},"5"));
+  }
+  g.appendChild(E("rect",{x:x,y:y,width:4*c,height:4*c,fill:"none",stroke:"#4338ca","stroke-width":2.5}));
+  /* 下方：4 個 √5 */
+  for(let k=0;k<4;k++)g.appendChild(E("text",{x:x+k*c+c/2,y:y+4*c+22,"text-anchor":"middle","font-size":13,fill:"#15803d","font-family":"Cambria,Georgia,serif"},"√5"));
+  g.appendChild(E("text",{x:x+2*c,y:y+4*c+46,"text-anchor":"middle","font-size":15,"font-weight":700,fill:"#15803d"},"邊長 ＝ 4 個 √5 ＝ 4√5"));
+  g.appendChild(E("text",{x:x+4*c+14,y:y+2*c-8,"font-size":14,fill:"#57525e"},"每塊面積 5"));
+  g.appendChild(E("text",{x:x+4*c+14,y:y+2*c+16,"font-size":14,fill:"#57525e"},"16 塊 ＝ 80"));
+})();
+
 /* ───────── 實驗一：加法 vs 乘法 ───────── */
 const LAB=[
  {k:"2√3 和 3√3",a:[2,3],b:[3,3],
-  add:["2r{3} ＋ 3r{3}","＝ (2＋3)r{3}","＝ 5r{3}"],addN:"$r{3}$ 是單位：2 段加 3 段 ＝ 5 段。根號還在，約 8.66。",
-  mul:["2r{3} × 3r{3}","＝ (2×3)×(r{3}×r{3})","＝ 6 × 3","＝ 18"],mulN:"$r{3}×r{3}＝3$：長方形裡每一格面積都是 3，6 格共 18。根號不見了。",
-  y:"想成 y：$2y＋3y＝5y$；$2y×3y＝6y^2$，而 $y^2＝(r{3})^2＝3$。"},
+  add:["2r{3} ＋ 3r{3}","＝ (2＋3)r{3}","＝ 5r{3}"],addN:"把 $r{3}$ 想成一根棒子：2 根加 3 根＝5 根。根號還在，大約 8.66。",
+  mul:["2r{3} × 3r{3}","＝ (2×3)×(r{3}×r{3})","＝ 6 × 3","＝ 18"],mulN:"拼成長方形，切成 6 個邊長 $r{3}$ 的小正方形，每個面積 3，6 個共 18。根號不見了。",
+  y:"一句話：加法是數棒子，乘法是算面積。"},
  {k:"4√3 和 2√3（會考 110-06）",a:[4,3],b:[2,3],
-  add:["4r{3} ＋ 2r{3}","＝ (4＋2)r{3}","＝ 6r{3}"],addN:"4 段加 2 段 ＝ 6 段 $r{3}$。",
-  mul:["4r{3} × 2r{3}","＝ (4×2)×(r{3}×r{3})","＝ 8 × 3","＝ 24"],mulN:"8 格，每格面積 3，共 24。寫 $8r{3}$ 的人只數了格子，忘了每格是 3。",
-  y:"想成 y：$4y×2y＝8y^2$，不是 $8y$。$y^2＝3$，所以是 24。"},
+  add:["4r{3} ＋ 2r{3}","＝ (4＋2)r{3}","＝ 6r{3}"],addN:"4 根加 2 根＝6 根 $r{3}$。",
+  mul:["4r{3} × 2r{3}","＝ (4×2)×(r{3}×r{3})","＝ 8 × 3","＝ 24"],mulN:"8 個小正方形，每個面積 3，共 24。寫 $8r{3}$ 的人只數了格子，忘了每一格的面積是 3。",
+  y:"會考 110 年第 6 題就是考這個：$4r{3}×2r{3}＝24$，不是 $8r{3}$。"},
  {k:"√2 和 √8",a:[1,2],b:[2,2],pre:"先化簡：$r{8}＝2r{2}$",
-  add:["r{2} ＋ r{8}","＝ r{2} ＋ 2r{2}","＝ 3r{2}"],addN:"$r{8}$ 化簡後是 2 段 $r{2}$，跟 $r{2}$ 同類，共 3 段。不是 $r{10}$。",
-  mul:["r{2} × r{8}","＝ r{2×8}","＝ r{16}","＝ 4"],mulN:"乘法不用先化簡，根號直接合：$r{16}＝4$。圖上 2 格，每格面積 2。",
-  y:"加法要先化簡才看得出同類；乘法根號裡直接乘。"},
+  add:["r{2} ＋ r{8}","＝ r{2} ＋ 2r{2}","＝ 3r{2}"],addN:"$r{8}$ 化簡後是 2 根 $r{2}$，和 $r{2}$ 一樣長，一共 3 根。不是 $r{10}$。",
+  mul:["r{2} × r{8}","＝ r{2×8}","＝ r{16}","＝ 4"],mulN:"乘法不用先化簡，根號裡直接乘：$r{16}＝4$（面積 16 的正方形邊長 4）。圖上 2 格，每格面積 2。",
+  y:"加法要先化簡，才看得出是不是同一種棒子；乘法根號裡直接乘。"},
  {k:"√2 和 √3",a:[1,2],b:[1,3],diff:true,
-  add:["r{2} ＋ r{3}","不同類，不能合併","答案就是 r{2}＋r{3}"],addN:"兩段長度不一樣，沒辦法說「幾段同一種」。約 3.15，可是 $r{5}$ 只有 2.24。",
-  mul:["r{2} × r{3}","＝ r{2×3}","＝ r{6}"],mulN:"乘法不管同不同類都能合：長方形面積 $r{6}≈2.45$。",
-  y:"想成 x 和 y：$x＋y$ 不能合，但 $x×y＝xy$ 可以寫成一項。"}
+  add:["r{2} ＋ r{3}","不一樣，不能合","答案就是 r{2}＋r{3}"],addN:"兩根棒子不一樣長，不能說成「幾根同一種」。大約 3.15，可是 $r{5}$ 只有 2.24。",
+  mul:["r{2} × r{3}","＝ r{2×3}","＝ r{6}"],mulN:"乘法不管一不一樣都能合：長方形面積是 $r{6}$，大約 2.45。",
+  y:"加法：不一樣的棒子不能合。乘法：任何兩個根號都能合成一個。"}
 ];
 let lab=0,labT=[];
 const chipsEl=document.getElementById("labChips"),addEl=document.getElementById("labAdd"),mulEl=document.getElementById("labMul"),
@@ -702,8 +774,6 @@ LAB.forEach(function(p,j){
   c.addEventListener("click",function(){lab=j;chipsEl.querySelectorAll(".chip").forEach(function(x,q){x.classList.toggle("on",q===j)});setLab(false)});
   chipsEl.appendChild(c);
 });
-const NS="http://www.w3.org/2000/svg";
-function E(tag,at,txt){const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e}
 function setLab(play){
   labT.forEach(clearTimeout);labT=[];
   const p=LAB[lab];
@@ -737,25 +807,25 @@ function drawLab(p){
   while(svg.firstChild)svg.removeChild(svg.firstChild);
   const ra=Math.sqrt(p.a[1]),rb=Math.sqrt(p.b[1]);
   const Ladd=p.a[0]*ra+p.b[0]*rb, W=p.b[0]*rb, H=p.a[0]*ra;
-  const VW=Math.max(340,Math.min(640,(svg.parentNode.clientWidth||640)-12)), nar=VW<520;
+  const VW=vw(svg), nar=VW<520;
   const s=Math.min((VW-40)/Ladd,(nar?VW-70:VW-250)/W,190/H);
   const x0=44;
-  svg.appendChild(E("text",{x:10,y:24,"font-size":15,"font-weight":700,fill:"#15803d"},"加法：把線段接起來，數有幾段"));
+  svg.appendChild(E("text",{x:10,y:24,"font-size":15,"font-weight":700,fill:"#15803d"},"加法：把棒子接起來，數有幾根"));
   let x=nar?10:x0;
-  function seg(len,lab,col,k){
+  function seg(len,lab,col){
     const g=E("g",{class:"seg"});
     g.appendChild(E("rect",{x:x,y:40,width:len*s-3,height:26,rx:5,fill:col,opacity:.85}));
     g.appendChild(E("text",{x:x+len*s/2-1.5,y:58,"font-size":13,"text-anchor":"middle",fill:"#fff","font-weight":700,"font-family":"Cambria,Georgia,serif"},lab));
     svg.appendChild(g);x+=len*s;
   }
-  for(let k=0;k<p.a[0];k++)seg(ra,"√"+p.a[1],"#15803d",k);
-  for(let k=0;k<p.b[0];k++)seg(rb,"√"+p.b[1],p.diff?"#a15c07":"#4d9b6c",k);
-  const tl=p.diff?"長度不同 → 只能寫 √2＋√3 ≈ "+(ra+rb).toFixed(2):
-    "共 "+(p.a[0]+p.b[0])+" 段 √"+p.a[1]+"　≈ "+Ladd.toFixed(2);
+  for(let k=0;k<p.a[0];k++)seg(ra,"√"+p.a[1],"#15803d");
+  for(let k=0;k<p.b[0];k++)seg(rb,"√"+p.b[1],p.diff?"#a15c07":"#4d9b6c");
+  const tl=p.diff?"兩根不一樣長 → 只能寫 √2＋√3 ≈ "+(ra+rb).toFixed(2):
+    "一共 "+(p.a[0]+p.b[0])+" 根 √"+p.a[1]+"　≈ "+Ladd.toFixed(2);
   svg.appendChild(E("text",{x:10,y:90,"font-size":13.5,fill:"#57525e",class:"tail"},tl));
 
   const y0=135;
-  svg.appendChild(E("text",{x:10,y:y0-12,"font-size":15,"font-weight":700,fill:"#6d28d9"},"乘法：圍成長方形，算面積"));
+  svg.appendChild(E("text",{x:10,y:y0-12,"font-size":15,"font-weight":700,fill:"#6d28d9"},"乘法：拼成長方形，算面積"));
   const cw=rb*s,chh=ra*s;
   for(let r=0;r<p.a[0];r++)for(let c=0;c<p.b[0];c++){
     const g=E("g",{class:"cell"});
@@ -764,83 +834,81 @@ function drawLab(p){
     g.appendChild(E("text",{x:x0+c*cw+cw/2,y:y0+r*chh+chh/2+6,"font-size":p.diff?15:18,"text-anchor":"middle",fill:"#6d28d9","font-weight":700,"font-family":"Cambria,Georgia,serif"},lab));
     svg.appendChild(g);
   }
-  /* 邊長標示 */
   svg.appendChild(E("text",{x:x0+W*s/2,y:y0+H*s+20,"font-size":13.5,"text-anchor":"middle",fill:"#57525e","font-family":"Cambria,Georgia,serif"},(p.b[0]>1?p.b[0]:"")+"√"+p.b[1]));
   svg.appendChild(E("text",{x:x0-8,y:y0+H*s/2+5,"font-size":13.5,"text-anchor":"end",fill:"#57525e","font-family":"Cambria,Georgia,serif"},(p.a[0]>1?p.a[0]:"")+"√"+p.a[1]));
   const n=p.a[0]*p.b[0];
   const tx=nar?10:x0+W*s+18, ty=nar?y0+H*s+50:y0+24;
-  const lines=p.diff?["一格就是整個長方形","√2 × √3 ＝ √6"]:
-    ["每一格：√"+p.a[1]+" × √"+p.a[1]+" ＝ "+p.a[1],n+" 格 × "+p.a[1]+" ＝ "+(n*p.a[1]),"（面積，沒有根號）"];
+  const lines=p.diff?["整個長方形只有一格","√2 × √3 ＝ √6"]:
+    ["每一個小正方形：√"+p.a[1]+" × √"+p.a[1]+" ＝ "+p.a[1],n+" 個 × "+p.a[1]+" ＝ "+(n*p.a[1]),"（這是面積，沒有根號）"];
   lines.forEach(function(l,k){svg.appendChild(E("text",{x:tx,y:ty+k*22,"font-size":14,fill:k===1?"#6d28d9":"#57525e","font-weight":k===1?700:400,class:"tail"},l))});
   svg.setAttribute("viewBox","0 0 "+VW+" "+Math.ceil(nar?ty+lines.length*22:y0+H*s+34));
 }
 document.getElementById("labPlay").addEventListener("click",function(){setLab(true)});
-let rsT=null,lastW=window.innerWidth;
-window.addEventListener("resize",function(){if(window.innerWidth===lastW)return;lastW=window.innerWidth;clearTimeout(rsT);rsT=setTimeout(function(){setLab(false);drawTri()},200)});
 setLab(false);
 
-/* ───────── 實驗二：三角形 ───────── */
-const sA=document.getElementById("sA"),sB=document.getElementById("sB"),tri=document.getElementById("triSvg");
-let triRaf=null;
-function drawTri(){
+/* ───────── 實驗二：兩個正方形的邊接起來 vs 大正方形的邊 ───────── */
+const sA=document.getElementById("sA"),sB=document.getElementById("sB"),sq2=document.getElementById("sq2Svg");
+let sq2T=[];
+function sqBox(parent,x,base,side,area,col,fill){
+  const g=E("g",{});
+  g.appendChild(E("rect",{x:x,y:base-side,width:side,height:side,fill:fill,stroke:col,"stroke-width":2}));
+  const n=Math.round(Math.sqrt(area));
+  if(n*n===area&&n>1&&n<=6){const u=side/n;for(let k=1;k<n;k++){
+    g.appendChild(E("line",{x1:x+k*u,y1:base-side,x2:x+k*u,y2:base,stroke:col,"stroke-width":.6,opacity:.45}));
+    g.appendChild(E("line",{x1:x,y1:base-side+k*u,x2:x+side,y2:base-side+k*u,stroke:col,"stroke-width":.6,opacity:.45}));
+  }}
+  g.appendChild(E("text",{x:x+side/2,y:base-side/2+5,"text-anchor":"middle","font-size":Math.max(11,Math.min(16,side*.28)),"font-weight":700,fill:col},"面積 "+area));
+  parent.appendChild(g);return g;
+}
+function fmt(v){return Number.isInteger(v)?String(v):"≈ "+v.toFixed(2)}
+function drawSq2(play){
+  sq2T.forEach(clearTimeout);sq2T=[];
   const a=+sA.value,b=+sB.value,ra=Math.sqrt(a),rb=Math.sqrt(b),rh=Math.sqrt(a+b);
   document.getElementById("tA").textContent=a;document.getElementById("tB").textContent=b;
-  document.getElementById("vAdd").textContent="√"+a+" ＋ √"+b+" ≈ "+(ra+rb).toFixed(3);
-  document.getElementById("vHyp").textContent="√"+(a+b)+" ≈ "+rh.toFixed(3);
-  document.getElementById("vMul").textContent="√"+a+"×√"+b+" ＝ √"+(a*b)+" ≈ "+(ra*rb).toFixed(3)+" ✓";
-  document.getElementById("triV").innerHTML="走兩股比走斜邊多了 <b>"+(ra+rb-rh).toFixed(3)+"</b>。所以 <span class='m'>"+M("r{"+a+"}＋r{"+b+"}")+"</span> ≠ <span class='m'>"+M("r{"+(a+b)+"}")+"</span>。"+
-    "<br>乘法那一格兩邊永遠一樣：<span class='m'>"+M("r{"+a+"}×r{"+b+"}＝r{"+(a*b)+"}")+"</span>。";
-  const VW=Math.max(340,Math.min(640,(tri.parentNode.clientWidth||640)-12));
-  tri.setAttribute("viewBox","0 0 "+VW+" 300");
-  const s=Math.min((VW-150)/ra,220/rb), X=50, Y=260, A=[X,Y], B=[X+ra*s,Y], C=[X+ra*s,Y-rb*s];
-  while(tri.firstChild)tri.removeChild(tri.firstChild);
-  tri.appendChild(E("polygon",{points:A+" "+B+" "+C,fill:"#f8f7f4",stroke:"none"}));
-  tri.appendChild(E("line",{x1:A[0],y1:A[1],x2:B[0],y2:B[1],stroke:"#15803d","stroke-width":5,"stroke-linecap":"round"}));
-  tri.appendChild(E("line",{x1:B[0],y1:B[1],x2:C[0],y2:C[1],stroke:"#15803d","stroke-width":5,"stroke-linecap":"round"}));
-  tri.appendChild(E("line",{x1:A[0],y1:A[1],x2:C[0],y2:C[1],stroke:"#b03030","stroke-width":4,"stroke-dasharray":"8 6"}));
-  tri.appendChild(E("rect",{x:B[0]-14,y:B[1]-14,width:14,height:14,fill:"none",stroke:"#57525e"}));
-  tri.appendChild(E("text",{x:(A[0]+B[0])/2,y:Y+24,"text-anchor":"middle","font-size":15,fill:"#15803d","font-weight":700,"font-family":"Cambria,Georgia,serif"},"√"+a+(Number.isInteger(ra)?" = "+ra:"")));
-  tri.appendChild(E("text",{x:B[0]+10,y:(B[1]+C[1])/2+5,"font-size":15,fill:"#15803d","font-weight":700,"font-family":"Cambria,Georgia,serif"},"√"+b+(Number.isInteger(rb)?" = "+rb:"")));
-  const hx=(A[0]+C[0])/2-12,hy=(A[1]+C[1])/2-10;
-  tri.appendChild(E("text",{x:hx,y:hy,"text-anchor":"end","font-size":15,fill:"#b03030","font-weight":700,"font-family":"Cambria,Georgia,serif"},"√"+(a+b)+(Number.isInteger(rh)?" = "+rh:"")));
-  tri.appendChild(E("circle",{id:"dotG",cx:A[0],cy:A[1],r:8,fill:"#15803d"}));
-  tri.appendChild(E("circle",{id:"dotR",cx:A[0],cy:A[1],r:8,fill:"#b03030",opacity:.9}));
-  tri.appendChild(E("text",{x:A[0]-4,y:A[1]+24,"font-size":14,fill:"#57525e"},"起點"));
-  tri.appendChild(E("text",{x:C[0]-14,y:C[1]-10,"font-size":14,fill:"#57525e"},"終點"));
-  tri._pts={A:A,B:B,C:C,ra:ra,rb:rb,rh:rh};
+  document.getElementById("vAdd").textContent="√"+a+" ＋ √"+b+" "+(Number.isInteger(ra+rb)?"＝ "+(ra+rb):"≈ "+(ra+rb).toFixed(2));
+  document.getElementById("vHyp").textContent="√"+(a+b)+" "+(Number.isInteger(rh)?"＝ "+rh:"≈ "+rh.toFixed(2));
+  document.getElementById("vMul").textContent="√"+a+"×√"+b+" ＝ √"+(a*b)+" ✓";
+  document.getElementById("triV").innerHTML="兩個正方形的邊接起來是 <b>"+fmt(ra+rb).replace("≈ ","大約 ")+"</b>；面積 "+a+"＋"+b+"＝"+(a+b)+" 的大正方形，邊只有 <b>"+fmt(rh).replace("≈ ","大約 ")+"</b>。<br>"+
+    "所以 <span class='m'>"+M("r{"+a+"}＋r{"+b+"}")+"</span> ≠ <span class='m'>"+M("r{"+(a+b)+"}")+"</span>：面積可以相加，邊長不會跟著這樣加。<br>"+
+    "乘法每次都對：<span class='m'>"+M("r{"+a+"}×r{"+b+"}＝r{"+(a*b)+"}")+"</span>。";
+  const VW=vw(sq2),gap=Math.min(48,VW*.08);
+  const s=Math.min((VW-30-gap)/(ra+rb+rh),180/Math.max(ra,rb,rh));
+  const base=215,x0=12,x1=x0+(ra+rb)*s+gap;
+  while(sq2.firstChild)sq2.removeChild(sq2.firstChild);
+  sq2.setAttribute("viewBox","0 0 "+VW+" 290");
+  const g1=E("g",{class:"seg"});sq2.appendChild(g1);
+  sqBox(g1,x0,base,ra*s,a,"#15803d","#e9f5ec");
+  sqBox(g1,x0+ra*s,base,rb*s,b,"#15803d","#dff0e4");
+  const g2=E("g",{class:"seg"});sq2.appendChild(g2);
+  g2.appendChild(E("line",{x1:x0,y1:base+14,x2:x0+(ra+rb)*s,y2:base+14,stroke:"#15803d","stroke-width":4,"stroke-linecap":"round"}));
+  g2.appendChild(E("text",{x:x0+(ra+rb)*s/2,y:base+36,"text-anchor":"middle","font-size":13.5,"font-weight":700,fill:"#15803d"},"邊接起來 "+fmt(ra+rb)));
+  const g3=E("g",{class:"seg"});sq2.appendChild(g3);
+  sqBox(g3,x1,base,rh*s,a+b,"#b03030","#fdeeee");
+  g3.appendChild(E("line",{x1:x1,y1:base+14,x2:x1+rh*s,y2:base+14,stroke:"#b03030","stroke-width":4,"stroke-linecap":"round"}));
+  g3.appendChild(E("text",{x:x1+rh*s/2,y:base+36,"text-anchor":"middle","font-size":13.5,"font-weight":700,fill:"#b03030"},"大正方形的邊 "+fmt(rh)));
+  g3.appendChild(E("text",{x:x1+rh*s/2,y:base+56,"text-anchor":"middle","font-size":12.5,fill:"#57525e"},"（面積 "+a+"＋"+b+"）"));
+  const gs=[g1,g2,g3];
+  if(play){gs.forEach(function(g,k){g.style.opacity=0;sq2T.push(setTimeout(function(){g.style.opacity=1},300+k*1100))})}
 }
-function playTri(){
-  if(triRaf)cancelAnimationFrame(triRaf);
-  const P=tri._pts,g=document.getElementById("dotG"),r=document.getElementById("dotR");
-  const speed=1.1/1000; /* 每毫秒走的「長度單位」 */
-  const t0=performance.now();
-  function lerp(p,q,u){return[p[0]+(q[0]-p[0])*u,p[1]+(q[1]-p[1])*u]}
-  function f(now){
-    const d=(now-t0)*speed;
-    let pg;
-    if(d<P.ra)pg=lerp(P.A,P.B,d/P.ra);else if(d<P.ra+P.rb)pg=lerp(P.B,P.C,(d-P.ra)/P.rb);else pg=P.C;
-    const pr=d<P.rh?lerp(P.A,P.C,d/P.rh):P.C;
-    g.setAttribute("cx",pg[0]);g.setAttribute("cy",pg[1]);r.setAttribute("cx",pr[0]);r.setAttribute("cy",pr[1]);
-    if(d<P.ra+P.rb)triRaf=requestAnimationFrame(f);
-  }
-  triRaf=requestAnimationFrame(f);
-}
-sA.addEventListener("input",drawTri);sB.addEventListener("input",drawTri);
-document.getElementById("triPlay").addEventListener("click",playTri);
-drawTri();
+sA.addEventListener("input",function(){drawSq2(false)});sB.addEventListener("input",function(){drawSq2(false)});
+document.getElementById("sq2Play").addEventListener("click",function(){drawSq2(true)});
+drawSq2(false);
+
+let rsT=null,lastW=window.innerWidth;
+window.addEventListener("resize",function(){if(window.innerWidth===lastW)return;lastW=window.innerWidth;clearTimeout(rsT);rsT=setTimeout(function(){setLab(false);drawSq0();drawSq2(false)},200)});
 
 /* ───────── 判斷題 ───────── */
 const TF=[
  {e:"r{2} × r{5} ＝ r{10}",a:true,w:"乘法：根號裡直接相乘。"},
- {e:"r{2} ＋ r{5} ＝ r{7}",a:false,w:"加法不能把根號裡相加。$r{2}＋r{5}≈1.41＋2.24＝3.65$，$r{7}≈2.65$。$r{2}$、$r{5}$ 不同類，答案就是 $r{2}＋r{5}$。"},
+ {e:"r{2} ＋ r{5} ＝ r{7}",a:false,w:"加法不能把根號裡相加。$r{2}＋r{5}$ 大約 1.41＋2.24＝3.65，$r{7}$ 只有大約 2.65。$r{2}$ 和 $r{5}$ 不是同一種棒子，答案就是 $r{2}＋r{5}$。"},
  {e:"r{12} − r{3} ＝ r{9} ＝ 3",a:false,w:"減法不能把根號裡相減。先化簡：$r{12}−r{3}＝2r{3}−r{3}＝r{3}$。"},
- {e:"2r{3} × 3r{3} ＝ 6r{3}",a:false,w:"這是乘法：$2×3×r{3}×r{3}＝6×3＝18$。$6r{3}$ 是忘了 $r{3}×r{3}＝3$。"},
- {e:"2r{3} ＋ 3r{3} ＝ 5r{3}",a:true,w:"同類方根相加，像 $2y＋3y＝5y$。"},
- {e:"2r{3} ＋ 3r{3} ＝ 5r{6}",a:false,w:"加法的根號是單位，不會變：$r{3}$ 還是 $r{3}$，答案 $5r{3}$。"},
- {e:"r{3} × r{3} ＝ 3",a:true,w:"根號自己乘自己，就回到裡面的數。"},
- {e:"r{3} ＋ r{3} ＝ r{6}",a:false,w:"1 個 $r{3}$ 加 1 個 $r{3}$ 是 2 個：$2r{3}$（約 3.46）。$r{6}$ 只有約 2.45。"},
- {e:"4r{3} ÷ 2r{3} ＝ 2",a:true,w:"$f{4}{2}×f{r{3}}{r{3}}＝2×1＝2$。"},
- {e:"r{9} ＋ r{16} ＝ r{25}",a:false,w:"$r{9}＋r{16}＝3＋4＝7$，可是 $r{25}＝5$。這就是上面三角形的例子：走兩股比走斜邊遠。"}
+ {e:"2r{3} × 3r{3} ＝ 6r{3}",a:false,w:"這是乘法：$2×3×r{3}×r{3}＝6×3＝18$。寫 $6r{3}$ 是忘了 $r{3}×r{3}＝3$（邊長乘邊長＝面積）。"},
+ {e:"2r{3} ＋ 3r{3} ＝ 5r{3}",a:true,w:"一樣的棒子：2 根加 3 根＝5 根。"},
+ {e:"2r{3} ＋ 3r{3} ＝ 5r{6}",a:false,w:"加法時棒子本身不變：$r{3}$ 還是 $r{3}$，答案是 $5r{3}$。"},
+ {e:"r{3} × r{3} ＝ 3",a:true,w:"邊長 $r{3}$ 的正方形，面積就是 3。"},
+ {e:"r{3} ＋ r{3} ＝ r{6}",a:false,w:"1 根 $r{3}$ 加 1 根 $r{3}$ 是 2 根：$2r{3}$（大約 3.46）。$r{6}$ 只有大約 2.45。"},
+ {e:"4r{3} ÷ 2r{3} ＝ 2",a:true,w:"4÷2＝2，$r{3}÷r{3}＝1$，所以是 2。"},
+ {e:"r{9} ＋ r{16} ＝ r{25}",a:false,w:"$r{9}＋r{16}＝3＋4＝7$，可是 $r{25}＝5$。就是上面的實驗二：兩個正方形的邊接起來，比大正方形的邊長。"}
 ];
 let tq=store.tq||0;const tres=store.tres||[];
 const tfQ=document.getElementById("tfQ"),tfFb=document.getElementById("tfFb"),tfT=document.getElementById("tfT"),tfF=document.getElementById("tfF"),
@@ -852,7 +920,7 @@ function tfDraw(){
     tfNo.textContent="";tfQ.innerHTML='<span style="font-size:19px;font-family:inherit">10 題答完：答對 '+ok+' 題</span>';
     tfT.style.display=tfF.style.display="none";tfNext.style.display="none";
     tfFb.className="tf-fb show ok";
-    tfFb.innerHTML=T("記住一句話：<strong>乘除，根號可以合；加減，只有同類才能合，根號裡的數不動。</strong><br>錯的題目可以回到上面對應的講解再看一次。");
+    tfFb.innerHTML=T("記住一句話：<strong>乘、除，根號可以合成一個；加、減，要一樣的根號才能合，根號裡的數不動。</strong><br>答錯的題目，可以回到上面對應的講解再看一次。");
     return;
   }
   tfNo.textContent="第 "+(tq+1)+" / "+TF.length+" 題";

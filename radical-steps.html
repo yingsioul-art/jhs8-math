@@ -193,6 +193,29 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 
 .note{background:var(--blue-soft);border:1px solid #cfe0e8;border-radius:12px;padding:14px 18px;margin:18px 0;font-size:15.5px}
 .note p:last-child{margin:0}
+/* ── 為什麼 √2×√3＝√6 ── */
+.w6h{font-size:12px;letter-spacing:.16em;color:var(--mul);font-weight:700;margin-bottom:10px}
+.w6cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.w6cols{grid-template-columns:1fr}}
+.w6c{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.w6c .lb{font-size:13px;color:var(--ink2);margin-bottom:4px}
+.w6c .ln{font-size:19px;line-height:2;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+.w6c .ln.on{opacity:1;transform:none}
+.w6c .ln small{font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif;font-size:13px;color:var(--ink2)}
+.w6v{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:15px;line-height:1.75;background:var(--green-soft);
+  border:1px solid #b7ddc3;opacity:0;transition:opacity .5s}
+.w6v.on{opacity:1}
+.stage{position:relative;height:150px;margin:6px 0 4px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tok{position:absolute;top:0;left:0;display:flex;align-items:center;justify-content:center;
+  font-family:"Cambria","Times New Roman",Georgia,serif;transition:transform .7s cubic-bezier(.4,0,.2,1),opacity .5s}
+.tok.card{height:54px;border-radius:11px;font-size:21px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.tok.c2{background:#e8f1f5;border:2px solid #1d5b79;color:#1d5b79}
+.tok.c3{background:#fdf2e3;border:2px solid #a15c07;color:#a15c07}
+.tok.c6{background:var(--green-soft);border:2px solid var(--green);color:var(--green)}
+.tok.sym{height:54px;font-size:22px;color:var(--ink2)}
+.cap{background:var(--mul-soft);border-left:3px solid var(--mul);border-radius:0 10px 10px 0;padding:10px 14px;
+  font-size:15.5px;line-height:1.85;min-height:76px}
+.cap .wl{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--mul);margin-bottom:2px}
 .reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:8px 16px;
   border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:22px}
 footer{padding:30px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
@@ -232,7 +255,7 @@ footer{padding:30px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
   後面每一題卡住的時候，都回到這個正方形來想。<br>
   每一行算式前面有一個小標籤：<span class="tg mul">乘除</span> 代表「兩個根號可以合成一個」；<span class="tg add">加減</span> 代表「要一樣的根號才能加在一起」。這一節大部分的錯，都是把這兩種搞混。</p>
   <div class="toc">
-    <a href="#what">根號是什麼</a><a href="#rules">乘和加不一樣</a><a href="#lab">動手看</a><a href="#secA">A 乘除</a><a href="#secB">B 化簡</a>
+    <a href="#what">根號是什麼</a><a href="#rules">乘和加不一樣</a><a href="#why6">為什麼 √2×√3＝√6</a><a href="#lab">動手看</a><a href="#secA">A 乘除</a><a href="#secB">B 化簡</a>
     <a href="#secC">C 分母有根號</a><a href="#secD">D 加減</a><a href="#secE">E 混在一起</a><a href="#secF">F 挑錯</a><a href="#quiz">判斷 10 題</a>
   </div>
 </header>
@@ -270,8 +293,8 @@ footer{padding:30px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
     <div class="rule mul">
       <div class="rn">乘除：兩個根號可以合成一個</div>
       <div class="rf m" data-m="r{2} × r{3} ＝ r{6}"></div>
-      <p>為什麼？把 <span class="m" data-m="r{2}×r{3}"></span> 自己乘自己：<span class="m" data-m="r{2}×r{2}"></span> 是 2，<span class="m" data-m="r{3}×r{3}"></span> 是 3，合起來 <strong>2×3＝6</strong>。<br>
-      自己乘自己會得到 6，它就是「面積 6 的正方形的邊長」，也就是 <span class="m" data-m="r{6}"></span>。</p>
+      <p>根號裡的數<strong>直接相乘</strong>，合成一個根號。<br>
+      為什麼可以？<a href="#why6" style="color:var(--mul);font-weight:700">往下分四步看 →</a> 先用算得出來的數試，再用近似值試，最後用卡片換位置看出理由。</p>
     </div>
     <div class="rule add">
       <div class="rn">加減：一樣的根號才能加在一起</div>
@@ -289,6 +312,56 @@ footer{padding:30px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
   </table>
   <div class="note"><p>📌 一句話：<strong>加法是數棒子，乘法是算面積。</strong><br>
   所以 <span class="m" data-m="4r{3}×2r{3}"></span> 寫成 <span class="m bd" data-m="8r{3}"></span> 是錯的（會考 110 年第 6 題）：那是只數了 4×2＝8 格，忘了每一格的面積是 3。正確答案是 8×3＝<span class="m gd">24</span>。</p></div>
+</section>
+
+<!-- ══ 為什麼 √2×√3＝√6 ══ -->
+<section id="why6">
+  <div class="step"><span class="n">★</span>想清楚再用</div>
+  <h2>為什麼 <span class="m" data-m="r{2}×r{3}"></span> 會等於 <span class="m" data-m="r{6}"></span>？</h2>
+  <p>不用背，分四步自己看出來：<strong>先用算得出來的數試 → 再用近似值試 → 看出為什麼一定成立 → 對照加法為什麼不行</strong>。</p>
+
+  <div class="lab">
+    <div class="w6h">第 1 步 ── 先用「算得出來」的數試試</div>
+    <p style="font-size:15.5px">根號裡放平方數，每個根號都開得出來。兩種算法比比看：</p>
+    <div class="chips" id="w1Chips"></div>
+    <div class="w6cols">
+      <div class="w6c"><div class="lb">算法一：先各自開根號，再乘</div><div id="w1L"></div></div>
+      <div class="w6c"><div class="lb">算法二：先把裡面乘起來，再開根號</div><div id="w1R"></div></div>
+    </div>
+    <div class="w6v" id="w1V"></div>
+  </div>
+
+  <div class="lab">
+    <div class="w6h">第 2 步 ── 換成「算不出來」的數，用近似值試</div>
+    <p style="font-size:15.5px"><span class="m" data-m="r{2}"></span>、<span class="m" data-m="r{3}"></span> 開不出整數，那就用 2-1 學的近似值：</p>
+    <div class="chips" id="w2Chips"></div>
+    <div class="w6cols">
+      <div class="w6c"><div class="lb" id="w2Lh"></div><div id="w2L"></div></div>
+      <div class="w6c"><div class="lb" id="w2Rh"></div><div id="w2R"></div></div>
+    </div>
+    <div class="w6v" id="w2V"></div>
+  </div>
+
+  <div class="lab">
+    <div class="w6h">第 3 步 ── 為什麼一定一樣？把卡片換位置</div>
+    <p style="font-size:15.5px"><span class="m" data-m="r{6}"></span> 是「面積 6 的正方形的邊長」，也就是<strong>自己乘自己會得到 6</strong> 的正數——就是第 2 步你在試的那個 2.449…。<br>
+    所以只要檢查：<span class="m" data-m="r{2}×r{3}"></span> <strong>自己乘自己</strong>，是不是 6？</p>
+    <div class="stage" id="stage"></div>
+    <div class="cap"><div class="wl" id="capN"></div><div id="capT"></div></div>
+    <div class="btnrow"><button class="btn ghost" id="cPrev">← 上一步</button><button class="btn" id="cNext">下一步 →</button><button class="btn ghost" id="cAuto">▶ 自動</button></div>
+  </div>
+
+  <div class="lab">
+    <div class="w6h" style="color:var(--add)">第 4 步 ── 對照：加法為什麼不行</div>
+    <p style="font-size:15.5px">如果 <span class="m" data-m="r{2}＋r{3}"></span> 等於 <span class="m" data-m="r{5}"></span>，它自己乘自己就該是 5。用正方形來看：邊長 <span class="m" data-m="r{2}＋r{3}"></span> 的正方形，面積是多少？</p>
+    <div class="vis"><svg id="w4Svg" viewBox="0 0 640 300" role="img" aria-label="邊長根號2加根號3的正方形，切成四塊"></svg></div>
+    <div class="btnrow"><button class="btn" id="w4Play">▶ 切開看看</button></div>
+    <div class="w6v" id="w4V"></div>
+  </div>
+
+  <div class="note"><p>📌 <strong>差別就在第 3 步的卡片能不能配成對。</strong><br>
+  乘法：<span class="m" data-m="(r{2}×r{3})^2"></span> 的四張卡可以換位置，<span class="m" data-m="r{2}"></span> 跟 <span class="m" data-m="r{2}"></span> 一對、<span class="m" data-m="r{3}"></span> 跟 <span class="m" data-m="r{3}"></span> 一對，乾乾淨淨得到 2×3＝6。<br>
+  加法：<span class="m" data-m="(r{2}＋r{3})^2"></span> 一展開就多出兩塊 <span class="m" data-m="r{6}"></span>，配不掉，所以不會是 5。</p></div>
 </section>
 
 <!-- ══ 實驗 ══ -->
@@ -363,7 +436,7 @@ footer{padding:30px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-alig
 <script>
 (function(){
 "use strict";
-const KEY="jhs8-radical-steps-v1";
+const KEY="jhs8-radical-steps-v2";
 let store={};
 try{store=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){store={}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
@@ -412,14 +485,6 @@ const TAG={
 /* ───────── 課本題目 ───────── */
 const SECS=[
 {id:"secA",h:"A　根號的乘法和除法　課本 p.75–78",d:"乘除是「兩個根號可以合成一個」的那一邊。根號外面的數和外面的數算，根號和根號算。",items:[
- {src:"課本 p.75　觀念",q:"為什麼 $r{2}×r{3}＝r{6}$？",steps:[
-   {e:"r{2} × r{3}",w:"先想 $r{6}$ 是什麼：它是「面積 6 的正方形的邊長」，也就是「自己乘自己會等於 6 的數」。只要 $r{2}×r{3}$ 自己乘自己也等於 6，它就是 $r{6}$。"},
-   {t:"chk",e:"(r{2}×r{3})^2 ＝ (r{2}×r{3})×(r{2}×r{3})",w:"把它自己乘自己看看（右上角的小 2 就是「自己乘自己」）。"},
-   {t:"mul",e:"＝ h{(r{2}×r{2})}×h{(r{3}×r{3})}",w:"乘法可以換順序，把一樣的放在一起。"},
-   {t:"mul",e:"＝ h{2} × h{3} ＝ 6",w:"$r{2}×r{2}$ 是邊長 $r{2}$ 的正方形面積，就是 2；$r{3}×r{3}$ 就是 3。2×3＝6。"},
-   {t:"ans",e:"所以 r{2}×r{3} ＝ g{r{6}}",w:"$r{2}×r{3}$ 自己乘自己等於 6，所以它就是 $r{6}$。這就是「根號相乘，裡面直接乘」的理由。<br>📌 加法沒辦法這樣：$r{2}＋r{3}$ 自己乘自己大約是 9.9，不是 5。"}
- ],trap:"所以：<strong>乘法可以把根號合起來，加法不行</strong>。$r{2}＋r{3}$ 大約是 3.15，$r{5}$ 只有大約 2.24，差很多。"},
-
  {src:"課本 p.77　例 2",q:"計算 $7r{2}×5r{2}$",steps:[
    {e:"o{7}i{r{2}} × o{5}i{r{2}}",w:"$7r{2}$ 就是 $7×r{2}$，中間的乘號省略了。橘色是根號外面的數，藍色是根號。"},
    {t:"mul",e:"＝ (o{7}×o{5}) × (i{r{2}}×i{r{2}})",w:"全部都是乘法，可以換順序：<strong>外面的數和外面的數乘，根號和根號乘</strong>。"},
@@ -746,6 +811,158 @@ drawSq0();
   g.appendChild(E("text",{x:x+4*c+14,y:y+2*c-8,"font-size":14,fill:"#57525e"},"每塊面積 5"));
   g.appendChild(E("text",{x:x+4*c+14,y:y+2*c+16,"font-size":14,fill:"#57525e"},"16 塊 ＝ 80"));
 })();
+
+/* ───────── 為什麼 √2×√3＝√6 ───────── */
+function seq(lines,vEl,vHTML){
+  lines.forEach(function(el,k){el.classList.remove("on");setTimeout(function(){el.classList.add("on")},150+k*650)});
+  vEl.classList.remove("on");vEl.innerHTML=vHTML;
+  setTimeout(function(){vEl.classList.add("on")},150+lines.length*650);
+}
+const W1=[[4,9],[9,16],[4,25],[16,25],[25,36]];
+const w1C=document.getElementById("w1Chips");
+function w1(k){
+  const a=W1[k][0],b=W1[k][1],ra=Math.sqrt(a),rb=Math.sqrt(b),p=a*b;
+  w1C.querySelectorAll(".chip").forEach(function(c,j){c.classList.toggle("on",j===k)});
+  const L=document.getElementById("w1L"),R=document.getElementById("w1R");
+  L.innerHTML=['<div class="ln m">'+M("r{"+a+"} × r{"+b+"}")+'</div>','<div class="ln m">＝ '+ra+' × '+rb+' <small>（'+ra+'×'+ra+'＝'+a+'、'+rb+'×'+rb+'＝'+b+'）</small></div>','<div class="ln m">＝ <b>'+(ra*rb)+'</b></div>'].join("");
+  R.innerHTML=['<div class="ln m">'+M("r{"+a+" × "+b+"}")+'</div>','<div class="ln m">＝ '+M("r{"+p+"}")+'</div>','<div class="ln m">＝ <b>'+(ra*rb)+'</b> <small>（'+(ra*rb)+'×'+(ra*rb)+'＝'+p+'）</small></div>'].join("");
+  const ls=[];for(let j=0;j<3;j++){ls.push(L.children[j]);ls.push(R.children[j])}
+  seq(ls,document.getElementById("w1V"),"兩種算法都得到 <b>"+(ra*rb)+"</b>。換別組數試試，每一組都一樣。");
+}
+W1.forEach(function(x,k){const c=document.createElement("button");c.className="chip";c.innerHTML="√"+x[0]+" × √"+x[1];c.addEventListener("click",function(){w1(k)});w1C.appendChild(c)});
+
+const W2=[[2,3],[2,5],[3,5],[2,7],[3,7]];
+const w2C=document.getElementById("w2Chips");
+function w2(k){
+  const a=W2[k][0],b=W2[k][1],n=a*b,ra=Math.sqrt(a),rb=Math.sqrt(b);
+  w2C.querySelectorAll(".chip").forEach(function(c,j){c.classList.toggle("on",j===k)});
+  document.getElementById("w2Lh").innerHTML="算法一：<span class='m'>"+M("r{"+a+"}×r{"+b+"}")+"</span> 用近似值相乘";
+  document.getElementById("w2Rh").innerHTML="算法二：找「自己乘自己＝"+n+"」的數，就是 <span class='m'>"+M("r{"+n+"}")+"</span>";
+  const L=document.getElementById("w2L"),R=document.getElementById("w2R");
+  L.innerHTML=['<div class="ln m">'+M("r{"+a+"}")+' ≈ '+ra.toFixed(5)+'</div>','<div class="ln m">'+M("r{"+b+"}")+' ≈ '+rb.toFixed(5)+'</div>','<div class="ln m">相乘 ≈ <b>'+(+ra.toFixed(5)*+rb.toFixed(5)).toFixed(5)+'</b></div>'].join("");
+  const kk=Math.floor(Math.sqrt(n));let d=0;while(Math.pow(kk+(d+1)/10,2)<=n)d++;
+  const g1=(kk+d/10),g2=(kk+(d+1)/10);
+  R.innerHTML=['<div class="ln m">'+g1.toFixed(1)+'×'+g1.toFixed(1)+'＝'+(g1*g1).toFixed(2)+' <small>太小</small></div>',
+    '<div class="ln m">'+g2.toFixed(1)+'×'+g2.toFixed(1)+'＝'+(g2*g2).toFixed(2)+' <small>太大</small></div>',
+    '<div class="ln m">繼續夾下去 ≈ <b>'+Math.sqrt(n).toFixed(5)+'</b></div>'].join("");
+  const ls=[];for(let j=0;j<3;j++){ls.push(L.children[j]);ls.push(R.children[j])}
+  seq(ls,document.getElementById("w2V"),"兩邊幾乎一模一樣（最後一位如果差一點點，是近似值四捨五入造成的）。<br>每一組都這麼巧？<strong>不是巧合</strong>——第 3 步看為什麼。");
+}
+W2.forEach(function(x,k){const c=document.createElement("button");c.className="chip";c.innerHTML="√"+x[0]+" × √"+x[1];c.addEventListener("click",function(){w2(k)});w2C.appendChild(c)});
+
+/* 卡片舞台 */
+const stage=document.getElementById("stage");
+const TK={P1:["sym","("],A1:["card c2","√2"],X1:["sym","×"],B1:["card c3","√3"],P2:["sym",")"],X2:["sym","×"],
+  P3:["sym","("],A2:["card c2","√2"],X3:["sym","×"],B2:["card c3","√3"],P4:["sym",")"],
+  R2:["card c2","2"],XR:["sym","×"],R3:["card c3","3"],EQ:["sym","＝"],R6:["card c6","6"]};
+const tokEl={};
+Object.keys(TK).forEach(function(k){const d=document.createElement("div");d.className="tok "+TK[k][0];
+  d.innerHTML=TK[k][1].replace(/√(\d)/,'√<span class="rad">$1</span>');d.style.opacity=0;stage.appendChild(d);tokEl[k]=d});
+const CS=[
+ {row:["P1","A1","X1","B1","P2","X2","P3","A2","X3","B2","P4"],t:"這就是 $r{2}×r{3}$ <strong>自己乘自己</strong>：兩組一模一樣的 $r{2}×r{3}$ 相乘。"},
+ {row:["A1","X1","B1","X2","A2","X3","B2"],t:"整串<strong>全部都是乘法</strong>，括號可以拿掉（乘法結合律）。"},
+ {row:["A1","X1","A2","X2","B1","X3","B2"],arc:["B1","A2"],t:"乘法可以<strong>交換順序</strong>（像 2×3＝3×2）。把中間的 $r{3}$ 和 $r{2}$ 對調，一樣的排在一起。"},
+ {row:["P1","A1","X1","A2","P2","X2","P3","B1","X3","B2","P4"],t:"現在配成兩對：$(r{2}×r{2})$ 和 $(r{3}×r{3})$。<br>$r{2}$ 是面積 2 的正方形的邊長，邊長×邊長＝面積，所以 $r{2}×r{2}$ 是多少？"},
+ {row:["R2","XR","R3"],merge:{A1:"R2",A2:"R2",X1:"R2",P1:"R2",P2:"R2",B1:"R3",B2:"R3",X3:"R3",P3:"R3",P4:"R3",X2:"XR"},t:"$r{2}×r{2}＝2$，$r{3}×r{3}＝3$——每一對都變回根號裡的數，<strong>根號消失了</strong>。"},
+ {row:["R2","XR","R3","EQ","R6"],t:"$2×3＝6$。所以 <strong>$r{2}×r{3}$ 自己乘自己＝6</strong>。"},
+ {row:["R2","XR","R3","EQ","R6"],fin:true,t:"$r{2}×r{3}$ 是正數，自己乘自己得 6——它就是面積 6 的正方形的邊長，也就是 $r{6}$。所以 <strong>$r{2}×r{3}＝r{6}$</strong>，跟第 2 步的 2.44949 對得上。<br>換成任何兩個數也一樣：$r{a}×r{b}$ 自己乘自己＝$a×b$，所以 $r{a}×r{b}＝r{ab}$。"}
+];
+let cs=0,cTimer=null;const pos={};
+function layout(row){
+  const Wd=stage.clientWidth,cards=row.filter(function(k){return TK[k][0].indexOf("card")===0}).length,syms=row.length-cards;
+  const sw=row.length>8?16:24, cw=Math.min(64,(Wd-24-syms*sw)/Math.max(cards,1));
+  let tot=cards*cw+syms*sw,x=(Wd-tot)/2;const out={};
+  row.forEach(function(k){const w=TK[k][0].indexOf("card")===0?cw:sw;out[k]={x:x,w:w};x+=w});
+  return out;
+}
+function cShow(n,anim){
+  cs=n;const S=CS[n],L=layout(S.row),y=48;
+  Object.keys(TK).forEach(function(k){
+    const el=tokEl[k];
+    el.style.transition=anim?"":"none";
+    if(L[k]){el.style.width=L[k].w+"px";pos[k]=L[k].x;el.style.opacity=1;el.style.transform="translate("+L[k].x+"px,"+y+"px)"}
+    else{
+      const tgt=S.merge&&S.merge[k];
+      if(tgt&&L[tgt]&&anim){el.style.transform="translate("+L[tgt].x+"px,"+y+"px) scale(.6)";}
+      el.style.opacity=0;
+    }
+  });
+  if(S.arc&&anim){
+    const a=S.arc[0],b=S.arc[1];
+    tokEl[a].style.transform="translate("+pos[a]+"px,"+(y-40)+"px)";tokEl[b].style.transform="translate("+pos[b]+"px,"+(y+40)+"px)";
+    /* 先往上、往下錯開，再落回同一排 */
+    const pa=CS[n-1]?layout(CS[n-1].row):L;
+    tokEl[a].style.transition="none";tokEl[b].style.transition="none";
+    tokEl[a].style.transform="translate("+pa[a].x+"px,"+y+"px)";tokEl[b].style.transform="translate("+pa[b].x+"px,"+y+"px)";
+    void stage.offsetWidth;
+    tokEl[a].style.transition="";tokEl[b].style.transition="";
+    tokEl[a].style.transform="translate("+((pa[a].x+L[a].x)/2)+"px,"+(y-42)+"px)";
+    tokEl[b].style.transform="translate("+((pa[b].x+L[b].x)/2)+"px,"+(y+42)+"px)";
+    setTimeout(function(){if(cs!==n)return;tokEl[a].style.transform="translate("+L[a].x+"px,"+y+"px)";tokEl[b].style.transform="translate("+L[b].x+"px,"+y+"px)"},600);
+  }
+  if(S.merge&&anim){/* 新出現的卡片晚一點浮現 */
+    ["R2","R3","XR"].forEach(function(k){tokEl[k].style.opacity=0});
+    setTimeout(function(){if(cs!==n)return;["R2","R3","XR"].forEach(function(k){tokEl[k].style.opacity=1})},500);
+  }
+  tokEl.R6.style.boxShadow=S.fin?"0 0 0 6px rgba(21,128,61,.18)":"";
+  document.getElementById("capN").textContent="第 "+(n+1)+" / "+CS.length+" 步";
+  document.getElementById("capT").innerHTML=T(S.t);
+  document.getElementById("cPrev").disabled=n===0;
+  document.getElementById("cNext").disabled=n===CS.length-1;
+}
+function cStop(){if(cTimer){clearInterval(cTimer);cTimer=null;document.getElementById("cAuto").textContent="▶ 自動"}}
+document.getElementById("cNext").addEventListener("click",function(){cStop();if(cs<CS.length-1)cShow(cs+1,true)});
+document.getElementById("cPrev").addEventListener("click",function(){cStop();if(cs>0)cShow(cs-1,false)});
+document.getElementById("cAuto").addEventListener("click",function(){
+  if(cTimer){cStop();return}
+  if(cs===CS.length-1)cShow(0,false);
+  this.textContent="❚❚ 暫停";
+  cTimer=setInterval(function(){if(cs<CS.length-1)cShow(cs+1,true);else cStop()},2800);
+});
+
+/* 第 4 步：(√2＋√3)² 的正方形 */
+const w4=document.getElementById("w4Svg");let w4T=[];
+function drawW4(play){
+  w4T.forEach(clearTimeout);w4T=[];
+  while(w4.firstChild)w4.removeChild(w4.firstChild);
+  const VW=Math.max(340,Math.min(640,(w4.parentNode.clientWidth||640)-12)),nar=VW<520;
+  const r2=Math.sqrt(2),r3=Math.sqrt(3),side=nar?Math.min(VW-70,230):250,s=side/(r2+r3),X=40,Y=30;
+  const a=r2*s,b=r3*s;
+  const P=[
+   {x:X,y:Y,w:a,h:a,f:"#e8f1f5",st:"#1d5b79",l:"2",sub:"√2×√2"},
+   {x:X+a,y:Y+a,w:b,h:b,f:"#fdf2e3",st:"#a15c07",l:"3",sub:"√3×√3"},
+   {x:X+a,y:Y,w:b,h:a,f:"#fdeeee",st:"#b03030",l:"√6",sub:"多出來"},
+   {x:X,y:Y+a,w:a,h:b,f:"#fdeeee",st:"#b03030",l:"√6",sub:"多出來"}
+  ];
+  w4.appendChild(E("text",{x:X+a/2,y:Y-8,"text-anchor":"middle","font-size":14,fill:"#1d5b79","font-family":"Cambria,Georgia,serif"},"√2"));
+  w4.appendChild(E("text",{x:X+a+b/2,y:Y-8,"text-anchor":"middle","font-size":14,fill:"#a15c07","font-family":"Cambria,Georgia,serif"},"√3"));
+  w4.appendChild(E("text",{x:X-6,y:Y+a/2+5,"text-anchor":"end","font-size":14,fill:"#1d5b79","font-family":"Cambria,Georgia,serif"},"√2"));
+  w4.appendChild(E("text",{x:X-6,y:Y+a+b/2+5,"text-anchor":"end","font-size":14,fill:"#a15c07","font-family":"Cambria,Georgia,serif"},"√3"));
+  const gs=P.map(function(q){
+    const g=E("g",{class:"cell"});
+    g.appendChild(E("rect",{x:q.x,y:q.y,width:q.w,height:q.h,fill:q.f,stroke:q.st,"stroke-width":2}));
+    g.appendChild(E("text",{x:q.x+q.w/2,y:q.y+q.h/2+2,"text-anchor":"middle","font-size":20,"font-weight":700,fill:q.st,"font-family":"Cambria,Georgia,serif"},q.l));
+    g.appendChild(E("text",{x:q.x+q.w/2,y:q.y+q.h/2+20,"text-anchor":"middle","font-size":11.5,fill:q.st},q.sub));
+    w4.appendChild(g);return g;
+  });
+  w4.appendChild(E("rect",{x:X,y:Y,width:a+b,height:a+b,fill:"none",stroke:"#232026","stroke-width":2.5}));
+  const tx=nar?10:X+a+b+28,ty=nar?Y+a+b+34:Y+40;
+  const L=["面積 ＝ 2 ＋ 3 ＋ √6 ＋ √6","≈ 5 ＋ 4.90 ＝ 9.90","如果 √2＋√3＝√5，","面積應該只有 5"];
+  const tl=L.map(function(t,k){const e=E("text",{x:tx,y:ty+k*24,"font-size":15,fill:k<2?"#232026":"#b03030","font-weight":k===1?700:400,class:"tail"},t);w4.appendChild(e);return e});
+  w4.setAttribute("viewBox","0 0 "+VW+" "+Math.ceil(nar?ty+L.length*24:Math.max(Y+a+b+20,ty+L.length*24)));
+  const v=document.getElementById("w4V");
+  v.innerHTML="四塊加起來約 9.90，不是 5。<strong>多出來的兩塊 √6</strong>（紅色）配不成對、消不掉——所以 $r{2}＋r{3}$ 自己乘自己不是 5，它也就<strong>不是</strong> $r{5}$。".replace(/\$([^$]+)\$/g,function(_,x){return'<span class="m">'+M(x)+'</span>'});
+  if(!play){gs.concat(tl).forEach(function(g){g.style.opacity=1});v.classList.add("on");return}
+  v.classList.remove("on");gs.concat(tl).forEach(function(g){g.style.opacity=0});
+  gs.forEach(function(g,k){w4T.push(setTimeout(function(){g.style.opacity=1},300+k*800))});
+  tl.forEach(function(g,k){w4T.push(setTimeout(function(){g.style.opacity=1},3500+k*500))});
+  w4T.push(setTimeout(function(){v.classList.add("on")},5600));
+}
+document.getElementById("w4Play").addEventListener("click",function(){drawW4(true)});
+
+w1(0);w2(0);cShow(0,false);drawW4(false);
+let w6W=window.innerWidth;
+window.addEventListener("resize",function(){if(window.innerWidth===w6W)return;w6W=window.innerWidth;cShow(cs,false);drawW4(false)});
 
 /* ───────── 實驗一：加法 vs 乘法 ───────── */
 const LAB=[

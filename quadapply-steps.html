@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4-3 課本逐題講解｜應用問題</title>
+<style>
+:root{
+  --paper:#f8f7f4; --ink:#232026; --ink2:#57525e; --line:#dcd8e0;
+  --accent:#4338ca; --accent-soft:#eeedfb;
+  --teal:#0f6b63; --teal-soft:#e6f2f0;
+  --blue:#1d5b79; --blue-soft:#e8f1f5;
+  --green:#15803d; --green-soft:#e9f5ec;
+  --red:#b03030; --red-soft:#fdeeee;
+  --orange:#a15c07; --orange-soft:#fdf2e3;
+  --mul:#6d28d9; --mul-soft:#f1ebfd;
+  --add:#15803d; --add-soft:#e9f5ec;
+  --shadow:0 1px 2px rgba(35,32,38,.06),0 8px 24px rgba(35,32,38,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:17px;line-height:1.85;letter-spacing:.01em}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 120px}
+header{padding:48px 0 26px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:14px}
+h1{font-size:32px;line-height:1.3;margin:0 0 14px}
+.sub{color:var(--ink2);font-size:15px;margin:0}
+.bar{position:sticky;top:0;z-index:50;background:rgba(248,247,244,.95);
+  border-bottom:1px solid var(--line);margin:0 -20px;padding:9px 20px}
+.bar-inner{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--ink2)}
+.track{flex:1;height:5px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .5s}
+.bar b{font-variant-numeric:tabular-nums}
+.toc{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 0}
+.toc a{font-size:13px;text-decoration:none;color:var(--ink2);background:#fff;border:1px solid var(--line);
+  border-radius:99px;padding:3px 11px}
+.toc a:hover{border-color:var(--accent);color:var(--accent)}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+.step{font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.step .n{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;
+  width:20px;height:20px;line-height:20px;text-align:center;margin-right:8px;letter-spacing:0}
+h2{font-size:24px;line-height:1.4;margin:0 0 18px}
+h3{font-size:18px;margin:30px 0 10px}
+p{margin:0 0 16px}
+.dim{color:var(--ink2)}
+em{font-style:normal;background:linear-gradient(transparent 62%,#bfe6c9 62%);font-weight:600;padding:0 1px}
+
+/* ── 數學排版 ── */
+.m{font-family:"Cambria","Times New Roman",Georgia,serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+.m sup{font-size:.68em;vertical-align:super;line-height:0}
+.sq{white-space:nowrap}
+.rad{border-top:1.3px solid currentColor;padding:0 3px 0 1px;margin-left:-1px}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  font-size:.86em;line-height:1.2;margin:0 3px}
+.frac>span:first-child{border-bottom:1.3px solid currentColor;padding:0 4px 1px}
+.frac>span:last-child{padding-top:2px}
+.co{color:var(--orange);font-weight:700}
+.ci{color:var(--blue);font-weight:700}
+.hl{background:#fff1b8;border-radius:4px;padding:0 3px;animation:pop .9s ease}
+@keyframes pop{0%{background:#ffd84d;transform:scale(1.18)}100%{background:#fff1b8;transform:none}}
+.hl{display:inline-block}
+.st{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;opacity:.55}
+.gd{color:var(--green);font-weight:700}
+.bd{color:var(--red);font-weight:700}
+
+/* ── 兩條規則卡 ── */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.rule{background:#fff;border-radius:14px;padding:18px;box-shadow:var(--shadow);border:2px solid}
+.rule.mul{border-color:var(--mul)}
+.rule.add{border-color:var(--add)}
+.rule .rn{font-size:12.5px;letter-spacing:.14em;font-weight:700;margin-bottom:8px}
+.rule.mul .rn{color:var(--mul)} .rule.add .rn{color:var(--add)}
+.rule .rf{font-size:20px;text-align:center;margin:8px 0 10px}
+.rule p{font-size:14.5px;line-height:1.75;margin:0;color:var(--ink2)}
+.rule p strong{color:var(--ink)}
+@media(max-width:600px){.rules{grid-template-columns:1fr}}
+.ytab{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;
+  overflow:hidden;margin:18px 0;font-size:15px}
+.ytab th,.ytab td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:center}
+.ytab th{background:#eef1eb;font-size:13px}
+.ytab tr:last-child td{border-bottom:0}
+.ytab td:first-child{text-align:left;color:var(--ink2);font-size:13.5px}
+.ytab .cmul{background:var(--mul-soft)} .ytab .cadd{background:var(--add-soft)}
+
+/* ── 實驗室 ── */
+.lab{background:linear-gradient(#fff,#fbfcfa);border:1px solid var(--line);border-radius:16px;
+  padding:20px;margin:22px 0;box-shadow:var(--shadow)}
+.lab-t{font-size:12px;letter-spacing:.18em;color:var(--blue);font-weight:700;margin-bottom:12px}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.chip{padding:6px 13px;border:1.5px solid var(--line);background:#fff;border-radius:99px;
+  cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink2)}
+.chip:hover{border-color:var(--ink2)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.duo{grid-template-columns:1fr}}
+.col{border-radius:12px;padding:12px 14px;min-height:150px}
+.col.add{background:var(--add-soft);border:1.5px solid #b7ddc3}
+.col.mul{background:var(--mul-soft);border:1.5px solid #d6c8f5}
+.col h4{margin:0 0 6px;font-size:14px;letter-spacing:.06em}
+.col.add h4{color:var(--add)} .col.mul h4{color:var(--mul)}
+.col .ln{font-size:19px;line-height:2;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+.col .ln.on{opacity:1;transform:none}
+.col .nt{font-size:13.5px;line-height:1.7;color:var(--ink2);margin-top:6px;opacity:0;transition:opacity .5s}
+.col .nt.on{opacity:1}
+.ybar{margin:12px 0 0;font-size:14.5px;background:#fff;border:1px dashed var(--line);border-radius:10px;padding:9px 12px;color:var(--ink2)}
+.vis{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px}
+svg{max-width:100%;height:auto;display:block}
+.seg{transition:opacity .4s}
+.cell{transition:opacity .35s,fill .35s}
+.btn{padding:8px 17px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+  border-radius:99px;cursor:pointer;font-size:14px;font-family:inherit;font-weight:600}
+.btn:hover{opacity:.86}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn:disabled{opacity:.35;cursor:default}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.sl{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+.sl label{font-size:13.5px;color:var(--ink2)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pill{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.pill .lb{font-size:12.5px;color:var(--ink2)}
+.pill .vl{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+.pill.a{border-color:#b7ddc3;background:var(--add-soft)}
+.pill.b{border-color:#edc4c4;background:var(--red-soft)}
+.pill.c{border-color:#d6c8f5;background:var(--mul-soft)}
+.verdict{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:15px;line-height:1.75;
+  background:var(--blue-soft);border:1px solid #cfe0e8}
+
+/* ── 逐題講解卡 ── */
+.sec-h{margin:34px 0 4px;font-size:13px;letter-spacing:.16em;color:var(--teal);font-weight:700}
+.sec-d{font-size:15px;color:var(--ink2);margin:0 0 6px}
+.wt{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:18px 18px 16px;margin:16px 0 22px;box-shadow:var(--shadow)}
+.wt.done{border-color:var(--green)}
+.wt-top{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:12.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:6px}
+.wt-top .ct{color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+.wt.done .wt-top .ct{color:var(--green)}
+.wt-q{font-size:16.5px;margin-bottom:10px}
+.board{border-left:3px solid var(--line);padding:4px 0 4px 12px;margin:6px 0 10px}
+.line{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:9px;cursor:pointer;
+  animation:slide .5s ease both;flex-wrap:wrap}
+@keyframes slide{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+.line .ex{font-size:20px;line-height:2.1;white-space:normal;min-width:0}
+.line .ex .sq,.line .ex .frac{white-space:nowrap}
+.line.old{opacity:.6}
+.line.old .hl{background:transparent;animation:none;padding:0}
+.line.cur{background:#faf9fd}
+.line.sel{outline:2px solid #c9c5f0;opacity:1}
+.tg{flex-shrink:0;font-size:11.5px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:99px;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;white-space:nowrap}
+.tg.mul{background:var(--mul-soft);color:var(--mul);border:1px solid #d6c8f5}
+.tg.add{background:var(--add-soft);color:var(--add);border:1px solid #b7ddc3}
+.tg.simp{background:var(--orange-soft);color:var(--orange);border:1px solid #ecd3ad}
+.tg.rat{background:var(--blue-soft);color:var(--blue);border:1px solid #cfe0e8}
+.tg.exp{background:var(--teal-soft);color:var(--teal);border:1px solid #bcdcd7}
+.tg.ans{background:var(--ink);color:#fff}
+.tg.bad{background:var(--red-soft);color:var(--red);border:1px solid #edc4c4}
+.tg.chk{background:#f3f1f6;color:var(--ink2);border:1px solid var(--line)}
+.whybox{background:var(--accent-soft);border-radius:0 10px 10px 0;border-left:3px solid var(--accent);
+  padding:10px 14px;font-size:15.5px;line-height:1.85;min-height:48px}
+.whybox .wl{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:2px}
+.whybox.mul{background:var(--mul-soft);border-color:var(--mul)} .whybox.mul .wl{color:var(--mul)}
+.whybox.add{background:var(--add-soft);border-color:var(--add)} .whybox.add .wl{color:var(--add)}
+.whybox.bad{background:var(--red-soft);border-color:var(--red)} .whybox.bad .wl{color:var(--red)}
+.ask{display:none;margin-top:12px;border:2px dashed var(--accent);border-radius:12px;padding:12px 14px;background:#fff}
+.ask.show{display:block;animation:slide .4s ease}
+.ask .aq{font-weight:700;font-size:15.5px;margin-bottom:8px}
+.ask .ao{display:flex;flex-direction:column;gap:7px}
+.ask button{font:inherit;font-size:15.5px;text-align:left;padding:9px 13px;border:1.5px solid var(--line);
+  border-radius:10px;background:#fff;cursor:pointer;color:inherit}
+.ask button:hover{border-color:var(--ink2)}
+.ask button.no{border-color:var(--red);background:var(--red-soft)}
+.ask .af{font-size:14.5px;margin-top:8px;color:var(--red);display:none}
+.ask .af.show{display:block}
+.trap{display:none;margin-top:12px;background:#fdf8e8;border:1px dashed #e3d5a4;border-radius:10px;
+  padding:10px 14px;font-size:14.5px;line-height:1.8;color:#5c4d20}
+.trap.show{display:block;animation:slide .4s ease}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+/* ── 判斷題 ── */
+.tf{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:20px;margin:20px 0;box-shadow:var(--shadow)}
+.tf-q{font-size:24px;text-align:center;margin:10px 0 14px}
+.tf-b{display:flex;gap:10px;justify-content:center}
+.tf-b button{font:inherit;font-size:16px;font-weight:700;padding:10px 26px;border-radius:99px;border:2px solid var(--line);background:#fff;cursor:pointer}
+.tf-b button:hover{border-color:var(--ink2)}
+.tf-fb{display:none;margin-top:14px;padding:12px 14px;border-radius:10px;font-size:15.5px;line-height:1.85}
+.tf-fb.show{display:block;animation:slide .3s ease}
+.tf-fb.ok{background:var(--green-soft);border:1px solid #b7ddc3}
+.tf-fb.no{background:var(--red-soft);border:1px solid #edc4c4}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:6px}
+.dot{width:20px;height:6px;border-radius:99px;background:var(--line)}
+.dot.ok{background:var(--green)} .dot.no{background:var(--red)} .dot.now{background:var(--teal)}
+
+.note{background:var(--blue-soft);border:1px solid #cfe0e8;border-radius:12px;padding:14px 18px;margin:18px 0;font-size:15.5px}
+.note p:last-child{margin:0}
+/* ── 為什麼 √2×√3＝√6 ── */
+.w6h{font-size:12px;letter-spacing:.16em;color:var(--mul);font-weight:700;margin-bottom:10px}
+.w6cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.w6cols{grid-template-columns:1fr}}
+.w6c{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.w6c .lb{font-size:13px;color:var(--ink2);margin-bottom:4px}
+.w6c .ln{font-size:19px;line-height:2;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+.w6c .ln.on{opacity:1;transform:none}
+.w6c .ln small{font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif;font-size:13px;color:var(--ink2)}
+.w6v{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:15px;line-height:1.75;background:var(--green-soft);
+  border:1px solid #b7ddc3;opacity:0;transition:opacity .5s}
+.w6v.on{opacity:1}
+.stage{position:relative;height:150px;margin:6px 0 4px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tok{position:absolute;top:0;left:0;display:flex;align-items:center;justify-content:center;
+  font-family:"Cambria","Times New Roman",Georgia,serif;transition:transform .7s cubic-bezier(.4,0,.2,1),opacity .5s}
+.tok.card{height:54px;border-radius:11px;font-size:21px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.tok.c2{background:#e8f1f5;border:2px solid #1d5b79;color:#1d5b79}
+.tok.c3{background:#fdf2e3;border:2px solid #a15c07;color:#a15c07}
+.tok.c6{background:var(--green-soft);border:2px solid var(--green);color:var(--green)}
+.tok.sym{height:54px;font-size:22px;color:var(--ink2)}
+.cap{background:var(--mul-soft);border-left:3px solid var(--mul);border-radius:0 10px 10px 0;padding:10px 14px;
+  font-size:15.5px;line-height:1.85;min-height:76px}
+.cap .wl{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--mul);margin-bottom:2px}
+.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:8px 16px;
+  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:22px}
+footer{padding:30px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<style>
+/* 4-3 的標籤顏色 */
+.srt-q{font-size:17px;line-height:1.8;text-align:center;margin:10px 0 14px}
+.srt-b{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.srt-b button{font:inherit;font-size:15px;font-weight:700;padding:8px 16px;border-radius:99px;border:2px solid var(--line);background:#fff;cursor:pointer}
+.srt-b button:hover{border-color:var(--ink2)}
+.srt-b button.no{border-color:var(--red);background:var(--red-soft)}
+.srt-b button.ok{border-color:var(--green);background:var(--green-soft)}
+.tf-q.m{white-space:normal;font-size:19px;line-height:1.7}
+.tf-q.tx{font-size:17.5px;line-height:1.8;text-align:center;margin:10px 0 14px}
+.tg.read{background:#f3f1f6;color:var(--ink2);border:1px solid var(--line)}
+.tg.set{background:var(--blue-soft);color:var(--blue);border:1px solid #cfe0e8}
+.tg.eq{background:var(--accent-soft);color:var(--accent);border:1px solid #c9c5f0}
+.tg.mv{background:var(--orange-soft);color:var(--orange);border:1px solid #ecd3ad}
+.tg.com{background:var(--mul-soft);color:var(--mul);border:1px solid #d6c8f5}
+.tg.crs{background:var(--mul-soft);color:var(--mul);border:1px solid #d6c8f5}
+.tg.pf{background:var(--teal-soft);color:var(--teal);border:1px solid #bcdcd7}
+.tg.fml{background:var(--teal-soft);color:var(--teal);border:1px solid #bcdcd7}
+.tg.lin{background:#f3f1f6;color:var(--ink2);border:1px solid var(--line)}
+.tg.cut{background:var(--red-soft);color:var(--red);border:1px solid #edc4c4}
+.whybox.cut{background:var(--red-soft);border-color:var(--red)} .whybox.cut .wl{color:var(--red)}
+.whybox.eq{background:var(--accent-soft);border-color:var(--accent)}
+.whybox.fml{background:var(--teal-soft);border-color:var(--teal)} .whybox.fml .wl{color:var(--teal)}
+.rules5{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
+.rule.r0{border-color:var(--ink2)} .rule.r0 .rn{color:var(--ink2)}
+.rule.r1{border-color:var(--blue)} .rule.r1 .rn{color:var(--blue)}
+.rule.r2{border-color:var(--accent)} .rule.r2 .rn{color:var(--accent)}
+.rule.r3{border-color:var(--mul)} .rule.r3 .rn{color:var(--mul)}
+.rule.r4{border-color:var(--red)} .rule.r4 .rn{color:var(--red)}
+.line .ex{font-size:18.5px}
+</style>
+<style id="sitenav-css">
+.sitenav{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+ padding:10px 0 12px;margin:0 0 6px;border-bottom:1px solid rgba(0,0,0,.08);font-size:13.5px;scrollbar-width:none}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav a{flex:0 0 auto;text-decoration:none;color:#4b5563;background:#fff;border:1px solid rgba(0,0,0,.12);
+ border-radius:99px;padding:4px 12px;line-height:1.6;white-space:nowrap}
+.sitenav a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav a.home{font-weight:700;color:#5b4bdb;border-color:#5b4bdb;background:#fff}
+.sitenav a.now{background:#5b4bdb;color:#fff;border-color:#5b4bdb;font-weight:700}
+.sitenav .sep{flex:0 0 auto;color:#9ca3af;padding:0 2px}
+.sitenav-b{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:34px 0 8px}
+.sitenav-b a{text-decoration:none;color:#374151;background:#fff;border:1px solid rgba(0,0,0,.14);border-radius:12px;
+ padding:12px 14px;line-height:1.5;font-size:14.5px;display:flex;flex-direction:column;justify-content:center}
+.sitenav-b a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav-b a small{font-size:11.5px;color:#9ca3af;letter-spacing:.08em}
+.sitenav-b a.next{text-align:left}
+.sitenav-b a.homeb{justify-content:center;text-align:center;font-weight:700;color:#5b4bdb;border-color:#5b4bdb}
+.sitenav-b span{display:block}
+@media(max-width:640px){.sitenav{flex-wrap:wrap;overflow:visible;gap:6px 5px;font-size:13px}.sitenav a{padding:3px 10px}}
+@media(max-width:520px){.sitenav-b{grid-template-columns:1fr 1fr}.sitenav-b a.homeb{grid-column:1/-1;order:-1}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="wrap">
+
+<!-- SITENAV:top 由 _add_site_nav.py 產生，勿手改 -->
+<nav class="sitenav" aria-label="站內導覽"><a class="home" href="index.html">八年級數學自學站</a><span class="sep">·</span><a class="" href="multiply.html">1-1 乘法公式</a><a class="" href="polynomial.html">1-2 多項式加減</a><a class="" href="division.html">1-3 多項式乘除</a><a class="" href="sqrt.html">2-1 平方根</a><a class="" href="radical.html">2-2 根式運算</a><a class="" href="pythag.html">2-3 畢氏定理</a><a class="" href="factor.html">3-1 提公因式與乘法公式</a><a class="" href="cross.html">3-2 十字交乘法</a><a class="" href="quadfactor.html">4-1 因式分解解方程式</a><a class="" href="quadformula.html">4-2 配方法與公式解</a><a class="now" href="quadapply.html">4-3 應用問題</a><span class="sep">·</span><a class="" href="exam-sections.html">段考・照節次練</a><a class="" href="exam.html">段考・整卷模擬</a></nav>
+<!-- /SITENAV:top -->
+
+<header>
+  <div class="kicker">八年級上 · 第四章 4-3 應用問題 · 課本逐題講解</div>
+  <h1>讀題、設、列、解，最後問：合理嗎？</h1>
+  <p class="sub">這一頁每一題都照同樣的五步走。每一行算式前面有一個小標籤：<span class="tg read">讀題</span> 找關係和限制；<span class="tg set">設未知數</span>；<span class="tg eq">列式</span> 寫出等號；
+  <span class="tg exp">整理</span>、<span class="tg crs">十字交乘</span>、<span class="tg fml">公式解</span> 是 4-1、4-2 的解法；<span class="tg cut">捨去</span> 把不合理的解劃掉。<br>
+  這一節大部分的錯，都是<strong>把 x 當成答案</strong>，或是<strong>兩個解都留下來</strong>。</p>
+  <div class="toc">
+    <a href="#rules">五步</a><a href="#lab">要捨去哪一個</a><a href="#secA">A 例題與隨堂</a><a href="#secB">B 自我評量</a><a href="#secC">C 章末延伸</a><a href="#quiz">判斷 10 題</a>
+  </div>
+</header>
+
+<div class="bar"><div class="bar-inner"><span>講解看完</span><div class="track"><div class="fill" id="pfill"></div></div><b id="ptext">0 / 0</b></div></div>
+
+<!-- ══ 1 五步 ══ -->
+<section id="rules">
+  <div class="step"><span class="n">1</span>先看這一張</div>
+  <h2>解應用問題的五步（課本 p.186、p.192）</h2>
+  <p>課本寫成 4 步：設未知數、列方程式、解方程式、檢查並寫答案。這裡在前面多加一步「讀題」。</p>
+  <div class="rules5">
+    <div class="rule r0">
+      <div class="rn">⓪ 讀題</div>
+      <p>圈出<strong>關係句</strong>（總和、乘積、2 倍少 20、收入 1750）和<strong>限制句</strong>（誰比較大、最多 15 張、要是正整數）。關係句拿來列式，限制句留到最後檢查。</p>
+    </div>
+    <div class="rule r1">
+      <div class="rn">① 設未知數</div>
+      <div class="rf m" data-m="設小翊 x 歲，10 年前 (x−10) 歲"></div>
+      <p>通常<strong>設題目問的量</strong>。另一個量用 x 表示，不要再設一個字母。</p>
+    </div>
+    <div class="rule r2">
+      <div class="rn">② 列方程式</div>
+      <div class="rf m" data-m="x(x−10) ＝ 39"></div>
+      <p>找一句能寫成「＝」的話。最常見：<strong>單價×數量＝總價</strong>、<strong>長×寬＝面積</strong>。</p>
+    </div>
+    <div class="rule r3">
+      <div class="rn">③ 解方程式</div>
+      <div class="rf m" data-m="(x−13)(x+3) ＝ 0　→　x＝13 或 −3"></div>
+      <p>讓右邊是 0，能拆就拆（4-1），拆不開用公式解（4-2）。</p>
+    </div>
+    <div class="rule r4">
+      <div class="rn">④ 檢查並寫答案</div>
+      <div class="rf m" data-m="x{x＝−3}　年齡不能是負的"></div>
+      <p>每一個解都放回題目問：<strong>合理嗎？</strong>不合理的捨去。<strong>兩個都不合理，就是無解</strong>（p.191）。最後回頭看題目問什麼，再寫答案。</p>
+    </div>
+  </div>
+  <div class="note"><p>⚠️ 兩件最常漏掉的事：<br>
+  ① x 不一定是答案：例 4 的 x 是<strong>增加</strong>的人數，答案要加回 30。<br>
+  ② 正的解不一定合理：p.195 第 5 題解出 36 條，可是 30 條是上限。</p></div>
+</section>
+
+<!-- ══ 要捨去哪一個 ══ -->
+<section id="lab">
+  <div class="step"><span class="n">★</span>動手看</div>
+  <h2>解出來了，要捨去哪一個？</h2>
+  <p>不用算，方程式已經解好了。只看情境，判斷哪一個解留下來。</p>
+  <div class="tf" id="srt">
+    <div class="dots" id="srtDots"></div>
+    <div style="text-align:center;font-size:13px;color:var(--ink2)" id="srtNo"></div>
+    <div class="srt-q" id="srtQ"></div>
+    <div class="srt-b" id="srtB"></div>
+    <div class="tf-fb" id="srtV"></div>
+    <div class="btnrow" style="justify-content:center"><button class="btn" id="srtNext" disabled>下一題</button></div>
+  </div>
+</section>
+
+<!-- ══ 逐題講解 ══ -->
+<section id="steps">
+  <div class="step"><span class="n">2</span>課本逐題講解</div>
+  <h2>照課本的順序，一題一題拆開</h2>
+  <p>按「下一步」，算式會多寫一行；按「▶ 自動」會自己一步一步播。有 <strong>❓</strong> 的地方會先問你，答對才往下。點已經寫好的任何一行，可以再看一次那一步的說明。</p>
+  <div id="wtList"></div>
+</section>
+
+<!-- ══ 判斷 ══ -->
+<section id="quiz">
+  <div class="step"><span class="n">3</span>最後檢查</div>
+  <h2>對還是錯？10 題</h2>
+  <p>先判斷，再看理由。</p>
+  <div class="tf">
+    <div class="dots" id="tfDots"></div>
+    <div style="text-align:center;font-size:13px;color:var(--ink2)" id="tfNo"></div>
+    <div class="tf-q tx" id="tfQ"></div>
+    <div class="tf-b"><button id="tfT">⭕ 對</button><button id="tfF">❌ 錯</button></div>
+    <div class="tf-fb" id="tfFb"></div>
+    <div class="btnrow" style="justify-content:center"><button class="btn" id="tfNext" disabled>下一題</button></div>
+  </div>
+  <div style="text-align:center"><button class="reset" id="reset">清除這一頁的進度，重新看一次</button></div>
+</section>
+
+<!-- SITENAV:bottom 由 _add_site_nav.py 產生，勿手改 -->
+<div class="sitenav-b"><a class="prev" href="quadapply.html"><small>← 上一頁</small><span>4-3 應用問題</span></a><a class="homeb" href="index.html">回八年級首頁</a><a class="next" href="exam-sections.html"><small>下一頁 →</small><span>段考・照節次練</span></a></div>
+<!-- /SITENAV:bottom -->
+
+<footer>
+  國中數學八上自學站 · 第四章 4-3 應用問題 · 課本逐題講解<br>
+  題目依康軒版第三冊 4-3 的例題、隨堂練習、自我評量與第 4 章章末順序整理<br>
+  <a href="quadapply.html" style="color:var(--accent)">回 4-3 單元</a> · <a href="index.html" style="color:var(--accent)">單元列表</a> · <a href="exam-sections.html" style="color:var(--accent)">段考題照節次練</a>
+</footer>
+</div>
+<script>
+(function(){
+"use strict";
+const KEY="jhs8-quadapply-steps-v1";
+let store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.done=store.done||{};
+
+/* 小型數學標記：r{..} 根號、f{分子}{分母} 分數、h{..} 新出現的部分、o{..} 外面的數、
+   i{..} 根號這個單位、x{..} 刪掉、g{..} 對、b{..} 錯、^2 或 ^{..} 次方 */
+function M(s){
+  let i=0;
+  function grp(){i++;let o="";while(i<s.length&&s[i]!=="}")o+=one();i++;return o}
+  function one(){
+    const c=s[i];
+    if("rfhoixgb".indexOf(c)>=0&&s[i+1]==="{"){
+      i++;const a=grp();
+      switch(c){
+        case"r":return'<span class="sq">√<span class="rad">'+a+'</span></span>';
+        case"f":{const d=grp();return'<span class="frac"><span>'+a+'</span><span>'+d+'</span></span>'}
+        case"h":return'<span class="hl">'+a+'</span>';
+        case"o":return'<span class="co">'+a+'</span>';
+        case"i":return'<span class="ci">'+a+'</span>';
+        case"x":return'<span class="st">'+a+'</span>';
+        case"g":return'<span class="gd">'+a+'</span>';
+        case"b":return'<span class="bd">'+a+'</span>';
+      }
+    }
+    if(c==="^"){i++;if(s[i]==="{")return"<sup>"+grp()+"</sup>";return"<sup>"+s[i++]+"</sup>"}
+    i++;return c;
+  }
+  let o="";while(i<s.length)o+=one();return o;
+}
+/* 說明文字：$...$ 裡面的是算式 */
+function T(s){return s.replace(/\$([^$]+)\$/g,function(_,x){return'<span class="m">'+M(x)+'</span>'})}
+document.querySelectorAll("[data-m]").forEach(function(el){el.innerHTML=M(el.getAttribute("data-m"))});
+
+const TAG={
+  read:["讀題","讀題：找關係句和限制句"],
+  set:["設未知數","設未知數：另一個量用 x 表示"],
+  eq:["列式","列方程式：找一句能寫成「＝」的話"],
+  exp:["整理","展開、移項、整理"],
+  mv:["移項","移項：讓等號右邊變成 0"],
+  com:["提公因式","提公因式：大家都有的那一塊拿到前面"],
+  crs:["十字交乘","十字交乘：相乘是常數項、交叉相加是中間項"],
+  pf:["完全平方","完全平方：a²±2ab＋b²＝(a±b)²"],
+  fml:["公式解","4-2 的公式解與判別式"],
+  lin:["解一次","解一次方程式"],
+  chk:["檢查","檢查一下"],
+  cut:["捨去","捨去：不合理的解劃掉"],
+  ans:["答","回頭看題目問什麼，寫答案"],
+  bad:["✗ 錯","錯在哪裡"]
+};
+
+/* ───────── 課本題目 ───────── */
+const SECS=[
+{id:"secA",h:"A　例題與隨堂練習　課本 p.186–191",d:"每一個例題後面接它的隨堂練習。看每一題最後的 <strong>捨去</strong> 那一行：捨去的理由都不一樣。",items:[
+ {src:"課本 p.186　漫畫（五步示範）",q:"X-man：「今年的年齡 × 10 年前的年齡」是幸運數字。小翊說是 39。小翊幾歲？",steps:[
+   {t:"read",e:"今年的年齡 × 10 年前的年齡 ＝ 39",w:"先把題目的關係寫成一句話。"},
+   {t:"set",e:"設小翊 x 歲，10 年前 (x−10) 歲"},
+   {t:"eq",e:"x(x−10) ＝ 39"},
+   {t:"exp",e:"x^2 − 10x − 39 ＝ 0"},
+   {t:"crs",e:"(x−13)(x+3) ＝ 0　→　x＝13 或 x＝−3",w:"相乘 −39、相加 −10：−13 和 3。"},
+   {t:"cut",ask:{q:"❓ 哪一個不合理？",o:["x＝−3：年齡不會是負的","x＝13：13 歲太小了","兩個都合理"],a:0,no:"年齡可以是負的嗎？"},e:"x{x＝−3}　年齡不可能是負數"},
+   {t:"ans",e:"g{小翊 13 歲}",w:"驗算：13×3＝39 ✓。4-1 解到「x＝13 或 −3」就停了；4-3 多了「−3 不合理」這一句。"}
+ ]},
+
+ {src:"課本 p.187　例 1　數字問題",q:"小翊與小妍抽號碼，小翊的號碼比小妍大，兩人號碼的總和為 25、乘積為 154。小翊抽到多少？",steps:[
+   {t:"read",e:"關係：總和 25、乘積 154　限制：小翊比較大",w:"關係句拿來列式；限制句留到最後檢查。"},
+   {t:"set",ask:{q:"❓ 設小翊抽到 x，小妍抽到？",o:["$25−x$","$154−x$","$x−25$"],a:0,no:"總和是 25，小妍＝25−小翊。"},e:"設小翊 x，小妍 (25−x)"},
+   {t:"eq",e:"x(25−x) ＝ 154",w:"「乘積為 154」。"},
+   {t:"exp",e:"−x^2 + 25x ＝ 154　→　x^2 − 25x + 154 ＝ 0",w:"展開、移項，讓 $x^2$ 前面是正的。"},
+   {t:"crs",e:"(x−14)(x−11) ＝ 0　→　x＝14 或 x＝11",w:"相乘 154、相加 −25：−14 和 −11。"},
+   {t:"cut",ask:{q:"❓ x＝11 時，小妍抽到幾號？",o:["14 號，比小翊大","11 號，一樣大","36 號"],a:0,no:"小妍＝25−x＝25−11。"},e:"x＝11：小妍 14 號，小翊比較小 → x{x＝11}",w:"和限制「小翊比較大」不合，捨去。"},
+   {t:"ans",e:"g{小翊抽到 14 號}",w:"驗算：14＋11＝25、14×11＝154 ✓"}
+ ]},
+
+ {src:"課本 p.187　例 1 隨堂練習",q:"5 月的某天是小鈺的生日，再過 4 天就是學校隔宿露營的日子。這兩天的日期相乘為 165。隔宿露營是 5 月幾號？",steps:[
+   {t:"set",e:"設生日 5 月 x 號，露營 (x+4) 號"},
+   {t:"eq",e:"x(x+4) ＝ 165"},
+   {t:"exp",e:"x^2 + 4x − 165 ＝ 0"},
+   {t:"crs",ask:{q:"❓ 相乘 −165、相加 4 的兩個數是？",o:["15 和 −11","−15 和 11","5 和 −33"],a:0,no:"15×(−11)＝−165、15＋(−11)＝4。"},e:"(x+15)(x−11) ＝ 0　→　x＝−15 或 x＝11"},
+   {t:"cut",e:"x{x＝−15}　日期不會是負的"},
+   {t:"ans",ask:{q:"❓ x＝11，題目問的露營是幾號？",o:["15 號","11 號"],a:0,no:"x 是生日，露營要再過 4 天。"},e:"露營是 11 + 4 ＝ g{5 月 15 號}",w:"驗算 11×15＝165 ✓。<strong>x 是生日，答案要回頭看題目問什麼。</strong>"}
+ ]},
+
+ {src:"課本 p.188　例 2　價格問題",q:"小茹班上賣鬆餅，賣出的數量是鬆餅單價的 2 倍少 20，收入 1750 元。鬆餅每個賣多少元？",steps:[
+   {t:"read",e:"單價 × 數量 ＝ 收入 1750",w:"價格問題的等號，幾乎都是這一句。"},
+   {t:"set",ask:{q:"❓ 設每個 x 元，「單價的 2 倍少 20」是？",o:["$2x−20$","$20−2x$","$2(x−20)$"],a:0,no:"先 2 倍得 2x，再少 20。$2(x−20)$ 是「先少 20 再 2 倍」。"},e:"單價 x 元，數量 (2x−20) 個"},
+   {t:"eq",e:"x(2x−20) ＝ 1750"},
+   {t:"exp",e:"2x^2 − 20x − 1750 ＝ 0　→　x^2 − 10x − 875 ＝ 0",w:"三項都是 2 的倍數，先同除 2，數字變小比較好拆。"},
+   {t:"crs",e:"(x−35)(x+25) ＝ 0　→　x＝35 或 x＝−25",w:"相乘 −875、相加 −10：−35 和 25。"},
+   {t:"cut",e:"x{x＝−25}　價格不可能是負數"},
+   {t:"ans",e:"g{每個 35 元}",w:"賣出 2×35−20＝50 個，35×50＝1750 ✓"}
+ ]},
+
+ {src:"課本 p.188　例 2 隨堂練習",q:"阿賢買筆記本，買的數量比單價少 14，結帳時付給老闆 300 元並找回 25 元。筆記本每本多少元？",
+  trap:"⚠️ 用 300 列式：$x^2−14x−300＝0$ 找不到整數的十字。<strong>拆不開的時候，先回頭檢查是不是讀錯題。</strong>",steps:[
+   {t:"read",ask:{q:"❓ 實際花了多少錢？",o:["300 − 25 ＝ 275 元","300 元","300 + 25 ＝ 325 元"],a:0,no:"找回來的 25 元沒有花掉。"},e:"實際花費 300 − 25 ＝ 275 元"},
+   {t:"set",e:"單價 x 元，數量 (x−14) 本"},
+   {t:"eq",e:"x(x−14) ＝ 275"},
+   {t:"exp",e:"x^2 − 14x − 275 ＝ 0"},
+   {t:"crs",e:"(x−25)(x+11) ＝ 0　→　x＝25 或 x＝−11",w:"相乘 −275、相加 −14：−25 和 11。"},
+   {t:"cut",e:"x{x＝−11}　價格不可能是負數"},
+   {t:"ans",e:"g{每本 25 元}",w:"買了 25−14＝11 本，25×11＝275 ✓"}
+ ]},
+
+ {src:"課本 p.189　例 3　面積問題",q:"長方形客廳的寬比長少 3 公尺，正中央的長方形地毯，邊緣與牆的距離都是 1.5 公尺。沒鋪地毯的面積是地毯面積的 3 倍。客廳的長、寬各多少？",steps:[
+   {t:"read",ask:{q:"❓ 地毯的長比客廳的長少多少？",o:["3 公尺","1.5 公尺"],a:0,no:"左右兩邊各離牆 1.5 公尺。"},e:"地毯的長、寬都比客廳少 1.5×2 ＝ 3"},
+   {t:"set",e:"客廳：長 x、寬 (x−3)　地毯：長 (x−3)、寬 (x−6)"},
+   {t:"eq",e:"x(x−3) − (x−3)(x−6) ＝ 3(x−3)(x−6)",w:"沒鋪地毯的面積＝客廳−地毯。"},
+   {t:"mv",e:"x(x−3) − h{4}(x−3)(x−6) ＝ 0",w:"右邊的 3 份地毯移過來，和左邊的 1 份合起來是 4 份。"},
+   {t:"com",e:"(x−3)[x − 4(x−6)] ＝ 0　→　(x−3)(−3x+24) ＝ 0",w:"兩項都有 (x−3)，提出來，不用全部展開。"},
+   {t:"lin",e:"x＝3 或 x＝8"},
+   {t:"cut",ask:{q:"❓ x＝3 時，地毯的長是多少？",o:["0 公尺","3 公尺","−3 公尺"],a:0,no:"地毯長＝x−3。"},e:"x＝3：地毯長 3−3＝0 → x{x＝3}",w:"長 0 公尺就不是一塊地毯，顯然不合題意。"},
+   {t:"ans",e:"g{客廳長 8 公尺、寬 5 公尺}",w:"驗算：客廳 8×5＝40，地毯 5×2＝10，沒鋪的 30＝3×10 ✓"}
+ ]},
+
+ {src:"課本 p.189　例 3 隨堂練習",q:"長方形農地的寬比長少 4 公尺，在農地內部周圍開一條寬 2 公尺的道路，剩下的做菜園。菜園面積是道路面積的 5 倍。原來農地的長、寬各多少？",steps:[
+   {t:"set",e:"農地：長 x、寬 (x−4)　菜園：長 (x−4)、寬 (x−8)",w:"道路繞一圈，兩邊各 2 公尺，長和寬各少 4。"},
+   {t:"eq",e:"(x−4)(x−8) ＝ 5[x(x−4) − (x−4)(x−8)]",w:"道路＝農地−菜園；菜園＝5×道路。"},
+   {t:"mv",e:"h{6}(x−4)(x−8) − 5x(x−4) ＝ 0",w:"右邊是 $5x(x−4)−5(x−4)(x−8)$。把 5 份菜園移到左邊，1＋5＝6 份。"},
+   {t:"com",e:"(x−4)[6(x−8) − 5x] ＝ 0　→　(x−4)(x−48) ＝ 0"},
+   {t:"lin",e:"x＝4 或 x＝48"},
+   {t:"cut",e:"x＝4：寬 4−4＝0 → x{x＝4}"},
+   {t:"ans",e:"g{長 48 公尺、寬 44 公尺}",w:"驗算：農地 48×44＝2112，菜園 44×40＝1760，道路 352，352×5＝1760 ✓"}
+ ]},
+
+ {src:"課本 p.190　例 4　收費問題",q:"旅行社預定 30 人，每人收費 5000 元；人數到 30 人後，每增加 1 人，每人可便宜 100 元。總收入 160000 元，共有多少人參加？",steps:[
+   {t:"read",e:"增加 1 人：5000−100×1　增加 2 人：5000−100×2　……",w:"課本的表：增加幾人，就便宜幾個 100。"},
+   {t:"set",e:"增加 x 人：人數 (30+x)，每人 (5000−100x) 元"},
+   {t:"eq",e:"(5000−100x)(30+x) ＝ 160000"},
+   {t:"exp",e:"150000 + 2000x − 100x^2 ＝ 160000",w:"$5000×30＋5000x−3000x−100x^2$。"},
+   {t:"mv",e:"100x^2 − 2000x + 10000 ＝ 0　→　x^2 − 20x + 100 ＝ 0",w:"全部移到右邊，讓 $x^2$ 是正的，再同除 100。"},
+   {t:"pf",e:"(x−10)^2 ＝ 0　→　x＝10（重根）",w:"$x^2−2·10·x+10^2$，完全平方。"},
+   {t:"ans",ask:{q:"❓ 共有多少人參加？",o:["40 人","10 人"],a:0,no:"x 是<strong>增加</strong>的人數。"},e:"30 + 10 ＝ g{40 人}",w:"每人 4000 元，40×4000＝160000 ✓。只有一個解（重根），沒有要捨去的，但要記得<strong>加回 30</strong>。"}
+ ]},
+
+ {src:"課本 p.190　例 4 隨堂練習",q:"下午茶吃到飽餐券 1000 元／張。每筆訂單需購買 4 張以上（含），最多可買 15 張；購買超過 4 張，每多買 1 張，每張可便宜 50 元。總花費 7200 元，共買了幾張？",steps:[
+   {t:"set",e:"多買 x 張：共 (4+x) 張，每張 (1000−50x) 元"},
+   {t:"eq",e:"(4+x)(1000−50x) ＝ 7200"},
+   {t:"exp",e:"(4+x)(20−x) ＝ 144",w:"$1000−50x＝50(20−x)$，兩邊同除 50，數字小很多。"},
+   {t:"exp",e:"80 + 16x − x^2 ＝ 144　→　x^2 − 16x + 64 ＝ 0"},
+   {t:"pf",e:"(x−8)^2 ＝ 0　→　x＝8（重根）"},
+   {t:"chk",ask:{q:"❓ 共買幾張？有沒有超過上限？",o:["12 張，沒超過 15 張","8 張，沒超過 15 張","12 張，超過上限，無解"],a:0,no:"x 是<strong>多買</strong>的張數；4＋8＝12，12 ≤ 15。"},e:"4 + 8 ＝ 12 張，12 ≤ 15 ✓"},
+   {t:"ans",e:"g{共買 12 張}",w:"每張 1000−400＝600 元，12×600＝7200 ✓"}
+ ]},
+
+ {src:"課本 p.191　例 5　解與情境的合理性",q:"每個吊飾的價格是購買數量的 2 倍。店員說：「如果再多買 5 個，每個吊飾可以再便宜 3 元，只要 330 元。」小盈原本買幾個？",steps:[
+   {t:"set",e:"原本 x 個、每個 2x 元　多買後 (x+5) 個、每個 (2x−3) 元"},
+   {t:"eq",e:"(x+5)(2x−3) ＝ 330"},
+   {t:"exp",e:"2x^2 + 7x − 15 ＝ 330　→　2x^2 + 7x − 345 ＝ 0"},
+   {t:"crs",e:"(2x−23)(x+15) ＝ 0　→　x＝f{23}{2} 或 x＝−15",w:"十字：2x 配 −23、x 配 15，交叉 $30x−23x＝7x$ ✓"},
+   {t:"cut",ask:{q:"❓ 哪一個合理？",o:["兩個都不合理","$f{23}{2}$ 合理","−15 合理"],a:0,no:"個數要是<strong>正整數</strong>：$f{23}{2}$＝11.5 個、−15 個都不行。"},e:"x{x＝f{23}{2}}　x{x＝−15}　個數要是正整數"},
+   {t:"ans",e:"b{此題無解}",w:"p.191：方程式的解都不符合情境，這一題就是<strong>無解</strong>。不是算錯，是店員說的情況不可能發生。"}
+ ]},
+
+ {src:"課本 p.191　例 5 隨堂練習",q:"水果商把水蜜桃分裝成禮盒，每盒顆數相同，禮盒的數量比每盒的顆數多 3。賣出 5 盒後，剩下 12 顆。你能算出每盒裝幾顆嗎？",steps:[
+   {t:"set",e:"每盒 x 顆，禮盒 (x+3) 盒"},
+   {t:"eq",ask:{q:"❓ 賣出 5 盒後，剩幾盒？",o:["$(x+3)−5＝x−2$ 盒","$x−5$ 盒"],a:0,no:"禮盒原本有 x＋3 盒，不是 x 盒。"},e:"剩 (x−2) 盒：x(x−2) ＝ 12"},
+   {t:"exp",e:"x^2 − 2x − 12 ＝ 0",w:"相乘 −12、相加 −2 的兩個整數找不到，拆不開。"},
+   {t:"fml",e:"x ＝ f{2 ± r{4+48}}{2} ＝ f{2 ± 2r{13}}{2} ＝ 1 ± r{13}",w:"4-2 的公式解：a＝1、b＝−2、c＝−12，$b^2−4ac＝4+48＝52$，$r{52}＝2r{13}$。"},
+   {t:"chk",e:"1 + r{13} ≒ 4.6　1 − r{13} ≒ −2.6",w:"$r{13}$ 介於 3 和 4 之間，大約 3.6。"},
+   {t:"cut",e:"x{4.6 顆}　x{−2.6 顆}　顆數要是正整數"},
+   {t:"ans",e:"b{不能算出，此題無解}",w:"兩個解都不是正整數，和例 5 一樣是<strong>無解</strong>。驗算也看得出來：每盒 4 顆剩 4×2＝8 顆、每盒 5 顆剩 5×3＝15 顆，12 顆夾在中間，找不到整數。"}
+ ]}
+]},
+
+{id:"secB",h:"B　自我評量　課本 p.193–195",d:"每一題旁邊課本都標了對應的例題。先自己做，再一步一步對。",items:[
+ {src:"課本 p.193　自我評量 1（對應 p.186）",q:"羿涵今年的年齡與 12 年後年齡的乘積，恰好是媽媽 4 年後年齡的 3 倍。媽媽今年 32 歲，羿涵今年幾歲？",steps:[
+   {t:"read",e:"媽媽 4 年後 36 歲，3 倍是 108"},
+   {t:"set",e:"羿涵 x 歲，12 年後 (x+12) 歲"},
+   {t:"eq",e:"x(x+12) ＝ 108"},
+   {t:"crs",e:"x^2 + 12x − 108 ＝ 0　→　(x+18)(x−6) ＝ 0",w:"相乘 −108、相加 12：18 和 −6。"},
+   {t:"cut",e:"x{x＝−18}　年齡不能是負的"},
+   {t:"ans",e:"g{羿涵 6 歲}",w:"6×18＝108 ✓"}
+ ]},
+
+ {src:"課本 p.193　自我評量 2（對應 p.187 例 1）",q:"一正三角形的一邊增加 3 公分、另一邊增加 2 公分、第三邊減少 5 公分後，可形成一個直角三角形。原正三角形的邊長為多少公分？",steps:[
+   {t:"set",e:"邊長 x：新的三邊 (x+3)、(x+2)、(x−5)"},
+   {t:"read",ask:{q:"❓ 哪一邊是斜邊？",o:["$x+3$（最長）","$x+2$","$x−5$"],a:0,no:"直角三角形的斜邊是最長的邊。"},e:"斜邊是最長的 (x+3)"},
+   {t:"eq",e:"(x+2)^2 + (x−5)^2 ＝ (x+3)^2",w:"2-3 畢氏定理：兩股平方和＝斜邊平方。"},
+   {t:"exp",e:"2x^2 − 6x + 29 ＝ x^2 + 6x + 9　→　x^2 − 12x + 20 ＝ 0"},
+   {t:"crs",e:"(x−2)(x−10) ＝ 0　→　x＝2 或 x＝10"},
+   {t:"cut",e:"x＝2：第三邊 2−5＝−3 → x{x＝2}",w:"邊長不能是負的。"},
+   {t:"ans",e:"g{邊長 10 公分}",w:"新的三邊 13、12、5：$5^2+12^2＝169＝13^2$ ✓"}
+ ]},
+
+ {src:"課本 p.194　自我評量 3",q:"雜貨店老闆把雞蛋裝盒，盒子的數量與每盒雞蛋的顆數一樣多。賣掉 2 盒後，還剩雞蛋 120 顆。老闆買進多少顆雞蛋？",steps:[
+   {t:"set",e:"每盒 x 顆，共 x 盒，全部 x^2 顆"},
+   {t:"eq",e:"x^2 − 2x ＝ 120",w:"賣掉 2 盒＝2x 顆。"},
+   {t:"crs",e:"x^2 − 2x − 120 ＝ 0　→　(x−12)(x+10) ＝ 0"},
+   {t:"cut",e:"x{x＝−10}　顆數不能是負的"},
+   {t:"chk",e:"x＝12：全部 12 × 12 ＝ 144 顆"},
+   {t:"ans",e:"g{買進 144 顆}",w:"題目問的是<strong>全部的雞蛋</strong>，不是每盒幾顆。剩 10 盒×12＝120 ✓"}
+ ]},
+
+ {src:"課本 p.194　自我評量 4（對應 p.189 例 3）",q:"長 30 公尺、寬 18 公尺的長方形觀賽座位區，內部規畫等寬的十字走道，其餘座位區面積為 448 平方公尺。走道寬為多少公尺？",steps:[
+   {t:"read",e:"把十字走道推到邊上，座位拼成一個長方形",w:"走道等寬，推到邊以後，座位長 30−x、寬 18−x。"},
+   {t:"eq",e:"(30−x)(18−x) ＝ 448"},
+   {t:"exp",e:"x^2 − 48x + 540 ＝ 448　→　x^2 − 48x + 92 ＝ 0"},
+   {t:"crs",e:"(x−2)(x−46) ＝ 0　→　x＝2 或 x＝46"},
+   {t:"cut",e:"x＝46：比座位區的寬 18 還大 → x{x＝46}"},
+   {t:"ans",e:"g{走道寬 2 公尺}",w:"28×16＝448 ✓（單元頁的實驗二可以拉拉看）"}
+ ]},
+
+ {src:"課本 p.195　自我評量 5（對應 p.190 例 4）",q:"生乳捲一條 220 元。每筆訂單需 20 條以上（含），30 條為上限；超過 20 條，每多一條，每條降價 5 元。某筆訂單總金額 5040 元，共訂了幾條？",steps:[
+   {t:"set",e:"多 x 條：共 (20+x) 條，每條 (220−5x) 元"},
+   {t:"eq",e:"(20+x)(220−5x) ＝ 5040　→　(20+x)(44−x) ＝ 1008",w:"$220−5x＝5(44−x)$，兩邊同除 5。"},
+   {t:"exp",e:"880 + 24x − x^2 ＝ 1008　→　x^2 − 24x + 128 ＝ 0"},
+   {t:"crs",e:"(x−8)(x−16) ＝ 0　→　x＝8 或 x＝16"},
+   {t:"cut",ask:{q:"❓ 兩個都是正整數，要捨去哪一個？",o:["x＝16：共 36 條，超過上限","x＝8","都不用捨去"],a:0,no:"再讀一次宣傳單：30 條為上限。"},e:"x＝16：共 36 條 ＞ 30 → x{x＝16}"},
+   {t:"ans",e:"g{共 28 條}",w:"每條 220−40＝180 元，28×180＝5040 ✓"}
+ ]},
+
+ {src:"課本 p.195　自我評量 6（對應 p.191 例 5）",q:"成年男性理想體重：算法① 身高×身高×22；算法② (100×身高−80)×0.7。阿誠用兩種算法算出的理想體重相同，他的身高是多少公尺？",steps:[
+   {t:"set",e:"設身高 h 公尺"},
+   {t:"eq",e:"22h^2 ＝ 0.7(100h − 80)"},
+   {t:"exp",e:"22h^2 ＝ 70h − 56　→　11h^2 − 35h + 28 ＝ 0",w:"移項後同除 2。"},
+   {t:"fml",e:"b^2 − 4ac ＝ 35^2 − 4×11×28 ＝ 1225 − 1232 ＝ −7",w:"4-2 的判別式。"},
+   {t:"chk",e:"−7 ＜ 0，方程式沒有解"},
+   {t:"ans",e:"b{無解：沒有這樣的身高}",w:"會考 113-24 的甲（女性的算法①②）也是這樣：方程式沒有解，「會相同」就是錯的。"}
+ ]}
+]},
+
+{id:"secC",h:"C　第 4 章章末延伸　課本 p.196–198",d:"扉選素養、一題多解、數學新視界。一樣照五步走。",items:[
+ {src:"課本 p.196　扉選素養 Q1",q:"採了 1000 顆橘子，20% 外觀有瑕疵，每 4 顆瑕疵橘子做 1 罐果醬，每罐 100 元可全部賣出；每罐每提高 10 元，就少賣 1 罐。希望收入 9000 元，每罐應賣多少元？最後剩幾罐？",steps:[
+   {t:"read",e:"瑕疵 1000×20% ＝ 200 顆，200÷4 ＝ 50 罐"},
+   {t:"set",e:"漲 x 次 10 元：每罐 (100+10x) 元，賣 (50−x) 罐"},
+   {t:"eq",e:"(100+10x)(50−x) ＝ 9000　→　(10+x)(50−x) ＝ 900",w:"$100+10x＝10(10+x)$，兩邊同除 10。"},
+   {t:"exp",e:"500 + 40x − x^2 ＝ 900　→　x^2 − 40x + 400 ＝ 0"},
+   {t:"pf",e:"(x−20)^2 ＝ 0　→　x＝20（重根）"},
+   {t:"ans",e:"每罐 g{300 元}，賣出 30 罐，剩下 g{20 罐}",w:"300×30＝9000 ✓"}
+ ]},
+
+ {src:"課本 p.196　扉選素養 Q2",q:"承 Q1，果園希望把義賣收入增加到 12000 元，需要賣出多少罐？",steps:[
+   {t:"eq",e:"(10+x)(50−x) ＝ 1200",w:"照 Q1 的漲價規則，收入改成 12000（一樣同除 10）。"},
+   {t:"exp",e:"x^2 − 40x + 700 ＝ 0"},
+   {t:"fml",e:"b^2 − 4ac ＝ 1600 − 2800 ＝ −1200 ＜ 0"},
+   {t:"ans",e:"b{無解：照這個規則，收入到不了 12000 元}",w:"Q1 剛好是重根，表示 9000 元就是最高的收入（單元頁實驗三的曲線）。<br><span style='font-size:14px;color:var(--ink2)'>課本書末答案沒有拍到，這是照 Q1 的規則自己解的。</span>"}
+ ]},
+
+ {src:"課本 p.197　一題多解",q:"康家三個兒子的年齡是三個連續偶數，年齡的平方和為 596。三人各幾歲？",steps:[
+   {t:"set",e:"三個連續偶數：x、x+2、x+4",w:"連續偶數每個差 2。"},
+   {t:"eq",e:"x^2 + (x+2)^2 + (x+4)^2 ＝ 596"},
+   {t:"exp",e:"3x^2 + 12x + 20 ＝ 596　→　x^2 + 4x − 192 ＝ 0",w:"$x^2+x^2+4x+4+x^2+8x+16$，移項後同除 3。"},
+   {t:"crs",e:"(x−12)(x+16) ＝ 0　→　x＝12 或 x＝−16"},
+   {t:"cut",e:"x{x＝−16}　年齡不能是負的"},
+   {t:"ans",e:"g{12、14、16 歲}",w:"144＋196＋256＝596 ✓。課本的另一個方法是列舉：2、4、6 → 56；……；12、14、16 → 596；14、16、18 → 776 已經太大，不用再試。"}
+ ]},
+
+ {src:"課本 p.198　數學新視界 Q1　黃金比例",q:"把一線段作黃金分割：長段：短段＝全長：長段。設短段長 1、長段長 x（x＞0），求 x。",steps:[
+   {t:"set",e:"短段 1、長段 x，全長 (x+1)"},
+   {t:"eq",e:"x : 1 ＝ (x+1) : x　→　x^2 ＝ x + 1",w:"比例式：外項乘積＝內項乘積。"},
+   {t:"exp",e:"x^2 − x − 1 ＝ 0",w:"相乘 −1、相加 −1 的整數找不到，用公式解。"},
+   {t:"fml",e:"x ＝ f{1 ± r{5}}{2}"},
+   {t:"cut",e:"f{1 − r{5}}{2} ＜ 0　→　捨去",w:"$r{5}$ 大約 2.236，$1−r{5}$ 是負的。長度一定是正的。"},
+   {t:"ans",e:"x ＝ g{f{1 + r{5}}{2} ≒ 1.618}",w:"這就是黃金比例 1.618：1，和課本 p.199 倒印的答案一樣。"}
+ ]}
+]}
+];
+/* ───────── 逐題講解播放器 ───────── */
+const list=document.getElementById("wtList");
+const ALL=[];
+SECS.forEach(function(sec){
+  const h=document.createElement("div");h.className="sec-h";h.id=sec.id;h.textContent=sec.h;list.appendChild(h);
+  const d=document.createElement("p");d.className="sec-d";d.innerHTML=T(sec.d);list.appendChild(d);
+  sec.items.forEach(function(it){ALL.push(it);build(it,list,sec.id+"-"+sec.items.indexOf(it))});
+});
+
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=b[i];b[i]=b[j];b[j]=t}return b}
+
+function build(it,parent,id){
+  it.id=id;
+  const el=document.createElement("div");el.className="wt";
+  el.innerHTML='<div class="wt-top"><span>'+it.src+'</span><span class="ct"></span></div>'+
+    '<div class="wt-q">'+T(it.q)+'</div><div class="board"></div>'+
+    '<div class="whybox"><div class="wl"></div><div class="wx"></div></div>'+
+    '<div class="ask"><div class="aq"></div><div class="ao"></div><div class="af"></div></div>'+
+    '<div class="ctl"><button class="btn ghost bp">← 上一步</button><button class="btn bn">下一步 →</button>'+
+    '<button class="btn ghost ba">▶ 自動</button></div>'+
+    (it.trap?'<div class="trap">'+T(it.trap)+'</div>':"");
+  parent.appendChild(el);
+  const board=el.querySelector(".board"),wb=el.querySelector(".whybox"),wl=wb.querySelector(".wl"),wx=wb.querySelector(".wx"),
+    ask=el.querySelector(".ask"),bp=el.querySelector(".bp"),bn=el.querySelector(".bn"),ba=el.querySelector(".ba"),
+    trap=el.querySelector(".trap"),ct=el.querySelector(".ct");
+  const S=it.steps, N=S.length;
+  let idx=0, sel=-1, timer=null, asking=false, okMsg="";
+  const answered={};
+  const doneBefore=!!store.done[id];
+  if(doneBefore)S.forEach(function(s,k){if(s.ask)answered[k]=true});
+
+  function lineHTML(k){
+    const s=S[k], tg=s.t?'<span class="tg '+s.t+'">'+TAG[s.t][0]+'</span>':"";
+    return tg+'<span class="ex m">'+M(s.e)+'</span>';
+  }
+  function showWhy(k,extra){
+    const s=S[k];
+    wb.className="whybox"+(["cut","bad","eq","fml"].indexOf(s.t)>=0?" "+s.t:"");
+    wl.textContent=k===0?"題目":("第 "+k+" 步　"+(s.t?TAG[s.t][1]:""));
+    wx.innerHTML=(extra?'<div style="color:var(--green);font-weight:700">'+extra+'</div>':"")+
+      (s.w?T(s.w):(k===0?"按「下一步」開始。":"照上一行的方法往下算。"));
+  }
+  function render(anim){
+    board.innerHTML="";
+    for(let k=0;k<=idx;k++){
+      const ln=document.createElement("div");
+      ln.className="line"+(k===idx?" cur":" old")+(k===sel?" sel":"");
+      if(!(anim&&k===idx))ln.style.animation="none";
+      ln.innerHTML=lineHTML(k);
+      ln.addEventListener("click",function(){stop();sel=(k===idx?-1:k);render(false);showWhy(k)});
+      board.appendChild(ln);
+    }
+    if(sel<0)showWhy(idx,anim?okMsg:"");
+    okMsg="";
+    bp.disabled=idx===0;
+    const fin=idx===N-1;
+    bn.disabled=fin||asking;
+    bn.textContent=fin?"講解完了 ✓":"下一步 →";
+    ba.disabled=fin||asking;
+    ct.textContent=fin?"✓ 看完了":(idx+" / "+(N-1)+" 步");
+    if(fin){
+      el.classList.add("done");if(trap)trap.classList.add("show");
+      if(!store.done[id]){store.done[id]=1;save();prog()}
+    }else if(trap)trap.classList.remove("show");
+  }
+  function openAsk(k){
+    asking=true;stop();
+    const a=S[k].ask;
+    ask.querySelector(".aq").innerHTML=T(a.q);
+    const ao=ask.querySelector(".ao"),af=ask.querySelector(".af");
+    ao.innerHTML="";af.classList.remove("show");
+    shuffle(a.o.map(function(t,j){return{t:t,j:j}})).forEach(function(o){
+      const b=document.createElement("button");b.innerHTML=T(o.t);
+      b.addEventListener("click",function(){
+        if(o.j===a.a){answered[k]=true;asking=false;ask.classList.remove("show");okMsg="✓ 答對了。";idx=k;sel=-1;render(true)}
+        else{b.classList.add("no");af.innerHTML="再想想："+T(a.no);af.classList.add("show")}
+      });
+      ao.appendChild(b);
+    });
+    ask.classList.add("show");
+    bn.disabled=true;ba.disabled=true;
+  }
+  function next(){
+    if(idx>=N-1||asking)return false;
+    const k=idx+1;
+    sel=-1;
+    if(S[k].ask&&!answered[k]){openAsk(k);return false}
+    idx=k;render(true);return true;
+  }
+  function stop(){if(timer){clearInterval(timer);timer=null;ba.textContent="▶ 自動"}}
+  bn.addEventListener("click",function(){stop();next()});
+  bp.addEventListener("click",function(){stop();if(asking){asking=false;ask.classList.remove("show");render(false);return}if(idx>0){idx--;sel=-1;render(false)}});
+  ba.addEventListener("click",function(){
+    if(timer){stop();return}
+    if(!next())return;
+    ba.textContent="❚❚ 暫停";
+    timer=setInterval(function(){if(!next())stop()},2600);
+  });
+  render(false);
+}
+
+function prog(){
+  const n=ALL.length,d=ALL.filter(function(it){return store.done[it.id]}).length;
+  document.getElementById("pfill").style.width=(d/n*100)+"%";
+  document.getElementById("ptext").textContent=d+" / "+n+" 題";
+}
+prog();
+
+
+/* ───────── 要捨去哪一個 ───────── */
+const KEEP=["留第一個","留第二個","兩個都留","兩個都不合（無解）"];
+const SRT=[
+ {q:"小翊的年齡：$x(x−10)＝39$<br>解出 x＝13 或 x＝−3",a:0,w:"年齡不會是負的，−3 捨去。"},
+ {q:"長方形的寬是 (x−5) 公尺<br>解出 x＝3 或 x＝9",a:1,w:"x＝3 時寬是 3−5＝−2 公尺，長度不能是負的。x＝9 時寬 4 公尺。<strong>要看的是寬，不是 x 本身</strong>：3 是正的，還是不合理。"},
+ {q:"買了 x 個吊飾<br>解出 x＝$f{7}{2}$ 或 x＝−4",a:3,w:"個數要是正整數：3.5 個、−4 個都不行，<strong>無解</strong>（像例 5）。"},
+ {q:"兩個連續整數相乘是 56：$x(x+1)＝56$<br>解出 x＝7 或 x＝−8",a:2,w:"題目說的是<strong>整數</strong>，整數可以是負的：7 和 8、−8 和 −7，相乘都是 56。兩個都留。"},
+ {q:"生乳捲每筆最多 30 條，共 (20＋x) 條<br>解出 x＝8 或 x＝16",a:0,w:"x＝16 是 36 條，超過上限（p.195 第 5 題）。<strong>兩個都是正整數，還是要捨去一個</strong>。"},
+ {q:"某數的平方比它的 3 倍多 10：$x^2＝3x+10$<br>解出 x＝5 或 x＝−2",a:2,w:"題目只說「某數」，沒有說要是正的。驗算：$5^2＝25＝15+10$ ✓、$(−2)^2＝4＝−6+10$ ✓，兩個都留。"},
+ {q:"筆記本每本 x 元，買了 (x−14) 本<br>解出 x＝25 或 x＝−11",a:0,w:"價格不能是負的（p.188 隨堂）。"},
+ {q:"地毯的長是 (x−3) 公尺<br>解出 x＝3 或 x＝8",a:1,w:"x＝3 時地毯長 0 公尺，不是一塊地毯（例 3）。"}
+];
+let sq=store.sq||0;const sres=store.sres||[];
+const srtQ=document.getElementById("srtQ"),srtB=document.getElementById("srtB"),srtV=document.getElementById("srtV"),
+  srtNext=document.getElementById("srtNext"),srtDots=document.getElementById("srtDots"),srtNo=document.getElementById("srtNo");
+function srtDotsDraw(){srtDots.innerHTML=SRT.map(function(_,k){return'<span class="dot'+(sres[k]===1?" ok":sres[k]===0?" no":k===sq?" now":"")+'"></span>'}).join("")}
+function srtDraw(){
+  srtDotsDraw();
+  if(sq>=SRT.length){
+    const ok=sres.filter(function(x){return x===1}).length;
+    srtNo.textContent="";srtQ.innerHTML='<span style="font-size:18px">'+SRT.length+' 題判斷完：一次就選對 '+ok+' 題</span>';
+    srtB.innerHTML="";srtNext.style.display="none";
+    srtV.className="tf-fb show ok";srtV.innerHTML=T("捨去的理由要回到<strong>題目</strong>找：年齡、價格、長度、個數不能是負的；長度不能是 0；個數要是整數；題目還有自己的上限。<strong>題目沒有限制的，負的也可以留</strong>（連續整數、某數）。");return;
+  }
+  srtNo.textContent="第 "+(sq+1)+" / "+SRT.length+" 題";
+  srtQ.innerHTML=T(SRT[sq].q);srtV.className="tf-fb";srtNext.disabled=true;srtNext.style.display="";
+  srtB.innerHTML="";
+  KEEP.forEach(function(t,j){
+    const b=document.createElement("button");b.textContent=t;
+    b.addEventListener("click",function(){
+      if(!srtNext.disabled)return;
+      const q=SRT[sq];
+      if(j===q.a){
+        b.classList.add("ok");if(sres[sq]==null){sres[sq]=1;store.sres=sres;save()}
+        srtV.className="tf-fb show ok";srtV.innerHTML="<strong>對，"+t+"。</strong> "+T(q.w);srtNext.disabled=false;
+      }else{
+        b.classList.add("no");if(sres[sq]==null){sres[sq]=0;store.sres=sres;save()}
+        srtV.className="tf-fb show no";srtV.innerHTML="<strong>不是「"+t+"」，再看一次情境。</strong>";
+      }
+      srtDotsDraw();
+    });
+    srtB.appendChild(b);
+  });
+}
+srtNext.addEventListener("click",function(){sq++;store.sq=sq;save();srtDraw()});
+srtDraw();
+
+/* ───────── 判斷題 ───────── */
+const TF=[
+ {e:"應用問題解出兩個解，兩個都要寫成答案。",a:false,w:"每個解都要放回題目檢查，不合理的要<strong>捨去</strong>（p.186 步驟 4）。"},
+ {e:"解出來的解都不合理，表示一定是算錯了。",a:false,w:"也可能是<strong>無解</strong>：題目的情境根本不可能發生（p.191 例 5）。"},
+ {e:"例 4 解出 x＝10，所以共有 10 人參加。",a:false,w:"x 是<strong>增加</strong>的人數，共有 30＋10＝40 人。"},
+ {e:"付 300 元、找回 25 元，列式時總價要用 275 元。",a:true,w:"真正花掉的是 300−25＝275 元（p.188 隨堂）。"},
+ {e:"長方形的寬解出來是 0，也可以當答案。",a:false,w:"寬是 0 就不是長方形了（例 3 的 x＝3）。"},
+ {e:"兩個連續整數相乘是 56，解出 x＝7 或 x＝−8，兩個都合理。",a:true,w:"整數可以是負的：7、8 和 −8、−7 都對。"},
+ {e:"每盒顆數解出 1＋√13，所以每盒裝 1＋√13 顆。",a:false,w:"顆數要是正整數，1＋√13 約 4.6 不是整數，這一題<strong>無解</strong>（p.191 隨堂）。"},
+ {e:"方程式的兩個解都是正整數，就一定都合理。",a:false,w:"還要看題目的條件：p.195 第 5 題的 36 條超過「30 條為上限」。"},
+ {e:"設未知數時，通常設題目要問的量為 x 比較省事。",a:true,w:"解出 x 就差不多是答案了。不過還是要檢查：p.187 隨堂設的是生日，問的卻是露營。"},
+ {e:"三個連續偶數的平方和是 596，三個數是 12、14、16。",a:true,w:"144＋196＋256＝596 ✓（p.197 一題多解）。"}
+];
+let tq=store.tq||0;const tres=store.tres||[];
+const tfQ=document.getElementById("tfQ"),tfFb=document.getElementById("tfFb"),tfT=document.getElementById("tfT"),tfF=document.getElementById("tfF"),
+  tfNext=document.getElementById("tfNext"),tfDots=document.getElementById("tfDots"),tfNo=document.getElementById("tfNo");
+function tfDotsDraw(){tfDots.innerHTML=TF.map(function(_,k){return'<span class="dot'+(tres[k]===1?" ok":tres[k]===0?" no":k===tq?" now":"")+'"></span>'}).join("")}
+function tfDraw(){
+  tfDotsDraw();
+  if(tq>=TF.length){
+    const ok=tres.filter(function(x){return x===1}).length;
+    tfNo.textContent="";tfQ.innerHTML='<span style="font-size:18px">'+TF.length+' 題答完：答對 '+ok+' 題</span>';
+    tfT.style.display=tfF.style.display="none";tfNext.style.display="none";
+    tfFb.className="tf-fb show ok";
+    tfFb.innerHTML=T("記住一句話：<strong>讀題、設、列、解，最後把每個解放回題目問「合理嗎？」</strong><br>答錯的題目，可以回到上面對應的講解再看一次。");
+    return;
+  }
+  tfNo.textContent="第 "+(tq+1)+" / "+TF.length+" 題";
+  tfQ.innerHTML=T(TF[tq].e);
+  tfT.style.display=tfF.style.display="";tfNext.style.display="";
+  tfT.disabled=tfF.disabled=false;tfNext.disabled=true;tfFb.className="tf-fb";
+}
+function tfAns(v){
+  const q=TF[tq],ok=v===q.a;
+  if(tres[tq]==null){tres[tq]=ok?1:0;store.tres=tres;save()}
+  tfT.disabled=tfF.disabled=true;tfNext.disabled=false;
+  tfFb.className="tf-fb show "+(ok?"ok":"no");
+  tfFb.innerHTML="<strong>"+(ok?"答對了。":"不對。")+"這句話"+(q.a?"正確":"不正確")+"。</strong> "+T(q.w);
+  tfDotsDraw();
+}
+tfT.addEventListener("click",function(){tfAns(true)});
+tfF.addEventListener("click",function(){tfAns(false)});
+tfNext.addEventListener("click",function(){tq++;store.tq=tq;save();tfDraw()});
+tfDraw();
+
+document.getElementById("reset").addEventListener("click",function(){
+  try{localStorage.removeItem(KEY)}catch(e){}
+  location.reload();
+});
+
+})();
+</script>
+</body>
+</html>

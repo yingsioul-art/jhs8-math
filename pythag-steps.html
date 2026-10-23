@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-3 課本逐題講解｜畢氏定理</title>
+<style>
+:root{
+  --paper:#f8f7f4; --ink:#232026; --ink2:#57525e; --line:#dcd8e0;
+  --accent:#4338ca; --accent-soft:#eeedfb;
+  --teal:#0f6b63; --teal-soft:#e6f2f0;
+  --blue:#1d5b79; --blue-soft:#e8f1f5;
+  --green:#15803d; --green-soft:#e9f5ec;
+  --red:#b03030; --red-soft:#fdeeee;
+  --orange:#a15c07; --orange-soft:#fdf2e3;
+  --mul:#6d28d9; --mul-soft:#f1ebfd;
+  --add:#15803d; --add-soft:#e9f5ec;
+  --shadow:0 1px 2px rgba(35,32,38,.06),0 8px 24px rgba(35,32,38,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:17px;line-height:1.85;letter-spacing:.01em}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 120px}
+header{padding:48px 0 26px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:14px}
+h1{font-size:32px;line-height:1.3;margin:0 0 14px}
+.sub{color:var(--ink2);font-size:15px;margin:0}
+.bar{position:sticky;top:0;z-index:50;background:rgba(248,247,244,.95);
+  border-bottom:1px solid var(--line);margin:0 -20px;padding:9px 20px}
+.bar-inner{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--ink2)}
+.track{flex:1;height:5px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .5s}
+.bar b{font-variant-numeric:tabular-nums}
+.toc{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 0}
+.toc a{font-size:13px;text-decoration:none;color:var(--ink2);background:#fff;border:1px solid var(--line);
+  border-radius:99px;padding:3px 11px}
+.toc a:hover{border-color:var(--accent);color:var(--accent)}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+.step{font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.step .n{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;
+  width:20px;height:20px;line-height:20px;text-align:center;margin-right:8px;letter-spacing:0}
+h2{font-size:24px;line-height:1.4;margin:0 0 18px}
+h3{font-size:18px;margin:30px 0 10px}
+p{margin:0 0 16px}
+.dim{color:var(--ink2)}
+em{font-style:normal;background:linear-gradient(transparent 62%,#bfe6c9 62%);font-weight:600;padding:0 1px}
+
+/* ── 數學排版 ── */
+.m{font-family:"Cambria","Times New Roman",Georgia,serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+.m sup{font-size:.68em;vertical-align:super;line-height:0}
+.sq{white-space:nowrap}
+.rad{border-top:1.3px solid currentColor;padding:0 3px 0 1px;margin-left:-1px}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  font-size:.86em;line-height:1.2;margin:0 3px}
+.frac>span:first-child{border-bottom:1.3px solid currentColor;padding:0 4px 1px}
+.frac>span:last-child{padding-top:2px}
+.co{color:var(--orange);font-weight:700}
+.ci{color:var(--blue);font-weight:700}
+.hl{background:#fff1b8;border-radius:4px;padding:0 3px;animation:pop .9s ease}
+@keyframes pop{0%{background:#ffd84d;transform:scale(1.18)}100%{background:#fff1b8;transform:none}}
+.hl{display:inline-block}
+.st{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;opacity:.55}
+.gd{color:var(--green);font-weight:700}
+.bd{color:var(--red);font-weight:700}
+
+/* ── 兩條規則卡 ── */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.rule{background:#fff;border-radius:14px;padding:18px;box-shadow:var(--shadow);border:2px solid}
+.rule.mul{border-color:var(--mul)}
+.rule.add{border-color:var(--add)}
+.rule .rn{font-size:12.5px;letter-spacing:.14em;font-weight:700;margin-bottom:8px}
+.rule.mul .rn{color:var(--mul)} .rule.add .rn{color:var(--add)}
+.rule .rf{font-size:20px;text-align:center;margin:8px 0 10px}
+.rule p{font-size:14.5px;line-height:1.75;margin:0;color:var(--ink2)}
+.rule p strong{color:var(--ink)}
+@media(max-width:600px){.rules{grid-template-columns:1fr}}
+.ytab{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;
+  overflow:hidden;margin:18px 0;font-size:15px}
+.ytab th,.ytab td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:center}
+.ytab th{background:#eef1eb;font-size:13px}
+.ytab tr:last-child td{border-bottom:0}
+.ytab td:first-child{text-align:left;color:var(--ink2);font-size:13.5px}
+.ytab .cmul{background:var(--mul-soft)} .ytab .cadd{background:var(--add-soft)}
+
+/* ── 實驗室 ── */
+.lab{background:linear-gradient(#fff,#fbfcfa);border:1px solid var(--line);border-radius:16px;
+  padding:20px;margin:22px 0;box-shadow:var(--shadow)}
+.lab-t{font-size:12px;letter-spacing:.18em;color:var(--blue);font-weight:700;margin-bottom:12px}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.chip{padding:6px 13px;border:1.5px solid var(--line);background:#fff;border-radius:99px;
+  cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink2)}
+.chip:hover{border-color:var(--ink2)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.duo{grid-template-columns:1fr}}
+.col{border-radius:12px;padding:12px 14px;min-height:150px}
+.col.add{background:var(--add-soft);border:1.5px solid #b7ddc3}
+.col.mul{background:var(--mul-soft);border:1.5px solid #d6c8f5}
+.col h4{margin:0 0 6px;font-size:14px;letter-spacing:.06em}
+.col.add h4{color:var(--add)} .col.mul h4{color:var(--mul)}
+.col .ln{font-size:19px;line-height:2;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+.col .ln.on{opacity:1;transform:none}
+.col .nt{font-size:13.5px;line-height:1.7;color:var(--ink2);margin-top:6px;opacity:0;transition:opacity .5s}
+.col .nt.on{opacity:1}
+.ybar{margin:12px 0 0;font-size:14.5px;background:#fff;border:1px dashed var(--line);border-radius:10px;padding:9px 12px;color:var(--ink2)}
+.vis{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px}
+svg{max-width:100%;height:auto;display:block}
+.seg{transition:opacity .4s}
+.cell{transition:opacity .35s,fill .35s}
+.btn{padding:8px 17px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+  border-radius:99px;cursor:pointer;font-size:14px;font-family:inherit;font-weight:600}
+.btn:hover{opacity:.86}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn:disabled{opacity:.35;cursor:default}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.sl{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+.sl label{font-size:13.5px;color:var(--ink2)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pill{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.pill .lb{font-size:12.5px;color:var(--ink2)}
+.pill .vl{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+.pill.a{border-color:#b7ddc3;background:var(--add-soft)}
+.pill.b{border-color:#edc4c4;background:var(--red-soft)}
+.pill.c{border-color:#d6c8f5;background:var(--mul-soft)}
+.verdict{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:15px;line-height:1.75;
+  background:var(--blue-soft);border:1px solid #cfe0e8}
+
+/* ── 逐題講解卡 ── */
+.sec-h{margin:34px 0 4px;font-size:13px;letter-spacing:.16em;color:var(--teal);font-weight:700}
+.sec-d{font-size:15px;color:var(--ink2);margin:0 0 6px}
+.wt{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:18px 18px 16px;margin:16px 0 22px;box-shadow:var(--shadow)}
+.wt.done{border-color:var(--green)}
+.wt-top{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:12.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:6px}
+.wt-top .ct{color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+.wt.done .wt-top .ct{color:var(--green)}
+.wt-q{font-size:16.5px;margin-bottom:10px}
+.board{border-left:3px solid var(--line);padding:4px 0 4px 12px;margin:6px 0 10px}
+.line{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:9px;cursor:pointer;
+  animation:slide .5s ease both;flex-wrap:wrap}
+@keyframes slide{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+.line .ex{font-size:20px;line-height:2.1;white-space:normal;min-width:0}
+.line .ex .sq,.line .ex .frac{white-space:nowrap}
+.line.old{opacity:.6}
+.line.old .hl{background:transparent;animation:none;padding:0}
+.line.cur{background:#faf9fd}
+.line.sel{outline:2px solid #c9c5f0;opacity:1}
+.tg{flex-shrink:0;font-size:11.5px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:99px;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;white-space:nowrap}
+.tg.mul{background:var(--mul-soft);color:var(--mul);border:1px solid #d6c8f5}
+.tg.add{background:var(--add-soft);color:var(--add);border:1px solid #b7ddc3}
+.tg.simp{background:var(--orange-soft);color:var(--orange);border:1px solid #ecd3ad}
+.tg.rat{background:var(--blue-soft);color:var(--blue);border:1px solid #cfe0e8}
+.tg.exp{background:var(--teal-soft);color:var(--teal);border:1px solid #bcdcd7}
+.tg.ans{background:var(--ink);color:#fff}
+.tg.bad{background:var(--red-soft);color:var(--red);border:1px solid #edc4c4}
+.tg.chk{background:#f3f1f6;color:var(--ink2);border:1px solid var(--line)}
+.whybox{background:var(--accent-soft);border-radius:0 10px 10px 0;border-left:3px solid var(--accent);
+  padding:10px 14px;font-size:15.5px;line-height:1.85;min-height:48px}
+.whybox .wl{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:2px}
+.whybox.mul{background:var(--mul-soft);border-color:var(--mul)} .whybox.mul .wl{color:var(--mul)}
+.whybox.add{background:var(--add-soft);border-color:var(--add)} .whybox.add .wl{color:var(--add)}
+.whybox.bad{background:var(--red-soft);border-color:var(--red)} .whybox.bad .wl{color:var(--red)}
+.ask{display:none;margin-top:12px;border:2px dashed var(--accent);border-radius:12px;padding:12px 14px;background:#fff}
+.ask.show{display:block;animation:slide .4s ease}
+.ask .aq{font-weight:700;font-size:15.5px;margin-bottom:8px}
+.ask .ao{display:flex;flex-direction:column;gap:7px}
+.ask button{font:inherit;font-size:15.5px;text-align:left;padding:9px 13px;border:1.5px solid var(--line);
+  border-radius:10px;background:#fff;cursor:pointer;color:inherit}
+.ask button:hover{border-color:var(--ink2)}
+.ask button.no{border-color:var(--red);background:var(--red-soft)}
+.ask .af{font-size:14.5px;margin-top:8px;color:var(--red);display:none}
+.ask .af.show{display:block}
+.trap{display:none;margin-top:12px;background:#fdf8e8;border:1px dashed #e3d5a4;border-radius:10px;
+  padding:10px 14px;font-size:14.5px;line-height:1.8;color:#5c4d20}
+.trap.show{display:block;animation:slide .4s ease}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+/* ── 判斷題 ── */
+.tf{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:20px;margin:20px 0;box-shadow:var(--shadow)}
+.tf-q{font-size:24px;text-align:center;margin:10px 0 14px}
+.tf-b{display:flex;gap:10px;justify-content:center}
+.tf-b button{font:inherit;font-size:16px;font-weight:700;padding:10px 26px;border-radius:99px;border:2px solid var(--line);background:#fff;cursor:pointer}
+.tf-b button:hover{border-color:var(--ink2)}
+.tf-fb{display:none;margin-top:14px;padding:12px 14px;border-radius:10px;font-size:15.5px;line-height:1.85}
+.tf-fb.show{display:block;animation:slide .3s ease}
+.tf-fb.ok{background:var(--green-soft);border:1px solid #b7ddc3}
+.tf-fb.no{background:var(--red-soft);border:1px solid #edc4c4}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:6px}
+.dot{width:20px;height:6px;border-radius:99px;background:var(--line)}
+.dot.ok{background:var(--green)} .dot.no{background:var(--red)} .dot.now{background:var(--teal)}
+
+.note{background:var(--blue-soft);border:1px solid #cfe0e8;border-radius:12px;padding:14px 18px;margin:18px 0;font-size:15.5px}
+.note p:last-child{margin:0}
+/* ── 為什麼 √2×√3＝√6 ── */
+.w6h{font-size:12px;letter-spacing:.16em;color:var(--mul);font-weight:700;margin-bottom:10px}
+.w6cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.w6cols{grid-template-columns:1fr}}
+.w6c{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.w6c .lb{font-size:13px;color:var(--ink2);margin-bottom:4px}
+.w6c .ln{font-size:19px;line-height:2;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+.w6c .ln.on{opacity:1;transform:none}
+.w6c .ln small{font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif;font-size:13px;color:var(--ink2)}
+.w6v{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:15px;line-height:1.75;background:var(--green-soft);
+  border:1px solid #b7ddc3;opacity:0;transition:opacity .5s}
+.w6v.on{opacity:1}
+.stage{position:relative;height:150px;margin:6px 0 4px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tok{position:absolute;top:0;left:0;display:flex;align-items:center;justify-content:center;
+  font-family:"Cambria","Times New Roman",Georgia,serif;transition:transform .7s cubic-bezier(.4,0,.2,1),opacity .5s}
+.tok.card{height:54px;border-radius:11px;font-size:21px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.tok.c2{background:#e8f1f5;border:2px solid #1d5b79;color:#1d5b79}
+.tok.c3{background:#fdf2e3;border:2px solid #a15c07;color:#a15c07}
+.tok.c6{background:var(--green-soft);border:2px solid var(--green);color:var(--green)}
+.tok.sym{height:54px;font-size:22px;color:var(--ink2)}
+.cap{background:var(--mul-soft);border-left:3px solid var(--mul);border-radius:0 10px 10px 0;padding:10px 14px;
+  font-size:15.5px;line-height:1.85;min-height:76px}
+.cap .wl{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--mul);margin-bottom:2px}
+.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:8px 16px;
+  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:22px}
+footer{padding:30px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+.tg.hyp{background:var(--accent-soft);color:var(--accent);border:1px solid #c9c5f0}
+.tg.sub{background:var(--orange-soft);color:var(--orange);border:1px solid #ecd3ad}
+.tg.root{background:var(--blue-soft);color:var(--blue);border:1px solid #cfe0e8}
+.tg.area{background:var(--teal-soft);color:var(--teal);border:1px solid #bcdcd7}
+.tg.half{background:#f6eefc;color:#7e22ce;border:1px solid #e0cdf3}
+.tg.coord{background:var(--blue-soft);color:var(--blue);border:1px solid #cfe0e8}
+.wfig{margin:4px 0 8px}
+.wfig svg{margin:4px auto}
+.hitl{cursor:pointer}
+.hyrow{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+
+</style>
+<style id="sitenav-css">
+.sitenav{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+ padding:10px 0 12px;margin:0 0 6px;border-bottom:1px solid rgba(0,0,0,.08);font-size:13.5px;scrollbar-width:none}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav a{flex:0 0 auto;text-decoration:none;color:#4b5563;background:#fff;border:1px solid rgba(0,0,0,.12);
+ border-radius:99px;padding:4px 12px;line-height:1.6;white-space:nowrap}
+.sitenav a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav a.home{font-weight:700;color:#5b4bdb;border-color:#5b4bdb;background:#fff}
+.sitenav a.now{background:#5b4bdb;color:#fff;border-color:#5b4bdb;font-weight:700}
+.sitenav .sep{flex:0 0 auto;color:#9ca3af;padding:0 2px}
+.sitenav-b{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:34px 0 8px}
+.sitenav-b a{text-decoration:none;color:#374151;background:#fff;border:1px solid rgba(0,0,0,.14);border-radius:12px;
+ padding:12px 14px;line-height:1.5;font-size:14.5px;display:flex;flex-direction:column;justify-content:center}
+.sitenav-b a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav-b a small{font-size:11.5px;color:#9ca3af;letter-spacing:.08em}
+.sitenav-b a.next{text-align:left}
+.sitenav-b a.homeb{justify-content:center;text-align:center;font-weight:700;color:#5b4bdb;border-color:#5b4bdb}
+.sitenav-b span{display:block}
+@media(max-width:640px){.sitenav{flex-wrap:wrap;overflow:visible;gap:6px 5px;font-size:13px}.sitenav a{padding:3px 10px}}
+@media(max-width:520px){.sitenav-b{grid-template-columns:1fr 1fr}.sitenav-b a.homeb{grid-column:1/-1;order:-1}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="wrap">
+
+<!-- SITENAV:top 由 _add_site_nav.py 產生，勿手改 -->
+<nav class="sitenav" aria-label="站內導覽"><a class="home" href="index.html">八年級數學自學站</a><span class="sep">·</span><a class="" href="multiply.html">1-1 乘法公式</a><a class="" href="polynomial.html">1-2 多項式加減</a><a class="" href="division.html">1-3 多項式乘除</a><a class="" href="sqrt.html">2-1 平方根</a><a class="" href="radical.html">2-2 根式運算</a><a class="now" href="pythag.html">2-3 畢氏定理</a><a class="" href="factor.html">3-1 提公因式與乘法公式</a><a class="" href="cross.html">3-2 十字交乘法</a><a class="" href="quadfactor.html">4-1 因式分解解方程式</a><a class="" href="quadformula.html">4-2 配方法與公式解</a><a class="" href="quadapply.html">4-3 應用問題</a><span class="sep">·</span><a class="" href="exam-sections.html">段考・照節次練</a><a class="" href="exam.html">段考・整卷模擬</a></nav>
+<!-- /SITENAV:top -->
+
+<header>
+  <div class="kicker">八年級上 · 第二章 2-3 畢氏定理 · 課本逐題講解</div>
+  <h1>先找直角，再找斜邊</h1>
+  <p class="sub">這一頁每一題都照同一個順序想：<strong>直角在哪裡？直角對面的是斜邊。</strong><br>
+  每一行算式前面有一個小標籤：<span class="tg hyp">找斜邊</span> 先認出斜邊；<span class="tg add">加</span> 要求斜邊，兩股平方相加；<span class="tg sub">減</span> 要求股，斜邊平方減另一股平方。<br>
+  這一節大部分的錯，都是<strong>還沒找斜邊就開始算</strong>。</p>
+  <div class="toc">
+    <a href="#what">哪一條是斜邊</a><a href="#why">為什麼 a²＋b²＝c²</a><a href="#secA">A 求第三邊</a><a href="#secB">B 斜邊上的高</a>
+    <a href="#secC">C 等腰與正三角形</a><a href="#secD">D 生活應用</a><a href="#secE">E 坐標距離</a><a href="#secF">F 挑錯</a><a href="#quiz">判斷 10 題</a>
+  </div>
+</header>
+
+<div class="bar"><div class="bar-inner"><span>講解看完</span><div class="track"><div class="fill" id="pfill"></div></div><b id="ptext">0 / 0</b></div></div>
+
+<!-- ══ 0 斜邊 ══ -->
+<section id="what">
+  <div class="step"><span class="n">0</span>先認識名字</div>
+  <h2>斜邊＝直角對面的那一條</h2>
+  <p>「斜邊」的意思<strong>不是</strong>「斜斜的邊」。三角形轉一轉，每條邊都可能是斜的。<strong>先找直角記號，它正對面的那條邊才是斜邊</strong>；夾住直角的兩條叫「股」。</p>
+  <div class="lab">
+    <div class="lab-t">點點看 ── 哪一條是斜邊</div>
+    <div class="vis"><svg id="hySvg" viewBox="0 0 320 230" role="img" aria-label="點選斜邊"></svg></div>
+    <div class="verdict" id="hyTxt"></div>
+    <div class="btnrow"><button class="btn" id="hyNext" disabled>下一個 →</button></div>
+  </div>
+  <div class="note"><p>📌 兩件一定要記住的事：<br>
+  ① 斜邊在最大的角（90°）對面，所以<strong>斜邊永遠最長</strong>。算出來的股比斜邊長，一定是算錯了。<br>
+  ② 畢氏定理只對<strong>直角三角形</strong>成立。題目沒有直角，就要自己畫一條高、連一條對角線，把直角「做」出來。</p></div>
+</section>
+
+<!-- ══ 1 為什麼 ══ -->
+<section id="why">
+  <div class="step"><span class="n">1</span>想清楚再用</div>
+  <h2>為什麼 <span class="m" data-m="a^2＋b^2＝c^2"></span>？把四塊三角形換個位置</h2>
+  <p>課本 p.96 和 p.114 用的是同一個拼圖：一個邊長 <span class="m" data-m="a＋b"></span> 的大正方形，裡面放 4 塊一模一樣的直角三角形（兩股 a、b，斜邊 c）。<strong>三角形換位置，留白的面積不會變。</strong></p>
+  <div class="lab">
+    <div class="lab-t">拼拼看 ── 無字證明</div>
+    <div class="sl">
+      <div><label>股 a ＝ <b id="pzAt">3</b></label><input type="range" id="pzA" min="1" max="6" value="3"></div>
+      <div><label>股 b ＝ <b id="pzBt">4</b></label><input type="range" id="pzB" min="1" max="6" value="4"></div>
+    </div>
+    <div class="vis"><svg id="pzSvg" viewBox="0 0 300 330" role="img" aria-label="大正方形裡的四塊直角三角形" style="max-width:320px;margin:0 auto"></svg></div>
+    <div class="btnrow"><button class="btn" id="pzBtn">▶ 換位置</button></div>
+    <div class="verdict" id="pzTxt"></div>
+  </div>
+  <div class="note"><p>📌 用算的也可以（課本 p.96 問題探索 2、3）：<br>
+  留白 ＝ 大正方形 − 4 塊三角形：<br>
+  <span class="m" data-m="c^2 ＝ (a＋b)^2 − 4×f{1}{2}ab"></span><br>
+  <span class="m" data-m="　 ＝ a^2＋2ab＋b^2 − 2ab"></span><br>
+  <span class="m" data-m="　 ＝ a^2＋b^2"></span><br>
+  1-1 的乘法公式，在這裡派上用場了。</p></div>
+</section>
+
+<!-- ══ 逐題講解 ══ -->
+<section id="steps">
+  <div class="step"><span class="n">2</span>課本逐題講解</div>
+  <h2>照課本的順序，一題一題拆開</h2>
+  <p>按「下一步」，算式會多寫一行；按「▶ 自動」會自己一步一步播。有 <strong>❓</strong> 的地方會先問你，答對才往下。點已經寫好的任何一行，可以再看一次那一步的說明。</p>
+  <div id="wtList"></div>
+</section>
+
+<!-- ══ 判斷 ══ -->
+<section id="quiz">
+  <div class="step"><span class="n">3</span>最後檢查</div>
+  <h2>對還是錯？10 題，專抓「沒先找斜邊」</h2>
+  <p>每一題都是同學真的會寫出來的說法。先判斷，再看理由。</p>
+  <div class="tf">
+    <div class="dots" id="tfDots"></div>
+    <div style="text-align:center;font-size:13px;color:var(--ink2)" id="tfNo"></div>
+    <div class="tf-q m" id="tfQ" style="font-size:19px;white-space:normal"></div>
+    <div class="tf-b"><button id="tfT">⭕ 對</button><button id="tfF">❌ 錯</button></div>
+    <div class="tf-fb" id="tfFb"></div>
+    <div class="btnrow" style="justify-content:center"><button class="btn" id="tfNext" disabled>下一題</button></div>
+  </div>
+  <div style="text-align:center"><button class="reset" id="reset">清除這一頁的進度，重新看一次</button></div>
+</section>
+
+<!-- SITENAV:bottom 由 _add_site_nav.py 產生，勿手改 -->
+<div class="sitenav-b"><a class="prev" href="pythag.html"><small>← 上一頁</small><span>2-3 畢氏定理</span></a><a class="homeb" href="index.html">回八年級首頁</a><a class="next" href="factor.html"><small>下一頁 →</small><span>3-1 提公因式與乘法公式</span></a></div>
+<!-- /SITENAV:bottom -->
+
+<footer>
+  國中數學八上自學站 · 第二章 2-3 畢氏定理 · 課本逐題講解<br>
+  題目依康軒版第三冊 2-3 的例題與隨堂練習順序整理；圖形依課本數字重畫
+</footer>
+</div>
+<script>
+(function(){
+"use strict";
+const KEY="jhs8-pythag-steps-v1";
+let store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.done=store.done||{};
+
+/* 小型數學標記：r{..} 根號、f{分子}{分母} 分數、h{..} 新出現的部分、o{..} 外面的數、
+   i{..} 根號這個單位、x{..} 刪掉、g{..} 對、b{..} 錯、^2 或 ^{..} 次方 */
+function M(s){
+  let i=0;
+  function grp(){i++;let o="";while(i<s.length&&s[i]!=="}")o+=one();i++;return o}
+  function one(){
+    const c=s[i];
+    if("rfhoixgb".indexOf(c)>=0&&s[i+1]==="{"){
+      i++;const a=grp();
+      switch(c){
+        case"r":return'<span class="sq">√<span class="rad">'+a+'</span></span>';
+        case"f":{const d=grp();return'<span class="frac"><span>'+a+'</span><span>'+d+'</span></span>'}
+        case"h":return'<span class="hl">'+a+'</span>';
+        case"o":return'<span class="co">'+a+'</span>';
+        case"i":return'<span class="ci">'+a+'</span>';
+        case"x":return'<span class="st">'+a+'</span>';
+        case"g":return'<span class="gd">'+a+'</span>';
+        case"b":return'<span class="bd">'+a+'</span>';
+      }
+    }
+    if(c==="^"){i++;if(s[i]==="{")return"<sup>"+grp()+"</sup>";return"<sup>"+s[i++]+"</sup>"}
+    i++;return c;
+  }
+  let o="";while(i<s.length)o+=one();return o;
+}
+/* 說明文字：$...$ 裡面的是算式 */
+function T(s){return s.replace(/\$([^$]+)\$/g,function(_,x){return'<span class="m">'+M(x)+'</span>'})}
+document.querySelectorAll("[data-m]").forEach(function(el){el.innerHTML=M(el.getAttribute("data-m"))});
+
+const TAG={
+  hyp:["找斜邊","找斜邊：直角對面那一條"],
+  add:["加","求斜邊：兩股的平方相加"],
+  sub:["減","求股：斜邊的平方減另一股的平方"],
+  root:["開根號","開根號：邊長是正的"],
+  area:["面積","面積算兩次"],
+  half:["切一半","畫高：底邊切成兩半"],
+  coord:["坐標","坐標：x 差多少、y 差多少"],
+  simp:["化簡","化成最簡根式"],
+  ans:["答","答案"],
+  bad:["✗ 錯","錯在哪裡"],
+  chk:["算","照著算"]
+};
+
+const FIGS={
+"ex1_1": "<svg viewBox=\"0 0 200 165\" style=\"max-width:170px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"150.0,20.0 70.0,140.0 150.0,140.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><polyline points=\"150.0,131.0 141.0,131.0 141.0,140.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"110.0\" y=\"158.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"162.0\" y=\"85.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">3</text><text x=\"98.0\" y=\"78.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">a</text></svg>",
+"ex1_3": "<svg viewBox=\"0 0 250 165\" style=\"max-width:240px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"20.0,140.0 230.0,140.0 95.6,39.2\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><polyline points=\"90.2,46.4 97.4,51.8 102.8,44.6\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"47.8\" y=\"85.6\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">9</text><text x=\"172.8\" y=\"85.6\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">c</text><text x=\"125.0\" y=\"158.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">15</text></svg>",
+"p98_2": "<svg viewBox=\"0 0 200 175\" style=\"max-width:180px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"50.0,20.0 50.0,150.0 140.0,150.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><polyline points=\"50.0,141.0 59.0,141.0 59.0,150.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"38.0\" y=\"90.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">b</text><text x=\"95.0\" y=\"168.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">7</text><text x=\"111.0\" y=\"83.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">10</text></svg>",
+"ex2": "<svg viewBox=\"0 0 210 150\" style=\"max-width:220px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"30.0,32.0 30.0,120.0 184.0,120.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"30.0\" y1=\"32.0\" x2=\"96.0\" y2=\"120.0\" stroke=\"#4338ca\" stroke-width=\"1.8\"/><polyline points=\"30.0,111.0 39.0,111.0 39.0,120.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"30.0\" y=\"26.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"20.0\" y=\"126.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"96.0\" y=\"138.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">D</text><text x=\"194.0\" y=\"126.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"18.0\" y=\"81.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">4</text><text x=\"63.0\" y=\"138.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">a</text><text x=\"140.0\" y=\"138.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">4</text><text x=\"71.0\" y=\"74.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">5</text><text x=\"113.0\" y=\"68.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">b</text></svg>",
+"p99": "<svg viewBox=\"0 0 220 230\" style=\"max-width:200px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"40.0,30.0 170.0,30.0 111.6,165.0 40.0,134.0\" fill=\"#e6f2f0\" stroke=\"#0f6b63\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"40.0\" y1=\"134.0\" x2=\"170.0\" y2=\"30.0\" stroke=\"#0f6b63\" stroke-width=\"1.6\"/><polyline points=\"40.0,39.0 49.0,39.0 49.0,30.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><polyline points=\"103.3,161.4 106.9,153.1 115.2,156.7\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"30.0\" y=\"26.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"180.0\" y=\"26.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">D</text><text x=\"28.0\" y=\"142.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"117.6\" y=\"181.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"105.0\" y=\"22.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">5</text><text x=\"28.0\" y=\"87.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">4</text><text x=\"69.8\" y=\"165.5\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">3</text></svg>",
+"ex3": "<svg viewBox=\"0 0 266 155\" style=\"max-width:260px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"16.0,130.0 50.6,46.9 250.0,130.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"50.6\" y1=\"46.9\" x2=\"50.6\" y2=\"130.0\" stroke=\"#4338ca\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><polyline points=\"47.2,55.2 55.5,58.7 58.9,50.4\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><polyline points=\"50.6,123.0 57.6,123.0 57.6,130.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"6.0\" y=\"135.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"50.6\" y=\"38.9\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"260.0\" y=\"135.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"50.6\" y=\"148.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">D</text><text x=\"21.3\" y=\"86.5\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">10</text><text x=\"158.3\" y=\"80.5\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">24</text></svg>",
+"p100": "<svg viewBox=\"0 0 270 165\" style=\"max-width:260px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"20.0,120.0 102.8,9.6 250.0,120.0\" fill=\"#fbf3d9\" stroke=\"#a15c07\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"102.8\" y1=\"9.6\" x2=\"102.8\" y2=\"120.0\" stroke=\"#a15c07\" stroke-width=\"1.6\" stroke-dasharray=\"5 4\"/><polyline points=\"97.4,16.8 104.6,22.2 110.0,15.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><polyline points=\"102.8,112.0 110.8,112.0 110.8,120.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"10.0\" y=\"125.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"102.8\" y=\"1.6\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"260.0\" y=\"125.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"102.8\" y=\"138.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">D</text><text x=\"186.4\" y=\"58.8\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"135.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#a15c07\" font-family=\"Cambria,Georgia,serif\">2.5</text></svg>",
+"sr1": "<svg viewBox=\"0 0 215 120\" style=\"max-width:240px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"20.0,14.0 185.0,14.0 185.0,102.0 20.0,102.0\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"20.0\" y1=\"102.0\" x2=\"185.0\" y2=\"14.0\" stroke=\"#232026\" stroke-width=\"1.6\"/><line x1=\"185.0\" y1=\"102.0\" x2=\"148.5\" y2=\"33.5\" stroke=\"#b03030\" stroke-width=\"1.8\"/><polyline points=\"151.8,39.7 157.9,36.4 154.6,30.2\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"10.0\" y=\"18.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">D</text><text x=\"195.0\" y=\"18.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"10.0\" y=\"110.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"195.0\" y=\"110.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"102.5\" y=\"10.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">15</text><text x=\"10.0\" y=\"63.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">8</text><text x=\"94.5\" y=\"52.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">b</text><text x=\"174.7\" y=\"75.7\" text-anchor=\"middle\" font-size=\"14\" fill=\"#b03030\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">c</text></svg>",
+"iso13": "<svg viewBox=\"0 0 120 146\" style=\"max-width:200px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"60.0,20.0 20.0,116.0 100.0,116.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><text x=\"60.0\" y=\"14.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"10.0\" y=\"121.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"110.0\" y=\"121.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"26.0\" y=\"68.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">13</text><text x=\"94.0\" y=\"68.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">13</text><text x=\"60.0\" y=\"136.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">10</text></svg>",
+"iso15": "<svg viewBox=\"0 0 148 122\" style=\"max-width:200px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"74.0,20.0 20.0,92.0 128.0,92.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><text x=\"74.0\" y=\"14.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"10.0\" y=\"97.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"138.0\" y=\"97.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"33.0\" y=\"56.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">15</text><text x=\"115.0\" y=\"56.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">15</text><text x=\"74.0\" y=\"112.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">18</text></svg>",
+"eq6": "<svg viewBox=\"0 0 180 153\" style=\"max-width:180px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"90.0,20.0 30.0,123.9 150.0,123.9\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"90.0\" y1=\"20.0\" x2=\"90.0\" y2=\"123.9\" stroke=\"#4338ca\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><polyline points=\"90.0,116.9 97.0,116.9 97.0,123.9\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"90.0\" y=\"14.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"20.0\" y=\"128.9\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"160.0\" y=\"128.9\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"90.0\" y=\"141.9\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">D</text><text x=\"48.0\" y=\"72.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">6</text><text x=\"60.0\" y=\"141.9\" text-anchor=\"middle\" font-size=\"12\" fill=\"#a15c07\" font-family=\"Cambria,Georgia,serif\">3</text></svg>",
+"eqa": "<svg viewBox=\"0 0 180 153\" style=\"max-width:180px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"90.0,20.0 30.0,123.9 150.0,123.9\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"90.0\" y1=\"20.0\" x2=\"90.0\" y2=\"123.9\" stroke=\"#4338ca\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><polyline points=\"90.0,116.9 97.0,116.9 97.0,123.9\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"90.0\" y=\"14.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"20.0\" y=\"128.9\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"160.0\" y=\"128.9\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"90.0\" y=\"141.9\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">D</text><text x=\"48.0\" y=\"72.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">a</text><text x=\"60.0\" y=\"141.9\" text-anchor=\"middle\" font-size=\"12\" fill=\"#a15c07\" font-family=\"Cambria,Georgia,serif\">a/2</text></svg>",
+"houses": "<svg viewBox=\"0 0 220 108\" style=\"max-width:240px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"10.0,54.6 50.0,54.6 50.0,94.6 10.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"10.0,54.6 50.0,54.6 30.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"50.0,54.6 90.0,54.6 90.0,94.6 50.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"50.0,54.6 90.0,54.6 70.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"90.0,54.6 130.0,54.6 130.0,94.6 90.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"90.0,54.6 130.0,54.6 110.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"130.0,54.6 170.0,54.6 170.0,94.6 130.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"130.0,54.6 170.0,54.6 150.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"170.0,54.6 210.0,54.6 210.0,94.6 170.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"170.0,54.6 210.0,54.6 190.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><text x=\"30.0\" y=\"79.6\" text-anchor=\"middle\" font-size=\"13\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"30.0\" y=\"48.6\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text></svg>",
+"phone": "<svg viewBox=\"0 0 220 175\" style=\"max-width:220px;margin:12px auto 4px\" role=\"img\" aria-label=\"摺疊前後的螢幕\"><polygon points=\"20.0,14.0 86.0,14.0 86.0,146.0 20.0,146.0\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"20.0\" y1=\"146.0\" x2=\"86.0\" y2=\"14.0\" stroke=\"#b03030\" stroke-width=\"2\"/><text x=\"53.0\" y=\"162.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">3</text><text x=\"96.0\" y=\"80.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">6</text><polygon points=\"130.0,80.0 196.0,80.0 196.0,146.0 130.0,146.0\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"130.0\" y1=\"146.0\" x2=\"196.0\" y2=\"80.0\" stroke=\"#b03030\" stroke-width=\"2\"/><text x=\"163.0\" y=\"162.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">3</text><text x=\"206.0\" y=\"117.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">3</text><text x=\"105.0\" y=\"113.0\" text-anchor=\"middle\" font-size=\"18\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">→</text></svg>",
+"band": "<svg viewBox=\"0 0 110 238\" style=\"max-width:110px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"20.0,12.0 62.4,12.0 62.4,224.1 20.0,224.1\" fill=\"#fbf3d9\" stroke=\"#a15c07\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"41.2,12.0 62.4,33.2 41.2,54.4 20.0,33.2\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><polygon points=\"41.2,54.4 62.4,75.6 41.2,96.9 20.0,75.6\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><polygon points=\"41.2,96.9 62.4,118.1 41.2,139.3 20.0,118.1\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><polygon points=\"41.2,139.3 62.4,160.5 41.2,181.7 20.0,160.5\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><polygon points=\"41.2,181.7 62.4,202.9 41.2,224.1 20.0,202.9\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><text x=\"26.6\" y=\"24.6\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"55.8\" y=\"24.6\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><line x1=\"76.4\" y1=\"12.0\" x2=\"76.4\" y2=\"224.1\" stroke=\"#15803d\" stroke-width=\"2\"/><text x=\"84.4\" y=\"118.1\" text-anchor=\"start\" font-size=\"15\" fill=\"#15803d\" font-weight=\"700\" font-family=\"Cambria,Georgia,serif\">？</text></svg>",
+"bamboo": "<svg viewBox=\"0 0 220 190\" style=\"max-width:230px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><rect x=\"180\" y=\"20.0\" width=\"16\" height=\"130.0\" fill=\"#d9d6e0\" stroke=\"#232026\" stroke-width=\"1\"/><line x1=\"10.0\" y1=\"150.0\" x2=\"180.0\" y2=\"150.0\" stroke=\"#232026\" stroke-width=\"1.6\"/><line x1=\"105.0\" y1=\"150.0\" x2=\"180.0\" y2=\"50.0\" stroke=\"#a15c07\" stroke-width=\"3\"/><line x1=\"145.0\" y1=\"150.0\" x2=\"180.0\" y2=\"30.0\" stroke=\"#15803d\" stroke-width=\"3\" stroke-dasharray=\"5 4\"/><polyline points=\"172.0,150.0 172.0,142.0 180.0,142.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"105.0\" y=\"166.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"145.0\" y=\"166.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">D</text><text x=\"174.0\" y=\"166.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"170.0\" y=\"54.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"170.0\" y=\"32.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">E</text><text x=\"142.5\" y=\"182.0\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">1.5</text><text x=\"126.5\" y=\"98.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#a15c07\" font-family=\"Cambria,Georgia,serif\">2.5</text><text x=\"210.0\" y=\"44.0\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">0.4</text></svg>",
+"ladder": "<svg viewBox=\"0 0 260 180\" style=\"max-width:260px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><rect x=\"200\" y=\"52.0\" width=\"26\" height=\"108.0\" fill=\"#f3d9d0\" stroke=\"#b03030\" stroke-width=\"1.4\"/><line x1=\"10.0\" y1=\"160.0\" x2=\"250.0\" y2=\"160.0\" stroke=\"#232026\" stroke-width=\"1.6\"/><line x1=\"56.0\" y1=\"160.0\" x2=\"200.0\" y2=\"52.0\" stroke=\"#232026\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/><line x1=\"155.0\" y1=\"160.0\" x2=\"224.2\" y2=\"-6.2\" stroke=\"#4338ca\" stroke-width=\"3.2\"/><text x=\"240.0\" y=\"106.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">1.2</text><text x=\"105.5\" y=\"178.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">1.1</text><text x=\"116.0\" y=\"102.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"236.2\" y=\"-2.2\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-family=\"Cambria,Georgia,serif\">？</text></svg>",
+"grid": "<svg viewBox=\"0 0 200 200\" style=\"max-width:230px;margin:12px auto 4px\" role=\"img\" aria-label=\"坐標方格\"><line x1=\"12.0\" y1=\"188.0\" x2=\"12.0\" y2=\"12.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"188.0\" x2=\"34.0\" y2=\"12.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"56.0\" y1=\"188.0\" x2=\"56.0\" y2=\"12.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"78.0\" y1=\"188.0\" x2=\"78.0\" y2=\"12.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"100.0\" y1=\"188.0\" x2=\"100.0\" y2=\"12.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"122.0\" y1=\"188.0\" x2=\"122.0\" y2=\"12.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"144.0\" y1=\"188.0\" x2=\"144.0\" y2=\"12.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"166.0\" y1=\"188.0\" x2=\"166.0\" y2=\"12.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"188.0\" y1=\"188.0\" x2=\"188.0\" y2=\"12.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"12.0\" y1=\"188.0\" x2=\"188.0\" y2=\"188.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"12.0\" y1=\"166.0\" x2=\"188.0\" y2=\"166.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"12.0\" y1=\"144.0\" x2=\"188.0\" y2=\"144.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"12.0\" y1=\"122.0\" x2=\"188.0\" y2=\"122.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"12.0\" y1=\"100.0\" x2=\"188.0\" y2=\"100.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"12.0\" y1=\"78.0\" x2=\"188.0\" y2=\"78.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"12.0\" y1=\"56.0\" x2=\"188.0\" y2=\"56.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"12.0\" y1=\"34.0\" x2=\"188.0\" y2=\"34.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"12.0\" y1=\"12.0\" x2=\"188.0\" y2=\"12.0\" stroke=\"#dcd8e0\" stroke-width=\"1\"/><line x1=\"12.0\" y1=\"144.0\" x2=\"188.0\" y2=\"144.0\" stroke=\"#232026\" stroke-width=\"1.4\"/><line x1=\"100.0\" y1=\"188.0\" x2=\"100.0\" y2=\"12.0\" stroke=\"#232026\" stroke-width=\"1.4\"/><line x1=\"34.0\" y1=\"166.0\" x2=\"144.0\" y2=\"166.0\" stroke=\"#a15c07\" stroke-width=\"2.4\"/><line x1=\"144.0\" y1=\"166.0\" x2=\"144.0\" y2=\"34.0\" stroke=\"#15803d\" stroke-width=\"2.4\"/><line x1=\"34.0\" y1=\"166.0\" x2=\"144.0\" y2=\"34.0\" stroke=\"#4338ca\" stroke-width=\"2.6\"/><polyline points=\"136.0,166.0 136.0,158.0 144.0,158.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><circle cx=\"34.0\" cy=\"166.0\" r=\"4\" fill=\"#232026\"/><circle cx=\"144.0\" cy=\"34.0\" r=\"4\" fill=\"#232026\"/><circle cx=\"144.0\" cy=\"166.0\" r=\"4\" fill=\"#a15c07\"/><text x=\"30.0\" y=\"184.0\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A(−3, −1)</text><text x=\"114.0\" y=\"32.0\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B(2, 5)</text><text x=\"156.0\" y=\"180.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#a15c07\" font-weight=\"700\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"92.0\" y=\"158.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">O</text></svg>"
+};
+/* ───────── 課本題目 ───────── */
+const SECS=[
+{id:"secA",h:"A　已知兩邊，求第三邊　課本 p.98–99",d:"每一題的第一步都一樣：<strong>找直角，直角對面那一條就是斜邊</strong>。要求的是斜邊就用加，要求的是股就用減。",items:[
+ {src:"課本 p.98　例 1 (1)",q:"兩股是 2 和 3，求 a。",fig:FIGS.ex1_1,steps:[
+   {e:"a ＝ ？",w:"先不要急著算，看圖：直角在右下角。"},
+   {t:"hyp",ask:{q:"❓ a 是斜邊還是股？",o:["斜邊：它在直角的對面","股：它是斜的","股：它最長"],a:0,no:"斜邊的意思是「直角對面的邊」，不是「斜斜的邊」。直角在右下角，對面是 a。"},e:"a 在直角對面 ⟹ a 是斜邊",w:"求的是斜邊，所以用<strong>加</strong>的。"},
+   {t:"add",e:"a^2 ＝ 2^2 ＋ 3^2 ＝ 4 ＋ 9 ＝ h{13}",w:"兩股的平方加起來。"},
+   {t:"root",e:"a ＝ r{13}",w:"$a^2＝13$，開根號。課本寫 $a＝±r{13}$，邊長是正的，所以只留 $r{13}$。13 裡沒有平方數，不能再化簡。"},
+   {t:"ans",e:"a ＝ g{r{13}}",w:"約 3.6，比兩股都長 ✓。"}
+ ]},
+ {src:"課本 p.98　例 1 (3)",q:"兩邊是 9 和 15，求 c。",fig:FIGS.ex1_3,steps:[
+   {e:"9、15、c",w:"這一題的直角在<strong>上面</strong>。"},
+   {t:"hyp",ask:{q:"❓ 哪一條是斜邊？",o:["15","c","9"],a:0,no:"直角在上面的頂點，它對面是底下那條 15。c 是夾住直角的邊，是股。"},e:"15 在直角對面 ⟹ 15 是斜邊，c 是股",w:"課本 Hint：<strong>要先確認想算的第三邊是斜邊還是股</strong>。"},
+   {t:"sub",e:"c^2 ＝ 15^2 − 9^2 ＝ 225 − 81 ＝ h{144}",w:"求股：斜邊的平方減掉另一股的平方。"},
+   {t:"root",e:"c ＝ r{144} ＝ 12",w:"12×12＝144。"},
+   {t:"ans",e:"c ＝ g{12}",w:"檢查：12 比斜邊 15 短 ✓。"}
+ ],trap:"⚠️ 用加的：$9^2＋15^2＝306$，c＝$r{306}$ 約 17.5——比斜邊 15 還長，不可能。<strong>算完看一眼：斜邊是不是最長？</strong>"},
+ {src:"課本 p.98　例 1 隨堂 (2)",q:"斜邊 10、一股 7，求 b。",fig:FIGS.p98_2,steps:[
+   {e:"7、10、b"},
+   {t:"hyp",e:"直角在左下 ⟹ 10 是斜邊，b 是股",w:"10 在直角對面。"},
+   {t:"sub",e:"b^2 ＝ 10^2 − 7^2 ＝ 100 − 49 ＝ h{51}"},
+   {t:"simp",e:"51 ＝ 3 × 17",w:"51 裡沒有 4、9、16、25… 這些平方數，根號裡不能再搬出來。"},
+   {t:"ans",e:"b ＝ g{r{51}}",w:"約 7.1，比 10 短 ✓。"}
+ ]},
+ {src:"課本 p.99　例 2",q:"求 a、b。",fig:FIGS.ex2,steps:[
+   {e:"△ABD 和 △ABC，直角都在 B",w:"一張圖裡藏了<strong>兩個</strong>直角三角形，它們共用 AB＝4。先做小的，再做大的。"},
+   {t:"hyp",e:"△ABD：斜邊 AD＝5，股 AB＝4、BD＝a"},
+   {t:"sub",e:"a^2 ＝ 5^2 − 4^2 ＝ 9 ⟹ a ＝ h{3}"},
+   {t:"chk",ask:{q:"❓ 大三角形 △ABC 的底邊 BC 是多少？",o:["3＋4＝7","4","5"],a:0,no:"BC 是 BD 和 DC 接起來：3＋4。"},e:"BC ＝ BD ＋ DC ＝ 3 ＋ 4 ＝ h{7}"},
+   {t:"add",e:"b^2 ＝ 4^2 ＋ 7^2 ＝ 16 ＋ 49 ＝ 65",w:"△ABC 中，b 在直角 B 的對面，是斜邊，用加的。"},
+   {t:"ans",e:"a ＝ g{3}，b ＝ g{r{65}}"}
+ ]},
+ {src:"課本 p.99　例 2 隨堂",q:"四邊形 ABCD 中，∠A＝∠C＝90°，AB＝4、BC＝3、AD＝5，求 BD 和 CD。",fig:FIGS.p99,steps:[
+   {e:"連 BD ⟹ △ABD（直角在 A）＋ △BCD（直角在 C）",w:"四邊形不能直接用畢氏定理。畫一條對角線，切成兩個直角三角形。"},
+   {t:"add",e:"BD^2 ＝ 4^2 ＋ 5^2 ＝ 41 ⟹ BD ＝ h{r{41}}",w:"△ABD：BD 在直角 A 的對面，是斜邊。"},
+   {t:"hyp",ask:{q:"❓ 在 △BCD 裡，斜邊是哪一條？",o:["BD","CD","BC"],a:0,no:"△BCD 的直角在 C，C 對面的是 BD。"},e:"△BCD：直角在 C ⟹ BD 是斜邊"},
+   {t:"sub",e:"CD^2 ＝ 41 − 3^2 ＝ 32",w:"BD² 直接用 41 就好，不用先開根號再平方回來。"},
+   {t:"simp",e:"CD ＝ r{32} ＝ r{16×2} ＝ 4r{2}",w:"2-2 的最簡根式：16 搬出來變 4。"},
+   {t:"ans",e:"BD ＝ g{r{41}}，CD ＝ g{4r{2}}"}
+ ]}
+]},
+
+{id:"secB",h:"B　斜邊上的高：面積算兩次　課本 p.100",d:"同一個直角三角形，面積可以用「兩股」算，也可以用「斜邊×斜邊上的高」算。兩種算出來一定一樣大，所以 <strong>兩股相乘 ＝ 斜邊 × 高</strong>。",items:[
+ {src:"課本 p.100　例 3",q:"∠ABC＝90°，AB＝10、BC＝24，BD 是斜邊上的高。求 AC 和 BD。",fig:FIGS.ex3,steps:[
+   {e:"AB＝10、BC＝24，∠B＝90°"},
+   {t:"add",e:"AC^2 ＝ 10^2 ＋ 24^2 ＝ 100 ＋ 576 ＝ 676 ⟹ AC ＝ 26",w:"26×26＝676。"},
+   {t:"area",e:"面積 ＝ f{1}{2} × 10 × 24 ＝ h{120}",w:"兩股互相垂直，一條當底、一條當高。"},
+   {t:"area",ask:{q:"❓ 改用斜邊 AC 當底，高是哪一條？",o:["BD","AB","BC"],a:0,no:"高要和底垂直。AC 當底，從對面的頂點 B 往 AC 畫垂線，就是 BD。"},e:"面積 ＝ f{1}{2} × 26 × BD",w:"底換了，面積不會變。"},
+   {t:"ans",e:"13 × BD ＝ 120 ⟹ BD ＝ g{f{120}{13}}",w:"也可以直接記：$BD＝f{10×24}{26}$（兩股相乘 ÷ 斜邊）。"}
+ ],trap:"⚠️ 高不是斜邊的一半（13）。$f{120}{13}$ 約 9.2，比兩股 10、24 都短，合理。"},
+ {src:"課本 p.100　例 3 隨堂",q:"∠ABC＝∠BDC＝90°，AC＝2.5、BC＝2，求 BD。",fig:FIGS.p100,steps:[
+   {e:"AC＝2.5（斜邊）、BC＝2"},
+   {t:"sub",e:"AB^2 ＝ 2.5^2 − 2^2 ＝ 6.25 − 4 ＝ 2.25 ⟹ AB ＝ 1.5",w:"1.5×1.5＝2.25。"},
+   {t:"area",e:"1.5 × 2 ＝ 2.5 × BD",w:"兩邊的 ½ 一起約掉。"},
+   {t:"ans",e:"BD ＝ 3 ÷ 2.5 ＝ g{1.2}"}
+ ]},
+ {src:"課本 p.110　自我評量 1 (2)",q:"長方形 ABCD 中，DC＝15、AD＝8，c 是 B 到對角線 AC 的距離。求 b 和 c。",fig:FIGS.sr1,steps:[
+   {e:"△ABC：AB＝15、BC＝8，直角在 B",w:"長方形的對邊一樣長，四個角都是直角。"},
+   {t:"add",e:"b^2 ＝ 15^2 ＋ 8^2 ＝ 225 ＋ 64 ＝ 289 ⟹ b ＝ 17",w:"8、15、17 是課本 p.109 列的常見組合。"},
+   {t:"area",e:"15 × 8 ＝ 17 × c",w:"c 就是 △ABC 斜邊 AC 上的高，和例 3 一樣。"},
+   {t:"ans",e:"b ＝ g{17}，c ＝ g{f{120}{17}}"}
+ ]}
+]},
+
+{id:"secC",h:"C　等腰三角形與正三角形的高　課本 p.101–103",d:"等腰三角形從頂點往底邊畫高，<strong>剛好把底邊切成兩半</strong>，左右各是一個直角三角形（腰是斜邊）。正三角形是三邊都一樣長的等腰三角形。",items:[
+ {src:"課本 p.101　例 4",q:"等腰三角形 ABC，AB＝AC＝13、BC＝10，求 BC 上的高和面積。",fig:FIGS.iso13,steps:[
+   {e:"AB＝AC＝13、BC＝10"},
+   {t:"half",ask:{q:"❓ 從 A 畫 BC 上的高 AD，D 在哪裡？",o:["BC 的正中間，BD＝5","靠近 B 的地方","不一定"],a:0,no:"等腰三角形左右對稱，對稱軸就是底邊的中垂線，所以 D 是 BC 的中點。"},e:"BD ＝ f{1}{2} × 10 ＝ h{5}",w:"AD 是對稱軸，也是 BC 的中垂線：AD⊥BC，D 是中點。"},
+   {t:"sub",e:"AD^2 ＝ 13^2 − 5^2 ＝ 169 − 25 ＝ 144 ⟹ AD ＝ 12",w:"△ABD 的直角在 D，腰 AB＝13 是斜邊。"},
+   {t:"area",e:"面積 ＝ f{1}{2} × 10 × 12 ＝ 60"},
+   {t:"ans",e:"高 ＝ g{12}，面積 ＝ g{60}"}
+ ],trap:"⚠️ 用腰當高：$f{1}{2}×10×13＝65$ 是錯的。腰是斜的，高要和底邊垂直。"},
+ {src:"課本 p.101　例 4 隨堂",q:"等腰三角形 ABC，AB＝AC＝15、BC＝18，求面積。",fig:FIGS.iso15,steps:[
+   {t:"half",e:"BD ＝ 18 ÷ 2 ＝ 9"},
+   {t:"sub",e:"高^2 ＝ 15^2 − 9^2 ＝ 225 − 81 ＝ 144 ⟹ 高 ＝ 12"},
+   {t:"ans",e:"面積 ＝ f{1}{2} × 18 × 12 ＝ g{108}"}
+ ]},
+ {src:"課本 p.102　正三角形（邊長 6）",q:"正三角形 ABC 的邊長是 6，求高和面積。",fig:FIGS.eq6,steps:[
+   {t:"half",e:"BD ＝ f{1}{2} × 6 ＝ 3",w:"正三角形也是等腰三角形，高一樣把底邊切成兩半。"},
+   {t:"sub",e:"AD^2 ＝ 6^2 − 3^2 ＝ 36 − 9 ＝ 27"},
+   {t:"simp",e:"AD ＝ r{27} ＝ r{9×3} ＝ 3r{3}"},
+   {t:"area",e:"面積 ＝ f{1}{2} × 6 × 3r{3} ＝ 9r{3}"},
+   {t:"ans",e:"高 ＝ g{3r{3}}，面積 ＝ g{9r{3}}"}
+ ]},
+ {src:"課本 p.102　正三角形（邊長 a）",q:"把上一題的 6 換成 a，得到公式。",fig:FIGS.eqa,steps:[
+   {t:"half",e:"BD ＝ f{a}{2}",w:"一模一樣的步驟，只是 6 換成 a。"},
+   {t:"sub",e:"AD^2 ＝ a^2 − (f{a}{2})^2 ＝ a^2 − f{a^2}{4} ＝ f{3}{4}a^2",w:"a² 減掉四分之一個 a²，剩四分之三個。"},
+   {t:"root",e:"AD ＝ r{f{3}{4}a^2} ＝ f{r{3}}{2}a",w:"分母 4 開根號是 2，$a^2$ 開根號是 a（a 是正的）。"},
+   {t:"area",e:"面積 ＝ f{1}{2} × a × f{r{3}}{2}a ＝ f{r{3}}{4}a^2"},
+   {t:"ans",e:"高 ＝ g{f{r{3}}{2}a}，面積 ＝ g{f{r{3}}{4}a^2}",w:"這就是課本 p.102 的 Key point。代 a＝6 回去：高 $3r{3}$、面積 $9r{3}$，和上一題一樣 ✓。"}
+ ]},
+ {src:"課本 p.103　例 5",q:"正三角形的邊長是 8，求高和面積。",steps:[
+   {e:"直接代公式，a ＝ 8"},
+   {t:"chk",e:"高 ＝ f{r{3}}{2} × 8 ＝ 4r{3}"},
+   {t:"chk",ask:{q:"❓ 面積公式裡的 $a^2$ 是多少？",o:["64","16","8"],a:0,no:"$a^2＝8×8＝64$，不是 8×2。"},e:"面積 ＝ f{r{3}}{4} × 8^2 ＝ f{r{3}}{4} × 64 ＝ 16r{3}"},
+   {t:"ans",e:"高 ＝ g{4r{3}}，面積 ＝ g{16r{3}}"}
+ ]},
+ {src:"課本 p.103　例 5 隨堂 2",q:"上面 5 個邊長 2 的正三角形，下面 5 個邊長 2 的正方形，求面積。",fig:FIGS.houses,steps:[
+   {t:"chk",e:"一個正三角形 ＝ f{r{3}}{4} × 2^2 ＝ r{3}",w:"這也是課本 p.109 重點整理的例子：邊長 2 的正三角形，面積 $r{3}$。"},
+   {t:"chk",e:"一個正方形 ＝ 2 × 2 ＝ 4"},
+   {t:"ans",e:"5r{3} ＋ 5×4 ＝ g{20 ＋ 5r{3}}",w:"20 和 $5r{3}$ 不是同類，<strong>不能合成 $25r{3}$</strong>（2-2 學過）。"}
+ ]}
+]},
+
+{id:"secD",h:"D　生活裡的直角：對角線、竹竿、梯子　課本 p.104–105",d:"題目不會畫出「直角三角形」給你，要自己找：長方形的角、牆和地面的夾角，都是直角。",items:[
+ {src:"課本 p.104　例 6",q:"摺疊手機：螢幕大小＝對角線長。摺疊前 3×6、摺疊後 3×3（吋），摺疊前比摺疊後多幾吋？",fig:FIGS.phone,steps:[
+   {t:"hyp",e:"長方形的對角線 ＝ 直角三角形的斜邊",w:"長方形的角是直角，對角線在直角的對面。"},
+   {t:"add",e:"摺疊前：r{3^2＋6^2} ＝ r{45} ＝ 3r{5}",w:"45＝9×5。"},
+   {t:"add",e:"摺疊後：r{3^2＋3^2} ＝ r{18} ＝ 3r{2}",w:"18＝9×2。"},
+   {t:"chk",ask:{q:"❓ $3r{5}−3r{2}$ 可以再合併嗎？",o:["不行，根號裡不一樣","可以，＝ $3r{3}$","可以，＝ 0"],a:0,no:"$r{5}$ 和 $r{2}$ 不是同類方根，不能相減成一項（2-2）。"},e:"多了 3r{5} − 3r{2} 吋"},
+   {t:"ans",e:"g{3r{5} − 3r{2}} ≈ 2.5 吋",w:"課本用計算機算出約 2.47。"}
+ ]},
+ {src:"課本 p.104　例 6 隨堂",q:"編織帶由 5 個斜放的正方形（邊長 2 公分）組成，總長約多少？（$r{2}$≒1.4）",fig:FIGS.band,steps:[
+   {t:"hyp",e:"編織帶的長 ＝ 5 條正方形的對角線",w:"正方形是轉 45° 放的，上下兩個角之間是對角線。"},
+   {t:"add",e:"對角線 ＝ r{2^2＋2^2} ＝ r{8} ＝ 2r{2}"},
+   {t:"ans",e:"5 × 2r{2} ＝ 10r{2} ≈ 10 × 1.4 ＝ g{14} 公分"}
+ ]},
+ {src:"課本 p.105　例 7",q:"2.5 公尺的竹竿靠在牆角。(1) 底端離牆 1.5 公尺，頂端多高？(2) 頂端往上移 0.4 公尺，底端往牆移了多少？",fig:FIGS.bamboo,steps:[
+   {t:"hyp",e:"牆角是直角 ⟹ 竹竿是斜邊",w:"竹竿、牆面、地面圍成直角三角形，直角在牆角 C。"},
+   {t:"sub",e:"(1) BC^2 ＝ 2.5^2 − 1.5^2 ＝ 6.25 − 2.25 ＝ 4 ⟹ BC ＝ 2"},
+   {t:"chk",ask:{q:"❓ 竹竿往上移以後，竹竿的長度是多少？",o:["還是 2.5","2.9","2.1"],a:0,no:"竹竿是同一支，長度不會變。變的是頂端的高度（2＋0.4）和底端的位置。"},e:"(2) EC ＝ 2 ＋ 0.4 ＝ 2.4，竹竿 ED 還是 2.5"},
+   {t:"sub",e:"CD^2 ＝ 2.5^2 − 2.4^2 ＝ 6.25 − 5.76 ＝ 0.49 ⟹ CD ＝ 0.7"},
+   {t:"ans",e:"AD ＝ 1.5 − 0.7 ＝ g{0.8} 公尺",w:"頂端只往上 0.4，底端卻移了 0.8。"}
+ ]},
+ {src:"課本 p.105　例 7 隨堂",q:"梯子長 2 公尺、牆高 1.2 公尺，原本頂端剛好靠在牆頂（虛線）。梯腳往牆移 1.1 公尺後，梯子凸出牆頂多少？",fig:FIGS.ladder,steps:[
+   {t:"sub",e:"原本梯腳離牆：r{2^2 − 1.2^2} ＝ r{2.56} ＝ 1.6",w:"原本梯子（斜邊 2）、牆高 1.2、地面圍成直角三角形。"},
+   {t:"chk",e:"移近以後：1.6 − 1.1 ＝ 0.5"},
+   {t:"add",e:"梯腳到牆頂：r{0.5^2 ＋ 1.2^2} ＝ r{1.69} ＝ 1.3",w:"新的直角三角形：股 0.5 和 1.2，要求的是斜邊（梯子在牆頂以下的那一段）。"},
+   {t:"ans",e:"2 − 1.3 ＝ g{0.7} 公尺"}
+ ],trap:"📌 5、12、13 放大 0.1 倍就是 0.5、1.2、1.3。常見組合記起來，答案一看就知道。"}
+]},
+
+{id:"secE",h:"E　坐標平面上兩點的距離　課本 p.106–108",d:"兩個點不在同一條水平線或鉛垂線上時，從一個點畫水平線、從另一個點畫鉛垂線，<strong>就畫出了直角</strong>。兩股是「x 差多少」和「y 差多少」。",items:[
+ {src:"課本 p.106　例 8",q:"(1) A(2, 3)、B(−4, 3)　(2) C(−2, 5)、D(−2, 1)，求兩點的距離。",steps:[
+   {t:"coord",e:"(1) y 坐標都是 3 ⟹ 在同一條水平線上",w:"同一條水平線上的兩點，距離就是 x 坐標差多少。"},
+   {t:"chk",e:"AB ＝ |2 − (−4)| ＝ |6| ＝ 6",w:"從 −4 走到 2，要走 6 格。"},
+   {t:"coord",e:"(2) x 坐標都是 −2 ⟹ 在同一條鉛垂線上"},
+   {t:"ans",e:"AB ＝ g{6}，CD ＝ |5 − 1| ＝ g{4}"}
+ ]},
+ {src:"課本 p.107　問題探索",q:"A(−3, −1)、B(2, 5)，求 A、B 的距離。",fig:FIGS.grid,steps:[
+   {t:"coord",e:"過 A 畫水平線、過 B 畫鉛垂線，交在 C",w:"水平線和鉛垂線一定互相垂直，C 就是直角。"},
+   {t:"coord",ask:{q:"❓ C 的坐標是什麼？",o:["(2, −1)","(−3, 5)","(2, 5)"],a:0,no:"C 和 B 在同一條鉛垂線上（x 一樣是 2），和 A 在同一條水平線上（y 一樣是 −1）。"},e:"C ＝ (2, −1)"},
+   {t:"chk",e:"AC ＝ |2 − (−3)| ＝ 5，BC ＝ |5 − (−1)| ＝ 6"},
+   {t:"add",e:"AB^2 ＝ 5^2 ＋ 6^2 ＝ 61"},
+   {t:"ans",e:"AB ＝ g{r{61}}"}
+ ]},
+ {src:"課本 p.108　例 9",q:"A(6, 4)、B(−3, −7)，求 AB。",steps:[
+   {t:"coord",e:"x 差：6 − (−3) ＝ 9；y 差：4 − (−7) ＝ 11",w:"距離公式就是把上一題的方法寫成一行：<strong>x 減 x、y 減 y</strong>。"},
+   {t:"add",e:"AB ＝ r{9^2 ＋ 11^2} ＝ r{81 ＋ 121}"},
+   {t:"ans",e:"AB ＝ g{r{202}}",w:"202＝2×101，沒有平方數，不能再化簡。"}
+ ]},
+ {src:"課本 p.108　例 9 隨堂",q:"C(2, −3)、D(1, 5)，求 CD。",steps:[
+   {t:"coord",ask:{q:"❓ y 坐標差多少？",o:["8","2","−2"],a:0,no:"(−3)−5＝−8，從 −3 走到 5 要走 8 格。平方以後正負都一樣，寫 8 或 −8 都可以。"},e:"x 差：2 − 1 ＝ 1；y 差：(−3) − 5 ＝ −8"},
+   {t:"add",e:"CD ＝ r{1^2 ＋ (−8)^2} ＝ r{1 ＋ 64}"},
+   {t:"ans",e:"CD ＝ g{r{65}}"}
+ ]}
+]},
+
+{id:"secF",h:"F　課本 p.109 自我檢核、p.111 挑錯題",d:"先把錯的想法寫出來，再找出哪裡不對。",items:[
+ {src:"課本 p.109　自我檢核 2",q:"「直角三角形中，若其中兩邊為 3、4，則第三邊必為 5。」對嗎？",steps:[
+   {e:"題目沒有說 3、4 是兩股",w:"「兩邊」不一定是兩股，其中一條可能是斜邊。"},
+   {t:"add",e:"情形一：3、4 都是股 ⟹ 第三邊 ＝ r{9＋16} ＝ 5"},
+   {t:"sub",e:"情形二：4 是斜邊 ⟹ 第三邊 ＝ r{16−9} ＝ r{7}",w:"3 不可能是斜邊，因為斜邊要最長。"},
+   {t:"ans",e:"b{不對}：第三邊是 5 或 r{7}"}
+ ]},
+ {src:"課本 p.109　自我檢核 4",q:"「A(7, 4)、B(3, 2)，則 AB＝$r{(7−4)^2＋(3−2)^2}$。」對嗎？",steps:[
+   {t:"bad",e:"b{(7 − 4)、(3 − 2)}",w:"7 和 4 是<strong>同一個點 A</strong> 的 x 和 y，拿它們相減沒有意義。"},
+   {t:"coord",e:"x 差：7 − 3 ＝ 4；y 差：4 − 2 ＝ 2",w:"要 x 減 x、y 減 y。"},
+   {t:"ans",e:"AB ＝ r{4^2＋2^2} ＝ r{20} ＝ g{2r{5}}，原式 b{不對}"}
+ ]},
+ {src:"課本 p.111　挑錯題",q:"直角三角形 ABC 以 AC 為斜邊，在 AB、BC、AC 上各畫正方形甲、乙、丙。第一位同學說：(甲的面積)²＋(乙的面積)²＝(丙的面積)²；第二位同學說：(甲的周長)²＋(乙的周長)²＝(丙的周長)²。誰對？",steps:[
+   {e:"甲的面積 ＝ AB^2，乙 ＝ BC^2，丙 ＝ AC^2",w:"正方形的面積就是邊長的平方。"},
+   {t:"bad",e:"第一位：面積已經是平方了，b{不用再平方}",w:"畢氏定理說的是 <strong>甲＋乙＝丙</strong>。用 3、4、5 檢查：$9^2＋16^2＝337$，$25^2＝625$，不相等。"},
+   {t:"chk",e:"第二位：周長是 4AB、4BC、4AC"},
+   {t:"chk",e:"(4AB)^2 ＋ (4BC)^2 ＝ 16(AB^2＋BC^2) ＝ 16AC^2 ＝ (4AC)^2",w:"每一項都乘 16，等號還是成立。用 3、4、5 檢查：$12^2＋16^2＝400＝20^2$ ✓。"},
+   {t:"ans",e:"第一位 b{錯誤}，第二位 g{正確}"}
+ ]}
+]}
+];
+/* 第一行有標籤或提問的題目，前面補一行「題目」，提問才會出現 */
+SECS.forEach(function(s){s.items.forEach(function(it){if(it.steps[0].t||it.steps[0].ask)it.steps.unshift({e:"看題目",w:"先看清楚題目給了什麼、要求什麼，再按「下一步」。"})})});
+/* ───────── 逐題講解播放器 ───────── */
+const list=document.getElementById("wtList");
+const ALL=[];
+SECS.forEach(function(sec){
+  const h=document.createElement("div");h.className="sec-h";h.id=sec.id;h.textContent=sec.h;list.appendChild(h);
+  const d=document.createElement("p");d.className="sec-d";d.innerHTML=T(sec.d);list.appendChild(d);
+  sec.items.forEach(function(it){ALL.push(it);build(it,list,sec.id+"-"+sec.items.indexOf(it))});
+});
+
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=b[i];b[i]=b[j];b[j]=t}return b}
+
+function build(it,parent,id){
+  it.id=id;
+  const el=document.createElement("div");el.className="wt";
+  el.innerHTML='<div class="wt-top"><span>'+it.src+'</span><span class="ct"></span></div>'+
+    '<div class="wt-q">'+T(it.q)+'</div>'+(it.fig?'<div class="wfig">'+it.fig+'</div>':'')+'<div class="board"></div>'+
+    '<div class="whybox"><div class="wl"></div><div class="wx"></div></div>'+
+    '<div class="ask"><div class="aq"></div><div class="ao"></div><div class="af"></div></div>'+
+    '<div class="ctl"><button class="btn ghost bp">← 上一步</button><button class="btn bn">下一步 →</button>'+
+    '<button class="btn ghost ba">▶ 自動</button></div>'+
+    (it.trap?'<div class="trap">'+T(it.trap)+'</div>':"");
+  parent.appendChild(el);
+  const board=el.querySelector(".board"),wb=el.querySelector(".whybox"),wl=wb.querySelector(".wl"),wx=wb.querySelector(".wx"),
+    ask=el.querySelector(".ask"),bp=el.querySelector(".bp"),bn=el.querySelector(".bn"),ba=el.querySelector(".ba"),
+    trap=el.querySelector(".trap"),ct=el.querySelector(".ct");
+  const S=it.steps, N=S.length;
+  let idx=0, sel=-1, timer=null, asking=false, okMsg="";
+  const answered={};
+  const doneBefore=!!store.done[id];
+  if(doneBefore)S.forEach(function(s,k){if(s.ask)answered[k]=true});
+
+  function lineHTML(k){
+    const s=S[k], tg=s.t?'<span class="tg '+s.t+'">'+TAG[s.t][0]+'</span>':"";
+    return tg+'<span class="ex m">'+M(s.e)+'</span>';
+  }
+  function showWhy(k,extra){
+    const s=S[k];
+    wb.className="whybox"+(s.t==="mul"?" mul":s.t==="add"?" add":s.t==="bad"?" bad":"");
+    wl.textContent=k===0?"題目":("第 "+k+" 步　"+(s.t?TAG[s.t][1]:""));
+    wx.innerHTML=(extra?'<div style="color:var(--green);font-weight:700">'+extra+'</div>':"")+
+      (s.w?T(s.w):(k===0?"按「下一步」開始。":"照上一行的方法往下算。"));
+  }
+  function render(anim){
+    board.innerHTML="";
+    for(let k=0;k<=idx;k++){
+      const ln=document.createElement("div");
+      ln.className="line"+(k===idx?" cur":" old")+(k===sel?" sel":"");
+      if(!(anim&&k===idx))ln.style.animation="none";
+      ln.innerHTML=lineHTML(k);
+      ln.addEventListener("click",function(){stop();sel=(k===idx?-1:k);render(false);showWhy(k)});
+      board.appendChild(ln);
+    }
+    if(sel<0)showWhy(idx,anim?okMsg:"");
+    okMsg="";
+    bp.disabled=idx===0;
+    const fin=idx===N-1;
+    bn.disabled=fin||asking;
+    bn.textContent=fin?"講解完了 ✓":"下一步 →";
+    ba.disabled=fin||asking;
+    ct.textContent=fin?"✓ 看完了":(idx+" / "+(N-1)+" 步");
+    if(fin){
+      el.classList.add("done");if(trap)trap.classList.add("show");
+      if(!store.done[id]){store.done[id]=1;save();prog()}
+    }else if(trap)trap.classList.remove("show");
+  }
+  function openAsk(k){
+    asking=true;stop();
+    const a=S[k].ask;
+    ask.querySelector(".aq").innerHTML=T(a.q);
+    const ao=ask.querySelector(".ao"),af=ask.querySelector(".af");
+    ao.innerHTML="";af.classList.remove("show");
+    shuffle(a.o.map(function(t,j){return{t:t,j:j}})).forEach(function(o){
+      const b=document.createElement("button");b.innerHTML=T(o.t);
+      b.addEventListener("click",function(){
+        if(o.j===a.a){answered[k]=true;asking=false;ask.classList.remove("show");okMsg="✓ 答對了。";idx=k;sel=-1;render(true)}
+        else{b.classList.add("no");af.innerHTML="再想想："+T(a.no);af.classList.add("show")}
+      });
+      ao.appendChild(b);
+    });
+    ask.classList.add("show");
+    bn.disabled=true;ba.disabled=true;
+  }
+  function next(){
+    if(idx>=N-1||asking)return false;
+    const k=idx+1;
+    sel=-1;
+    if(S[k].ask&&!answered[k]){openAsk(k);return false}
+    idx=k;render(true);return true;
+  }
+  function stop(){if(timer){clearInterval(timer);timer=null;ba.textContent="▶ 自動"}}
+  bn.addEventListener("click",function(){stop();next()});
+  bp.addEventListener("click",function(){stop();if(asking){asking=false;ask.classList.remove("show");render(false);return}if(idx>0){idx--;sel=-1;render(false)}});
+  ba.addEventListener("click",function(){
+    if(timer){stop();return}
+    if(!next())return;
+    ba.textContent="❚❚ 暫停";
+    timer=setInterval(function(){if(!next())stop()},2600);
+  });
+  render(false);
+}
+
+function prog(){
+  const n=ALL.length,d=ALL.filter(function(it){return store.done[it.id]}).length;
+  document.getElementById("pfill").style.width=(d/n*100)+"%";
+  document.getElementById("ptext").textContent=d+" / "+n+" 題";
+}
+prog();
+
+
+
+const NS="http://www.w3.org/2000/svg";
+function E(tag,at,txt){const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e}
+
+/* ───────── 0：點點看，哪一條是斜邊 ───────── */
+const HY=[
+ {p:[[60,40],[60,200],[260,200]],r:0+1},
+ {p:[[40,190],[280,190],[200,60]],r:2},
+ {p:[[160,20],[40,200],[280,140]],r:0},
+ {p:[[50,60],[290,60],[110,200]],r:2},
+ {p:[[60,100],[200,20],[250,200]],r:1}
+];
+/* 每一組：p 三個頂點，r＝直角頂點的編號；斜邊是另外兩點連成的那條 */
+(function fixRight(){
+  HY.forEach(function(t){
+    /* 把直角頂點調成真的直角：保留另外兩點，直角點放在以斜邊為直徑的圓上 */
+    const i=t.r,a=t.p[(i+1)%3],b=t.p[(i+2)%3],m=[(a[0]+b[0])/2,(a[1]+b[1])/2],R=Math.hypot(a[0]-b[0],a[1]-b[1])/2;
+    const v=[t.p[i][0]-m[0],t.p[i][1]-m[1]],L=Math.hypot(v[0],v[1])||1;
+    t.p[i]=[m[0]+v[0]/L*R,m[1]+v[1]/L*R];
+  });
+})();
+let hk=0,hyDone=false;
+const hySvg=document.getElementById("hySvg"),hyTxt=document.getElementById("hyTxt"),hyNext=document.getElementById("hyNext");
+function hyDraw(){
+  while(hySvg.firstChild)hySvg.removeChild(hySvg.firstChild);
+  hyDone=false;hyNext.disabled=true;
+  const t=HY[hk],P=t.p,i=t.r;
+  hySvg.appendChild(E("polygon",{points:P.map(q=>q[0].toFixed(1)+","+q[1].toFixed(1)).join(" "),fill:"#eeedfb",stroke:"none"}));
+  /* 直角記號 */
+  const c=P[i],u=P[(i+1)%3],w=P[(i+2)%3];
+  function d(q){const L=Math.hypot(q[0]-c[0],q[1]-c[1]);return[(q[0]-c[0])/L*14,(q[1]-c[1])/L*14]}
+  const du=d(u),dw=d(w);
+  hySvg.appendChild(E("polyline",{points:[[c[0]+du[0],c[1]+du[1]],[c[0]+du[0]+dw[0],c[1]+du[1]+dw[1]],[c[0]+dw[0],c[1]+dw[1]]].map(q=>q.join(",")).join(" "),fill:"none",stroke:"#232026","stroke-width":1.6}));
+  [0,1,2].forEach(function(k){
+    const a=P[k],b=P[(k+1)%3],opp=(k+2)%3;   /* 這條邊對面的頂點 */
+    const vis=E("line",{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:"#4338ca","stroke-width":4,"stroke-linecap":"round"});
+    const hit=E("line",{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:"transparent","stroke-width":26,class:"hitl"});
+    hySvg.appendChild(vis);hySvg.appendChild(hit);
+    hit.addEventListener("click",function(){
+      if(hyDone)return;
+      if(opp===i){vis.setAttribute("stroke","#15803d");vis.setAttribute("stroke-width",7);hyDone=true;hyNext.disabled=hk>=HY.length-1;
+        hyTxt.className="verdict good";hyTxt.innerHTML="<strong>對了。</strong>這一條在直角的正對面，是斜邊。另外兩條夾住直角，都是股。"+(hk>=HY.length-1?"<br>5 個都找到了：<strong>不管三角形怎麼轉，斜邊永遠是直角對面那一條，也是最長的那一條。</strong>":"");}
+      else{vis.setAttribute("stroke","#b03030");hyTxt.className="verdict warn";hyTxt.innerHTML="這一條<strong>碰到直角</strong>（直角記號的一邊），是股。斜邊在直角的<strong>對面</strong>，再找一次。"}
+    });
+  });
+  hyTxt.className="verdict";hyTxt.innerHTML="第 "+(hk+1)+" / "+HY.length+" 個：直角記號在哪裡？點它<strong>對面</strong>的那條邊。";
+}
+hyNext.addEventListener("click",function(){if(hk<HY.length-1){hk++;hyDraw()}});
+hyDraw();
+
+/* ───────── 1：拼圖（課本 p.96、p.114） ───────── */
+const pzA=document.getElementById("pzA"),pzB=document.getElementById("pzB"),pzSvg=document.getElementById("pzSvg"),pzTxt=document.getElementById("pzTxt"),pzBtn=document.getElementById("pzBtn");
+let pzState=0,pzAnim=null,pzT=0;
+function pzGeom(){
+  const a=+pzA.value,b=+pzB.value,n=a+b,s=Math.min(260/n,46),o=20;
+  document.getElementById("pzAt").textContent=a;document.getElementById("pzBt").textContent=b;
+  /* 四個角落的三角形（圖 2 位置）與要平移到圖 1 的位移 */
+  const T=[
+    {p:[[0,0],[a,0],[0,b]],d:[0,a]},        /* 左上 */
+    {p:[[n,0],[n,a],[n-b,0]],d:[0,0]},      /* 右上 */
+    {p:[[n,n],[n-a,n],[n,n-b]],d:[-b,0]},   /* 右下 */
+    {p:[[0,n],[0,n-a],[b,n]],d:[a,-b]}      /* 左下 */
+  ];
+  return {a,b,n,s,o,T};
+}
+function pzDraw(t){
+  const G=pzGeom(),{a,b,n,s,o,T}=G;
+  while(pzSvg.firstChild)pzSvg.removeChild(pzSvg.firstChild);
+  pzSvg.setAttribute("viewBox","0 0 "+(n*s+2*o)+" "+(n*s+2*o+30));
+  const X=x=>o+x*s;
+  pzSvg.appendChild(E("rect",{x:o,y:o,width:n*s,height:n*s,fill:"#fff",stroke:"#232026","stroke-width":2.5}));
+  /* 留白的標示：t 接近 0 顯示 c²，接近 1 顯示 a²、b² */
+  if(t<0.02){
+    const H=[[a,0],[n,a],[b,n],[0,b]];
+    pzSvg.appendChild(E("polygon",{points:H.map(q=>X(q[0])+","+X(q[1])).join(" "),fill:"#fdeeee",stroke:"#b03030","stroke-width":2}));
+    pzSvg.appendChild(E("text",{x:X(n/2),y:X(n/2)+7,"text-anchor":"middle","font-size":20,"font-weight":700,fill:"#b03030"},"c²"));
+  }
+  if(t>0.98){
+    pzSvg.appendChild(E("rect",{x:X(0),y:X(0),width:a*s,height:a*s,fill:"#e8f1f5",stroke:"#1d5b79","stroke-width":2}));
+    pzSvg.appendChild(E("rect",{x:X(a),y:X(a),width:b*s,height:b*s,fill:"#e9f5ec",stroke:"#15803d","stroke-width":2}));
+    pzSvg.appendChild(E("text",{x:X(a/2),y:X(a/2)+7,"text-anchor":"middle","font-size":18,"font-weight":700,fill:"#1d5b79"},"a²"));
+    pzSvg.appendChild(E("text",{x:X(a+b/2),y:X(a+b/2)+7,"text-anchor":"middle","font-size":20,"font-weight":700,fill:"#15803d"},"b²"));
+  }
+  const col=["#f5d79e","#f5d79e","#f5d79e","#f5d79e"];
+  T.forEach(function(tr,k){
+    const dx=tr.d[0]*t,dy=tr.d[1]*t;
+    pzSvg.appendChild(E("polygon",{points:tr.p.map(q=>X(q[0]+dx)+","+X(q[1]+dy)).join(" "),fill:col[k],stroke:"#a15c07","stroke-width":1.6,"stroke-linejoin":"round"}));
+  });
+  /* 邊長標示 */
+  pzSvg.appendChild(E("text",{x:X(a/2),y:o-6,"text-anchor":"middle","font-size":13,fill:"#57525e"},"a"));
+  pzSvg.appendChild(E("text",{x:X(a+b/2),y:o-6,"text-anchor":"middle","font-size":13,fill:"#57525e"},"b"));
+  pzSvg.appendChild(E("text",{x:X(n/2),y:X(n)+24,"text-anchor":"middle","font-size":13,fill:"#57525e"},"大正方形的邊 ＝ a＋b ＝ "+n));
+  const tri=a*b/2;
+  if(t<0.02)pzTxt.innerHTML="四塊三角形放在四個角，<strong>留白是一個斜放的正方形，邊長是斜邊 c</strong>：留白 ＝ c²。<br>大正方形 "+(n*n)+" − 4 塊三角形 "+(4*tri)+" ＝ <strong>"+(n*n-4*tri)+"</strong>。按「換位置」。";
+  else if(t>0.98)pzTxt.innerHTML="同樣四塊三角形，兩塊兩塊拼成長方形，<strong>留白變成兩個正方形</strong>：a² ＋ b² ＝ "+(a*a)+" ＋ "+(b*b)+" ＝ <strong>"+(a*a+b*b)+"</strong>。<br>大正方形一樣大、三角形一樣多，留白當然一樣大：<strong>c² ＝ a² ＋ b²</strong>。";
+  else pzTxt.innerHTML="三角形只有<strong>平移</strong>，沒有變大變小……";
+}
+function pzGo(){
+  if(pzAnim)return;
+  const from=pzState,to=1-pzState,t0=performance.now();
+  pzBtn.disabled=true;
+  function step(now){
+    const k=Math.min(1,(now-t0)/1600),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    pzT=from+(to-from)*e;pzDraw(pzT);
+    if(k<1)pzAnim=requestAnimationFrame(step);
+    else{pzAnim=null;pzState=to;pzBtn.disabled=false;pzBtn.textContent=pzState?"▶ 換回去":"▶ 換位置"}
+  }
+  pzAnim=requestAnimationFrame(step);
+}
+pzBtn.addEventListener("click",pzGo);
+[pzA,pzB].forEach(function(el){el.addEventListener("input",function(){pzDraw(pzState)})});
+pzDraw(0);
+
+
+/* ───────── 判斷題 ───────── */
+const TF=[
+ {e:"直角三角形最長的邊一定是斜邊",a:true,w:"斜邊在最大的角（90°）對面，所以最長。算完答案可以用這一點檢查。"},
+ {e:"兩股是 5、12，斜邊是 17",a:false,w:"$25＋144＝169$，斜邊是 13。17 是 5＋12——邊長不能直接相加。"},
+ {e:"斜邊 13、一股 5，另一股是 12",a:true,w:"$169−25＝144$，$r{144}＝12$。"},
+ {e:"直角三角形兩邊是 3、4，第三邊一定是 5",a:false,w:"如果 4 是斜邊，第三邊是 $r{16−9}＝r{7}$（自我檢核 2）。"},
+ {e:"三邊 6、8、10 的三角形，最大的角是直角",a:true,w:"$36＋64＝100$，符合畢氏定理。就像操繩師的 3、4、5，放大 2 倍。"},
+ {e:"邊長 2 的正三角形，高是 r{3}",a:true,w:"$f{r{3}}{2}×2＝r{3}$。或者：$r{2^2−1^2}＝r{3}$。"},
+ {e:"邊長 r{3} 的正三角形，面積是 f{3}{4}",a:false,w:"$f{r{3}}{4}×(r{3})^2＝f{3r{3}}{4}$，少了 $r{3}$（自我檢核 3）。"},
+ {e:"A(1, 2)、B(4, 6) 的距離是 5",a:true,w:"x 差 3、y 差 4，$r{9＋16}＝5$。"},
+ {e:"A(7, 4)、B(3, 2) 的距離是 r{(7−4)^2＋(3−2)^2}",a:false,w:"要 x 減 x、y 減 y：$r{(7−3)^2＋(4−2)^2}＝r{20}$（自我檢核 4）。"},
+ {e:"直角三角形斜邊上的高 ＝ 兩股相乘 ÷ 斜邊",a:true,w:"面積算兩次：$f{1}{2}×股×股＝f{1}{2}×斜邊×高$（例 3）。"}
+];
+let tq=store.tq||0;const tres=store.tres||[];
+const tfQ=document.getElementById("tfQ"),tfFb=document.getElementById("tfFb"),tfT=document.getElementById("tfT"),tfF=document.getElementById("tfF"),
+  tfNext=document.getElementById("tfNext"),tfDots=document.getElementById("tfDots"),tfNo=document.getElementById("tfNo");
+function tfDraw(){
+  tfDots.innerHTML=TF.map(function(_,k){return'<span class="dot'+(tres[k]===1?" ok":tres[k]===0?" no":k===tq?" now":"")+'"></span>'}).join("");
+  if(tq>=TF.length){
+    const ok=tres.filter(function(x){return x===1}).length;
+    tfNo.textContent="";tfQ.innerHTML='<span style="font-size:19px;font-family:inherit">10 題答完：答對 '+ok+' 題</span>';
+    tfT.style.display=tfF.style.display="none";tfNext.style.display="none";
+    tfFb.className="tf-fb show ok";
+    tfFb.innerHTML=T("記住一句話：<strong>先找直角，直角對面的是斜邊；求斜邊用加，求股用減，最後開根號。</strong><br>答錯的題目，可以回到上面對應的講解再看一次。");
+    return;
+  }
+  tfNo.textContent="第 "+(tq+1)+" / "+TF.length+" 題";
+  tfQ.innerHTML=M(TF[tq].e);
+  tfT.style.display=tfF.style.display="";tfNext.style.display="";
+  tfT.disabled=tfF.disabled=false;tfNext.disabled=true;tfFb.className="tf-fb";
+}
+function tfAns(v){
+  const q=TF[tq],ok=v===q.a;
+  if(tres[tq]==null){tres[tq]=ok?1:0;store.tres=tres;save()}
+  tfT.disabled=tfF.disabled=true;tfNext.disabled=false;
+  tfFb.className="tf-fb show "+(ok?"ok":"no");
+  tfFb.innerHTML="<strong>"+(ok?"答對了。":"不對。")+"這個式子"+(q.a?"成立":"不成立")+"。</strong> "+T(q.w);
+  tfDots.innerHTML=TF.map(function(_,k){return'<span class="dot'+(tres[k]===1?" ok":tres[k]===0?" no":k===tq?" now":"")+'"></span>'}).join("");
+}
+tfT.addEventListener("click",function(){tfAns(true)});
+tfF.addEventListener("click",function(){tfAns(false)});
+tfNext.addEventListener("click",function(){tq++;store.tq=tq;save();tfDraw()});
+tfDraw();
+
+
+document.getElementById("reset").addEventListener("click",function(){
+  try{localStorage.removeItem(KEY)}catch(e){}
+  location.reload();
+});
+})();
+</script>
+</body>
+</html>

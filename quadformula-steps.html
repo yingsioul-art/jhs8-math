@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4-2 課本逐題講解｜配方法與公式解</title>
+<style>
+:root{
+  --paper:#f8f7f4; --ink:#232026; --ink2:#57525e; --line:#dcd8e0;
+  --accent:#4338ca; --accent-soft:#eeedfb;
+  --teal:#0f6b63; --teal-soft:#e6f2f0;
+  --blue:#1d5b79; --blue-soft:#e8f1f5;
+  --green:#15803d; --green-soft:#e9f5ec;
+  --red:#b03030; --red-soft:#fdeeee;
+  --orange:#a15c07; --orange-soft:#fdf2e3;
+  --mul:#6d28d9; --mul-soft:#f1ebfd;
+  --add:#15803d; --add-soft:#e9f5ec;
+  --shadow:0 1px 2px rgba(35,32,38,.06),0 8px 24px rgba(35,32,38,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:17px;line-height:1.85;letter-spacing:.01em}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 120px}
+header{padding:48px 0 26px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:14px}
+h1{font-size:32px;line-height:1.3;margin:0 0 14px}
+.sub{color:var(--ink2);font-size:15px;margin:0}
+.bar{position:sticky;top:0;z-index:50;background:rgba(248,247,244,.95);
+  border-bottom:1px solid var(--line);margin:0 -20px;padding:9px 20px}
+.bar-inner{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--ink2)}
+.track{flex:1;height:5px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .5s}
+.bar b{font-variant-numeric:tabular-nums}
+.toc{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 0}
+.toc a{font-size:13px;text-decoration:none;color:var(--ink2);background:#fff;border:1px solid var(--line);
+  border-radius:99px;padding:3px 11px}
+.toc a:hover{border-color:var(--accent);color:var(--accent)}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+.step{font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.step .n{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;
+  width:20px;height:20px;line-height:20px;text-align:center;margin-right:8px;letter-spacing:0}
+h2{font-size:24px;line-height:1.4;margin:0 0 18px}
+h3{font-size:18px;margin:30px 0 10px}
+p{margin:0 0 16px}
+.dim{color:var(--ink2)}
+em{font-style:normal;background:linear-gradient(transparent 62%,#bfe6c9 62%);font-weight:600;padding:0 1px}
+
+/* ── 數學排版 ── */
+.m{font-family:"Cambria","Times New Roman",Georgia,serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+.m sup{font-size:.68em;vertical-align:super;line-height:0}
+.sq{white-space:nowrap}
+.rad{border-top:1.3px solid currentColor;padding:0 3px 0 1px;margin-left:-1px}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  font-size:.86em;line-height:1.2;margin:0 3px}
+.frac>span:first-child{border-bottom:1.3px solid currentColor;padding:0 4px 1px}
+.frac>span:last-child{padding-top:2px}
+.co{color:var(--orange);font-weight:700}
+.ci{color:var(--blue);font-weight:700}
+.hl{background:#fff1b8;border-radius:4px;padding:0 3px;animation:pop .9s ease}
+@keyframes pop{0%{background:#ffd84d;transform:scale(1.18)}100%{background:#fff1b8;transform:none}}
+.hl{display:inline-block}
+.st{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;opacity:.55}
+.gd{color:var(--green);font-weight:700}
+.bd{color:var(--red);font-weight:700}
+
+/* ── 兩條規則卡 ── */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.rule{background:#fff;border-radius:14px;padding:18px;box-shadow:var(--shadow);border:2px solid}
+.rule.mul{border-color:var(--mul)}
+.rule.add{border-color:var(--add)}
+.rule .rn{font-size:12.5px;letter-spacing:.14em;font-weight:700;margin-bottom:8px}
+.rule.mul .rn{color:var(--mul)} .rule.add .rn{color:var(--add)}
+.rule .rf{font-size:20px;text-align:center;margin:8px 0 10px}
+.rule p{font-size:14.5px;line-height:1.75;margin:0;color:var(--ink2)}
+.rule p strong{color:var(--ink)}
+@media(max-width:600px){.rules{grid-template-columns:1fr}}
+.ytab{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;
+  overflow:hidden;margin:18px 0;font-size:15px}
+.ytab th,.ytab td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:center}
+.ytab th{background:#eef1eb;font-size:13px}
+.ytab tr:last-child td{border-bottom:0}
+.ytab td:first-child{text-align:left;color:var(--ink2);font-size:13.5px}
+.ytab .cmul{background:var(--mul-soft)} .ytab .cadd{background:var(--add-soft)}
+
+/* ── 實驗室 ── */
+.lab{background:linear-gradient(#fff,#fbfcfa);border:1px solid var(--line);border-radius:16px;
+  padding:20px;margin:22px 0;box-shadow:var(--shadow)}
+.lab-t{font-size:12px;letter-spacing:.18em;color:var(--blue);font-weight:700;margin-bottom:12px}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.chip{padding:6px 13px;border:1.5px solid var(--line);background:#fff;border-radius:99px;
+  cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink2)}
+.chip:hover{border-color:var(--ink2)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.duo{grid-template-columns:1fr}}
+.col{border-radius:12px;padding:12px 14px;min-height:150px}
+.col.add{background:var(--add-soft);border:1.5px solid #b7ddc3}
+.col.mul{background:var(--mul-soft);border:1.5px solid #d6c8f5}
+.col h4{margin:0 0 6px;font-size:14px;letter-spacing:.06em}
+.col.add h4{color:var(--add)} .col.mul h4{color:var(--mul)}
+.col .ln{font-size:19px;line-height:2;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+.col .ln.on{opacity:1;transform:none}
+.col .nt{font-size:13.5px;line-height:1.7;color:var(--ink2);margin-top:6px;opacity:0;transition:opacity .5s}
+.col .nt.on{opacity:1}
+.ybar{margin:12px 0 0;font-size:14.5px;background:#fff;border:1px dashed var(--line);border-radius:10px;padding:9px 12px;color:var(--ink2)}
+.vis{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px}
+svg{max-width:100%;height:auto;display:block}
+.seg{transition:opacity .4s}
+.cell{transition:opacity .35s,fill .35s}
+.btn{padding:8px 17px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+  border-radius:99px;cursor:pointer;font-size:14px;font-family:inherit;font-weight:600}
+.btn:hover{opacity:.86}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn:disabled{opacity:.35;cursor:default}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.sl{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+.sl label{font-size:13.5px;color:var(--ink2)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pill{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.pill .lb{font-size:12.5px;color:var(--ink2)}
+.pill .vl{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+.pill.a{border-color:#b7ddc3;background:var(--add-soft)}
+.pill.b{border-color:#edc4c4;background:var(--red-soft)}
+.pill.c{border-color:#d6c8f5;background:var(--mul-soft)}
+.verdict{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:15px;line-height:1.75;
+  background:var(--blue-soft);border:1px solid #cfe0e8}
+
+/* ── 逐題講解卡 ── */
+.sec-h{margin:34px 0 4px;font-size:13px;letter-spacing:.16em;color:var(--teal);font-weight:700}
+.sec-d{font-size:15px;color:var(--ink2);margin:0 0 6px}
+.wt{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:18px 18px 16px;margin:16px 0 22px;box-shadow:var(--shadow)}
+.wt.done{border-color:var(--green)}
+.wt-top{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:12.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:6px}
+.wt-top .ct{color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+.wt.done .wt-top .ct{color:var(--green)}
+.wt-q{font-size:16.5px;margin-bottom:10px}
+.board{border-left:3px solid var(--line);padding:4px 0 4px 12px;margin:6px 0 10px}
+.line{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:9px;cursor:pointer;
+  animation:slide .5s ease both;flex-wrap:wrap}
+@keyframes slide{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+.line .ex{font-size:20px;line-height:2.1;white-space:normal;min-width:0}
+.line .ex .sq,.line .ex .frac{white-space:nowrap}
+.line.old{opacity:.6}
+.line.old .hl{background:transparent;animation:none;padding:0}
+.line.cur{background:#faf9fd}
+.line.sel{outline:2px solid #c9c5f0;opacity:1}
+.tg{flex-shrink:0;font-size:11.5px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:99px;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;white-space:nowrap}
+.tg.mul{background:var(--mul-soft);color:var(--mul);border:1px solid #d6c8f5}
+.tg.add{background:var(--add-soft);color:var(--add);border:1px solid #b7ddc3}
+.tg.simp{background:var(--orange-soft);color:var(--orange);border:1px solid #ecd3ad}
+.tg.rat{background:var(--blue-soft);color:var(--blue);border:1px solid #cfe0e8}
+.tg.exp{background:var(--teal-soft);color:var(--teal);border:1px solid #bcdcd7}
+.tg.ans{background:var(--ink);color:#fff}
+.tg.bad{background:var(--red-soft);color:var(--red);border:1px solid #edc4c4}
+.tg.chk{background:#f3f1f6;color:var(--ink2);border:1px solid var(--line)}
+.whybox{background:var(--accent-soft);border-radius:0 10px 10px 0;border-left:3px solid var(--accent);
+  padding:10px 14px;font-size:15.5px;line-height:1.85;min-height:48px}
+.whybox .wl{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:2px}
+.whybox.mul{background:var(--mul-soft);border-color:var(--mul)} .whybox.mul .wl{color:var(--mul)}
+.whybox.add{background:var(--add-soft);border-color:var(--add)} .whybox.add .wl{color:var(--add)}
+.whybox.bad{background:var(--red-soft);border-color:var(--red)} .whybox.bad .wl{color:var(--red)}
+.ask{display:none;margin-top:12px;border:2px dashed var(--accent);border-radius:12px;padding:12px 14px;background:#fff}
+.ask.show{display:block;animation:slide .4s ease}
+.ask .aq{font-weight:700;font-size:15.5px;margin-bottom:8px}
+.ask .ao{display:flex;flex-direction:column;gap:7px}
+.ask button{font:inherit;font-size:15.5px;text-align:left;padding:9px 13px;border:1.5px solid var(--line);
+  border-radius:10px;background:#fff;cursor:pointer;color:inherit}
+.ask button:hover{border-color:var(--ink2)}
+.ask button.no{border-color:var(--red);background:var(--red-soft)}
+.ask .af{font-size:14.5px;margin-top:8px;color:var(--red);display:none}
+.ask .af.show{display:block}
+.trap{display:none;margin-top:12px;background:#fdf8e8;border:1px dashed #e3d5a4;border-radius:10px;
+  padding:10px 14px;font-size:14.5px;line-height:1.8;color:#5c4d20}
+.trap.show{display:block;animation:slide .4s ease}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+/* ── 判斷題 ── */
+.tf{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:20px;margin:20px 0;box-shadow:var(--shadow)}
+.tf-q{font-size:24px;text-align:center;margin:10px 0 14px}
+.tf-b{display:flex;gap:10px;justify-content:center}
+.tf-b button{font:inherit;font-size:16px;font-weight:700;padding:10px 26px;border-radius:99px;border:2px solid var(--line);background:#fff;cursor:pointer}
+.tf-b button:hover{border-color:var(--ink2)}
+.tf-fb{display:none;margin-top:14px;padding:12px 14px;border-radius:10px;font-size:15.5px;line-height:1.85}
+.tf-fb.show{display:block;animation:slide .3s ease}
+.tf-fb.ok{background:var(--green-soft);border:1px solid #b7ddc3}
+.tf-fb.no{background:var(--red-soft);border:1px solid #edc4c4}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:6px}
+.dot{width:20px;height:6px;border-radius:99px;background:var(--line)}
+.dot.ok{background:var(--green)} .dot.no{background:var(--red)} .dot.now{background:var(--teal)}
+
+.note{background:var(--blue-soft);border:1px solid #cfe0e8;border-radius:12px;padding:14px 18px;margin:18px 0;font-size:15.5px}
+.note p:last-child{margin:0}
+/* ── 為什麼 √2×√3＝√6 ── */
+.w6h{font-size:12px;letter-spacing:.16em;color:var(--mul);font-weight:700;margin-bottom:10px}
+.w6cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.w6cols{grid-template-columns:1fr}}
+.w6c{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.w6c .lb{font-size:13px;color:var(--ink2);margin-bottom:4px}
+.w6c .ln{font-size:19px;line-height:2;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+.w6c .ln.on{opacity:1;transform:none}
+.w6c .ln small{font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif;font-size:13px;color:var(--ink2)}
+.w6v{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:15px;line-height:1.75;background:var(--green-soft);
+  border:1px solid #b7ddc3;opacity:0;transition:opacity .5s}
+.w6v.on{opacity:1}
+.stage{position:relative;height:150px;margin:6px 0 4px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tok{position:absolute;top:0;left:0;display:flex;align-items:center;justify-content:center;
+  font-family:"Cambria","Times New Roman",Georgia,serif;transition:transform .7s cubic-bezier(.4,0,.2,1),opacity .5s}
+.tok.card{height:54px;border-radius:11px;font-size:21px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.tok.c2{background:#e8f1f5;border:2px solid #1d5b79;color:#1d5b79}
+.tok.c3{background:#fdf2e3;border:2px solid #a15c07;color:#a15c07}
+.tok.c6{background:var(--green-soft);border:2px solid var(--green);color:var(--green)}
+.tok.sym{height:54px;font-size:22px;color:var(--ink2)}
+.cap{background:var(--mul-soft);border-left:3px solid var(--mul);border-radius:0 10px 10px 0;padding:10px 14px;
+  font-size:15.5px;line-height:1.85;min-height:76px}
+.cap .wl{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--mul);margin-bottom:2px}
+.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:8px 16px;
+  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:22px}
+footer{padding:30px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<style>
+/* 4-2 的標籤顏色 */
+.tf-q.m,.srt-q.m{white-space:normal;font-size:21px;line-height:1.7}
+.tg.sqr{background:var(--blue-soft);color:var(--blue);border:1px solid #cfe0e8}
+.tg.mv{background:#f3f1f6;color:var(--ink2);border:1px solid var(--line)}
+.tg.dv{background:var(--teal-soft);color:var(--teal);border:1px solid #bcdcd7}
+.tg.plus{background:var(--orange-soft);color:var(--orange);border:1px solid #ecd3ad}
+.tg.pf{background:var(--mul-soft);color:var(--mul);border:1px solid #d6c8f5}
+.tg.abc{background:var(--blue-soft);color:var(--blue);border:1px solid #cfe0e8}
+.tg.dis{background:var(--orange-soft);color:var(--orange);border:1px solid #ecd3ad}
+.tg.fml{background:var(--add-soft);color:var(--add);border:1px solid #b7ddc3}
+.whybox.pf{background:var(--mul-soft);border-color:var(--mul)} .whybox.pf .wl{color:var(--mul)}
+.whybox.plus,.whybox.dis{background:var(--orange-soft);border-color:var(--orange)} .whybox.plus .wl,.whybox.dis .wl{color:var(--orange)}
+.rules3{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
+.rule.pf{border-color:var(--teal)} .rule.pf .rn{color:var(--teal)}
+.rule.dis{border-color:var(--orange)} .rule.dis .rn{color:var(--orange)}
+.rule .rf{white-space:normal;line-height:1.8}
+.srt-q{font-size:24px;text-align:center;margin:10px 0 14px}
+.srt-b{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.srt-b button{font:inherit;font-size:15px;font-weight:700;padding:8px 14px;border-radius:99px;border:2px solid var(--line);background:#fff;cursor:pointer}
+.srt-b button:hover{border-color:var(--ink2)}
+.srt-b button.no{border-color:var(--red);background:var(--red-soft)}
+.srt-b button.ok{border-color:var(--green);background:var(--green-soft)}
+</style>
+<style id="sitenav-css">
+.sitenav{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+ padding:10px 0 12px;margin:0 0 6px;border-bottom:1px solid rgba(0,0,0,.08);font-size:13.5px;scrollbar-width:none}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav a{flex:0 0 auto;text-decoration:none;color:#4b5563;background:#fff;border:1px solid rgba(0,0,0,.12);
+ border-radius:99px;padding:4px 12px;line-height:1.6;white-space:nowrap}
+.sitenav a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav a.home{font-weight:700;color:#5b4bdb;border-color:#5b4bdb;background:#fff}
+.sitenav a.now{background:#5b4bdb;color:#fff;border-color:#5b4bdb;font-weight:700}
+.sitenav .sep{flex:0 0 auto;color:#9ca3af;padding:0 2px}
+.sitenav-b{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:34px 0 8px}
+.sitenav-b a{text-decoration:none;color:#374151;background:#fff;border:1px solid rgba(0,0,0,.14);border-radius:12px;
+ padding:12px 14px;line-height:1.5;font-size:14.5px;display:flex;flex-direction:column;justify-content:center}
+.sitenav-b a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav-b a small{font-size:11.5px;color:#9ca3af;letter-spacing:.08em}
+.sitenav-b a.next{text-align:left}
+.sitenav-b a.homeb{justify-content:center;text-align:center;font-weight:700;color:#5b4bdb;border-color:#5b4bdb}
+.sitenav-b span{display:block}
+@media(max-width:640px){.sitenav{flex-wrap:wrap;overflow:visible;gap:6px 5px;font-size:13px}.sitenav a{padding:3px 10px}}
+@media(max-width:520px){.sitenav-b{grid-template-columns:1fr 1fr}.sitenav-b a.homeb{grid-column:1/-1;order:-1}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="wrap">
+
+<!-- SITENAV:top 由 _add_site_nav.py 產生，勿手改 -->
+<nav class="sitenav" aria-label="站內導覽"><a class="home" href="index.html">八年級數學自學站</a><span class="sep">·</span><a class="" href="multiply.html">1-1 乘法公式</a><a class="" href="polynomial.html">1-2 多項式加減</a><a class="" href="division.html">1-3 多項式乘除</a><a class="" href="sqrt.html">2-1 平方根</a><a class="" href="radical.html">2-2 根式運算</a><a class="" href="pythag.html">2-3 畢氏定理</a><a class="" href="factor.html">3-1 提公因式與乘法公式</a><a class="" href="cross.html">3-2 十字交乘法</a><a class="" href="quadfactor.html">4-1 因式分解解方程式</a><a class="now" href="quadformula.html">4-2 配方法與公式解</a><a class="" href="quadapply.html">4-3 應用問題</a><span class="sep">·</span><a class="" href="exam-sections.html">段考・照節次練</a><a class="" href="exam.html">段考・整卷模擬</a></nav>
+<!-- /SITENAV:top -->
+
+<header>
+  <div class="kicker">八年級上 · 第四章 4-2 配方法與公式解 · 課本逐題講解</div>
+  <h1>配方，就是幫正方形補上缺的那一角</h1>
+  <p class="sub">4-1 的方程式都拆得開。這一節的 <span class="m" data-m="x^2+2x−1＝0"></span> 拆不開，要先<strong>配成完全平方</strong>，再開根號。<br>
+  每一行算式前面有一個小標籤：<span class="tg sqr">開根號</span> 是用平方根的概念；<span class="tg mv">移項</span>；<span class="tg dv">同除</span> 是讓 x² 係數變 1；<span class="tg plus">兩邊同加</span> 是補上 (p/2)²；<span class="tg pf">配成平方</span>；<span class="tg abc">a、b、c</span> 是認出係數；<span class="tg dis">判別式</span> 是先算 b²−4ac；<span class="tg fml">代公式</span>。</p>
+  <div class="toc">
+    <a href="#what">補成正方形</a><a href="#rules">三種方法</a><a href="#lab">判別式</a><a href="#secA">A 平方根</a><a href="#secB">B 配方法</a>
+    <a href="#secC">C 公式解</a><a href="#secD">D 自我評量與挑錯</a><a href="#quiz">判斷 10 題</a>
+  </div>
+</header>
+
+<div class="bar"><div class="bar-inner"><span>講解看完</span><div class="track"><div class="fill" id="pfill"></div></div><b id="ptext">0 / 0</b></div></div>
+
+<!-- ══ 0 補成正方形 ══ -->
+<section id="what">
+  <div class="step"><span class="n">0</span>先看一個圖</div>
+  <h2>x²＋6x：一個正方形加一條長條，差一角就是正方形</h2>
+  <p>x² 是邊長 x 的正方形，6x 是長 x、寬 6 的長條。選一題，按「下一步」。</p>
+  <div class="lab">
+    <div class="lab-t">拼拼看 ── 把長條切一半，補上缺角</div>
+    <div class="chips" id="tlChips"></div>
+    <div class="vis"><svg id="tlSvg" viewBox="0 0 320 300" role="img" aria-label="把 x 平方和長條補成正方形"></svg></div>
+    <div class="btnrow"><button class="btn" id="tlBtn">下一步 →</button></div>
+    <div class="verdict" id="tlTxt"></div>
+  </div>
+  <div class="note"><p>📌 長條寬 p，切一半是 <span class="m" data-m="f{p}{2}"></span>，缺的角是 <span class="m" data-m="(f{p}{2})^2"></span>。所以 <span class="m" data-m="x^2+px+(f{p}{2})^2＝(x+f{p}{2})^2"></span>——這就是課本 p.171 的結論。</p></div>
+</section>
+
+<!-- ══ 1 三種方法 ══ -->
+<section id="rules">
+  <div class="step"><span class="n">1</span>先看這一張</div>
+  <h2>這一節的三種方法，其實是同一件事</h2>
+  <div class="rules3">
+    <div class="rule mul">
+      <div class="rn">方法一：平方根概念（p.168–169）</div>
+      <div class="rf m" data-m="(x+3)^2＝16 → x+3＝±4 → x＝1 或 −7"></div>
+      <p>一邊是<strong>平方</strong>、另一邊是數字，就直接開根號。記得 <strong>±</strong>，兩個解。</p>
+    </div>
+    <div class="rule add">
+      <div class="rn">方法二：配方法（p.170–175）</div>
+      <div class="rf m" data-m="x^2+2x−2＝0 → x^2+2x+1^2＝2+1^2 → (x+1)^2＝3"></div>
+      <p>不是平方，就<strong>補成平方</strong>：x² 係數變 1 → 常數移到右邊 → 兩邊同加 (p/2)² → 配成平方 → 回到方法一。</p>
+    </div>
+    <div class="rule pf">
+      <div class="rn">方法三：公式解（p.176–181）</div>
+      <div class="rf m" data-m="ax^2+bx+c＝0 → x＝f{−b±r{b^2−4ac}}{2a}"></div>
+      <p>把方法二用 a、b、c 做一次，得到的公式。先<strong>移項成 ＝0</strong>，連正負號抄 a、b、c，先算 b²−4ac。</p>
+    </div>
+    <div class="rule dis">
+      <div class="rn">判別式：還沒解，先知道有幾個解（p.177）</div>
+      <div class="rf m" data-m="b^2−4ac＞0 兩個　＝0 重根　＜0 無解"></div>
+      <p>它就是配方後右邊那個數的「正負號」：右邊正的，開得出兩個；是 0，只有一個；負的，開不出來。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 判別式 ══ -->
+<section id="lab">
+  <div class="step"><span class="n">★</span>動手看</div>
+  <h2>還沒解，先判斷有幾個解</h2>
+  <p>只算 <span class="m" data-m="b^2−4ac"></span>，判斷是兩個相異的根、重根，還是無解。</p>
+  <div class="tf" id="srt">
+    <div class="dots" id="srtDots"></div>
+    <div style="text-align:center;font-size:13px;color:var(--ink2)" id="srtNo"></div>
+    <div class="srt-q m" id="srtQ"></div>
+    <div class="srt-b" id="srtB"></div>
+    <div class="tf-fb" id="srtV"></div>
+    <div class="btnrow" style="justify-content:center"><button class="btn" id="srtNext" disabled>下一題</button></div>
+  </div>
+</section>
+
+<!-- ══ 逐題講解 ══ -->
+<section id="steps">
+  <div class="step"><span class="n">2</span>課本逐題講解</div>
+  <h2>照課本的順序，一題一題拆開</h2>
+  <p>按「下一步」，算式會多寫一行；按「▶ 自動」會自己一步一步播。有 <strong>❓</strong> 的地方會先問你，答對才往下。點已經寫好的任何一行，可以再看一次那一步的說明。</p>
+  <div id="wtList"></div>
+</section>
+
+<!-- ══ 判斷 ══ -->
+<section id="quiz">
+  <div class="step"><span class="n">3</span>最後檢查</div>
+  <h2>對還是錯？10 題（前 5 題是課本 p.183 自我檢核）</h2>
+  <p>先判斷，再看理由。</p>
+  <div class="tf">
+    <div class="dots" id="tfDots"></div>
+    <div style="text-align:center;font-size:13px;color:var(--ink2)" id="tfNo"></div>
+    <div class="tf-q m" id="tfQ"></div>
+    <div class="tf-b"><button id="tfT">⭕ 對</button><button id="tfF">❌ 錯</button></div>
+    <div class="tf-fb" id="tfFb"></div>
+    <div class="btnrow" style="justify-content:center"><button class="btn" id="tfNext" disabled>下一題</button></div>
+  </div>
+  <div style="text-align:center"><button class="reset" id="reset">清除這一頁的進度，重新看一次</button></div>
+</section>
+
+<!-- SITENAV:bottom 由 _add_site_nav.py 產生，勿手改 -->
+<div class="sitenav-b"><a class="prev" href="quadformula.html"><small>← 上一頁</small><span>4-2 配方法與公式解</span></a><a class="homeb" href="index.html">回八年級首頁</a><a class="next" href="quadapply.html"><small>下一頁 →</small><span>4-3 應用問題</span></a></div>
+<!-- /SITENAV:bottom -->
+
+<footer>
+  國中數學八上自學站 · 第四章 4-2 配方法與公式解 · 課本逐題講解<br>
+  題目依康軒版第三冊 4-2 的例題、隨堂練習、自我評量順序整理
+</footer>
+</div>
+<script>
+(function(){
+"use strict";
+const KEY="jhs8-quadformula-steps-v1";
+let store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.done=store.done||{};
+
+/* 小型數學標記：r{..} 根號、f{分子}{分母} 分數、h{..} 新出現的部分、o{..} 橘色強調、
+   x{..} 刪掉、g{..} 對、b{..} 錯、^2 或 ^{..} 次方 */
+function M(s){
+  let i=0;
+  function grp(){i++;let o="";while(i<s.length&&s[i]!=="}")o+=one();i++;return o}
+  function one(){
+    const c=s[i];
+    if("rfhoxgb".indexOf(c)>=0&&s[i+1]==="{"){
+      i++;const a=grp();
+      switch(c){
+        case"r":return'<span class="sq">√<span class="rad">'+a+'</span></span>';
+        case"f":{const d=grp();return'<span class="frac"><span>'+a+'</span><span>'+d+'</span></span>'}
+        case"h":return'<span class="hl">'+a+'</span>';
+        case"o":return'<span class="co">'+a+'</span>';
+        case"x":return'<span class="st">'+a+'</span>';
+        case"g":return'<span class="gd">'+a+'</span>';
+        case"b":return'<span class="bd">'+a+'</span>';
+      }
+    }
+    if(c==="^"){i++;if(s[i]==="{")return"<sup>"+grp()+"</sup>";return"<sup>"+s[i++]+"</sup>"}
+    i++;return c;
+  }
+  let o="";while(i<s.length)o+=one();return o;
+}
+/* 說明文字：$...$ 裡面的是算式 */
+function T(s){return s.replace(/\$([^$]+)\$/g,function(_,x){return'<span class="m">'+M(x)+'</span>'})}
+document.querySelectorAll("[data-m]").forEach(function(el){el.innerHTML=M(el.getAttribute("data-m"))});
+
+const TAG={
+  sqr:["開根號","開根號：括號整塊是某個數的平方根，記得 ±"],
+  mv:["移項","移項：讓平方或 x 的項單獨留在左邊"],
+  dv:["同除","同除：讓 x² 的係數變成 1"],
+  plus:["兩邊同加","兩邊同加 (p/2)²：補上缺的那一角"],
+  pf:["配成平方","配成完全平方：x²±px＋(p/2)²＝(x±p/2)²"],
+  abc:["a、b、c","認出 a、b、c：先移項成 ＝0，連正負號一起抄"],
+  dis:["判別式","判別式：先算 b²−4ac，看是正、0、還是負"],
+  fml:["代公式","代公式：x＝(−b±√(b²−4ac))÷2a"],
+  exp:["乘開","乘開或化簡"],
+  ans:["答","答案"],
+  bad:["✗ 錯","錯在哪裡"],
+  chk:["檢查","檢查一下"]
+};
+
+/* ───────── 課本題目 ───────── */
+const SECS=[
+{id:"secA",h:"A　利用平方根概念解　課本 p.168–169",d:"一邊是<strong>平方</strong>、一邊是數字：括號整塊開根號，記得 <strong>±</strong>。平方不是單獨一邊時，先移項。",items:[
+ {src:"課本 p.168　例 1 (1)",q:"解 $x^2＝25$",steps:[
+   {e:"x^2 ＝ 25",w:"x 是「平方等於 25 的數」，也就是 25 的平方根（學習時光機：$b^2＝a$ 就稱 b 是 a 的平方根）。"},
+   {t:"sqr",ask:{q:"❓ 平方是 25 的數有幾個？",o:["兩個：5 和 −5","一個：5","沒有"],a:0,no:"$(−5)^2＝25$ 也成立。"},e:"x ＝ ±r{25} ＝ ±5"},
+   {t:"ans",e:"x ＝ g{5} 或 x ＝ g{−5}"}
+ ]},
+ {src:"課本 p.168　例 1 (2)",q:"解 $(x+3)^2＝16$",steps:[
+   {e:"(x+3)^2 ＝ 16",w:"把 $(x+3)$ 看成一整塊：這一塊的平方是 16。"},
+   {t:"sqr",e:"x+3 ＝ ±r{16} ＝ ±4",w:"所以這一塊是 4 或 −4。"},
+   {t:"mv",e:"x ＝ −3 ± 4",w:"3 移到右邊變 −3。"},
+   {t:"ans",e:"x ＝ g{1} 或 x ＝ g{−7}",w:"$−3+4＝1$、$−3−4＝−7$。代回去檢查：$(1+3)^2＝16$ ✓、$(−7+3)^2＝16$ ✓"}
+ ]},
+ {src:"課本 p.168　例 1 (3)",q:"解 $(x+1)^2＝2$",steps:[
+   {e:"(x+1)^2 ＝ 2"},
+   {t:"sqr",e:"x+1 ＝ ±r{2}",w:"2 不是完全平方數，根號留著。"},
+   {t:"ans",e:"x ＝ g{−1±r{2}}",w:"課本 Hint：$−1±r{2}$ 是兩個解，$−1+r{2}$ 和 $−1−r{2}$。按計算機約是 0.414 和 −2.414。"}
+ ]},
+ {src:"課本 p.169　例 1 隨堂 (1)",q:"解 $x^2＝121$",steps:[
+   {e:"x^2 ＝ 121"},
+   {t:"sqr",e:"x ＝ ±r{121} ＝ ±11"},
+   {t:"ans",e:"x ＝ g{11} 或 x ＝ g{−11}"}
+ ]},
+ {src:"課本 p.169　例 1 隨堂 (2)",q:"解 $(x−4)^2＝25$",steps:[
+   {e:"(x−4)^2 ＝ 25"},
+   {t:"sqr",e:"x−4 ＝ ±5"},
+   {t:"mv",ask:{q:"❓ 把 −4 移到右邊，x 等於多少？",o:["$4±5$","$−4±5$"],a:0,no:"左邊是 −4，移過去要變號成 +4。"},e:"x ＝ 4 ± 5"},
+   {t:"ans",e:"x ＝ g{9} 或 x ＝ g{−1}"}
+ ]},
+ {src:"課本 p.169　例 1 隨堂 (3)",q:"解 $(x−2)^2＝3$",steps:[
+   {e:"(x−2)^2 ＝ 3"},
+   {t:"sqr",e:"x−2 ＝ ±r{3}"},
+   {t:"ans",e:"x ＝ g{2±r{3}}"}
+ ]},
+ {src:"課本 p.169　例 2 (1)",q:"解 $(x+7)^2−3＝0$",steps:[
+   {e:"(x+7)^2 − 3 ＝ 0",w:"平方旁邊還有 −3，不能直接開根號。"},
+   {t:"mv",e:"(x+7)^2 ＝ 3",w:"先把 −3 移到右邊，讓平方單獨留在左邊。"},
+   {t:"sqr",e:"x+7 ＝ ±r{3}"},
+   {t:"ans",e:"x ＝ g{−7±r{3}}"}
+ ]},
+ {src:"課本 p.169　例 2 (2)",q:"解 $(2x−3)^2−7＝4$",steps:[
+   {e:"(2x−3)^2 − 7 ＝ 4"},
+   {t:"mv",e:"(2x−3)^2 ＝ 11",w:"−7 移到右邊：$4+7＝11$。"},
+   {t:"sqr",e:"2x−3 ＝ ±r{11}"},
+   {t:"mv",e:"2x ＝ 3 ± r{11}"},
+   {t:"ans",e:"x ＝ g{f{3±r{11}}{2}}",w:"最後兩邊除以 2，分子<strong>整個</strong>除以 2。也可以寫成 $f{3}{2}±f{r{11}}{2}$。"}
+ ]},
+ {src:"課本 p.169　例 2 隨堂 (1)",q:"解 $(x−3)^2−23＝0$",steps:[
+   {e:"(x−3)^2 − 23 ＝ 0"},
+   {t:"mv",e:"(x−3)^2 ＝ 23"},
+   {t:"sqr",e:"x−3 ＝ ±r{23}"},
+   {t:"ans",e:"x ＝ g{3±r{23}}"}
+ ]},
+ {src:"課本 p.169　例 2 隨堂 (2)",q:"解 $(3x+5)^2−15＝2$",steps:[
+   {e:"(3x+5)^2 − 15 ＝ 2"},
+   {t:"mv",e:"(3x+5)^2 ＝ 17"},
+   {t:"sqr",e:"3x+5 ＝ ±r{17}"},
+   {t:"mv",e:"3x ＝ −5 ± r{17}"},
+   {t:"ans",e:"x ＝ g{f{−5±r{17}}{3}}"}
+ ]}
+]},
+
+{id:"secB",h:"B　利用配方法解　課本 p.170–175",d:"不是平方，就<strong>補成平方</strong>。x 的係數砍一半再平方，<strong>兩邊同加</strong>。",items:[
+ {src:"課本 p.170",q:"$x^2+2x−1＝0$ 拆不開。可是它和例 1 (3) $(x+1)^2＝2$ 有什麼關係？",steps:[
+   {e:"(x+1)^2 ＝ 2",w:"從例 1 (3) 出發，把它展開。"},
+   {t:"exp",e:"x^2+2x+1 ＝ 2"},
+   {t:"mv",e:"x^2+2x−1 ＝ 0",w:"正是我們想解的方程式！"},
+   {t:"chk",e:"反過來：x^2+2x−1＝0 → x^2+2x+h{1}＝2 → (x+1)^2＝2",w:"所以只要把 $x^2+2x$ <strong>加上 1</strong> 配成 $(x+1)^2$，就能用平方根解。這種把式子配成完全平方式的方法，叫<strong>配方法</strong>。"}
+ ]},
+ {src:"課本 p.171　例 3 (1)",q:"$x^2+12x+□$ 是完全平方式，□ 是多少？",steps:[
+   {e:"a^2 + 2·a·b + b^2 ＝ (a+b)^2",w:"和的平方公式，把 a 對到 x。"},
+   {t:"pf",e:"x^2 + 12x + □ ＝ x^2 + 2·x·h{6} + □",w:"$12x＝2·x·6$，所以 b＝6。"},
+   {t:"ans",e:"□ ＝ 6^2 ＝ g{36}，x^2+12x+36 ＝ (x+6)^2"}
+ ]},
+ {src:"課本 p.171　例 3 (2)",q:"$x^2−7x+□$ 是完全平方式，□ 是多少？",steps:[
+   {e:"a^2 − 2·a·b + b^2 ＝ (a−b)^2",w:"中間是減號，用差的平方。"},
+   {t:"pf",e:"x^2 − 7x + □ ＝ x^2 − 2·x·h{f{7}{2}} + □",w:"7 是奇數，一半是分數 $f{7}{2}$，沒關係。"},
+   {t:"ans",e:"□ ＝ (f{7}{2})^2 ＝ g{f{49}{4}}，＝ (x−f{7}{2})^2",w:"結論：$x^2±px$ 加上 $(f{p}{2})^2$ 就配成 $(x±f{p}{2})^2$。"}
+ ]},
+ {src:"課本 p.171　隨堂 (1)",q:"$x^2−6x+□＝(x−○)^2$",steps:[
+   {e:"x^2 − 6x + □"},
+   {t:"pf",ask:{q:"❓ 6 砍一半是多少？",o:["3","6","12"],a:0,no:"一半就是除以 2。"},e:"x^2 − 2·x·3 + 3^2"},
+   {t:"ans",e:"□ ＝ g{9}，○ ＝ g{3}"}
+ ]},
+ {src:"課本 p.171　隨堂 (2)",q:"$x^2+f{1}{3}x+□＝(x+○)^2$",steps:[
+   {e:"x^2 + f{1}{3}x + □"},
+   {t:"pf",e:"f{1}{3} 的一半 ＝ f{1}{6}",w:"$f{1}{3}÷2＝f{1}{6}$。"},
+   {t:"ans",e:"□ ＝ (f{1}{6})^2 ＝ g{f{1}{36}}，○ ＝ g{f{1}{6}}"}
+ ]},
+ {src:"課本 p.172　例 4 (1)",q:"用配方法解 $x^2+2x−2＝0$",steps:[
+   {e:"x^2 + 2x − 2 ＝ 0"},
+   {t:"mv",e:"x^2 + 2x ＝ 2",w:"常數先移到右邊，左邊只留 $x^2+px$。"},
+   {t:"plus",ask:{q:"❓ 兩邊要同加多少？",o:["$1^2$","$2^2$","只有左邊加 1"],a:0,no:"2 的一半是 1，加 $1^2$；而且<strong>兩邊都要加</strong>，等號才成立。"},e:"x^2 + 2x + h{1^2} ＝ 2 + h{1^2}"},
+   {t:"pf",e:"(x+1)^2 ＝ 3"},
+   {t:"sqr",e:"x+1 ＝ ±r{3}"},
+   {t:"ans",e:"x ＝ g{−1±r{3}}"}
+ ]},
+ {src:"課本 p.172　例 4 (2)",q:"用配方法解 $x^2＝x+1$",steps:[
+   {e:"x^2 ＝ x + 1"},
+   {t:"mv",e:"x^2 − x ＝ 1",w:"x 項移到左邊，常數留右邊。"},
+   {t:"plus",e:"x^2 − x + h{(f{1}{2})^2} ＝ 1 + h{(f{1}{2})^2}",w:"x 的係數是 −1，一半是 $f{1}{2}$。"},
+   {t:"pf",e:"(x − f{1}{2})^2 ＝ f{5}{4}"},
+   {t:"sqr",e:"x − f{1}{2} ＝ ±r{f{5}{4}} ＝ ±f{r{5}}{2}",w:"分子分母分開開根號：$r{4}＝2$。"},
+   {t:"ans",e:"x ＝ g{f{1±r{5}}{2}}"}
+ ]},
+ {src:"課本 p.172　例 4 隨堂 (1)",q:"用配方法解 $x^2−10x+3＝0$",steps:[
+   {e:"x^2 − 10x + 3 ＝ 0"},
+   {t:"mv",e:"x^2 − 10x ＝ −3"},
+   {t:"plus",e:"x^2 − 10x + h{5^2} ＝ −3 + h{5^2}"},
+   {t:"pf",e:"(x−5)^2 ＝ 22"},
+   {t:"ans",e:"x−5 ＝ ±r{22}，x ＝ g{5±r{22}}"}
+ ]},
+ {src:"課本 p.172　例 4 隨堂 (2)",q:"用配方法解 $x^2＝2−5x$",steps:[
+   {e:"x^2 ＝ 2 − 5x"},
+   {t:"mv",e:"x^2 + 5x ＝ 2"},
+   {t:"plus",e:"x^2 + 5x + h{(f{5}{2})^2} ＝ 2 + h{f{25}{4}}"},
+   {t:"pf",e:"(x + f{5}{2})^2 ＝ f{33}{4}",w:"$2＝f{8}{4}$，$f{8}{4}+f{25}{4}＝f{33}{4}$。"},
+   {t:"sqr",e:"x + f{5}{2} ＝ ±f{r{33}}{2}"},
+   {t:"ans",e:"x ＝ g{f{−5±r{33}}{2}}"}
+ ]},
+ {src:"課本 p.173　例 5",q:"用配方法解 $x^2−4x−396＝0$",steps:[
+   {e:"x^2 − 4x − 396 ＝ 0",w:"396 很大，十字要試很多組。用配方法比較快。"},
+   {t:"mv",e:"x^2 − 4x ＝ 396"},
+   {t:"plus",e:"x^2 − 4x + h{2^2} ＝ 396 + h{2^2}"},
+   {t:"pf",e:"(x−2)^2 ＝ 400"},
+   {t:"sqr",e:"x−2 ＝ ±20"},
+   {t:"ans",e:"x ＝ g{22} 或 x ＝ g{−18}"}
+ ]},
+ {src:"課本 p.173　例 5 隨堂",q:"用配方法解 $x^2−6x−891＝0$",steps:[
+   {e:"x^2 − 6x − 891 ＝ 0"},
+   {t:"mv",e:"x^2 − 6x ＝ 891"},
+   {t:"plus",e:"x^2 − 6x + h{3^2} ＝ 891 + h{9}"},
+   {t:"pf",e:"(x−3)^2 ＝ 900"},
+   {t:"sqr",e:"x−3 ＝ ±30"},
+   {t:"ans",e:"x ＝ g{33} 或 x ＝ g{−27}",w:"檢查：$33×(−27)＝−891$ ✓"}
+ ]},
+ {src:"課本 p.174　例 6 (1)",q:"用配方法解 $2x^2−8x+3＝0$",steps:[
+   {e:"2x^2 − 8x + 3 ＝ 0",w:"x² 前面是 2，配方公式只能用在 x² 係數是 1 的時候。"},
+   {t:"dv",e:"x^2 − 4x + f{3}{2} ＝ 0",w:"等號兩邊同除以 2，<strong>每一項</strong>都要除（等量公理）。"},
+   {t:"mv",e:"x^2 − 4x ＝ −f{3}{2}"},
+   {t:"plus",e:"x^2 − 4x + h{2^2} ＝ −f{3}{2} + h{2^2}"},
+   {t:"pf",e:"(x−2)^2 ＝ f{5}{2}"},
+   {t:"sqr",e:"x−2 ＝ ±r{f{5}{2}} ＝ ±f{r{10}}{2}",w:"2-2 的分母有理化：$r{f{5}{2}}＝f{r{5}}{r{2}}＝f{r{10}}{2}$。"},
+   {t:"ans",e:"x ＝ g{2±f{r{10}}{2}}"}
+ ]},
+ {src:"課本 p.174　例 6 (2)",q:"用配方法解 $3x^2+6x＝−3$",steps:[
+   {e:"3x^2 + 6x ＝ −3"},
+   {t:"dv",e:"x^2 + 2x ＝ −1"},
+   {t:"plus",e:"x^2 + 2x + h{1^2} ＝ −1 + h{1^2}"},
+   {t:"pf",e:"(x+1)^2 ＝ 0",w:"右邊是 <strong>0</strong>。"},
+   {t:"ans",e:"x ＝ g{−1}（重根）",w:"0 的平方根只有 0，所以 $x+1＝0$。兩個解都是 −1，叫重根。"}
+ ]},
+ {src:"課本 p.174　例 6 (3)",q:"用配方法解 $−2x^2+4x−7＝0$",steps:[
+   {e:"−2x^2 + 4x − 7 ＝ 0"},
+   {t:"dv",e:"x^2 − 2x + f{7}{2} ＝ 0",w:"同除以 −2，每一項都<strong>變號</strong>。"},
+   {t:"mv",e:"x^2 − 2x ＝ −f{7}{2}"},
+   {t:"plus",e:"x^2 − 2x + h{1^2} ＝ −f{7}{2} + h{1^2}"},
+   {t:"pf",e:"(x−1)^2 ＝ b{−f{5}{2}}",w:"右邊是<strong>負的</strong>。"},
+   {t:"ans",e:"g{無解}",w:"目前學過的任意數，平方都不是負數。找不到 x 能使 $(x−1)^2＜0$。"}
+ ],trap:"📌 例 6 三小題剛好是三種情況：配完右邊是<strong>正數 → 兩個相異的根</strong>、<strong>0 → 重根</strong>、<strong>負數 → 無解</strong>（課本 p.175）。"},
+ {src:"課本 p.175　例 6 隨堂 (1)",q:"用配方法解 $3x^2+4x−1＝0$",steps:[
+   {e:"3x^2 + 4x − 1 ＝ 0"},
+   {t:"dv",e:"x^2 + f{4}{3}x − f{1}{3} ＝ 0"},
+   {t:"mv",e:"x^2 + f{4}{3}x ＝ f{1}{3}"},
+   {t:"plus",e:"x^2 + f{4}{3}x + h{(f{2}{3})^2} ＝ f{1}{3} + h{f{4}{9}}",w:"$f{4}{3}$ 的一半是 $f{2}{3}$。"},
+   {t:"pf",e:"(x + f{2}{3})^2 ＝ f{7}{9}"},
+   {t:"sqr",e:"x + f{2}{3} ＝ ±f{r{7}}{3}"},
+   {t:"ans",e:"x ＝ g{f{−2±r{7}}{3}}"}
+ ]},
+ {src:"課本 p.175　例 6 隨堂 (2)",q:"用配方法解 $7x^2−28x+28＝0$",steps:[
+   {e:"7x^2 − 28x + 28 ＝ 0"},
+   {t:"dv",e:"x^2 − 4x + 4 ＝ 0"},
+   {t:"pf",e:"(x−2)^2 ＝ 0",w:"$x^2−4x+4$ 本身就是完全平方式，不用再加。"},
+   {t:"ans",e:"x ＝ g{2}（重根）"}
+ ]},
+ {src:"課本 p.175　例 6 隨堂 (3)",q:"用配方法解 $−5x^2+10x−14＝0$",steps:[
+   {e:"−5x^2 + 10x − 14 ＝ 0"},
+   {t:"dv",e:"x^2 − 2x + f{14}{5} ＝ 0"},
+   {t:"mv",e:"x^2 − 2x ＝ −f{14}{5}"},
+   {t:"plus",e:"x^2 − 2x + h{1} ＝ −f{14}{5} + h{1}"},
+   {t:"pf",ask:{q:"❓ 右邊 $−f{14}{5}+1$ 是多少？",o:["$−f{9}{5}$","$f{9}{5}$","$−f{19}{5}$"],a:0,no:"$1＝f{5}{5}$，$−f{14}{5}+f{5}{5}＝−f{9}{5}$。"},e:"(x−1)^2 ＝ b{−f{9}{5}}"},
+   {t:"ans",e:"g{無解}"}
+ ]}
+]},
+
+{id:"secC",h:"C　公式解與判別式　課本 p.176–181",d:"把配方法用 a、b、c 做一次，就得到公式。先<strong>移項成 ＝0</strong>，抄 a、b、c 時連正負號，先算 $b^2−4ac$。",items:[
+ {src:"課本 p.176　公式怎麼來的",q:"用配方法解 $ax^2+bx+c＝0$（a＞0）。每一步的說明裡，同時用 $2x^2+5x+1＝0$ 做一次對照（課本 p.176 的表）。",steps:[
+   {e:"ax^2 + bx + c ＝ 0",w:"對照例子：$2x^2+5x+1＝0$。"},
+   {t:"dv",e:"x^2 + f{b}{a}x + f{c}{a} ＝ 0",w:"對照例子：$x^2+f{5}{2}x+f{1}{2}＝0$。兩邊同除以 a，x² 係數變 1。"},
+   {t:"mv",e:"x^2 + f{b}{a}x ＝ −f{c}{a}",w:"對照例子：$x^2+f{5}{2}x＝−f{1}{2}$。"},
+   {t:"plus",e:"x^2 + f{b}{a}x + h{(f{b}{2a})^2} ＝ −f{c}{a} + h{(f{b}{2a})^2}",w:"$f{b}{a}$ 的一半是 $f{b}{2a}$。對照例子加的是 $(f{5}{4})^2$。"},
+   {t:"pf",e:"(x + f{b}{2a})^2 ＝ f{b^2−4ac}{4a^2}",w:"對照例子：$(x+f{5}{4})^2＝f{17}{16}$。右邊通分：$−f{4ac}{4a^2}+f{b^2}{4a^2}＝f{b^2−4ac}{4a^2}$。分母 $4a^2$ 一定是正的，所以右邊的正負，<strong>只看 $b^2−4ac$</strong>。"},
+   {t:"sqr",e:"x + f{b}{2a} ＝ ±f{r{b^2−4ac}}{2a}",w:"這一步要 $b^2−4ac≥0$ 才能開根號。"},
+   {t:"ans",e:"x ＝ g{f{−b±r{b^2−4ac}}{2a}}",w:"對照例子：$x＝f{−5±r{17}}{4}$。這就是<strong>公式解</strong>。a 是負數時直接代也成立（課本 p.180）。"}
+ ]},
+ {src:"課本 p.177–178　判別式",q:"$2x^2+8x−1＝0$ 有幾個解？",steps:[
+   {e:"2x^2 + 8x − 1 ＝ 0"},
+   {t:"abc",e:"a ＝ 2、b ＝ 8、c ＝ −1"},
+   {t:"dis",e:"b^2 − 4ac ＝ 8^2 − 4×2×(−1) ＝ 64 + 8 ＝ 72",w:"c 是負的，$−4×2×(−1)＝+8$。"},
+   {t:"ans",e:"72 ＞ 0 → g{兩個相異的根}",w:"判別式：$＞0$ 兩個相異的根、$＝0$ 重根、$＜0$ 無解。"}
+ ]},
+ {src:"課本 p.178　隨堂",q:"判斷解的情形：(1) $4x^2+4x+1＝0$　(2) $2x^2−9x+5＝0$　(3) $x^2+x+2＝0$",steps:[
+   {e:"每一題都只算 b^2−4ac"},
+   {t:"dis",e:"(1) 4^2 − 4×4×1 ＝ 0 → g{重根}"},
+   {t:"dis",ask:{q:"❓ (2) 的 $b^2$ 是多少？b＝−9。",o:["81","−81"],a:0,no:"$(−9)^2＝(−9)×(−9)＝81$，平方一定不是負的。"},e:"(2) (−9)^2 − 4×2×5 ＝ 81 − 40 ＝ 41 → g{兩個相異的根}"},
+   {t:"dis",e:"(3) 1^2 − 4×1×2 ＝ −7 → g{無解}"}
+ ]},
+ {src:"課本 p.178　例 7 (1)",q:"用公式解解 $5x^2−13x+7＝0$",steps:[
+   {e:"5x^2 − 13x + 7 ＝ 0"},
+   {t:"abc",e:"a ＝ 5、b ＝ −13、c ＝ 7"},
+   {t:"dis",e:"b^2 − 4ac ＝ (−13)^2 − 4×5×7 ＝ 169 − 140 ＝ 29 ＞ 0"},
+   {t:"fml",ask:{q:"❓ 公式最前面的 −b 是多少？",o:["13","−13"],a:0,no:"b＝−13，$−b＝−(−13)＝13$。"},e:"x ＝ f{−(−13)±r{29}}{2×5}"},
+   {t:"ans",e:"x ＝ g{f{13±r{29}}{10}}"}
+ ]},
+ {src:"課本 p.178　例 7 (2)",q:"用公式解解 $3x^2+7x＝−2$",steps:[
+   {e:"3x^2 + 7x ＝ −2"},
+   {t:"mv",e:"3x^2 + 7x + 2 ＝ 0",w:"公式要用在「＝0」的樣子，先移項。"},
+   {t:"abc",e:"a ＝ 3、b ＝ 7、c ＝ 2"},
+   {t:"dis",e:"b^2 − 4ac ＝ 49 − 24 ＝ 25"},
+   {t:"fml",e:"x ＝ f{−7±r{25}}{6} ＝ f{−7±5}{6}"},
+   {t:"ans",e:"x ＝ g{−f{1}{3}} 或 x ＝ g{−2}",w:"判別式是完全平方數，答案沒有根號——這題其實也能十字交乘：$(3x+1)(x+2)＝0$。"}
+ ]},
+ {src:"課本 p.179　例 7 隨堂 (1)",q:"用公式解解 $x^2+8x+12＝0$",steps:[
+   {e:"x^2 + 8x + 12 ＝ 0"},
+   {t:"abc",e:"a ＝ 1、b ＝ 8、c ＝ 12"},
+   {t:"dis",e:"b^2 − 4ac ＝ 64 − 48 ＝ 16"},
+   {t:"fml",e:"x ＝ f{−8±4}{2}"},
+   {t:"ans",e:"x ＝ g{−2} 或 x ＝ g{−6}"}
+ ]},
+ {src:"課本 p.179　例 7 隨堂 (2)",q:"用公式解解 $3x^2+5x＝7$",steps:[
+   {e:"3x^2 + 5x ＝ 7"},
+   {t:"mv",e:"3x^2 + 5x − 7 ＝ 0"},
+   {t:"abc",e:"a ＝ 3、b ＝ 5、c ＝ o{−7}",w:"移項後 c 是 <strong>−7</strong>。"},
+   {t:"dis",e:"b^2 − 4ac ＝ 25 − 4×3×(−7) ＝ 25 + 84 ＝ 109"},
+   {t:"ans",e:"x ＝ g{f{−5±r{109}}{6}}"}
+ ]},
+ {src:"課本 p.179　例 8 (1)",q:"用公式解解 $x^2+22x+121＝0$",steps:[
+   {e:"x^2 + 22x + 121 ＝ 0"},
+   {t:"dis",e:"b^2 − 4ac ＝ 22^2 − 4×1×121 ＝ 484 − 484 ＝ 0"},
+   {t:"fml",e:"x ＝ −f{b}{2a} ＝ −f{22}{2}",w:"根號裡是 0，$±0$ 一樣，只剩 $−f{b}{2a}$。"},
+   {t:"ans",e:"x ＝ g{−11}（重根）"}
+ ]},
+ {src:"課本 p.179　例 8 (2)",q:"用公式解解 $2x^2+3x+4＝0$",steps:[
+   {e:"2x^2 + 3x + 4 ＝ 0"},
+   {t:"dis",e:"b^2 − 4ac ＝ 9 − 32 ＝ −23 ＜ 0"},
+   {t:"ans",e:"g{無解}",w:"判別式是負的，就不用代公式了。"}
+ ]},
+ {src:"課本 p.179　例 8 隨堂",q:"(1) $x^2+x+f{1}{4}＝0$　(2) $x^2−4x+5＝0$",steps:[
+   {e:"兩題都先算判別式"},
+   {t:"dis",e:"(1) 1 − 4×1×f{1}{4} ＝ 0 → x ＝ −f{1}{2} g{（重根）}"},
+   {t:"dis",e:"(2) (−4)^2 − 4×1×5 ＝ 16 − 20 ＝ −4 → g{無解}"}
+ ]},
+ {src:"課本 p.180　例 9",q:"用公式解解 $−3x^2−x+3＝0$",steps:[
+   {e:"−3x^2 − x + 3 ＝ 0"},
+   {t:"chk",e:"兩邊同乘 (−1)：3x^2 + x − 3 ＝ 0",w:"讓 a 變正的，比較不容易算錯。"},
+   {t:"abc",e:"a ＝ 3、b ＝ 1、c ＝ −3"},
+   {t:"dis",e:"b^2 − 4ac ＝ 1 + 36 ＝ 37"},
+   {t:"ans",e:"x ＝ g{f{−1±r{37}}{6}}"},
+   {t:"chk",e:"直接代：a＝−3、b＝−1、c＝3 → f{1±r{37}}{−6} ＝ f{−1∓r{37}}{6}",w:"分子分母同乘 −1，± 變成 ∓，兩個解還是同樣兩個。所以 <strong>a 是負數也能直接用公式</strong>：只要 $a≠0$ 且 $b^2−4ac≥0$。"}
+ ]},
+ {src:"課本 p.180　例 9 隨堂",q:"用公式解解 $−9x^2+7x+1＝0$",steps:[
+   {e:"−9x^2 + 7x + 1 ＝ 0"},
+   {t:"chk",e:"9x^2 − 7x − 1 ＝ 0"},
+   {t:"dis",e:"b^2 − 4ac ＝ 49 − 4×9×(−1) ＝ 49 + 36 ＝ 85"},
+   {t:"ans",e:"x ＝ g{f{7±r{85}}{18}}"}
+ ]},
+ {src:"課本 p.181　例 10",q:"$x^2−10x+(5m+10)＝0$ 有重根，求 m 及方程式的解。",steps:[
+   {e:"x^2 − 10x + (5m+10) ＝ 0",w:"c 是整個 $(5m+10)$。"},
+   {t:"dis",e:"有重根 → b^2 − 4ac ＝ 0",w:"反過來用判別式：已經知道解的情形，就知道判別式。"},
+   {t:"exp",e:"(−10)^2 − 4×1×(5m+10) ＝ 100 − 20m − 40 ＝ 0"},
+   {t:"chk",e:"20m ＝ 60，m ＝ 3"},
+   {t:"ans",e:"x^2 − 10x + 25 ＝ (x−5)^2 ＝ 0 → x ＝ g{5}（重根）"}
+ ]},
+ {src:"課本 p.181　例 10 隨堂",q:"$x^2−8x+(3m+7)＝0$ 有兩個相異的根，求 m 的最大整數值。",steps:[
+   {e:"x^2 − 8x + (3m+7) ＝ 0"},
+   {t:"dis",ask:{q:"❓ 「兩個相異的根」，判別式要怎樣？",o:["$＞0$","$＝0$","$≥0$"],a:0,no:"$＝0$ 是重根，不算「相異」。"},e:"b^2 − 4ac ＞ 0"},
+   {t:"exp",e:"64 − 4(3m+7) ＝ 64 − 12m − 28 ＝ 36 − 12m ＞ 0"},
+   {t:"chk",e:"12m ＜ 36，m ＜ 3"},
+   {t:"ans",e:"m 的最大整數值 ＝ g{2}",w:"m 不能等於 3（那時是重根）。"}
+ ]}
+]},
+
+{id:"secD",h:"D　自我評量與挑錯題　課本 p.184–185",d:"綜合練習。先想：<strong>這題用哪一種方法最快？</strong>",items:[
+ {src:"課本 p.184　自我評量 1",q:"(1) $x^2+18x+＿＿＝(x+＿＿)^2$　(2) $x^2−x+＿＿＝(x−＿＿)^2$",steps:[
+   {e:"砍一半，再平方"},
+   {t:"pf",e:"(1) 18 ÷ 2 ＝ 9 → x^2+18x+g{81} ＝ (x+g{9})^2"},
+   {t:"pf",e:"(2) 1 ÷ 2 ＝ f{1}{2} → x^2−x+g{f{1}{4}} ＝ (x−g{f{1}{2}})^2"}
+ ]},
+ {src:"課本 p.184　自我評量 2 (2)",q:"解 $(3x−2)^2−16＝0$",steps:[
+   {e:"(3x−2)^2 − 16 ＝ 0"},
+   {t:"mv",e:"(3x−2)^2 ＝ 16"},
+   {t:"sqr",e:"3x−2 ＝ ±4"},
+   {t:"ans",e:"3x ＝ 6 或 3x ＝ −2 → x ＝ g{2} 或 x ＝ g{−f{2}{3}}"}
+ ]},
+ {src:"課本 p.184　自我評量 2 (3)",q:"解 $2x^2−8x−1792＝0$",steps:[
+   {e:"2x^2 − 8x − 1792 ＝ 0",w:"常數很大，又有公因數 2 → 先除，再配方（例 5、例 6 的做法）。"},
+   {t:"dv",e:"x^2 − 4x − 896 ＝ 0"},
+   {t:"mv",e:"x^2 − 4x ＝ 896"},
+   {t:"plus",e:"x^2 − 4x + h{4} ＝ 896 + h{4}"},
+   {t:"pf",e:"(x−2)^2 ＝ 900"},
+   {t:"ans",e:"x−2 ＝ ±30 → x ＝ g{32} 或 x ＝ g{−28}"}
+ ]},
+ {src:"課本 p.184　自我評量 2 (4)",q:"解 $3x^2+5x+1＝0$",steps:[
+   {e:"3x^2 + 5x + 1 ＝ 0"},
+   {t:"dis",e:"b^2 − 4ac ＝ 25 − 12 ＝ 13"},
+   {t:"ans",e:"x ＝ g{f{−5±r{13}}{6}}"}
+ ]},
+ {src:"課本 p.184　自我評量 2 (5)",q:"解 $9x^2+4＝12x$",steps:[
+   {e:"9x^2 + 4 ＝ 12x"},
+   {t:"mv",e:"9x^2 − 12x + 4 ＝ 0"},
+   {t:"dis",e:"b^2 − 4ac ＝ 144 − 144 ＝ 0"},
+   {t:"ans",e:"x ＝ f{12}{18} ＝ g{f{2}{3}}（重根）",w:"也就是 $(3x−2)^2＝0$。"}
+ ]},
+ {src:"課本 p.184　自我評量 2 (6)",q:"解 $−5x^2+2x−3＝0$",steps:[
+   {e:"−5x^2 + 2x − 3 ＝ 0"},
+   {t:"chk",e:"5x^2 − 2x + 3 ＝ 0"},
+   {t:"dis",e:"b^2 − 4ac ＝ 4 − 60 ＝ −56 ＜ 0"},
+   {t:"ans",e:"g{無解}"}
+ ]},
+ {src:"課本 p.185　自我評量 3",q:"$mx^2−5x+1＝0$ 是一元二次方程式且無解，求 m 的最小整數值。",steps:[
+   {e:"mx^2 − 5x + 1 ＝ 0，a ＝ m"},
+   {t:"dis",e:"無解 → (−5)^2 − 4×m×1 ＜ 0"},
+   {t:"chk",e:"25 − 4m ＜ 0，m ＞ f{25}{4} ＝ 6.25"},
+   {t:"ans",e:"m 的最小整數值 ＝ g{7}"}
+ ]},
+ {src:"課本 p.185　挑錯題（小翊）",q:"小翊用配方法解 $x^2+3x−1＝0$：$x^2+3x＝1$，$x^2+3x+3^2＝1+3^2$，$(x+3)^2＝10$……錯在哪？",steps:[
+   {e:"x^2 + 3x ＝ 1",w:"移項這一步是對的。"},
+   {t:"bad",e:"x^2 + 3x + b{3^2} ＝ 1 + 3^2",w:"錯在這一行：要加的是 3 的<strong>一半</strong>的平方，不是 $3^2$。檢查：$(x+3)^2＝x^2+6x+9$，中間是 6x，不是 3x。"},
+   {t:"plus",e:"x^2 + 3x + h{(f{3}{2})^2} ＝ 1 + h{f{9}{4}}"},
+   {t:"pf",e:"(x + f{3}{2})^2 ＝ f{13}{4}"},
+   {t:"ans",e:"x ＝ g{f{−3±r{13}}{2}}"}
+ ]},
+ {src:"課本 p.185　挑錯題（小妍）",q:"小妍用公式解同一題：$x＝f{−3±r{3^2−4×1×1}}{2×1}＝f{−3±r{5}}{2}$。錯在哪？",steps:[
+   {e:"x^2 + 3x − 1 ＝ 0：a＝1、b＝3、c＝o{−1}"},
+   {t:"bad",e:"r{3^2 − 4×1×b{1}}",w:"錯在這裡：c 是 <strong>−1</strong>，她抄成 1。"},
+   {t:"dis",e:"3^2 − 4×1×(−1) ＝ 9 + 4 ＝ 13"},
+   {t:"ans",e:"x ＝ g{f{−3±r{13}}{2}}",w:"和配方法算出來一樣。兩種方法答案要一致，可以互相檢查。"}
+ ]}
+]}
+];
+/* ───────── 逐題講解播放器 ───────── */
+const list=document.getElementById("wtList");
+const ALL=[];
+SECS.forEach(function(sec){
+  const h=document.createElement("div");h.className="sec-h";h.id=sec.id;h.textContent=sec.h;list.appendChild(h);
+  const d=document.createElement("p");d.className="sec-d";d.innerHTML=T(sec.d);list.appendChild(d);
+  sec.items.forEach(function(it){ALL.push(it);build(it,list,sec.id+"-"+sec.items.indexOf(it))});
+});
+
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=b[i];b[i]=b[j];b[j]=t}return b}
+
+function build(it,parent,id){
+  it.id=id;
+  const el=document.createElement("div");el.className="wt";
+  el.innerHTML='<div class="wt-top"><span>'+it.src+'</span><span class="ct"></span></div>'+
+    '<div class="wt-q">'+T(it.q)+'</div><div class="board"></div>'+
+    '<div class="whybox"><div class="wl"></div><div class="wx"></div></div>'+
+    '<div class="ask"><div class="aq"></div><div class="ao"></div><div class="af"></div></div>'+
+    '<div class="ctl"><button class="btn ghost bp">← 上一步</button><button class="btn bn">下一步 →</button>'+
+    '<button class="btn ghost ba">▶ 自動</button></div>'+
+    (it.trap?'<div class="trap">'+T(it.trap)+'</div>':"");
+  parent.appendChild(el);
+  const board=el.querySelector(".board"),wb=el.querySelector(".whybox"),wl=wb.querySelector(".wl"),wx=wb.querySelector(".wx"),
+    ask=el.querySelector(".ask"),bp=el.querySelector(".bp"),bn=el.querySelector(".bn"),ba=el.querySelector(".ba"),
+    trap=el.querySelector(".trap"),ct=el.querySelector(".ct");
+  const S=it.steps, N=S.length;
+  let idx=0, sel=-1, timer=null, asking=false, okMsg="";
+  const answered={};
+  const doneBefore=!!store.done[id];
+  if(doneBefore)S.forEach(function(s,k){if(s.ask)answered[k]=true});
+
+  function lineHTML(k){
+    const s=S[k], tg=s.t?'<span class="tg '+s.t+'">'+TAG[s.t][0]+'</span>':"";
+    return tg+'<span class="ex m">'+M(s.e)+'</span>';
+  }
+  function showWhy(k,extra){
+    const s=S[k];
+    wb.className="whybox"+(s.t==="pf"?" pf":s.t==="plus"?" plus":s.t==="dis"?" dis":s.t==="bad"?" bad":"");
+    wl.textContent=k===0?"題目":("第 "+k+" 步　"+(s.t?TAG[s.t][1]:""));
+    wx.innerHTML=(extra?'<div style="color:var(--green);font-weight:700">'+extra+'</div>':"")+
+      (s.w?T(s.w):(k===0?"按「下一步」開始。":"照上一行的方法往下算。"));
+  }
+  function render(anim){
+    board.innerHTML="";
+    for(let k=0;k<=idx;k++){
+      const ln=document.createElement("div");
+      ln.className="line"+(k===idx?" cur":" old")+(k===sel?" sel":"");
+      if(!(anim&&k===idx))ln.style.animation="none";
+      ln.innerHTML=lineHTML(k);
+      ln.addEventListener("click",function(){stop();sel=(k===idx?-1:k);render(false);showWhy(k)});
+      board.appendChild(ln);
+    }
+    if(sel<0)showWhy(idx,anim?okMsg:"");
+    okMsg="";
+    bp.disabled=idx===0;
+    const fin=idx===N-1;
+    bn.disabled=fin||asking;
+    bn.textContent=fin?"講解完了 ✓":"下一步 →";
+    ba.disabled=fin||asking;
+    ct.textContent=fin?"✓ 看完了":(idx+" / "+(N-1)+" 步");
+    if(fin){
+      el.classList.add("done");if(trap)trap.classList.add("show");
+      if(!store.done[id]){store.done[id]=1;save();prog()}
+    }else if(trap)trap.classList.remove("show");
+  }
+  function openAsk(k){
+    asking=true;stop();
+    const a=S[k].ask;
+    ask.querySelector(".aq").innerHTML=T(a.q);
+    const ao=ask.querySelector(".ao"),af=ask.querySelector(".af");
+    ao.innerHTML="";af.classList.remove("show");
+    shuffle(a.o.map(function(t,j){return{t:t,j:j}})).forEach(function(o){
+      const b=document.createElement("button");b.innerHTML=T(o.t);
+      b.addEventListener("click",function(){
+        if(o.j===a.a){answered[k]=true;asking=false;ask.classList.remove("show");okMsg="✓ 答對了。";idx=k;sel=-1;render(true)}
+        else{b.classList.add("no");af.innerHTML="再想想："+T(a.no);af.classList.add("show")}
+      });
+      ao.appendChild(b);
+    });
+    ask.classList.add("show");
+    bn.disabled=true;ba.disabled=true;
+  }
+  function next(){
+    if(idx>=N-1||asking)return false;
+    const k=idx+1;
+    sel=-1;
+    if(S[k].ask&&!answered[k]){openAsk(k);return false}
+    idx=k;render(true);return true;
+  }
+  function stop(){if(timer){clearInterval(timer);timer=null;ba.textContent="▶ 自動"}}
+  bn.addEventListener("click",function(){stop();next()});
+  bp.addEventListener("click",function(){stop();if(asking){asking=false;ask.classList.remove("show");render(false);return}if(idx>0){idx--;sel=-1;render(false)}});
+  ba.addEventListener("click",function(){
+    if(timer){stop();return}
+    if(!next())return;
+    ba.textContent="❚❚ 暫停";
+    timer=setInterval(function(){if(!next())stop()},2600);
+  });
+  render(false);
+}
+
+function prog(){
+  const n=ALL.length,d=ALL.filter(function(it){return store.done[it.id]}).length;
+  document.getElementById("pfill").style.width=(d/n*100)+"%";
+  document.getElementById("ptext").textContent=d+" / "+n+" 題";
+}
+prog();
+
+
+const NS="http://www.w3.org/2000/svg";
+function E(tag,at,txt){const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e}
+
+/* ───────── 0：x²＋px 補成正方形 ───────── */
+const TLS=[2,6,8];
+let tlK=1,tlS=0;
+const tlSvg=document.getElementById("tlSvg"),tlBtn=document.getElementById("tlBtn"),tlTxt=document.getElementById("tlTxt"),tlChips=document.getElementById("tlChips");
+tlChips.innerHTML=TLS.map(function(p,i){return'<button class="chip'+(i===tlK?" on":"")+'" data-i="'+i+'">'+M("x^2+"+p+"x")+'</button>'}).join("");
+tlChips.querySelectorAll(".chip").forEach(function(b){b.addEventListener("click",function(){
+  tlK=+b.dataset.i;tlS=0;tlChips.querySelectorAll(".chip").forEach(function(c,j){c.classList.toggle("on",j===tlK)});tlDraw()})});
+function tlDraw(){
+  while(tlSvg.firstChild)tlSvg.removeChild(tlSvg.firstChild);
+  const p=TLS[tlK],h=p/2,X=120,u=14,P=p*u,H=h*u,ox=34,oy=30;
+  const W=Math.max(320,ox+(tlS===0?X+P:X+H)+16),Hh=oy+(tlS===0?X:X+H)+28;
+  tlSvg.setAttribute("viewBox","0 0 "+W+" "+Hh);
+  function R(x,y,w,hh,f,s,l,dash){const g=E("g",{});g.appendChild(E("rect",{x:x,y:y,width:w,height:hh,fill:f,stroke:s,"stroke-width":1.6,"stroke-dasharray":dash?"5 4":"none"}));
+    if(l&&Math.min(w,hh)>13)g.appendChild(E("text",{x:x+w/2,y:y+hh/2+5,"text-anchor":"middle","font-size":Math.min(16,Math.min(w,hh)*.5),"font-weight":700,fill:s,"font-family":"Cambria,Georgia,serif"},l));tlSvg.appendChild(g)}
+  function L(x,y,t,a){tlSvg.appendChild(E("text",{x:x,y:y,"text-anchor":a||"middle","font-size":14,"font-weight":700,fill:"#4338ca","font-family":"Cambria,Georgia,serif"},t))}
+  R(ox,oy,X,X,"#f4c2c2","#b03030","x²");L(ox+X/2,oy-10,"x");L(ox-8,oy+X/2+5,"x","end");
+  if(tlS===0){R(ox+X,oy,P,X,"#cfe0f5","#1d5b79",p+"x");L(ox+X+P/2,oy-10,String(p))}
+  else{
+    R(ox+X,oy,H,X,"#cfe0f5","#1d5b79",h+"x");R(ox,oy+X,X,H,"#cfe0f5","#1d5b79",h+"x");
+    L(ox+X+H/2,oy-10,String(h));L(ox-8,oy+X+H/2+5,String(h),"end");
+    if(tlS>=2){R(ox+X,oy+X,H,H,"#fbe7a1","#a15c07",String(h*h));
+      tlSvg.appendChild(E("rect",{x:ox,y:oy,width:X+H,height:X+H,fill:"none",stroke:"#15803d","stroke-width":3}));L(ox+(X+H)/2,oy+X+H+20,"邊長 x＋"+h)}
+    else R(ox+X,oy+X,H,H,"#ffffff","#a15c07","?",true);
+  }
+  tlBtn.textContent=tlS>=2?"↺ 重來":"下一步 →";
+  tlTxt.innerHTML=tlS===0?"一個 "+M("x^2")+" 加一條長 x、寬 "+p+" 的長條，拼不成正方形。按「下一步」把長條<strong>從中間切開</strong>。"
+    :tlS===1?"兩半各寬 "+h+"，貼在右邊和下面。<strong>右下角缺一塊 "+h+"×"+h+"＝"+(h*h)+"</strong>。"
+    :"補上 "+(h*h)+"：<span class='m'>"+M("x^2+"+p+"x+h{"+h+"^2}＝(x+"+h+")^2")+"</span>。方程式要配方時，<strong>右邊也要加 "+(h*h)+"</strong>。";
+}
+tlBtn.addEventListener("click",function(){tlS=tlS>=2?0:tlS+1;tlDraw()});
+tlDraw();
+
+/* ───────── 判別式分類 ───────── */
+const KINDS=["兩個相異的根","重根","無解"];
+const SRT=[
+ {e:"x^2−6x+5＝0",a:0,w:"$36−20＝16＞0$。其實是 $(x−1)(x−5)＝0$。"},
+ {e:"x^2−6x+9＝0",a:1,w:"$36−36＝0$，$(x−3)^2＝0$。"},
+ {e:"x^2−6x+10＝0",a:2,w:"$36−40＝−4＜0$。"},
+ {e:"2x^2+3x−5＝0",a:0,w:"c 是負的：$9−4×2×(−5)＝9+40＝49＞0$。"},
+ {e:"x^2+4＝0",a:2,w:"b＝0：$0−16＜0$。也可以直接看：$x^2＝−4$ 不可能。"},
+ {e:"4x^2−20x+25＝0",a:1,w:"$400−400＝0$，$(2x−5)^2＝0$。"},
+ {e:"−x^2+3x+1＝0",a:0,w:"a＝−1、c＝1：$9−4×(−1)×1＝13＞0$。a、c 一正一負，判別式一定是正的。"},
+ {e:"3x^2−x+2＝0",a:2,w:"$1−24＝−23＜0$。"}
+];
+let sq=store.sq||0;const sres=store.sres||[];
+const srtQ=document.getElementById("srtQ"),srtB=document.getElementById("srtB"),srtV=document.getElementById("srtV"),
+  srtNext=document.getElementById("srtNext"),srtDots=document.getElementById("srtDots"),srtNo=document.getElementById("srtNo");
+function srtDotsDraw(){srtDots.innerHTML=SRT.map(function(_,k){return'<span class="dot'+(sres[k]===1?" ok":sres[k]===0?" no":k===sq?" now":"")+'"></span>'}).join("")}
+function srtDraw(){
+  srtDotsDraw();
+  if(sq>=SRT.length){
+    const ok=sres.filter(function(x){return x===1}).length;
+    srtNo.textContent="";srtQ.innerHTML='<span style="font-size:19px;font-family:inherit">8 題判斷完：一次就選對 '+ok+' 題</span>';
+    srtB.innerHTML="";srtNext.style.display="none";
+    srtV.className="tf-fb show ok";srtV.innerHTML=T("記住：<strong>先移項成 ＝0，連正負號抄 a、b、c，算 $b^2−4ac$</strong>。b 是負的，平方還是正的；c 是負的，$−4ac$ 會變成加。");return;
+  }
+  srtNo.textContent="第 "+(sq+1)+" / "+SRT.length+" 題";
+  srtQ.innerHTML=M(SRT[sq].e);srtV.className="tf-fb";srtNext.disabled=true;srtNext.style.display="";
+  srtB.innerHTML="";
+  KINDS.forEach(function(t,j){
+    const b=document.createElement("button");b.textContent=t;
+    b.addEventListener("click",function(){
+      if(!srtNext.disabled)return;
+      const q=SRT[sq];
+      if(j===q.a){
+        b.classList.add("ok");if(sres[sq]==null){sres[sq]=1;store.sres=sres;save()}
+        srtV.className="tf-fb show ok";srtV.innerHTML="<strong>對，"+t+"。</strong> "+T(q.w);srtNext.disabled=false;
+      }else{
+        b.classList.add("no");if(sres[sq]==null){sres[sq]=0;store.sres=sres;save()}
+        srtV.className="tf-fb show no";srtV.innerHTML="<strong>不是「"+t+"」，再選一次。</strong>先寫出 a、b、c，再算 "+M("b^2−4ac")+"。";
+      }
+      srtDotsDraw();
+    });
+    srtB.appendChild(b);
+  });
+}
+srtNext.addEventListener("click",function(){sq++;store.sq=sq;save();srtDraw()});
+srtDraw();
+
+/* ───────── 判斷題 ───────── */
+const TF=[
+ {e:"方程式 x^2＝49 的解為 ±r{7}",a:false,w:"平方是 49 的數是 ±7。$(r{7})^2＝7$，不是 49（p.183 自我檢核 1）。"},
+ {e:"4x^2+12x+9 是完全平方式",a:true,w:"$(2x)^2+2·2x·3+3^2＝(2x+3)^2$（p.183 自我檢核 2）。"},
+ {e:"若 x^2−10x+□ 是完全平方式，則 □＝−25",a:false,w:"□ 是 $(f{10}{2})^2＝25$，平方一定是正的：$x^2−10x+25＝(x−5)^2$（p.183 自我檢核 3）。"},
+ {e:"方程式 4x^2+5x+3＝0 解的情形為無解",a:true,w:"$b^2−4ac＝25−48＝−23＜0$，無解（p.183 自我檢核 4）。"},
+ {e:"方程式 2x^2+3x−3＝0 的解為 x＝f{−3±r{3^2−4×2×(−3)}}{2}",a:false,w:"分母要是 <strong>2a＝4</strong>，不是 2。正確是 $f{−3±r{33}}{4}$（p.183 自我檢核 5）。"},
+ {e:"(x+5)^2＝−9 有兩個解：x＝−5±3",a:false,w:"右邊是負的，平方不會是負的 → <strong>無解</strong>（會考 114-13 也考這個）。"},
+ {e:"x^2+8x 要配成完全平方式，要加 16",a:true,w:"8 的一半是 4，$4^2＝16$：$x^2+8x+16＝(x+4)^2$。"},
+ {e:"解 3x^2−12x＝6 時，可以先兩邊同除以 3 再配方",a:true,w:"$x^2−4x＝2$ → $(x−2)^2＝6$ → $x＝2±r{6}$。等量公理：兩邊同除以同一個不是 0 的數，等號還成立。"},
+ {e:"x^2−2x−5＝0 用公式解，a＝1、b＝2、c＝5",a:false,w:"要連正負號：<strong>b＝−2、c＝−5</strong>。$b^2−4ac＝4+20＝24$，$x＝1±r{6}$。"},
+ {e:"若 x^2+6x+k＝0 有重根，則 k＝9",a:true,w:"重根 → $36−4k＝0$ → k＝9，方程式是 $(x+3)^2＝0$（例 10 的做法）。"}
+];
+let tq=store.tq||0;const tres=store.tres||[];
+const tfQ=document.getElementById("tfQ"),tfFb=document.getElementById("tfFb"),tfT=document.getElementById("tfT"),tfF=document.getElementById("tfF"),
+  tfNext=document.getElementById("tfNext"),tfDots=document.getElementById("tfDots"),tfNo=document.getElementById("tfNo");
+function tfDraw(){
+  tfDots.innerHTML=TF.map(function(_,k){return'<span class="dot'+(tres[k]===1?" ok":tres[k]===0?" no":k===tq?" now":"")+'"></span>'}).join("");
+  if(tq>=TF.length){
+    const ok=tres.filter(function(x){return x===1}).length;
+    tfNo.textContent="";tfQ.innerHTML='<span style="font-size:19px;font-family:inherit">10 題答完：答對 '+ok+' 題</span>';
+    tfT.style.display=tfF.style.display="none";tfNext.style.display="none";
+    tfFb.className="tf-fb show ok";
+    tfFb.innerHTML=T("記住一句話：<strong>配方加「一半的平方」、兩邊都加；公式先移項成 ＝0、連正負號抄 a、b、c。</strong><br>答錯的題目，可以回到上面對應的講解再看一次。");
+    return;
+  }
+  tfNo.textContent="第 "+(tq+1)+" / "+TF.length+" 題";
+  tfQ.innerHTML=M(TF[tq].e);
+  tfT.style.display=tfF.style.display="";tfNext.style.display="";
+  tfT.disabled=tfF.disabled=false;tfNext.disabled=true;tfFb.className="tf-fb";
+}
+function tfAns(v){
+  const q=TF[tq],ok=v===q.a;
+  if(tres[tq]==null){tres[tq]=ok?1:0;store.tres=tres;save()}
+  tfT.disabled=tfF.disabled=true;tfNext.disabled=false;
+  tfFb.className="tf-fb show "+(ok?"ok":"no");
+  tfFb.innerHTML="<strong>"+(ok?"答對了。":"不對。")+"這個說法"+(q.a?"正確":"不正確")+"。</strong> "+T(q.w);
+  tfDots.innerHTML=TF.map(function(_,k){return'<span class="dot'+(tres[k]===1?" ok":tres[k]===0?" no":k===tq?" now":"")+'"></span>'}).join("");
+}
+tfT.addEventListener("click",function(){tfAns(true)});
+tfF.addEventListener("click",function(){tfAns(false)});
+tfNext.addEventListener("click",function(){tq++;store.tq=tq;save();tfDraw()});
+tfDraw();
+
+document.getElementById("reset").addEventListener("click",function(){
+  try{localStorage.removeItem(KEY)}catch(e){}
+  location.reload();
+});
+})();
+</script>
+</body>
+</html>

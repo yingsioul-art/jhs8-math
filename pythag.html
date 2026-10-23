@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>畢氏定理｜八上 2-3</title>
+<style>
+:root{
+  --paper:#f8f7f4; --ink:#232026; --ink2:#57525e; --line:#dcd8e0;
+  --accent:#4338ca; --accent-soft:#eeedfb;
+  --teal:#0f6b63; --teal-soft:#e6f2f0;
+  --blue:#1d5b79; --blue-soft:#e8f1f5;
+  --green:#15803d; --green-soft:#e9f5ec;
+  --red:#b03030; --red-soft:#fdeeee;
+  --shadow:0 1px 2px rgba(35,32,38,.06),0 8px 24px rgba(35,32,38,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:17px;line-height:1.85;letter-spacing:.01em}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 120px}
+
+header{padding:56px 0 28px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:14px}
+h1{font-size:34px;line-height:1.3;margin:0 0 14px;letter-spacing:-.01em}
+.sub{color:var(--ink2);font-size:15px;margin:0}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.tag{font-size:12px;padding:4px 11px;border:1px solid var(--line);border-radius:99px;color:var(--ink2);background:#fff}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(247,248,245,.95);
+  border-bottom:1px solid var(--line);margin:0;padding:10px 20px}  /* .bar 在 .wrap 外面，原本的 -20px 會讓手機頁面多出 20px 橫向捲動（10/23 修） */
+.bar-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.track{flex:1;height:5px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.bar b{font-size:12px;color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+.step{font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.step .n{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;
+  width:20px;height:20px;line-height:20px;text-align:center;margin-right:8px;letter-spacing:0}
+h2{font-size:25px;line-height:1.4;margin:0 0 20px;letter-spacing:-.01em}
+h3{font-size:19px;margin:34px 0 12px}
+h4{font-size:16.5px;margin:24px 0 8px;color:var(--teal)}
+p{margin:0 0 18px}
+.lead{font-size:19px;line-height:1.9}
+.dim{color:var(--ink2)}
+.big{font-size:22px;font-weight:700;line-height:1.6;margin:26px 0}
+em{font-style:normal;background:linear-gradient(transparent 62%,#bfe6c9 62%);font-weight:600;padding:0 1px}
+.eq{font-family:"Cambria","Times New Roman",Georgia,serif;font-size:1.06em;font-variant-numeric:tabular-nums}
+.eq sup{font-size:.68em;vertical-align:super;line-height:0}
+.eq.blk{display:block;text-align:center;font-size:21px;margin:20px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  font-size:.82em;line-height:1.15;margin:0 2px}
+.frac span:first-child{border-bottom:1.3px solid currentColor;padding:0 4px}
+.hl{background:#fff3c4;border-radius:3px;padding:0 3px}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:24px 0;box-shadow:var(--shadow)}
+.quote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 20px;border-radius:0 10px 10px 0;margin:24px 0}
+.quote p:last-child{margin:0}
+.note{background:var(--blue-soft);border:1px solid #cfe0e8;border-radius:12px;padding:18px 20px;margin:24px 0;font-size:16px}
+.note p:last-child{margin:0}
+.note b{color:var(--blue)}
+.aside{background:#fdf8e8;border:1px dashed #e3d5a4;border-radius:12px;padding:16px 18px;margin:24px 0;font-size:15px;color:#5c4d20}
+.aside p:last-child{margin:0}
+
+.fcard{background:#fff;border:2px solid var(--accent);border-radius:14px;padding:20px;margin:16px 0;box-shadow:var(--shadow)}
+.fcard .fname{font-size:13px;letter-spacing:.14em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.fcard .fbody{font-size:21px;text-align:center;margin:10px 0 14px;font-family:"Cambria",Georgia,serif}
+.fcard .fsay{font-size:15.5px;color:var(--ink2);line-height:1.75;margin:0}
+.fcard .fsay strong{color:var(--ink)}
+
+.q{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:24px;margin:26px 0;box-shadow:var(--shadow)}
+.q-src{font-size:12px;letter-spacing:.12em;color:var(--accent);font-weight:700;margin-bottom:12px}
+.q-body{font-size:16.5px;line-height:1.9;margin-bottom:20px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;gap:12px;align-items:center;padding:14px 16px;border:1.5px solid var(--line);
+  border-radius:11px;cursor:pointer;background:#fff;font-size:16px;line-height:1.7;
+  transition:border-color .15s,background .15s;text-align:left;width:100%;font-family:inherit;color:inherit}
+.opt:hover:not(.locked){border-color:var(--ink2);background:#fbfcfa}
+.opt .k{font-weight:700;flex-shrink:0;width:22px;color:var(--ink2)}
+.opt.picked{border-color:var(--ink);border-width:2px}
+.opt.right{border-color:var(--green);background:var(--green-soft)}
+.opt.right .k{color:var(--green)}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.opt.wrong .k{color:var(--red)}
+.opt.locked{cursor:default}
+.fb{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);font-size:16px;display:none}
+.fb.show{display:block;animation:rise .45s ease}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.fb h4{margin:0 0 8px;font-size:15px;letter-spacing:.06em;color:inherit}
+.fb p:last-child{margin:0}
+
+.locked-zone{opacity:.3;pointer-events:none;filter:blur(4px) saturate(.2);user-select:none}
+.revealed{animation:reveal .6s ease both}
+@keyframes reveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.prac{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:22px;margin:26px 0;box-shadow:var(--shadow)}
+.prac-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+  font-size:13px;color:var(--ink2);font-weight:600;gap:10px;flex-wrap:wrap}
+.prac-top .src{color:var(--teal);letter-spacing:.08em}
+.dots{display:flex;gap:5px;margin-bottom:16px;flex-wrap:wrap}
+.dot{width:22px;height:6px;border-radius:99px;background:var(--line);transition:background .3s}
+.dot.done{background:var(--green)}
+.dot.now{background:var(--teal)}
+.prac-q{font-size:17.5px;line-height:2;margin-bottom:8px}
+.prac-hint{font-size:14.5px;color:var(--ink2);margin-bottom:16px;line-height:1.7}
+.prac-fb{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15.5px;line-height:1.8;display:none}
+.prac-fb.show{display:block;animation:rise .3s ease}
+.prac-fb.ok{background:var(--green-soft);border:1px solid #b7ddc3}
+.prac-fb.no{background:var(--red-soft);border:1px solid #edc4c4}
+
+.btn{padding:9px 18px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+  border-radius:99px;cursor:pointer;font-size:14.5px;font-family:inherit;font-weight:600;transition:opacity .15s}
+.btn:hover{opacity:.86}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn:disabled{opacity:.35;cursor:default}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+.lab{background:linear-gradient(#fff,#fbfcfa);border:1px solid var(--line);border-radius:16px;
+  padding:22px;margin:26px 0;box-shadow:var(--shadow)}
+.lab-t{font-size:12px;letter-spacing:.18em;color:var(--blue);font-weight:700;margin-bottom:16px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{padding:7px 14px;border:1.5px solid var(--line);background:#fff;border-radius:99px;
+  cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink2);transition:all .15s}
+.chip:hover{border-color:var(--ink2)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--accent);height:26px}
+.slider-lab{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);margin:6px 0 2px}
+.readout{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.pill{flex:1;min-width:106px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.pill .lb{font-size:12.5px;color:var(--ink2)}
+.pill .vl{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.pill.hi{background:var(--accent-soft);border-color:#b7ddc3}
+.pill.hi .vl{color:var(--accent)}
+.verdict{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15px;line-height:1.7;
+  background:var(--blue-soft);border:1px solid #cfe0e8}
+.verdict.good{background:var(--green-soft);border-color:#b7ddc3}
+.verdict.warn{background:#fdf8e8;border-color:#e3d5a4}
+
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15px;background:#fff;
+  border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#eef1eb;font-weight:700;font-size:13.5px;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:24px -20px;padding:0 20px}
+.scroll table{margin:0;min-width:460px}
+
+.flow{counter-reset:s;list-style:none;padding:0;margin:14px 0 0}
+.flow li{counter-increment:s;position:relative;padding:7px 0 7px 40px;font-size:15.5px;line-height:1.7}
+.flow li::before{content:counter(s);position:absolute;left:0;top:8px;width:25px;height:25px;
+  background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:12.5px;font-weight:700}
+details.pre{background:#fff;border:1px solid var(--line);border-radius:11px;margin-bottom:9px;overflow:hidden}
+details.pre summary{padding:13px 16px;cursor:pointer;font-size:16px;font-weight:600;list-style:none;
+  display:flex;align-items:center;gap:10px}
+details.pre summary::-webkit-details-marker{display:none}
+details.pre summary::before{content:"?";flex-shrink:0;width:22px;height:22px;border-radius:50%;
+  background:var(--line);color:var(--ink2);display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700}
+details.pre[open] summary::before{content:"\2713";background:var(--green);color:#fff}
+details.pre[open] summary{border-bottom:1px solid var(--line)}
+details.pre .bd{padding:14px 16px;font-size:15.5px;line-height:1.8;color:var(--ink2)}
+details.pre .bd strong{color:var(--ink)}
+details.pre .bd p{margin:0 0 10px}
+details.pre .bd p:last-child{margin:0}
+
+.done{text-align:center;padding:52px 0 20px}
+.done h2{font-size:27px}
+.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:9px 18px;
+  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:28px}
+footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
+svg{max-width:100%;height:auto;display:block}
+
+/* 原始考題下載 */
+.dl{background:#fff;border:2px solid var(--accent);border-radius:14px;padding:20px 22px;margin:24px 0;text-align:left}
+.dl h4{margin:0 0 8px;font-size:17px;color:var(--ink)}
+.dl p{font-size:15px;line-height:1.8;margin:0 0 14px;color:var(--ink2)}
+.dl a.get{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+  text-decoration:none;padding:11px 20px;border-radius:99px;font-size:15px;font-weight:700;
+  transition:opacity .15s}
+.dl a.get:hover{opacity:.86}
+.dl .meta{font-size:13px;color:var(--ink2);margin:10px 0 0}
+
+/* 完整解法步驟 */
+.sol{margin:20px 0}
+.sstep{display:flex;gap:14px;margin-bottom:20px}
+.sn{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-top:2px}
+.sb{flex:1;min-width:0}
+.sb h4{margin:2px 0 8px;font-size:17px;color:var(--ink)}
+.sb p{font-size:15.5px;line-height:1.85;margin:0 0 10px}
+.sb p:last-child{margin:0}
+.sb p.warn{background:#fdf8e8;border-left:3px solid #e3d5a4;padding:8px 12px;border-radius:0 8px 8px 0;font-size:14.5px}
+
+
+.rad{border-top:1.3px solid currentColor;padding:0 3px 0 1px;margin-left:-1px}
+.frac .rad{border-top-width:1px}
+.prac-q svg,.q-body svg{margin:12px auto 4px}
+.rope-c{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+
+</style>
+<style id="sitenav-css">
+.sitenav{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+ padding:10px 0 12px;margin:0 0 6px;border-bottom:1px solid rgba(0,0,0,.08);font-size:13.5px;scrollbar-width:none}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav a{flex:0 0 auto;text-decoration:none;color:#4b5563;background:#fff;border:1px solid rgba(0,0,0,.12);
+ border-radius:99px;padding:4px 12px;line-height:1.6;white-space:nowrap}
+.sitenav a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav a.home{font-weight:700;color:#5b4bdb;border-color:#5b4bdb;background:#fff}
+.sitenav a.now{background:#5b4bdb;color:#fff;border-color:#5b4bdb;font-weight:700}
+.sitenav .sep{flex:0 0 auto;color:#9ca3af;padding:0 2px}
+.sitenav-b{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:34px 0 8px}
+.sitenav-b a{text-decoration:none;color:#374151;background:#fff;border:1px solid rgba(0,0,0,.14);border-radius:12px;
+ padding:12px 14px;line-height:1.5;font-size:14.5px;display:flex;flex-direction:column;justify-content:center}
+.sitenav-b a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav-b a small{font-size:11.5px;color:#9ca3af;letter-spacing:.08em}
+.sitenav-b a.next{text-align:left}
+.sitenav-b a.homeb{justify-content:center;text-align:center;font-weight:700;color:#5b4bdb;border-color:#5b4bdb}
+.sitenav-b span{display:block}
+@media(max-width:640px){.sitenav{flex-wrap:wrap;overflow:visible;gap:6px 5px;font-size:13px}.sitenav a{padding:3px 10px}}
+@media(max-width:520px){.sitenav-b{grid-template-columns:1fr 1fr}.sitenav-b a.homeb{grid-column:1/-1;order:-1}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-inner">
+  <b id="pnum">0 / 18</b>
+  <div class="track"><div class="fill" id="pfill"></div></div>
+</div></div>
+
+<div class="wrap">
+
+<!-- SITENAV:top 由 _add_site_nav.py 產生，勿手改 -->
+<nav class="sitenav" aria-label="站內導覽"><a class="home" href="index.html">八年級數學自學站</a><span class="sep">·</span><a class="" href="multiply.html">1-1 乘法公式</a><a class="" href="polynomial.html">1-2 多項式加減</a><a class="" href="division.html">1-3 多項式乘除</a><a class="" href="sqrt.html">2-1 平方根</a><a class="" href="radical.html">2-2 根式運算</a><a class="now" href="pythag.html">2-3 畢氏定理</a><a class="" href="factor.html">3-1 提公因式與乘法公式</a><a class="" href="cross.html">3-2 十字交乘法</a><a class="" href="quadfactor.html">4-1 因式分解解方程式</a><a class="" href="quadformula.html">4-2 配方法與公式解</a><a class="" href="quadapply.html">4-3 應用問題</a><span class="sep">·</span><a class="" href="exam-sections.html">段考・照節次練</a><a class="" href="exam.html">段考・整卷模擬</a></nav>
+<!-- /SITENAV:top -->
+
+<header>
+  <div class="kicker">八年級上 · 第二章 2-3 畢氏定理</div>
+  <h1>兩個小正方形，剛好拼成一個大正方形</h1>
+  <p class="sub">直角三角形的兩股是 3 和 4，斜邊一定是 5——因為 <span class='eq'>3<sup>2</sup>＋4<sup>2</sup>＝5<sup>2</sup></span>。<br>整節 2-3 只有一句話：<strong>兩股的平方加起來，等於斜邊的平方</strong>。剩下的，都是在找「直角三角形藏在哪裡」。</p>
+  <div class="meta">
+    <span class="tag">課本 p.94–111</span>
+    <span class="tag">課本練習 12 題</span>
+    <span class="tag">會考挑戰 6 題</span>
+    <span class="tag">約 45 分鐘</span>
+  </div>
+</header>
+
+<!-- ══ 開始之前 ══ -->
+<section>
+  <div class="step">開始之前</div>
+  <h2>這一課會怎麼走</h2>
+  <div class="card">
+    <ol class="flow">
+      <li><strong>先把五件事認熟</strong>：直角三角形的名字、畢氏定理、求第三邊、三角形的高、坐標上兩點的距離</li>
+      <li><strong>兩個實驗</strong>：方格上的三個正方形；古埃及人用 12 個結的繩子拉出直角</li>
+      <li><strong>用課本的隨堂練習動手做</strong>（12 題）</li>
+      <li>重點整理，最後是<strong>會考挑戰 6 題</strong></li>
+      <li>想看每一題怎麼一步一步算，另有 <a href='pythag-steps.html' style='color:var(--accent);font-weight:700'>2-3 課本逐題講解</a></li>
+    </ol>
+  </div>
+  <h3>先確認你知道這些</h3>
+
+  <details class="pre"><summary>2-1 的平方根：√<span class="rad">25</span>＝5、平方表</summary><div class="bd">
+    <p>畢氏定理算出來的是「斜邊的平方」，最後一定要<strong>開根號</strong>才是邊長。<span class="eq">c<sup>2</sup>＝25</span>，所以 <span class="eq">c＝√<span class="rad">25</span>＝5</span>。</p>
+    <p>邊長是正的，所以 <span class="eq">c＝±5</span> 只留 <strong>5</strong>。<strong>1、4、9、16、25、36、49、64、81、100、121、144、169、196、225</strong> 要一眼認得。忘了先回 <a href="sqrt.html" style="color:var(--accent);font-weight:700">2-1</a>。</p>
+  </div></details>
+  <details class="pre"><summary>2-2 的最簡根式：√<span class="rad">32</span>＝4√<span class="rad">2</span></summary><div class="bd">
+    <p>開不盡的時候，答案要寫成最簡根式：<span class="eq">√<span class="rad">72</span>＝√<span class="rad">36×2</span>＝6√<span class="rad">2</span></span>。忘了先回 <a href="radical.html" style="color:var(--accent);font-weight:700">2-2</a>。</p>
+  </div></details>
+  <details class="pre"><summary>七下的直角坐標：點 (x, y)、水平線與鉛垂線</summary><div class="bd">
+    <p>點 <span class="eq">(2, 3)</span>：從原點往右 2、往上 3。<strong>y 坐標一樣</strong>的兩點在同一條水平線上；<strong>x 坐標一樣</strong>的兩點在同一條鉛垂線上。主題 3（p.106–108）會用到。</p>
+  </div></details>
+
+</section>
+
+<!-- ══ 1 概念 ══ -->
+<section>
+  <div class="step"><span class="n">1</span>這一節在教什麼</div>
+
+  <h2>五件事，先認熟</h2>
+
+  <div class="fcard">
+    <div class="fname">① 直角三角形的名字（課本 p.94）</div>
+    <div class="fbody">直角對面的邊 ＝ <strong>斜邊</strong>；夾住直角的兩邊 ＝ <strong>股</strong></div>
+    <p class="fsay">斜邊對著最大的角（90°），所以<strong>斜邊永遠是三邊裡最長的</strong>。<br>
+    兩股一樣長的，叫等腰直角三角形。三角板就是兩種直角三角形。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">② 畢氏定理（課本 p.95–97）</div>
+    <div class="fbody">兩股 a、b，斜邊 c ⟹ <span class="eq">a<sup>2</sup>＋b<sup>2</sup>＝c<sup>2</sup></span></div>
+    <p class="fsay">用圖來說：在三條邊上各畫一個正方形，<strong>兩股上的兩個正方形面積加起來，剛好等於斜邊上的正方形</strong>。<br>
+    例：3、4、5 → <span class="eq">9＋16＝25</span>。常見的還有 5、12、13；7、24、25；8、15、17（課本 p.109）。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">③ 已知兩邊，求第三邊（課本 p.98–99）</div>
+    <div class="fbody">求斜邊：<span class="eq">c<sup>2</sup>＝a<sup>2</sup>＋b<sup>2</sup></span><br>求股：<span class="eq">b<sup>2</sup>＝c<sup>2</sup>−a<sup>2</sup></span></div>
+    <p class="fsay"><strong>第一步永遠是：先找斜邊</strong>（直角對面那一條）。課本 Hint：要先確認想算的第三邊是斜邊還是股。<br>
+    例 1 (3)：斜邊 15、一股 9 → <span class="eq">c<sup>2</sup>＝225−81＝144</span>，<span class="eq">c＝12</span>。用加的會得到 <span class="eq">√<span class="rad">306</span></span>，比斜邊還長，一定錯。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">④ 找出藏起來的直角三角形（課本 p.100–105）</div>
+    <div class="fbody">斜邊上的高：<span class="eq">a×b ＝ c×h</span><br>正三角形（邊長 a）：高 <span class="frac"><span>√<span class="rad">3</span></span><span>2</span></span>a、面積 <span class="frac"><span>√<span class="rad">3</span></span><span>4</span></span>a<sup>2</sup></div>
+    <p class="fsay"><strong>斜邊上的高</strong>：同一個直角三角形的面積，用「兩股」算一次、用「斜邊×高」算一次，兩個一樣大（例 3）。<br>
+    <strong>等腰、正三角形</strong>：從頂點往底邊畫高，剛好切成兩個直角三角形，底邊被分成兩半（例 4、例 5）。<br>
+    <strong>長方形的對角線、靠在牆上的竹竿</strong>：直角就是長方形的角、牆角（例 6、例 7）。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">⑤ 坐標平面上兩點的距離（課本 p.106–108）</div>
+    <div class="fbody">A(x<sub>1</sub>, y<sub>1</sub>)、B(x<sub>2</sub>, y<sub>2</sub>) ⟹ AB ＝ √<span class="rad">(x<sub>1</sub>−x<sub>2</sub>)<sup>2</sup>＋(y<sub>1</sub>−y<sub>2</sub>)<sup>2</sup></span></div>
+    <p class="fsay">從 A 畫水平線、從 B 畫鉛垂線，交點和 A、B 圍成直角三角形：<strong>兩股是「x 差多少」和「y 差多少」</strong>。<br>
+    例 9：A(6, 4)、B(−3, −7)，x 差 9、y 差 11，<span class="eq">AB＝√<span class="rad">81＋121</span>＝√<span class="rad">202</span></span>。<br>
+    同一條水平線或鉛垂線上的兩點，直接相減取絕對值就好（例 8）。</p>
+  </div>
+
+  <h3>先玩一下：方格上的三個正方形</h3>
+  <p>課本 p.95 的問題探索：直角三角形的三條邊上各畫一個正方形。<strong>拉動 a、b，看藍色加綠色是不是剛好等於紅色。</strong></p>
+  <div class="lab">
+    <div class="lab-t">實驗一 ── 三個正方形的面積</div>
+    <div class="slider-lab"><span>股 a（藍色正方形的邊）</span><span id="la">3</span></div>
+    <input type="range" id="sa" min="1" max="8" value="3">
+    <div class="slider-lab"><span>股 b（綠色正方形的邊）</span><span id="lb">4</span></div>
+    <input type="range" id="sb" min="1" max="8" value="4">
+    <svg id="sqv" viewBox="0 0 300 300" role="img" aria-label="直角三角形三邊上的正方形" style="margin:12px auto 0;max-width:340px"></svg>
+    <div class="readout">
+      <div class="pill"><div class="lb">藍 a<sup>2</sup></div><div class="vl" id="va"></div></div>
+      <div class="pill"><div class="lb">綠 b<sup>2</sup></div><div class="vl" id="vb"></div></div>
+      <div class="pill hi"><div class="lb">紅 c<sup>2</sup>（斜邊上的正方形）</div><div class="vl" id="vc"></div></div>
+    </div>
+    <div class="verdict good" id="vsq"></div>
+  </div>
+
+</section>
+
+<!-- ══ 2 歷史 ══ -->
+<section>
+  <div class="step"><span class="n">2</span>古埃及人怎麼拉出直角</div>
+
+  <h2>一條打了 12 個結的繩子</h2>
+  <p class="lead">古埃及的尼羅河每年氾濫，田地的界線都被沖掉。重新畫田，第一件事就是要有<strong>準確的直角</strong>——可是那時候沒有三角板。</p>
+  <p>課本 p.94 說，古埃及有專門測量土地的「操繩師」：繩子上等距離打 12 個結，圍成一圈。三個人各抓一個結拉緊，<strong>拉成 3 格、4 格、5 格</strong>的三角形，3 格和 4 格夾住的那個角就是直角（課本 p.103）。</p>
+  <div class="card">
+    <p style="margin:0">為什麼一定是直角？因為 <span class="eq">3<sup>2</sup>＋4<sup>2</sup>＝9＋16＝25＝5<sup>2</sup></span>。<br>
+    <strong>畢氏定理反過來也對</strong>：三邊剛好符合 <span class="eq">a<sup>2</sup>＋b<sup>2</sup>＝c<sup>2</sup></span>，最長邊對面的角就是直角。課本 p.103 的解答就是用這個道理：三邊符合 3²＋4²＝5²，所以拉出來的角是直角。</p>
+  </div>
+
+  <h3>同一件事，三個地方都發現了</h3>
+  <p><strong>古希臘</strong>：相傳是畢達哥拉斯（約西元前六世紀）和他的學生發現的，所以叫「畢氏定理」。1955 年希臘發行了一張紀念郵票，上面就是 3×3、4×4、5×5 三個棋盤格正方形圍著一個直角三角形（課本 p.97）。</p>
+  <p><strong>古代中國</strong>：更早的《周髀算經》記載了周公和商高的對話，商高說「<strong>勾廣三，股修四，徑隅五</strong>」：短的股（勾）是 3，長的股是 4，斜邊（徑）是 5。所以這個定理也叫<strong>勾股定理</strong>或<strong>商高定理</strong>。</p>
+  <div class="quote"><p>三個不同的文明，都從 <strong>3、4、5</strong> 開始。因為它是<strong>最小的一組整數</strong>能剛好拼成直角三角形的三邊。</p></div>
+
+  <h3>再玩一下：12 個結，怎麼拉才是直角</h3>
+  <p>選一種拉法。<strong>只有三邊符合 a²＋b²＝c² 的那種，最大的角才剛好是 90°。</strong></p>
+  <div class="lab">
+    <div class="lab-t">實驗二 ── 操繩師的繩圈</div>
+    <div class="chips" id="rc"></div>
+    <svg id="rope" viewBox="0 0 320 220" role="img" aria-label="繩圈拉成的三角形" style="margin:6px auto 0;max-width:360px"></svg>
+    <div class="verdict" id="vrope"></div>
+  </div>
+
+</section>
+
+<!-- ══ 3 課本練習 ══ -->
+<section>
+  <div class="step"><span class="n">3</span>動手練</div>
+  <h2>照課本的順序，一題一題來</h2>
+  <p>下面 12 題<strong>全部出自課本 2-3 的隨堂練習</strong>，順序照課本：<em>求第三邊 → 斜邊上的高 → 等腰與正三角形 → 對角線與竹竿 → 坐標上兩點的距離</em>。每一題都先問自己：<strong>斜邊是哪一條？</strong></p>
+
+  <div class="prac">
+    <div class="prac-top"><span class="src" id="pSrc"></span><span id="pNo"></span></div>
+    <div class="dots" id="pDots"></div>
+    <div class="prac-q" id="pQ"></div>
+    <div class="prac-hint" id="pHint"></div>
+    <div class="opts" id="pOpts"></div>
+    <div class="prac-fb" id="pFb"></div>
+    <div class="btnrow"><button class="btn" id="pNext" disabled>下一題</button></div>
+  </div>
+</section>
+
+<!-- ══ 4 重點整理 ══ -->
+<section class="locked-zone" id="z4">
+  <div class="step"><span class="n">4</span>重點整理</div>
+
+  <h2>整節 2-3 收成一張表</h2>
+  <div class="scroll"><table>
+    <tr><th style="width:84px">課本位置</th><th>先備知識</th><th>2-3 新學的</th></tr>
+    <tr><td><b>主題 1</b><br>p.94–99<br>發現畢氏定理</td><td>正方形面積<br>2-1 平方根</td><td>斜邊、股<br><span class="eq">a<sup>2</sup>＋b<sup>2</sup>＝c<sup>2</sup></span><br>求斜邊用加、求股用減</td></tr>
+    <tr><td><b>主題 2</b><br>p.100–105<br>畢氏定理的應用</td><td>三角形面積<br>等腰三角形的對稱軸</td><td>斜邊上的高：<span class="eq">ab＝ch</span><br>正三角形：高 <span class="frac"><span>√<span class="rad">3</span></span><span>2</span></span>a、面積 <span class="frac"><span>√<span class="rad">3</span></span><span>4</span></span>a<sup>2</sup><br>對角線、竹竿、梯子</td></tr>
+    <tr><td><b>主題 3</b><br>p.106–108<br>兩點的距離</td><td>七下直角坐標<br>絕對值</td><td>水平、鉛垂：坐標相減取絕對值<br><span class="eq">AB＝√<span class="rad">(x<sub>1</sub>−x<sub>2</sub>)<sup>2</sup>＋(y<sub>1</sub>−y<sub>2</sub>)<sup>2</sup></span></span></td></tr>
+  </table></div>
+  <h3>三個最容易錯的地方（課本 p.109 自我檢核就是在考這些）</h3>
+  <div class="card"><p><strong>① 沒先找斜邊</strong></p><p style="margin-bottom:0">看到兩個數就「平方相加」是最常見的錯。斜邊是直角對面那一條，<em>求斜邊用加，求股用減</em>。算完檢查：斜邊一定最長。</p></div>
+  <div class="card"><p><strong>② 「兩邊 3、4，第三邊一定是 5」——不對</strong></p><p style="margin-bottom:0">如果 4 是斜邊，第三邊是 <span class="eq">√<span class="rad">16−9</span>＝√<span class="rad">7</span></span>。題目沒說哪條是斜邊，<em>兩種都要想</em>（自我檢核第 2 題）。</p></div>
+  <div class="card"><p><strong>③ 距離公式減錯對象</strong></p><p style="margin-bottom:0">A(7, 4)、B(3, 2)：要 <strong>x 減 x、y 減 y</strong>，<span class="eq">√<span class="rad">(7−3)<sup>2</sup>＋(4−2)<sup>2</sup></span>＝√<span class="rad">20</span>＝2√<span class="rad">5</span></span>。寫成 <span class="eq">(7−4)<sup>2</sup>＋(3−2)<sup>2</sup></span> 是把同一個點的 x、y 拿來減（自我檢核第 4 題）。</p></div>
+  <div class="aside"><p>📌 延伸（課本 p.112 扉選素養）：風箏線拉到最長 25 公尺。人和風箏的水平距離是 24 公尺時，風箏高 <span class="eq">√<span class="rad">625−576</span>＝7</span> 公尺；水平距離 20 公尺時，高 <span class="eq">√<span class="rad">625−400</span>＝15</span> 公尺。<strong>線一樣長，水平距離越短，風箏飛得越高。</strong></p></div>
+
+</section>
+
+<!-- ══ 5 會考挑戰 ══ -->
+<section class="locked-zone" id="z5">
+  <div class="step"><span class="n">5</span>會考挑戰</div>
+  <h2>同樣的東西，考場上怎麼問</h2>
+
+  <p>會考 103～115 年，題庫裡和畢氏定理有關的有 14 題；逐題看過後，<strong>8 題要用到九年級的圓、外心，或要解一元二次方程式</strong>，先不收。剩下 <strong>6 題</strong>只要 2-3 就做得完，其中 4 題題庫標在別的章，是「藏起來的畢氏定理」。順序照課本：求第三邊 → 斜邊上的高 → 等腰三角形 → 坐標。</p>
+  <div class="aside"><p>📌 這 6 題都沒有直接給你一個直角三角形，<strong>要自己找出直角在哪裡</strong>：長方形的角、高、牆角、坐標的水平線和鉛垂線。這就是課本主題 2 一直在練的事。</p></div>
+
+
+  <div class="q">
+    <div class="q-src">會考 103 年 第 3 題</div>
+    <div class="q-body">如圖，梯形 ABCD 中，AD∥BC，E 點在 BC 上，且 AE⊥BC。若 <b class='eq'>AB＝10</b>，<b class='eq'>BE＝8</b>，<b class='eq'>DE＝6√<span class="rad">3</span></b>，則 <b class='eq'>AD</b> 的長度為何？<svg viewBox="0 0 300 135" style="max-width:280px;margin:12px auto 4px" role="img" aria-label="梯形 ABCD"><polygon points="116.0,38.0 217.8,38.0 265.8,110.0 20.0,110.0" fill="#fff" stroke="#232026" stroke-width="1.8" stroke-linejoin="round"/><line x1="116.0" y1="38.0" x2="116.0" y2="110.0" stroke="#232026" stroke-width="1.6"/><line x1="217.8" y1="38.0" x2="116.0" y2="110.0" stroke="#232026" stroke-width="1.6"/><polyline points="116.0,101.0 125.0,101.0 125.0,110.0" fill="none" stroke="#232026" stroke-width="1.3"/><text x="116.0" y="30.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">A</text><text x="217.8" y="30.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">D</text><text x="10.0" y="115.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">B</text><text x="275.8" y="115.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">C</text><text x="116.0" y="128.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">E</text></svg></div>
+    <div class="opts" data-q="0" data-ans="C">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>8</span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>9</span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'>6√<span class="rad">2</span></span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'>6√<span class="rad">3</span></span></span></button>
+    </div>
+    <div class="fb" id="fb0"></div>
+  </div>
+
+  <div class="locked-zone" id="zq1">
+  <div class="q">
+    <div class="q-src">會考 105 年 第 20 題</div>
+    <div class="q-body">如圖，以矩形 ABCD 的 A 為圓心、AD 長為半徑畫弧，交 AB 於 F 點；再以 C 為圓心、CD 長為半徑畫弧，交 AB 於 E 點。若 <b class='eq'>AD＝5</b>，<b class='eq'>CD＝<span class="frac"><span>17</span><span>3</span></span></b>，則 <b class='eq'>EF</b> 的長度為何？<svg viewBox="0 0 190 165" style="max-width:200px;margin:12px auto 4px" role="img" aria-label="矩形 ABCD 與兩段圓弧"><rect x="30.0" y="12.0" width="120.0" height="136.0" fill="#fff" stroke="#232026" stroke-width="1.8"/><path d="M150.0,12.0 A120.0,120.0 0 0 1 30.0,132.0" fill="none" stroke="#4338ca" stroke-width="1.6"/><path d="M150.0,12.0 A136.0,136.0 0 0 0 30.0,84.0" fill="none" stroke="#a15c07" stroke-width="1.6"/><text x="20.0" y="16.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">A</text><text x="160.0" y="16.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">D</text><text x="20.0" y="154.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">B</text><text x="160.0" y="154.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">C</text><text x="20.0" y="89.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">E</text><text x="20.0" y="137.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">F</text></svg></div>
+    <div class="opts" data-q="1" data-ans="A">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>2</span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>3</span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'><span class="frac"><span>2</span><span>3</span></span></span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'><span class="frac"><span>7</span><span>3</span></span></span></span></button>
+    </div>
+    <div class="fb" id="fb1"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="zq2">
+  <div class="q">
+    <div class="q-src">會考 112 年 第 23 題</div>
+    <div class="q-body">如圖，矩形 ABCD 中，<b class='eq'>AB＝6</b>，<b class='eq'>AD＝8</b>，且有一點 P 從 B 點沿著 BD 往 D 點移動。若過 P 點作 AB 的垂線交 AB 於 E 點，過 P 點作 AD 的垂線交 AD 於 F 點，則 <b class='eq'>EF</b> 的長度最小為多少？<svg viewBox="0 0 210 150" style="max-width:230px;margin:12px auto 4px" role="img" aria-label="矩形 ABCD"><rect x="24" y="14" width="160" height="120" fill="#fff" stroke="#232026" stroke-width="1.8"/><line x1="24.0" y1="134.0" x2="184.0" y2="14.0" stroke="#232026" stroke-width="1.6"/><line x1="24.0" y1="62.0" x2="120.0" y2="62.0" stroke="#4338ca" stroke-width="1.6"/><line x1="120.0" y1="14.0" x2="120.0" y2="62.0" stroke="#4338ca" stroke-width="1.6"/><polyline points="24.0,55.0 31.0,55.0 31.0,62.0" fill="none" stroke="#232026" stroke-width="1.3"/><polyline points="113.0,14.0 113.0,21.0 120.0,21.0" fill="none" stroke="#232026" stroke-width="1.3"/><circle cx="120.0" cy="62.0" r="3" fill="#232026"/><text x="14.0" y="18.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">A</text><text x="194.0" y="18.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">D</text><text x="14.0" y="140.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">B</text><text x="194.0" y="140.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">C</text><text x="14.0" y="67.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">E</text><text x="120.0" y="10.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">F</text><text x="124.0" y="80.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">P</text></svg></div>
+    <div class="opts" data-q="2" data-ans="B">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'><span class="frac"><span>14</span><span>5</span></span></span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'><span class="frac"><span>24</span><span>5</span></span></span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'>5</span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'>7</span></span></button>
+    </div>
+    <div class="fb" id="fb2"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="zq3">
+  <div class="q">
+    <div class="q-src">會考 109 年 第 17 題</div>
+    <div class="q-body">如圖，P 點為矩形 ABCD 兩對角線的交點，將 P 點分別以 AD、BC 為對稱軸畫出對稱點 Q、R，形成六邊形 QABRCD。若 <b class='eq'>AB＝2</b>，<b class='eq'>AD＝4</b>，則六邊形 QABRCD 的周長為何？<svg viewBox="0 0 220 185" style="max-width:200px;margin:12px auto 4px" role="img" aria-label="六邊形 QABRCD"><polygon points="110.0,10.0 190.0,50.0 190.0,130.0 110.0,170.0 30.0,130.0 30.0,50.0" fill="#fff" stroke="#232026" stroke-width="1.8" stroke-linejoin="round"/><line x1="30.0" y1="50.0" x2="190.0" y2="50.0" stroke="#232026" stroke-width="1.6"/><line x1="30.0" y1="130.0" x2="190.0" y2="130.0" stroke="#232026" stroke-width="1.6"/><circle cx="110.0" cy="90.0" r="3" fill="#232026"/><text x="124.0" y="16.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">Q</text><text x="110.0" y="184.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">R</text><text x="20.0" y="54.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">A</text><text x="200.0" y="54.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">D</text><text x="20.0" y="136.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">B</text><text x="200.0" y="136.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">C</text><text x="122.0" y="95.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">P</text></svg></div>
+    <div class="opts" data-q="3" data-ans="D">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>12</span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>4＋2√<span class="rad">6</span></span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'>4＋4√<span class="rad">3</span></span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'>4＋4√<span class="rad">5</span></span></span></button>
+    </div>
+    <div class="fb" id="fb3"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="zq4">
+  <div class="q">
+    <div class="q-src">會考 106 年 第 26 題</div>
+    <div class="q-body">如圖為兩正方形 ABCD、BPQR 重疊的情形，其中 R 點在 AD 上，CD 與 QR 相交於 S 點。若兩正方形 ABCD、BPQR 的面積分別為 <b class='eq'>16</b>、<b class='eq'>25</b>，則四邊形 RBCS 的面積為何？<svg viewBox="0 0 330 330" style="max-width:230px;margin:12px auto 4px" role="img" aria-label="兩正方形重疊"><polygon points="140.0,20.0 20.0,180.0 180.0,180.0 180.0,50.0" fill="#d9d6e0" stroke="none" stroke-width="2" stroke-linejoin="round"/><polygon points="20.0,20.0 180.0,20.0 180.0,180.0 20.0,180.0" fill="none" stroke="#232026" stroke-width="1.8" stroke-linejoin="round"/><polygon points="20.0,180.0 180.0,300.0 300.0,140.0 140.0,20.0" fill="none" stroke="#232026" stroke-width="1.8" stroke-linejoin="round"/><text x="8.0" y="26.0" text-anchor="middle" font-size="20" fill="#232026" font-family="Cambria,Georgia,serif">A</text><text x="192.0" y="22.0" text-anchor="middle" font-size="20" fill="#232026" font-family="Cambria,Georgia,serif">D</text><text x="6.0" y="188.0" text-anchor="middle" font-size="20" fill="#232026" font-family="Cambria,Georgia,serif">B</text><text x="194.0" y="194.0" text-anchor="middle" font-size="20" fill="#232026" font-family="Cambria,Georgia,serif">C</text><text x="140.0" y="14.0" text-anchor="middle" font-size="20" fill="#232026" font-family="Cambria,Georgia,serif">R</text><text x="166.0" y="68.0" text-anchor="middle" font-size="20" fill="#232026" font-family="Cambria,Georgia,serif">S</text><text x="180.0" y="320.0" text-anchor="middle" font-size="20" fill="#232026" font-family="Cambria,Georgia,serif">P</text><text x="314.0" y="146.0" text-anchor="middle" font-size="20" fill="#232026" font-family="Cambria,Georgia,serif">Q</text></svg></div>
+    <div class="opts" data-q="4" data-ans="D">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>8</span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'><span class="frac"><span>17</span><span>2</span></span></span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'><span class="frac"><span>28</span><span>3</span></span></span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'><span class="frac"><span>77</span><span>8</span></span></span></span></button>
+    </div>
+    <div class="fb" id="fb4"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="zq5">
+  <div class="q">
+    <div class="q-src">會考 104 年 第 23 題</div>
+    <div class="q-body">如圖為兩正方形 ABCD、BEFG 和矩形 DGHI 的位置圖，其中 G、F 兩點分別在 BC、EH 上。若 <b class='eq'>AB＝5</b>，<b class='eq'>BG＝3</b>，則 △GFH 的面積為何？<svg viewBox="0 0 300 200" style="max-width:280px;margin:12px auto 4px" role="img" aria-label="兩正方形與一個矩形"><polygon points="80.0,120.0 80.0,180.0 230.0,180.0" fill="#d9d6e0" stroke="none" stroke-width="2" stroke-linejoin="round"/><polygon points="20.0,20.0 120.0,20.0 120.0,120.0 20.0,120.0" fill="none" stroke="#232026" stroke-width="1.8" stroke-linejoin="round"/><polygon points="20.0,120.0 80.0,120.0 80.0,180.0 20.0,180.0" fill="none" stroke="#232026" stroke-width="1.8" stroke-linejoin="round"/><polygon points="120.0,20.0 80.0,120.0 230.0,180.0 270.0,80.0" fill="none" stroke="#232026" stroke-width="1.8" stroke-linejoin="round"/><text x="10.0" y="24.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">A</text><text x="120.0" y="14.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">D</text><text x="9.0" y="125.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">B</text><text x="130.0" y="132.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">C</text><text x="76.0" y="114.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">G</text><text x="10.0" y="186.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">E</text><text x="80.0" y="196.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">F</text><text x="230.0" y="196.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">H</text><text x="280.0" y="84.0" text-anchor="middle" font-size="14" fill="#232026" font-family="Cambria,Georgia,serif">I</text></svg></div>
+    <div class="opts" data-q="5" data-ans="D">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>10</span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>11</span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'><span class="frac"><span>15</span><span>2</span></span></span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'><span class="frac"><span>45</span><span>4</span></span></span></span></button>
+    </div>
+    <div class="fb" id="fb5"></div>
+  </div>
+  </div>
+</section>
+
+<!-- ══ 結案 ══ -->
+<section class="locked-zone" id="z6">
+  <div class="done">
+    <h2>2-3 走完了</h2>
+    <p class="dim">斜邊與股、畢氏定理、斜邊上的高、等腰與正三角形、坐標上兩點的距離——2-3 全部走完了。</p>
+  </div>
+
+  <div class="quote">
+    <p><strong>2-3 回頭看：</strong></p>
+    <p>整節只有一個定理：<em>兩股的平方和＝斜邊的平方</em>。難的從來不是公式，是<strong>在圖裡找出直角三角形</strong>：畫高、連對角線、從坐標畫水平線和鉛垂線。找到了，就只剩加和減。</p>
+  </div>
+  <div class="dl">
+    <h4>📄 這一節的會考原題（PDF）</h4>
+    <p>上面的題目在網頁上是重新排版過的。這份 PDF 是<strong>原本考卷上的樣子</strong>——官方排版、原始選項。</p>
+    <p>建議：印出來，<strong>限時 15 分鐘</strong>做完，再對答案。</p>
+    <a class="get" href="pdf/pythag_exam.pdf" download>下載原始考題 PDF</a>
+    <p class="meta">6 題 · 103-03、105-20、112-23、109-17、106-26、104-23 · 取自國中教育會考正式試題</p>
+  </div>
+
+  <div class="card">
+    <p><strong>2-3 完成，第二章也完成了。</strong>想把每一個例題的步驟再看一次，到 <a href="pythag-steps.html" style="color:var(--accent);font-weight:700">2-3 課本逐題講解</a>。<br>
+    回到<a href="index.html" style="color:var(--accent);font-weight:700">單元列表</a>，或用 <a href="exam-sections.html" style="color:var(--accent);font-weight:700">段考・照節次練</a> 練學校的考卷。<br>
+    下一章 <a href="factor.html" style="color:var(--accent);font-weight:700">3-1 因式分解</a>：把 1-1 的乘法公式倒過來用。</p>
+  </div>
+  <div class="btnrow" style="justify-content:center;margin-top:26px">
+    <a class="btn ghost" href="index.html" style="text-decoration:none">回到單元列表</a>
+  </div>
+  <div style="text-align:center"><button class="reset" id="rst">清除這一課的進度，重新做一次</button></div>
+</section>
+
+<!-- SITENAV:bottom 由 _add_site_nav.py 產生，勿手改 -->
+<div class="sitenav-b"><a class="prev" href="radical-steps.html"><small>← 上一頁</small><span>2-2 課本逐題講解</span></a><a class="homeb" href="index.html">回八年級首頁</a><a class="next" href="pythag-steps.html"><small>下一頁 →</small><span>2-3 課本逐題講解</span></a></div>
+<!-- /SITENAV:bottom -->
+
+<footer>
+  國中數學八上自學站 · 第二章 2-3 畢氏定理<br>
+  課本例題與隨堂練習取自康軒版第三冊；會考題取自國中教育會考正式試題<br>
+  <a href="index.html" style="color:var(--accent)">單元列表</a> ·
+  <a href="https://yingsioul-art.github.io/jhs7-math/" style="color:var(--accent)">七上數學</a> ·
+  <a href="https://yingsioul-art.github.io/jhs8-science/" style="color:var(--accent)">八上自然</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+const KEY="jhs8-pythag-v1", NQ=6;
+const PRAC=[
+ {
+  "src": "課本 p.98 例 1 隨堂 (1)",
+  "q": "求斜邊 <b class='eq'>a</b> 的長。<svg viewBox=\"0 0 240 135\" style=\"max-width:230px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"40.0,30.0 40.0,110.0 200.0,30.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><polyline points=\"40.0,39.0 49.0,39.0 49.0,30.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"120.0\" y=\"22.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">8</text><text x=\"28.0\" y=\"75.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">6</text><text x=\"130.0\" y=\"86.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">a</text></svg>",
+  "hint": "直角在左上角，a 在直角對面，是斜邊。a² ＝ 6² ＋ 8²。",
+  "o": [
+   "10",
+   "14",
+   "2√<span class=\"rad\">7</span>",
+   "100"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>a<sup>2</sup>＝36＋64＝100</span>，<span class='eq'>a＝10</span>。<br>⚠️ 14 是 6＋8，邊長不能直接相加；100 是 a²，還沒開根號；2√<span class=\"rad\">7</span> 是用減的（64−36＝28），但 a 是斜邊，要用加的。"
+ },
+ {
+  "src": "課本 p.98 例 1 隨堂 (2)",
+  "q": "求 <b class='eq'>b</b> 的長。<svg viewBox=\"0 0 200 175\" style=\"max-width:180px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"50.0,20.0 50.0,150.0 140.0,150.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><polyline points=\"50.0,141.0 59.0,141.0 59.0,150.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"38.0\" y=\"90.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">b</text><text x=\"95.0\" y=\"168.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">7</text><text x=\"111.0\" y=\"83.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">10</text></svg>",
+  "hint": "直角在左下角，直角對面的 10 才是斜邊，b 是股。b² ＝ 10² − 7²。",
+  "o": [
+   "√<span class=\"rad\">51</span>",
+   "√<span class=\"rad\">149</span>",
+   "3",
+   "51"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>b<sup>2</sup>＝100−49＝51</span>，51＝3×17 沒有平方數，<span class='eq'>b＝√<span class=\"rad\">51</span></span>。<br>⚠️ √<span class=\"rad\">149</span> 是 100＋49：把 b 當成斜邊了，可是 √<span class=\"rad\">149</span>≈12.2 比斜邊 10 還長，不可能。3 是 10−7。"
+ },
+ {
+  "src": "課本 p.98 例 1 隨堂 (3)",
+  "q": "求斜邊 <b class='eq'>c</b> 的長。<svg viewBox=\"0 0 280 100\" style=\"max-width:260px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"30.0,30.0 30.0,65.0 250.0,30.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><polyline points=\"30.0,39.0 39.0,39.0 39.0,30.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"18.0\" y=\"52.5\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">7</text><text x=\"140.0\" y=\"22.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">24</text><text x=\"140.0\" y=\"69.5\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">c</text></svg>",
+  "hint": "c 在直角對面，是斜邊。24² ＝ 576。",
+  "o": [
+   "25",
+   "√<span class=\"rad\">527</span>",
+   "31",
+   "625"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>c<sup>2</sup>＝49＋576＝625</span>，<span class='eq'>25×25＝625</span>，<span class='eq'>c＝25</span>。<br>📌 7、24、25 是課本 p.109 列的常見組合之一，記起來很省時間。"
+ },
+ {
+  "src": "課本 p.99 例 2 隨堂 (1)(2)",
+  "q": "四邊形 ABCD 中，∠A＝∠C＝90°，AB＝4、BC＝3、AD＝5，求 <b class='eq'>CD</b>。<svg viewBox=\"0 0 220 230\" style=\"max-width:200px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"40.0,30.0 170.0,30.0 111.6,165.0 40.0,134.0\" fill=\"#e6f2f0\" stroke=\"#0f6b63\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"40.0\" y1=\"134.0\" x2=\"170.0\" y2=\"30.0\" stroke=\"#0f6b63\" stroke-width=\"1.6\"/><polyline points=\"40.0,39.0 49.0,39.0 49.0,30.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><polyline points=\"103.3,161.4 106.9,153.1 115.2,156.7\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"30.0\" y=\"26.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"180.0\" y=\"26.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">D</text><text x=\"28.0\" y=\"142.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"117.6\" y=\"181.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"105.0\" y=\"22.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">5</text><text x=\"28.0\" y=\"87.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">4</text><text x=\"69.8\" y=\"165.5\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">3</text></svg>",
+  "hint": "對角線 BD 把四邊形切成兩個直角三角形。先在 △ABD 求 BD，再到 △BCD 求 CD。",
+  "o": [
+   "4√<span class=\"rad\">2</span>",
+   "√<span class=\"rad\">41</span>",
+   "5√<span class=\"rad\">2</span>",
+   "4"
+  ],
+  "a": 0,
+  "why": "△ABD：<span class='eq'>BD<sup>2</sup>＝16＋25＝41</span>。<br>△BCD 的直角在 C，BD 是斜邊：<span class='eq'>CD<sup>2</sup>＝41−9＝32</span>，<span class='eq'>CD＝√<span class=\"rad\">32</span>＝4√<span class=\"rad\">2</span></span>。<br>⚠️ √<span class=\"rad\">41</span> 是 BD，只做了一半；5√<span class=\"rad\">2</span>＝√<span class=\"rad\">50</span> 是 41＋9，把 CD 當成斜邊了。"
+ },
+ {
+  "src": "課本 p.100 例 3 隨堂",
+  "q": "直角三角形 ABC 中，∠ABC 和 ∠BDC 都是直角，AC＝2.5、BC＝2，求 <b class='eq'>BD</b>。<svg viewBox=\"0 0 270 165\" style=\"max-width:260px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"20.0,120.0 102.8,9.6 250.0,120.0\" fill=\"#fbf3d9\" stroke=\"#a15c07\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"102.8\" y1=\"9.6\" x2=\"102.8\" y2=\"120.0\" stroke=\"#a15c07\" stroke-width=\"1.6\" stroke-dasharray=\"5 4\"/><polyline points=\"97.4,16.8 104.6,22.2 110.0,15.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><polyline points=\"102.8,112.0 110.8,112.0 110.8,120.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"10.0\" y=\"125.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"102.8\" y=\"1.6\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"260.0\" y=\"125.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"102.8\" y=\"138.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">D</text><text x=\"186.4\" y=\"58.8\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"135.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#a15c07\" font-family=\"Cambria,Georgia,serif\">2.5</text></svg>",
+  "hint": "先求另一股 AB。再用面積算兩次：½ × AB × BC ＝ ½ × AC × BD。",
+  "o": [
+   "1.2",
+   "1.5",
+   "1.25",
+   "2.4"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>AB<sup>2</sup>＝6.25−4＝2.25</span>，<span class='eq'>AB＝1.5</span>。<br>面積：<span class='eq'>1.5×2＝2.5×BD</span>，<span class='eq'>BD＝3÷2.5＝1.2</span>。<br>⚠️ 1.5 是 AB；1.25 是 AC 的一半——高不是斜邊的一半。"
+ },
+ {
+  "src": "課本 p.101 例 4 隨堂",
+  "q": "等腰三角形 ABC 中，AB＝AC＝15、BC＝18，求 △ABC 的<b>面積</b>。<svg viewBox=\"0 0 148 122\" style=\"max-width:200px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"74.0,20.0 20.0,92.0 128.0,92.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><text x=\"74.0\" y=\"14.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"10.0\" y=\"97.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"138.0\" y=\"97.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"33.0\" y=\"56.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">15</text><text x=\"115.0\" y=\"56.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">15</text><text x=\"74.0\" y=\"112.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">18</text></svg>",
+  "hint": "從 A 往 BC 畫高，BC 被分成兩半，各 9。高² ＝ 15² − 9²。",
+  "o": [
+   "108",
+   "216",
+   "135",
+   "54"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>高<sup>2</sup>＝225−81＝144</span>，高＝12。面積＝<span class='eq'>½×18×12＝108</span>。<br>⚠️ 216 忘了乘 ½；135 是 ½×18×15，把腰當成高了——腰是斜的，比高長；54 是只算了一半的三角形。"
+ },
+ {
+  "src": "課本 p.103 例 5 隨堂 1",
+  "q": "正三角形的邊長是 <b class='eq'>10</b>，它的高與面積分別是多少？",
+  "hint": "高 ＝ <span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>2</span></span> × 邊長；面積 ＝ <span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>4</span></span> × 邊長²。",
+  "o": [
+   "高 5√<span class=\"rad\">3</span>，面積 25√<span class=\"rad\">3</span>",
+   "高 5√<span class=\"rad\">3</span>，面積 50√<span class=\"rad\">3</span>",
+   "高 5，面積 25",
+   "高 10√<span class=\"rad\">3</span>，面積 100√<span class=\"rad\">3</span>"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>高＝<span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>2</span></span>×10＝5√<span class=\"rad\">3</span></span>，<span class='eq'>面積＝<span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>4</span></span>×100＝25√<span class=\"rad\">3</span></span>。<br>驗算：<span class='eq'>½×10×5√<span class=\"rad\">3</span>＝25√<span class=\"rad\">3</span></span>。⚠️ 50√<span class=\"rad\">3</span> 是底×高忘了 ½；高 5 是把高當成邊長的一半。"
+ },
+ {
+  "src": "課本 p.103 例 5 隨堂 2",
+  "q": "上半部是 5 個邊長 2 的正三角形，下半部是 5 個邊長 2 的正方形，求整個圖形的面積。<svg viewBox=\"0 0 220 108\" style=\"max-width:240px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"10.0,54.6 50.0,54.6 50.0,94.6 10.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"10.0,54.6 50.0,54.6 30.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"50.0,54.6 90.0,54.6 90.0,94.6 50.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"50.0,54.6 90.0,54.6 70.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"90.0,54.6 130.0,54.6 130.0,94.6 90.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"90.0,54.6 130.0,54.6 110.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"130.0,54.6 170.0,54.6 170.0,94.6 130.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"130.0,54.6 170.0,54.6 150.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"170.0,54.6 210.0,54.6 210.0,94.6 170.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"170.0,54.6 210.0,54.6 190.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><text x=\"30.0\" y=\"79.6\" text-anchor=\"middle\" font-size=\"13\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"30.0\" y=\"48.6\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text></svg>",
+  "hint": "一個邊長 2 的正三角形面積 ＝ <span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>4</span></span> × 2²。一個正方形 ＝ 2×2。",
+  "o": [
+   "20＋5√<span class=\"rad\">3</span>",
+   "20＋10√<span class=\"rad\">3</span>",
+   "20＋20√<span class=\"rad\">3</span>",
+   "25√<span class=\"rad\">3</span>"
+  ],
+  "a": 0,
+  "why": "正三角形：<span class='eq'><span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>4</span></span>×4＝√<span class=\"rad\">3</span></span>，5 個是 5√<span class=\"rad\">3</span>；正方形 5 個是 20。共 <span class='eq'>20＋5√<span class=\"rad\">3</span></span>。<br>⚠️ 20 和 5√<span class=\"rad\">3</span> 不是同類，<b>不能合成 25√<span class=\"rad\">3</span></b>（2-2 學過）。20＋20√<span class=\"rad\">3</span> 是忘了除以 4。"
+ },
+ {
+  "src": "課本 p.104 例 6 隨堂",
+  "q": "一條編織帶由 5 個相連的正方形斜排組成，每個正方形邊長 2 公分。編織帶總長大約幾公分？（√<span class=\"rad\">2</span>≒1.4）<svg viewBox=\"0 0 110 238\" style=\"max-width:110px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"20.0,12.0 62.4,12.0 62.4,224.1 20.0,224.1\" fill=\"#fbf3d9\" stroke=\"#a15c07\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"41.2,12.0 62.4,33.2 41.2,54.4 20.0,33.2\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><polygon points=\"41.2,54.4 62.4,75.6 41.2,96.9 20.0,75.6\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><polygon points=\"41.2,96.9 62.4,118.1 41.2,139.3 20.0,118.1\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><polygon points=\"41.2,139.3 62.4,160.5 41.2,181.7 20.0,160.5\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><polygon points=\"41.2,181.7 62.4,202.9 41.2,224.1 20.0,202.9\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><text x=\"26.6\" y=\"24.6\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"55.8\" y=\"24.6\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><line x1=\"76.4\" y1=\"12.0\" x2=\"76.4\" y2=\"224.1\" stroke=\"#15803d\" stroke-width=\"2\"/><text x=\"84.4\" y=\"118.1\" text-anchor=\"start\" font-size=\"15\" fill=\"#15803d\" font-weight=\"700\" font-family=\"Cambria,Georgia,serif\">？</text></svg>",
+  "hint": "正方形是轉 45° 放的，編織帶的長是 5 條<b>對角線</b>接起來。對角線² ＝ 2² ＋ 2²。",
+  "o": [
+   "14",
+   "10",
+   "20",
+   "28"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>對角線＝√<span class=\"rad\">4＋4</span>＝√<span class=\"rad\">8</span>＝2√<span class=\"rad\">2</span></span>，5 條是 <span class='eq'>10√<span class=\"rad\">2</span>≒14</span> 公分。<br>⚠️ 10 是 5 個邊長相加——但正方形是斜放的，上下兩個角之間是對角線，比邊長。"
+ },
+ {
+  "src": "課本 p.105 例 7 隨堂",
+  "q": "梯子長 2 公尺、牆高 1.2 公尺，梯子原本頂端剛好靠在牆頂（虛線）。梯腳往牆壁移近 1.1 公尺後，梯子凸出牆頂的部分是多少公尺？<svg viewBox=\"0 0 260 180\" style=\"max-width:260px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><rect x=\"200\" y=\"52.0\" width=\"26\" height=\"108.0\" fill=\"#f3d9d0\" stroke=\"#b03030\" stroke-width=\"1.4\"/><line x1=\"10.0\" y1=\"160.0\" x2=\"250.0\" y2=\"160.0\" stroke=\"#232026\" stroke-width=\"1.6\"/><line x1=\"56.0\" y1=\"160.0\" x2=\"200.0\" y2=\"52.0\" stroke=\"#232026\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/><line x1=\"155.0\" y1=\"160.0\" x2=\"224.2\" y2=\"-6.2\" stroke=\"#4338ca\" stroke-width=\"3.2\"/><text x=\"240.0\" y=\"106.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">1.2</text><text x=\"105.5\" y=\"178.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">1.1</text><text x=\"116.0\" y=\"102.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"236.2\" y=\"-2.2\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-family=\"Cambria,Georgia,serif\">？</text></svg>",
+  "hint": "先算原本梯腳離牆多遠：√(2² − 1.2²)。移近 1.1 後剩多少？再算梯腳到牆頂那一段有多長。",
+  "o": [
+   "0.7",
+   "1.3",
+   "0.8",
+   "0.5"
+  ],
+  "a": 0,
+  "why": "原本：<span class='eq'>√<span class=\"rad\">4−1.44</span>＝√<span class=\"rad\">2.56</span>＝1.6</span>；移近後剩 <span class='eq'>1.6−1.1＝0.5</span>。<br>梯腳到牆頂：<span class='eq'>√<span class=\"rad\">0.25＋1.44</span>＝√<span class=\"rad\">1.69</span>＝1.3</span>，凸出 <span class='eq'>2−1.3＝0.7</span> 公尺。<br>⚠️ 1.3 是還在牆頂以下的那一段；0.5 是梯腳到牆的距離。"
+ },
+ {
+  "src": "課本 p.106 例 8 隨堂 (1)",
+  "q": "求 <b class='eq'>A(1, −2)</b>、<b class='eq'>B(−6, −2)</b> 兩點的距離。",
+  "hint": "y 坐標都是 −2，兩點在同一條水平線上，距離 ＝ |x 坐標的差|。",
+  "o": [
+   "7",
+   "5",
+   "−7",
+   "4"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>|1−(−6)|＝|7|＝7</span>。<br>⚠️ 5 是 1＋(−6) 再拿掉負號——要<b>相減</b>；−7 是 (−6)−1，距離要取絕對值，不會是負的。"
+ },
+ {
+  "src": "課本 p.108 例 9 隨堂",
+  "q": "求 <b class='eq'>C(2, −3)</b>、<b class='eq'>D(1, 5)</b> 兩點的距離。",
+  "hint": "x 差多少？y 差多少？這兩個是直角三角形的兩股。",
+  "o": [
+   "√<span class=\"rad\">65</span>",
+   "√<span class=\"rad\">5</span>",
+   "9",
+   "65"
+  ],
+  "a": 0,
+  "why": "x 差 <span class='eq'>2−1＝1</span>，y 差 <span class='eq'>(−3)−5＝−8</span>：<span class='eq'>CD＝√<span class=\"rad\">1<sup>2</sup>＋(−8)<sup>2</sup></span>＝√<span class=\"rad\">65</span></span>。<br>⚠️ √<span class=\"rad\">5</span> 是把 −3 和 5 算成差 2（−3＋5）；y 從 −3 到 5 要走 8 格。9 是 1＋8 直接相加——兩股不能直接加，要平方再加。<b>12 題做完了。</b>"
+ }
+];
+const FB={
+ "0": {
+  "A": [
+   "8 是 BE",
+   "<p>AD 要在 △AED 裡算。先在 △ABE 求 <span class='eq'>AE＝√<span class=\"rad\">100−64</span>＝6</span>；AD∥BC、AE⊥BC，所以 AE 也和 AD 垂直，△AED 的直角在 A。</p>"
+  ],
+  "B": [
+   "驗算一下",
+   "<p>如果 AD＝9，<span class='eq'>9<sup>2</sup>＋6<sup>2</sup>＝117</span>，可是 <span class='eq'>DE<sup>2</sup>＝(6√<span class=\"rad\">3</span>)<sup>2</sup>＝108</span>，對不上。</p><p>DE 是斜邊：<span class='eq'>AD<sup>2</sup>＝108−36＝72</span>。</p>"
+  ],
+  "C": [
+   "對了",
+   "<p>兩次畢氏定理：△ABE 中 <span class='eq'>AE<sup>2</sup>＝100−64＝36</span>，AE＝6。<br>△AED 的直角在 A（AE 和 AD 垂直），DE 是斜邊：<span class='eq'>AD<sup>2</sup>＝108−36＝72</span>，<span class='eq'>AD＝√<span class=\"rad\">72</span>＝6√<span class=\"rad\">2</span></span>。</p><p>📌 和課本例 2 一樣：一個圖裡有兩個直角三角形，<strong>共用一條邊</strong>（這裡是 AE）。</p>"
+  ],
+  "D": [
+   "6√3 是 DE",
+   "<p>DE 對著直角 ∠DAE，是斜邊，<strong>斜邊一定最長</strong>，AD 一定比 6√<span class=\"rad\">3</span> 短。</p>"
+  ]
+ },
+ "1": {
+  "A": [
+   "對了",
+   "<p>同一個圓的半徑一樣長：<span class='eq'>AF＝AD＝5</span>，所以 <span class='eq'>BF＝<span class=\"frac\"><span>17</span><span>3</span></span>−5＝<span class=\"frac\"><span>2</span><span>3</span></span></span>。<br><span class='eq'>CE＝CD＝<span class=\"frac\"><span>17</span><span>3</span></span></span> 是 △EBC 的斜邊（直角在 B）：<span class='eq'>BE<sup>2</sup>＝<span class=\"frac\"><span>289</span><span>9</span></span>−25＝<span class=\"frac\"><span>64</span><span>9</span></span></span>，<span class='eq'>BE＝<span class=\"frac\"><span>8</span><span>3</span></span></span>。<br><span class='eq'>EF＝<span class=\"frac\"><span>8</span><span>3</span></span>−<span class=\"frac\"><span>2</span><span>3</span></span>＝2</span>。</p>"
+  ],
+  "B": [
+   "再算 BE",
+   "<p>3 其實是 AE（<span class=\"frac\"><span>17</span><span>3</span></span>−<span class=\"frac\"><span>8</span><span>3</span></span>）。題目要的是 EF：<span class='eq'>EF＝BE−BF＝<span class=\"frac\"><span>8</span><span>3</span></span>−<span class=\"frac\"><span>2</span><span>3</span></span></span>。</p>"
+  ],
+  "C": [
+   "2/3 是 BF",
+   "<p>BF 算對了，但題目要 EF。還要算 BE：CE 和 CD 是同一個圓的半徑，<span class='eq'>CE＝<span class=\"frac\"><span>17</span><span>3</span></span></span>，它是 △EBC 的斜邊。</p>"
+  ],
+  "D": [
+   "先把 BE 和 BF 分開算",
+   "<p>BF 用「半徑一樣長」：AF＝5，BF＝<span class=\"frac\"><span>2</span><span>3</span></span>。BE 用畢氏：斜邊 CE＝<span class=\"frac\"><span>17</span><span>3</span></span>、股 BC＝5，<span class='eq'>BE<sup>2</sup>＝<span class=\"frac\"><span>289</span><span>9</span></span>−<span class=\"frac\"><span>225</span><span>9</span></span>＝<span class=\"frac\"><span>64</span><span>9</span></span></span>。</p>"
+  ]
+ },
+ "2": {
+  "A": [
+   "先把 EF 換成別的線段",
+   "<p>AEPF 四個角都是直角，是長方形，<strong>EF 和 AP 是它的兩條對角線，一樣長</strong>。問題變成：A 到 BD 上的點，最近是多遠？</p>"
+  ],
+  "B": [
+   "對了",
+   "<p>EF＝AP（長方形 AEPF 的兩條對角線）。A 到 BD 最短的是<strong>垂直線段</strong>，也就是 △ABD 斜邊 BD 上的高。</p><p><span class='eq'>BD＝√<span class=\"rad\">36＋64</span>＝10</span>；面積算兩次：<span class='eq'>6×8＝10×h</span>，<span class='eq'>h＝<span class=\"frac\"><span>48</span><span>10</span></span>＝<span class=\"frac\"><span>24</span><span>5</span></span></span>。這就是課本例 3。</p>"
+  ],
+  "C": [
+   "P 在中點時不是最短",
+   "<p>5 是 P 剛好在 BD 中點時 AP 的長。P 再往 B 那邊挪一點，AP 還會更短；最短的時候 AP⊥BD。</p>"
+  ],
+  "D": [
+   "不是兩邊平均",
+   "<p>7＝(6＋8)÷2。EF 是長方形 AEPF 的對角線，換成 AP 來想：<strong>A 到 BD 的垂直距離</strong>＝斜邊上的高。</p>"
+  ]
+ },
+ "3": {
+  "A": [
+   "QA 不是 2",
+   "<p>12 是把 QA 當成 2。Q 在 AD 上方、正對 AD 中點，<strong>QA 是斜的</strong>：一股是 AD 的一半（2），另一股是 Q 到 AD 的距離（1）。</p>"
+  ],
+  "B": [
+   "再算一次 QA²",
+   "<p>P 在正中間，到 AD 的距離是 AB 的一半＝1，所以 Q 到 AD 也是 1。<span class='eq'>QA<sup>2</sup>＝2<sup>2</sup>＋1<sup>2</sup>＝5</span>，不是 6。</p>"
+  ],
+  "C": [
+   "斜邊要用加的",
+   "<p>√<span class=\"rad\">3</span> 是 <span class='eq'>2<sup>2</sup>−1<sup>2</sup></span>，把 QA 當成股了。QA 在直角對面，是斜邊：<span class='eq'>QA<sup>2</sup>＝2<sup>2</sup>＋1<sup>2</sup>＝5</span>。</p>"
+  ],
+  "D": [
+   "對了",
+   "<p>△QAD 是等腰三角形（QA＝QD），底 AD＝4、高 1（和課本例 4 一樣，從頂點往底邊畫高）。<br><span class='eq'>QA＝√<span class=\"rad\">2<sup>2</sup>＋1<sup>2</sup></span>＝√<span class=\"rad\">5</span></span>。QA、QD、RB、RC 四條都是 √<span class=\"rad\">5</span>，再加 AB、CD：<span class='eq'>2＋2＋4√<span class=\"rad\">5</span>＝4＋4√<span class=\"rad\">5</span></span>。</p>"
+  ]
+ },
+ "4": {
+  "A": [
+   "要扣掉兩塊",
+   "<p>RBCS ＝ 正方形 ABCD 扣掉 △ABR 和 △RDS。先求 AR：BR＝5（大正方形的邊）、AB＝4，<span class='eq'>AR＝√<span class=\"rad\">25−16</span>＝3</span>，RD＝1。</p>"
+  ],
+  "B": [
+   "DS 不是 3",
+   "<p><span class=\"frac\"><span>17</span><span>2</span></span>＝16−6−<span class=\"frac\"><span>3</span><span>2</span></span>，是把 DS 當成 3。設 DS＝y，BS² 用兩個直角三角形各算一次：<span class='eq'>16＋(4−y)<sup>2</sup>＝25＋(1＋y<sup>2</sup>)</span>，解得 <span class='eq'>y＝<span class=\"frac\"><span>3</span><span>4</span></span></span>。</p>"
+  ],
+  "C": [
+   "DS 算錯了",
+   "<p><span class=\"frac\"><span>28</span><span>3</span></span> 對應 DS＝<span class=\"frac\"><span>4</span><span>3</span></span>。用畢氏列式檢查：△BCS 中 <span class='eq'>BS<sup>2</sup>＝16＋(4−y)<sup>2</sup></span>；△BRS 的直角在 R，<span class='eq'>BS<sup>2</sup>＝25＋RS<sup>2</sup>＝25＋1＋y<sup>2</sup></span>。兩個相等，<span class='eq'>y＝<span class=\"frac\"><span>3</span><span>4</span></span></span>。</p>"
+  ],
+  "D": [
+   "對了",
+   "<p>① <span class='eq'>AR＝√<span class=\"rad\">25−16</span>＝3</span>，RD＝1，△ABR＝6。<br>② 設 DS＝y。BS² 算兩次：<span class='eq'>16＋(4−y)<sup>2</sup>＝25＋1＋y<sup>2</sup></span> → <span class='eq'>32−8y＝26</span> → <span class='eq'>y＝<span class=\"frac\"><span>3</span><span>4</span></span></span>，△RDS＝<span class='eq'>½×1×<span class=\"frac\"><span>3</span><span>4</span></span>＝<span class=\"frac\"><span>3</span><span>8</span></span></span>。<br>③ <span class='eq'>16−6−<span class=\"frac\"><span>3</span><span>8</span></span>＝<span class=\"frac\"><span>77</span><span>8</span></span></span>。</p><p>📌 九年級會用相似形做得更快；但只用畢氏定理「同一條線段算兩次」也做得出來。</p>"
+  ]
+ },
+ "5": {
+  "A": [
+   "先求 FH",
+   "<p>△GFH 的直角在 F，高 GF＝3，要求的是底 FH。把圖放到坐標上：E(0, 0)、F(3, 0)、G(3, 3)、D(5, 8)，設 H(3＋x, 0)。</p>"
+  ],
+  "B": [
+   "先求 FH",
+   "<p>關鍵是 ∠DGH＝90°（矩形的角），所以 DH 是 △DGH 的斜邊：<span class='eq'>DH<sup>2</sup>＝DG<sup>2</sup>＋GH<sup>2</sup></span>。DH² 再用坐標距離算一次，兩個相等就能解出 FH。</p>"
+  ],
+  "C": [
+   "FH 不是 5",
+   "<p><span class=\"frac\"><span>15</span><span>2</span></span>＝½×3×5。FH 要用畢氏列式：<span class='eq'>DG<sup>2</sup>＝2<sup>2</sup>＋5<sup>2</sup>＝29</span>、<span class='eq'>GH<sup>2</sup>＝9＋x<sup>2</sup></span>、<span class='eq'>DH<sup>2</sup>＝(x−2)<sup>2</sup>＋8<sup>2</sup></span>。</p>"
+  ],
+  "D": [
+   "對了",
+   "<p>坐標：E(0, 0)、F(3, 0)、G(3, 3)、D(5, 8)，設 FH＝x，H(3＋x, 0)。<br>△DGH 的直角在 G：<span class='eq'>DH<sup>2</sup>＝29＋(9＋x<sup>2</sup>)</span>；坐標距離：<span class='eq'>DH<sup>2</sup>＝(x−2)<sup>2</sup>＋64</span>。<br>兩個相等：<span class='eq'>38＝−4x＋68</span>，<span class='eq'>x＝7.5</span>。面積＝<span class='eq'>½×3×7.5＝<span class=\"frac\"><span>45</span><span>4</span></span></span>。</p><p>📌 主題 3 的距離公式和主題 1 的畢氏定理，同一題一起用。</p>"
+  ]
+ }
+};
+
+let state={};
+try{state=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){state={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+const $=(id)=>document.getElementById(id);
+const TOTAL=PRAC.length+NQ;
+
+/* 打散選項順序 —— 正解不會永遠在同一個位置 */
+PRAC.forEach(function(P){
+  var pairs=P.o.map(function(t,i){return {t:t, ok:(i===P.a)};});
+  for(var i=pairs.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),tmp=pairs[i];pairs[i]=pairs[j];pairs[j]=tmp;}
+  P.o=pairs.map(function(x){return x.t;}); P.a=pairs.findIndex(function(x){return x.ok;});
+});
+
+let pi=0, pDone=(state.prac||0);
+function pDots(){
+  $("pDots").innerHTML=PRAC.map((_,i)=>'<span class="dot'+(i<pDone?" done":(i===pi?" now":""))+'"></span>').join("");
+}
+function pRender(){
+  const P=PRAC[pi];
+  $("pSrc").textContent=P.src;
+  $("pNo").textContent="第 "+(pi+1)+" 題 / 共 "+PRAC.length+" 題";
+  $("pQ").innerHTML=P.q; $("pHint").innerHTML=P.hint; pDots();
+  const solved=pi<pDone;
+  $("pOpts").innerHTML=P.o.map((t,i)=>'<button class="opt'+(solved&&i===P.a?" right locked":(solved?" locked":""))+'" data-i="'+i+'"><span class="k">'+"ABCD"[i]+'</span><span>'+t+'</span></button>').join("");
+  const fb=$("pFb");
+  if(solved){fb.className="prac-fb show ok";fb.innerHTML="<b>答對了</b>　"+P.why;$("pNext").disabled=false}
+  else{fb.className="prac-fb";fb.innerHTML="";$("pNext").disabled=true}
+  $("pNext").textContent=pi>=PRAC.length-1?"完成，進入重點整理":"下一題";
+  $("pOpts").querySelectorAll(".opt").forEach(b=>{
+    b.addEventListener("click",()=>{
+      if(b.classList.contains("locked"))return;
+      const i=+b.dataset.i, P=PRAC[pi], fb=$("pFb");
+      if(i===P.a){
+        b.classList.add("right","locked");
+        $("pOpts").querySelectorAll(".opt").forEach(x=>x.classList.add("locked"));
+        fb.className="prac-fb show ok"; fb.innerHTML="<b>答對了</b>　"+P.why;
+        if(pi>=pDone){pDone=pi+1;state.prac=pDone;save();gate()}
+        $("pNext").disabled=false; pDots();
+      }else{
+        b.classList.add("wrong"); fb.className="prac-fb show no";
+        fb.innerHTML="<b>再想一次</b>　"+P.hint+"<br><span style='color:var(--ink2)'>選錯不扣分，直接再選一個。</span>";
+      }
+    });
+  });
+}
+$("pNext").addEventListener("click",()=>{
+  if(pi<PRAC.length-1){pi++;pRender();document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"})}
+  else{unlock("z4");unlock("z5");$("z4").scrollIntoView({behavior:"smooth",block:"start"})}
+});
+
+function qDone(){return Object.keys(state).filter(k=>/^q\d+$/.test(k)).length}
+function paint(){const d=Math.min(state.prac||0,PRAC.length)+qDone();$("pnum").textContent=d+" / "+TOTAL;$("pfill").style.width=(d/TOTAL*100)+"%"}
+function unlock(id){const el=$(id);if(el&&el.classList.contains("locked-zone")){el.classList.remove("locked-zone");el.classList.add("revealed");setTimeout(()=>el.classList.remove("revealed"),700)}}
+function gate(){
+  if((state.prac||0)>=PRAC.length){unlock("z4");unlock("z5")}
+  for(let i=0;i<NQ;i++){if(state["q"+i]!==undefined){unlock("zs"+i);if(i+1<NQ)unlock("zq"+(i+1));else unlock("z6")}}
+  paint();
+}
+document.querySelectorAll(".opts[data-q]").forEach(box=>{
+  const qi=box.dataset.q, ans=box.dataset.ans;
+  box.querySelectorAll(".opt").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      if(box.dataset.locked)return;
+      const k=btn.dataset.k; state["q"+qi]=k; save(); reveal(qi,k,ans,box,true); gate();
+    });
+  });
+});
+function reveal(qi,k,ans,box,scroll){
+  box.dataset.locked="1";
+  box.querySelectorAll(".opt").forEach(b=>{
+    b.classList.add("locked");
+    if(b.dataset.k===k)b.classList.add("picked",k===ans?"right":"wrong");
+    else if(b.dataset.k===ans)b.classList.add("right");
+  });
+  const f=FB[qi][k], fb=$("fb"+qi);
+  fb.innerHTML="<h4 style='color:"+(k===ans?"var(--green)":"var(--red)")+"'>"+f[0]+"</h4>"+f[1];
+  fb.classList.add("show");
+  if(scroll)setTimeout(()=>fb.scrollIntoView({behavior:"smooth",block:"nearest"}),120);
+}
+
+
+/* 實驗一：三個正方形 */
+function sqDraw(){
+  const a=+$("sa").value,b=+$("sb").value; $("la").textContent=a; $("lb").textContent=b;
+  const sv=$("sqv"), NS="http://www.w3.org/2000/svg";
+  while(sv.firstChild)sv.removeChild(sv.firstChild);
+  /* 直角在 C；股 a 水平向右、股 b 垂直向上；正方形：a 在下、b 在左、c 在右上 */
+  const W=a+2*b, H=2*a+b, s=Math.min(300/W,300/H), x0=b*s, y0=(a+b)*s;
+  const C=[x0,y0], B=[x0+a*s,y0], A=[x0,y0-b*s], n=[b*s,-a*s];
+  function P(pts,fill,stroke){const e=document.createElementNS(NS,"polygon");e.setAttribute("points",pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" "));e.setAttribute("fill",fill);e.setAttribute("stroke",stroke);e.setAttribute("stroke-width",1.8);sv.appendChild(e)}
+  function L(p,q,c){const e=document.createElementNS(NS,"line");e.setAttribute("x1",p[0]);e.setAttribute("y1",p[1]);e.setAttribute("x2",q[0]);e.setAttribute("y2",q[1]);e.setAttribute("stroke",c);e.setAttribute("stroke-width",.8);sv.appendChild(e)}
+  function T(x,y,t,c){const e=document.createElementNS(NS,"text");e.setAttribute("x",x);e.setAttribute("y",y);e.setAttribute("text-anchor","middle");e.setAttribute("font-size",Math.max(12,Math.min(20,s*0.9)));e.setAttribute("font-weight","700");e.setAttribute("fill",c);e.textContent=t;sv.appendChild(e)}
+  P([C,B,[B[0],y0+a*s],[x0,y0+a*s]],"#e8f1f5","#1d5b79");
+  for(let k=1;k<a;k++){L([x0+k*s,y0],[x0+k*s,y0+a*s],"#9cc0d2");L([x0,y0+k*s],[x0+a*s,y0+k*s],"#9cc0d2")}
+  P([C,A,[x0-b*s,A[1]],[x0-b*s,y0]],"#e9f5ec","#15803d");
+  for(let k=1;k<b;k++){L([x0-k*s,y0],[x0-k*s,A[1]],"#a7d3b4");L([x0,y0-k*s],[x0-b*s,y0-k*s],"#a7d3b4")}
+  P([A,B,[B[0]+n[0],B[1]+n[1]],[A[0]+n[0],A[1]+n[1]]],"#fdeeee","#b03030");
+  P([A,B,C],"#d9d6e0","#232026");
+  T(x0+a*s/2,y0+a*s/2+6,a*a,"#1d5b79"); T(x0-b*s/2,y0-b*s/2+6,b*b,"#15803d");
+  T((A[0]+B[0])/2+n[0]/2,(A[1]+B[1])/2+n[1]/2+6,a*a+b*b,"#b03030");
+  sv.setAttribute("viewBox","-4 -4 "+(W*s+8)+" "+(H*s+8));
+  const c2=a*a+b*b, r=Math.sqrt(c2), ri=Math.round(r);
+  $("va").textContent=a*a; $("vb").textContent=b*b; $("vc").textContent=c2;
+  /* 斜邊寫成最簡根式 */
+  let out=1,inn=c2; for(let d=2;d*d<=inn;d++){while(inn%(d*d)===0){inn/=d*d;out*=d}}
+  const cs=inn===1?String(out):(out===1?"√"+c2:out+"√"+inn);
+  const v=$("vsq");
+  if(ri*ri===c2)v.innerHTML="<strong>"+a*a+" ＋ "+b*b+" ＝ "+c2+" ＝ "+ri+"²</strong>。斜邊剛好是整數 <strong>"+ri+"</strong>——"+a+"、"+b+"、"+ri+" 是一組「畢氏數」。";
+  else v.innerHTML=a*a+" ＋ "+b*b+" ＝ "+c2+"，所以斜邊 c ＝ <strong>"+cs+"</strong>（約 "+r.toFixed(2)+"）。不是整數也沒關係，<strong>藍＋綠＝紅</strong>永遠成立。";
+}
+["sa","sb"].forEach(id=>$(id).addEventListener("input",sqDraw)); sqDraw();
+
+/* 實驗二：操繩師的繩圈 */
+const ROPES=[[3,4,5,"12 結：3、4、5"],[4,4,4,"12 結：4、4、4"],[2,5,5,"12 結：2、5、5"],[3,3,6,"12 結：3、3、6"],[6,8,10,"24 結：6、8、10"],[5,12,13,"30 結：5、12、13"]];
+let ri=0;
+$("rc").innerHTML=ROPES.map((r,i)=>'<button class="chip'+(i===0?" on":"")+'" data-i="'+i+'">'+r[3]+'</button>').join("");
+function ropeDraw(){
+  const [p,q,L]=ROPES[ri], sv=$("rope"), NS="http://www.w3.org/2000/svg";
+  while(sv.firstChild)sv.removeChild(sv.firstChild);
+  const k=Math.min(260/L,150/Math.max(p,q)), x=(L*L+p*p-q*q)/(2*L), y2=p*p-x*x, y=y2>0?Math.sqrt(y2):0;
+  const ox=30, oy=190, P0=[ox,oy], P1=[ox+L*k,oy], X=[ox+x*k,oy-y*k];
+  function el(t,at){const e=document.createElementNS(NS,t);for(const a in at)e.setAttribute(a,at[a]);sv.appendChild(e);return e}
+  el("polygon",{points:[P0,P1,X].map(z=>z[0].toFixed(1)+","+z[1].toFixed(1)).join(" "),fill:y>0?"#fbf3d9":"none",stroke:"#a15c07","stroke-width":2.4,"stroke-linejoin":"round"});
+  /* 結點 */
+  const sides=[[P0,P1,L],[P1,X,q],[X,P0,p]];
+  sides.forEach(([u,v,n])=>{for(let j=0;j<n;j++){const t=j/n;el("circle",{cx:u[0]+(v[0]-u[0])*t,cy:u[1]+(v[1]-u[1])*t,r:4,fill:"#232026"})}});
+  function lb(u,v,t,dx,dy){const e=el("text",{x:(u[0]+v[0])/2+dx,y:(u[1]+v[1])/2+dy,"text-anchor":"middle","font-size":15,"font-weight":700,fill:"#a15c07"});e.textContent=t}
+  lb(P0,P1,L+" 格",0,22); lb(P1,X,q+" 格",22,0); lb(X,P0,p+" 格",-22,0);
+  const top=Math.min(X[1],oy)-24; sv.setAttribute("viewBox","0 "+top.toFixed(0)+" 320 "+(oy+34-top).toFixed(0));
+  const vr=$("vrope");
+  if(p+q<=L){vr.className="verdict warn";vr.innerHTML="<strong>拉不起來。</strong>"+p+"＋"+q+"＝"+L+"，兩段加起來剛好等於第三段，三個結點被拉成一直線，圍不出三角形。";return}
+  const cosv=(p*p+q*q-L*L)/(2*p*q), ang=Math.acos(Math.max(-1,Math.min(1,cosv)))*180/Math.PI;
+  if(p*p+q*q===L*L){vr.className="verdict good";
+    const u=[(P0[0]-X[0])/(p*k)*12,(P0[1]-X[1])/(p*k)*12], w=[(P1[0]-X[0])/(q*k)*12,(P1[1]-X[1])/(q*k)*12];
+    el("polyline",{points:[[X[0]+u[0],X[1]+u[1]],[X[0]+u[0]+w[0],X[1]+u[1]+w[1]],[X[0]+w[0],X[1]+w[1]]].map(z=>z[0].toFixed(1)+","+z[1].toFixed(1)).join(" "),fill:"none",stroke:"#15803d","stroke-width":2});
+    vr.innerHTML="<strong>"+p+"² ＋ "+q+"² ＝ "+(p*p)+" ＋ "+(q*q)+" ＝ "+(L*L)+" ＝ "+L+"²</strong>，最大的角剛好是 <strong>90°</strong>，拉出直角了。"+(L>5?"（"+p+"、"+q+"、"+L+" 是 3、4、5 放大，或另一組畢氏數。）":"")}
+  else{vr.className="verdict warn";vr.innerHTML=p+"² ＋ "+q+"² ＝ "+(p*p+q*q)+"，比 "+L+"² ＝ "+(L*L)+(p*p+q*q>L*L?" 大":" 小")+"，最大的角大約是 <strong>"+ang.toFixed(0)+"°</strong>，"+(ang<90?"比直角小":"比直角大")+"，不能拿來畫直角。"}
+}
+document.querySelectorAll("#rc .chip").forEach(c=>c.addEventListener("click",()=>{
+  ri=+c.dataset.i; document.querySelectorAll("#rc .chip").forEach(x=>x.classList.toggle("on",x===c)); ropeDraw();
+}));
+ropeDraw();
+
+
+if(pDone>0&&pDone<PRAC.length)pi=pDone; else if(pDone>=PRAC.length)pi=PRAC.length-1;
+pRender();
+document.querySelectorAll(".opts[data-q]").forEach(box=>{const qi=box.dataset.q,saved=state["q"+qi];if(saved!==undefined)reveal(qi,saved,box.dataset.ans,box,false)});
+gate();
+$("rst").addEventListener("click",()=>{try{localStorage.removeItem(KEY)}catch(e){}location.reload()});
+
+})();
+</script>
+</body>
+</html>

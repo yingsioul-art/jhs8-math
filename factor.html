@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>提公因式與乘法公式｜八上 3-1</title>
+<style>
+:root{
+  --paper:#f8f7f4; --ink:#232026; --ink2:#57525e; --line:#dcd8e0;
+  --accent:#4338ca; --accent-soft:#eeedfb;
+  --teal:#0f6b63; --teal-soft:#e6f2f0;
+  --blue:#1d5b79; --blue-soft:#e8f1f5;
+  --green:#15803d; --green-soft:#e9f5ec;
+  --red:#b03030; --red-soft:#fdeeee;
+  --shadow:0 1px 2px rgba(35,32,38,.06),0 8px 24px rgba(35,32,38,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:17px;line-height:1.85;letter-spacing:.01em}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 120px}
+
+header{padding:56px 0 28px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:14px}
+h1{font-size:34px;line-height:1.3;margin:0 0 14px;letter-spacing:-.01em}
+.sub{color:var(--ink2);font-size:15px;margin:0}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.tag{font-size:12px;padding:4px 11px;border:1px solid var(--line);border-radius:99px;color:var(--ink2);background:#fff}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(247,248,245,.95);
+  border-bottom:1px solid var(--line);margin:0;padding:10px 20px}  /* .bar 在 .wrap 外面，原本的 -20px 會讓手機頁面多出 20px 橫向捲動（10/23 修） */
+.bar-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.track{flex:1;height:5px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.bar b{font-size:12px;color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+.step{font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.step .n{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;
+  width:20px;height:20px;line-height:20px;text-align:center;margin-right:8px;letter-spacing:0}
+h2{font-size:25px;line-height:1.4;margin:0 0 20px;letter-spacing:-.01em}
+h3{font-size:19px;margin:34px 0 12px}
+h4{font-size:16.5px;margin:24px 0 8px;color:var(--teal)}
+p{margin:0 0 18px}
+.lead{font-size:19px;line-height:1.9}
+.dim{color:var(--ink2)}
+.big{font-size:22px;font-weight:700;line-height:1.6;margin:26px 0}
+em{font-style:normal;background:linear-gradient(transparent 62%,#bfe6c9 62%);font-weight:600;padding:0 1px}
+.eq{font-family:"Cambria","Times New Roman",Georgia,serif;font-size:1.06em;font-variant-numeric:tabular-nums}
+.eq sup{font-size:.68em;vertical-align:super;line-height:0}
+.eq.blk{display:block;text-align:center;font-size:21px;margin:20px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  font-size:.82em;line-height:1.15;margin:0 2px}
+.frac span:first-child{border-bottom:1.3px solid currentColor;padding:0 4px}
+.hl{background:#fff3c4;border-radius:3px;padding:0 3px}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:24px 0;box-shadow:var(--shadow)}
+.quote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 20px;border-radius:0 10px 10px 0;margin:24px 0}
+.quote p:last-child{margin:0}
+.note{background:var(--blue-soft);border:1px solid #cfe0e8;border-radius:12px;padding:18px 20px;margin:24px 0;font-size:16px}
+.note p:last-child{margin:0}
+.note b{color:var(--blue)}
+.aside{background:#fdf8e8;border:1px dashed #e3d5a4;border-radius:12px;padding:16px 18px;margin:24px 0;font-size:15px;color:#5c4d20}
+.aside p:last-child{margin:0}
+
+.fcard{background:#fff;border:2px solid var(--accent);border-radius:14px;padding:20px;margin:16px 0;box-shadow:var(--shadow)}
+.fcard .fname{font-size:13px;letter-spacing:.14em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.fcard .fbody{font-size:21px;text-align:center;margin:10px 0 14px;font-family:"Cambria",Georgia,serif}
+.fcard .fsay{font-size:15.5px;color:var(--ink2);line-height:1.75;margin:0}
+.fcard .fsay strong{color:var(--ink)}
+
+.q{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:24px;margin:26px 0;box-shadow:var(--shadow)}
+.q-src{font-size:12px;letter-spacing:.12em;color:var(--accent);font-weight:700;margin-bottom:12px}
+.q-body{font-size:16.5px;line-height:1.9;margin-bottom:20px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;gap:12px;align-items:center;padding:14px 16px;border:1.5px solid var(--line);
+  border-radius:11px;cursor:pointer;background:#fff;font-size:16px;line-height:1.7;
+  transition:border-color .15s,background .15s;text-align:left;width:100%;font-family:inherit;color:inherit}
+.opt:hover:not(.locked){border-color:var(--ink2);background:#fbfcfa}
+.opt .k{font-weight:700;flex-shrink:0;width:22px;color:var(--ink2)}
+.opt.picked{border-color:var(--ink);border-width:2px}
+.opt.right{border-color:var(--green);background:var(--green-soft)}
+.opt.right .k{color:var(--green)}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.opt.wrong .k{color:var(--red)}
+.opt.locked{cursor:default}
+.fb{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);font-size:16px;display:none}
+.fb.show{display:block;animation:rise .45s ease}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.fb h4{margin:0 0 8px;font-size:15px;letter-spacing:.06em;color:inherit}
+.fb p:last-child{margin:0}
+
+.locked-zone{opacity:.3;pointer-events:none;filter:blur(4px) saturate(.2);user-select:none}
+.revealed{animation:reveal .6s ease both}
+@keyframes reveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.prac{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:22px;margin:26px 0;box-shadow:var(--shadow)}
+.prac-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+  font-size:13px;color:var(--ink2);font-weight:600;gap:10px;flex-wrap:wrap}
+.prac-top .src{color:var(--teal);letter-spacing:.08em}
+.dots{display:flex;gap:5px;margin-bottom:16px;flex-wrap:wrap}
+.dot{width:22px;height:6px;border-radius:99px;background:var(--line);transition:background .3s}
+.dot.done{background:var(--green)}
+.dot.now{background:var(--teal)}
+.prac-q{font-size:17.5px;line-height:2;margin-bottom:8px}
+.prac-hint{font-size:14.5px;color:var(--ink2);margin-bottom:16px;line-height:1.7}
+.prac-fb{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15.5px;line-height:1.8;display:none}
+.prac-fb.show{display:block;animation:rise .3s ease}
+.prac-fb.ok{background:var(--green-soft);border:1px solid #b7ddc3}
+.prac-fb.no{background:var(--red-soft);border:1px solid #edc4c4}
+
+.btn{padding:9px 18px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+  border-radius:99px;cursor:pointer;font-size:14.5px;font-family:inherit;font-weight:600;transition:opacity .15s}
+.btn:hover{opacity:.86}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn:disabled{opacity:.35;cursor:default}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+.lab{background:linear-gradient(#fff,#fbfcfa);border:1px solid var(--line);border-radius:16px;
+  padding:22px;margin:26px 0;box-shadow:var(--shadow)}
+.lab-t{font-size:12px;letter-spacing:.18em;color:var(--blue);font-weight:700;margin-bottom:16px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{padding:7px 14px;border:1.5px solid var(--line);background:#fff;border-radius:99px;
+  cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink2);transition:all .15s}
+.chip:hover{border-color:var(--ink2)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--accent);height:26px}
+.slider-lab{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);margin:6px 0 2px}
+.readout{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.pill{flex:1;min-width:106px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.pill .lb{font-size:12.5px;color:var(--ink2)}
+.pill .vl{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.pill.hi{background:var(--accent-soft);border-color:#b7ddc3}
+.pill.hi .vl{color:var(--accent)}
+.verdict{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:15px;line-height:1.7;
+  background:var(--blue-soft);border:1px solid #cfe0e8}
+.verdict.good{background:var(--green-soft);border-color:#b7ddc3}
+.verdict.warn{background:#fdf8e8;border-color:#e3d5a4}
+
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15px;background:#fff;
+  border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#eef1eb;font-weight:700;font-size:13.5px;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:24px -20px;padding:0 20px}
+.scroll table{margin:0;min-width:460px}
+
+.flow{counter-reset:s;list-style:none;padding:0;margin:14px 0 0}
+.flow li{counter-increment:s;position:relative;padding:7px 0 7px 40px;font-size:15.5px;line-height:1.7}
+.flow li::before{content:counter(s);position:absolute;left:0;top:8px;width:25px;height:25px;
+  background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:12.5px;font-weight:700}
+details.pre{background:#fff;border:1px solid var(--line);border-radius:11px;margin-bottom:9px;overflow:hidden}
+details.pre summary{padding:13px 16px;cursor:pointer;font-size:16px;font-weight:600;list-style:none;
+  display:flex;align-items:center;gap:10px}
+details.pre summary::-webkit-details-marker{display:none}
+details.pre summary::before{content:"?";flex-shrink:0;width:22px;height:22px;border-radius:50%;
+  background:var(--line);color:var(--ink2);display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700}
+details.pre[open] summary::before{content:"\2713";background:var(--green);color:#fff}
+details.pre[open] summary{border-bottom:1px solid var(--line)}
+details.pre .bd{padding:14px 16px;font-size:15.5px;line-height:1.8;color:var(--ink2)}
+details.pre .bd strong{color:var(--ink)}
+details.pre .bd p{margin:0 0 10px}
+details.pre .bd p:last-child{margin:0}
+
+.done{text-align:center;padding:52px 0 20px}
+.done h2{font-size:27px}
+.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:9px 18px;
+  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:28px}
+footer{padding:36px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
+svg{max-width:100%;height:auto;display:block}
+
+/* 原始考題下載 */
+.dl{background:#fff;border:2px solid var(--accent);border-radius:14px;padding:20px 22px;margin:24px 0;text-align:left}
+.dl h4{margin:0 0 8px;font-size:17px;color:var(--ink)}
+.dl p{font-size:15px;line-height:1.8;margin:0 0 14px;color:var(--ink2)}
+.dl a.get{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+  text-decoration:none;padding:11px 20px;border-radius:99px;font-size:15px;font-weight:700;
+  transition:opacity .15s}
+.dl a.get:hover{opacity:.86}
+.dl .meta{font-size:13px;color:var(--ink2);margin:10px 0 0}
+
+/* 完整解法步驟 */
+.sol{margin:20px 0}
+.sstep{display:flex;gap:14px;margin-bottom:20px}
+.sn{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-top:2px}
+.sb{flex:1;min-width:0}
+.sb h4{margin:2px 0 8px;font-size:17px;color:var(--ink)}
+.sb p{font-size:15.5px;line-height:1.85;margin:0 0 10px}
+.sb p:last-child{margin:0}
+.sb p.warn{background:#fdf8e8;border-left:3px solid #e3d5a4;padding:8px 12px;border-radius:0 8px 8px 0;font-size:14.5px}
+
+
+.fac{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:12px 0 6px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 4px}
+.cmp div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+.cmp b{display:block;font-family:Cambria,Georgia,serif;font-size:20px}
+.cmp small{color:var(--ink2);font-size:13px}
+.vis{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px}
+.vis svg{max-width:100%;height:auto;display:block}
+.pc{transition:transform .9s cubic-bezier(.4,0,.2,1);transform-box:view-box;transform-origin:0 0}
+.two{display:flex;gap:8px;justify-content:center;font-family:Cambria,Georgia,serif;font-size:19px;font-weight:700;margin:10px 0 0;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){.pc{transition:none}}
+
+</style>
+<style id="sitenav-css">
+.sitenav{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+ padding:10px 0 12px;margin:0 0 6px;border-bottom:1px solid rgba(0,0,0,.08);font-size:13.5px;scrollbar-width:none}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav a{flex:0 0 auto;text-decoration:none;color:#4b5563;background:#fff;border:1px solid rgba(0,0,0,.12);
+ border-radius:99px;padding:4px 12px;line-height:1.6;white-space:nowrap}
+.sitenav a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav a.home{font-weight:700;color:#5b4bdb;border-color:#5b4bdb;background:#fff}
+.sitenav a.now{background:#5b4bdb;color:#fff;border-color:#5b4bdb;font-weight:700}
+.sitenav .sep{flex:0 0 auto;color:#9ca3af;padding:0 2px}
+.sitenav-b{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:34px 0 8px}
+.sitenav-b a{text-decoration:none;color:#374151;background:#fff;border:1px solid rgba(0,0,0,.14);border-radius:12px;
+ padding:12px 14px;line-height:1.5;font-size:14.5px;display:flex;flex-direction:column;justify-content:center}
+.sitenav-b a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav-b a small{font-size:11.5px;color:#9ca3af;letter-spacing:.08em}
+.sitenav-b a.next{text-align:left}
+.sitenav-b a.homeb{justify-content:center;text-align:center;font-weight:700;color:#5b4bdb;border-color:#5b4bdb}
+.sitenav-b span{display:block}
+@media(max-width:640px){.sitenav{flex-wrap:wrap;overflow:visible;gap:6px 5px;font-size:13px}.sitenav a{padding:3px 10px}}
+@media(max-width:520px){.sitenav-b{grid-template-columns:1fr 1fr}.sitenav-b a.homeb{grid-column:1/-1;order:-1}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+
+<div class="bar"><div class="bar-inner">
+  <b id="pnum">0 / 16</b>
+  <div class="track"><div class="fill" id="pfill"></div></div>
+</div></div>
+
+<div class="wrap">
+
+<!-- SITENAV:top 由 _add_site_nav.py 產生，勿手改 -->
+<nav class="sitenav" aria-label="站內導覽"><a class="home" href="index.html">八年級數學自學站</a><span class="sep">·</span><a class="" href="multiply.html">1-1 乘法公式</a><a class="" href="polynomial.html">1-2 多項式加減</a><a class="" href="division.html">1-3 多項式乘除</a><a class="" href="sqrt.html">2-1 平方根</a><a class="" href="radical.html">2-2 根式運算</a><a class="" href="pythag.html">2-3 畢氏定理</a><a class="now" href="factor.html">3-1 提公因式與乘法公式</a><a class="" href="cross.html">3-2 十字交乘法</a><a class="" href="quadfactor.html">4-1 因式分解解方程式</a><a class="" href="quadformula.html">4-2 配方法與公式解</a><a class="" href="quadapply.html">4-3 應用問題</a><span class="sep">·</span><a class="" href="exam-sections.html">段考・照節次練</a><a class="" href="exam.html">段考・整卷模擬</a></nav>
+<!-- /SITENAV:top -->
+
+<header>
+  <div class="kicker">八年級上 · 第三章 3-1 提公因式與乘法公式</div>
+  <h1>把乘開的式子，拆回相乘</h1>
+  <p class="sub">1-1 學的是 <span class='eq'>(x＋1)(x＋2) → x²＋3x＋2</span>，這一節反過來：<span class='eq'>x²＋3x＋2 → (x＋1)(x＋2)</span>。<br>這個「拆回相乘」叫做<strong>因式分解</strong>。這一節教三招：<strong>提公因式、平方差、和或差的平方</strong>。</p>
+  <div class="meta">
+    <span class="tag">課本 p.118–133</span>
+    <span class="tag">課本練習 13 題</span>
+    <span class="tag">會考挑戰 3 題</span>
+    <span class="tag">約 40 分鐘</span>
+  </div>
+</header>
+
+<!-- ══ 開始之前 ══ -->
+<section>
+  <div class="step">開始之前</div>
+  <h2>這一課會怎麼走</h2>
+  <div class="card">
+    <ol class="flow">
+      <li><strong>先把五件事認熟</strong>：因式與倍式、因式分解、提公因式、平方差、和或差的平方</li>
+      <li><strong>實驗一</strong>：把一個缺角的正方形剪開重拼，看見 <span class='eq'>a²−b²＝(a＋b)(a−b)</span></li>
+      <li>為什麼要拆回去？心算、還有 4-1 解方程式要用；<strong>實驗二</strong>：用色紙拼正方形</li>
+      <li><strong>用課本的隨堂練習動手做</strong>（13 題）</li>
+      <li>重點整理，最後是<strong>會考挑戰 3 題</strong></li>
+    </ol>
+  </div>
+  <h3>先確認你知道這些</h3>
+
+  <details class="pre"><summary>七上的因數與倍數：16＝2×8</summary><div class="bd">
+    <p>16 能被 2 整除，所以 2 是 16 的<strong>因數</strong>，16 是 2 的<strong>倍數</strong>。寫成乘法就是 <span class="eq">16＝2×8</span>：乘號兩邊的 2 和 8 都是 16 的因數。</p>
+    <p>這一節把「數」換成「多項式」，道理完全一樣。忘了先回 <a href="https://yingsioul-art.github.io/jhs7-math/factor.html" style="color:var(--accent);font-weight:700">七上 2-1</a>。</p>
+  </div></details>
+  <details class="pre"><summary>1-1 的三個乘法公式</summary><div class="bd">
+    <p><span class="eq">(a＋b)(a−b)＝a²−b²</span>（平方差）<br><span class="eq">(a＋b)²＝a²＋2ab＋b²</span>（和的平方）<br><span class="eq">(a−b)²＝a²−2ab＋b²</span>（差的平方）</p>
+    <p>這一節的主題 4 就是把這三條<strong>左右對調</strong>來用。三條要背熟，忘了先回 <a href="multiply.html" style="color:var(--accent);font-weight:700">1-1</a>。</p>
+  </div></details>
+  <details class="pre"><summary>1-3 的多項式除法：商式、餘式</summary><div class="bd">
+    <p>多項式長除法要除到<strong>餘式是 0</strong>，或餘式的次數比除式小。<span class="eq">被除式＝除式×商式＋餘式</span>。</p>
+    <p>這一節的主題 1、2 用除法判斷「是不是因式」：餘式是 0 才是。忘了先回 <a href="division.html" style="color:var(--accent);font-weight:700">1-3</a>。</p>
+  </div></details>
+
+</section>
+
+<!-- ══ 1 概念 ══ -->
+<section>
+  <div class="step"><span class="n">1</span>這一節在教什麼</div>
+
+  <h2>五件事，先認熟</h2>
+
+  <div class="fcard">
+    <div class="fname">① 因式與倍式（課本 p.118–119）</div>
+    <div class="fbody">A ＝ B × C　→　B、C 是 A 的因式；A 是 B、C 的倍式</div>
+    <p class="fsay">和七上的因數、倍數一樣，只是把數換成多項式。判斷方法也一樣：<strong>用除法，除得盡（餘式是 0）才是因式</strong>。<br>
+    例：<span class="eq">(x²＋3x＋2)÷(x＋1)</span> 商 x＋2、餘 0，所以 x＋1 是 x²＋3x＋2 的因式。<br>
+    <span class="eq">(x²＋3x＋2)÷(x＋4)</span> 餘 6，所以 x＋4 <strong>不是</strong>它的因式。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">② 因式分解（課本 p.120–121）</div>
+    <div class="fbody">x²＋3x＋2　⇄　(x＋1)(x＋2)</div>
+    <p class="fsay">往右是<strong>因式分解</strong>：把一個二次式寫成兩個一次式相乘。往左是<strong>乘積展開</strong>，就是 1-1 做的事。<br>
+    知道其中一個因式，就能用除法把另一個找出來：<span class="eq">(6x²＋5x−6)÷(2x＋3)＝3x−2</span>，所以 <span class="eq">6x²＋5x−6＝(2x＋3)(3x−2)</span>（例 1）。<br>
+    也可以把括號乘開，再<strong>比較係數</strong>（例 2）。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">③ 提公因式（課本 p.122–124）</div>
+    <div class="fbody">A·B ＋ A·C ＝ A(B＋C)</div>
+    <p class="fsay">每一項都有的因式叫<strong>公因式</strong>，用分配律把它提到括號外面。<br>
+    要提<strong>最大的</strong>：<span class="eq">4x²−2x＝2x(2x−1)</span>，不要只提 x。<br>
+    看起來不一樣的，變個號就一樣了：<span class="eq">−(5−x)＝＋(x−5)</span>、<span class="eq">(4−x)²＝(x−4)²</span>（例 4）。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">④ 平方差公式（課本 p.125–127）</div>
+    <div class="fbody">a² − b² ＝ (a＋b)(a−b)</div>
+    <p class="fsay">兩項、<strong>相減</strong>、兩項都能寫成某個東西的平方。<br>
+    <span class="eq">9x²−16＝(3x)²−4²＝(3x＋4)(3x−4)</span>（例 5）。<br>
+    a、b 也可以是一整個括號：<span class="eq">(2x＋1)²−6²＝[(2x＋1)＋6][(2x＋1)−6]＝(2x＋7)(2x−5)</span>（例 6）。</p>
+  </div>
+
+  <div class="fcard">
+    <div class="fname">⑤ 和的平方、差的平方（課本 p.128–130）</div>
+    <div class="fbody">a²＋2ab＋b² ＝ (a＋b)²　　a²−2ab＋b² ＝ (a−b)²</div>
+    <p class="fsay">三項、頭尾兩項是平方、<strong>中間正好是 2×a×b</strong>。<br>
+    <span class="eq">x²＋6x＋9＝x²＋2·x·3＋3²＝(x＋3)²</span>（例 7）；<span class="eq">x²−12x＋36＝x²−2·x·6＋6²＝(x−6)²</span>（例 8）。<br>
+    中間是正的用和，負的用差。</p>
+  </div>
+
+  <h3>先玩一下：把缺角的正方形剪開重拼</h3>
+  <p>邊長 a 的正方形，挖掉角落一個邊長 b 的小正方形，剩下的面積就是 <span class="eq">a²−b²</span>。按「剪開重拼」，看它變成什麼形狀。</p>
+  <div class="lab">
+    <div class="lab-t">實驗一 ── 平方差剪拼</div>
+    <div class="slider-lab"><span>大正方形的邊 a</span><span id="la">7</span></div>
+    <input type="range" id="sa" min="3" max="10" value="7">
+    <div class="slider-lab"><span>挖掉的小正方形的邊 b</span><span id="lb">3</span></div>
+    <input type="range" id="sb" min="1" max="9" value="3">
+    <div class="vis"><svg id="sqd" viewBox="0 0 640 300" role="img" aria-label="缺角正方形剪開重拼成長方形"></svg></div>
+    <div class="btnrow"><button class="btn" id="cut">✂ 剪開重拼</button></div>
+    <div class="verdict" id="vsq"></div>
+  </div>
+
+</section>
+
+<!-- ══ 2 歷史 ══ -->
+<section>
+  <div class="step"><span class="n">2</span>為什麼要拆回去</div>
+
+  <h2>乘開很簡單，拆回去有什麼用？</h2>
+  <p class="lead">1-1 把括號乘開，式子變長；這一節又把它拆回去。繞一圈回到原點，好像白做了？其實拆回相乘有兩個大用處。</p>
+
+  <h3>用處一：心算變簡單</h3>
+  <p>不用計算機，算 <span class="eq">51²−49²</span>。一般做法要算 2601−2401。用平方差拆開：</p>
+  <div class="card">
+    <p style="margin:0"><span class="eq">51²−49²＝(51＋49)(51−49)＝100×2＝<strong>200</strong></span></p>
+  </div>
+  <p>課本第 3 章開頭（p.117）的 <span class="eq">103×97</span> 也是同一招倒過來用：<span class="eq">(100＋3)(100−3)＝100²−3²＝9991</span>。<strong>相乘和相減可以互換，挑好算的那一邊。</strong></p>
+
+  <h3>用處二：看一眼就知道答案（4-1 會用到）</h3>
+  <p>英國數學家哈里奧特（Thomas Harriot）的代數書，在他過世後的 1631 年出版。書裡把方程式寫成幾個括號相乘等於 0，像 <span class="eq">(x−2)(x−3)＝0</span>。</p>
+  <p>這樣寫的好處是：<strong>兩個數相乘是 0，其中一個一定是 0</strong>。所以 x 不是 2 就是 3，一眼看出來。乘開的 <span class="eq">x²−5x＋6＝0</span> 就看不出來。</p>
+  <div class="aside"><p>📌 這就是第 4 章「因式分解解一元二次方程式」的做法。<strong>3-1、3-2 把式子拆好，4-1 就能直接讀出答案。</strong></p></div>
+
+  <h3>提公因式像國字的部首</h3>
+  <p>課本 p.148 的漫畫有一個好比喻：「花、草、葉」都有相同的部首「艹」。把每一項都有的部分提出來，就像把三個字共同的部首拿出來寫在前面。</p>
+  <div class="quote"><p><strong>AC＋BC＝C(A＋B)：</strong>C 是兩項共同的「部首」，提出來寫一次就好。</p></div>
+
+  <h3>再玩一下：用色紙拼正方形（課本 p.146–147）</h3>
+  <p>畫家蒙德里安喜歡用紅、黃、藍的格子作畫。課本準備三種色紙：紅色正方形面積 <span class="eq">x²</span>、藍色長條面積 <span class="eq">x</span>（長 x、寬 1）、黃色小正方形面積 1。<br>
+  拿 1 張紅色，再選藍色和黃色的張數，看能不能<strong>剛好拼成一個大正方形</strong>。</p>
+  <div class="lab">
+    <div class="lab-t">實驗二 ── 色紙拼正方形</div>
+    <div class="slider-lab"><span>藍色長條（x）幾張</span><span id="lbx">6</span></div>
+    <input type="range" id="sbx" min="0" max="12" value="6">
+    <div class="slider-lab"><span>黃色小正方形（1）幾張</span><span id="lc1">9</span></div>
+    <input type="range" id="sc1" min="0" max="40" value="9">
+    <div class="two" id="tiq"></div>
+    <div class="vis"><svg id="tile" viewBox="0 0 640 300" role="img" aria-label="色紙拼正方形"></svg></div>
+    <div class="verdict" id="vti"></div>
+  </div>
+
+</section>
+
+<!-- ══ 3 課本練習 ══ -->
+<section>
+  <div class="step"><span class="n">3</span>動手練</div>
+  <h2>照課本的順序，一題一題來</h2>
+  <p>下面 13 題<strong>全部出自課本 3-1 的隨堂練習</strong>，順序照課本：<em>因式與倍式 → 用除法分解 → 比較係數 → 公因式 → 提公因式 → 變號提公因式 → 平方差 → 和或差的平方</em>。</p>
+  <p class="dim" style="font-size:15px">📖 想看每一題<strong>一步一步怎麼算、為什麼可以這樣算</strong>？到 <a href="factor-steps.html" style="color:var(--accent)">3-1 課本逐題講解</a>。</p>
+  <div class="prac">
+    <div class="prac-top"><span class="src" id="pSrc"></span><span id="pNo"></span></div>
+    <div class="dots" id="pDots"></div>
+    <div class="prac-q" id="pQ"></div>
+    <div class="prac-hint" id="pHint"></div>
+    <div class="opts" id="pOpts"></div>
+    <div class="prac-fb" id="pFb"></div>
+    <div class="btnrow"><button class="btn" id="pNext" disabled>下一題</button></div>
+  </div>
+</section>
+
+<!-- ══ 4 重點整理 ══ -->
+<section class="locked-zone" id="z4">
+  <div class="step"><span class="n">4</span>重點整理</div>
+
+  <h2>整節 3-1 收成一張表</h2>
+  <div class="scroll"><table>
+    <tr><th style="width:84px">課本位置</th><th>先備知識</th><th>3-1 新學的</th></tr>
+    <tr><td><b>主題 1–2</b><br>p.118–121<br>因式與倍式、因式分解</td><td>七上因數與倍數<br>1-3 多項式除法</td><td>A＝B×C：B、C 是因式，A 是倍式<br>除得盡（餘 0）才是因式<br>用除法或比較係數做分解</td></tr>
+    <tr><td><b>主題 3</b><br>p.122–124<br>提公因式</td><td>分配律</td><td><span class="eq">AB＋AC＝A(B＋C)</span>，提最大的<br>變號：<span class="eq">(5−x)＝−(x−5)</span><br>平方不用變號：<span class="eq">(4−x)²＝(x−4)²</span></td></tr>
+    <tr><td><b>主題 4</b><br>p.125–130<br>利用乘法公式</td><td>1-1 三個乘法公式</td><td><span class="eq">a²−b²＝(a＋b)(a−b)</span><br><span class="eq">a²±2ab＋b²＝(a±b)²</span><br>a、b 可以是數、字母或整個括號</td></tr>
+  </table></div>
+  <h3>先判斷用哪一招</h3>
+  <div class="card"><p style="margin:0">① 每一項有沒有<strong>公因式</strong>？有就先提出來。<br>② 剩兩項、相減、都是平方 → <strong>平方差</strong>。<br>③ 剩三項、頭尾是平方、中間是 2×a×b → <strong>和或差的平方</strong>。</p></div>
+  <h3>三個最容易錯的地方（課本 p.133 挑錯題就是前兩個）</h3>
+  <div class="card"><p><strong>① 提完公因式，把 1 弄丟</strong></p><p style="margin-bottom:0"><span class="eq">x(x＋1)−(x＋1)</span> 的後面那一項是 <span class="eq">(x＋1)×1</span>，提走 x＋1 還剩 1：<span class="eq">＝(x＋1)(x−1)</span>。寫成 <span class="eq">(x＋1)(x−0)</span> 就錯了。</p></div>
+  <div class="card"><p><strong>② 分解完又乘回去</strong></p><p style="margin-bottom:0"><span class="eq">(x＋1)(x−1)</span> 已經是答案。再寫 <span class="eq">＝x²−1</span> 是走回頭路——那是乘積展開，<em>題目要的是相乘的樣子</em>。</p></div>
+  <div class="card"><p><strong>③ 變號變錯、沒有分解完</strong></p><p style="margin-bottom:0"><span class="eq">(3−x)</span> 換成 <span class="eq">(x−3)</span> 要多一個負號，平方就不用。提完以後看括號裡還能不能再提：<span class="eq">(3x−5)(3x−6)＝3(3x−5)(x−2)</span>。</p></div>
+
+</section>
+
+<!-- ══ 5 會考挑戰 ══ -->
+<section class="locked-zone" id="z5">
+  <div class="step"><span class="n">5</span>會考挑戰</div>
+  <h2>同樣的東西，考場上怎麼問</h2>
+
+  <p>會考 103～115 年，題庫標成第 3 章「因式分解」的有 6 題。逐題看過後，<strong>3 題要用十字交乘法</strong>（105-06、108-08、111-08），留到 3-2；剩下 <strong>3 題</strong>用的正是這一節的方法：因式判別、平方差、提公因式。</p>
+  <div class="aside"><p>📌 112、113 年有官方選項百分比，會告訴你全國有多少人選錯。113 年那一題全國只有 65% 答對——錯的人大多錯在<strong>漏了平方</strong>或<strong>正負號</strong>。</p></div>
+
+
+  <div class="q">
+    <div class="q-src">會考 112 年 第 2 題</div>
+    <div class="q-body">下列何者為多項式 <b class='eq'>x²−36</b> 的因式？</div>
+    <div class="opts" data-q="0" data-ans="C">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>x−3</span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>x−4</span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'>x−6</span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'>x−9</span></span></button>
+    </div>
+    <div class="fb" id="fb0"></div>
+  </div>
+
+  <div class="locked-zone" id="zq1">
+  <div class="q">
+    <div class="q-src">會考 113 年 第 10 題</div>
+    <div class="q-body">下列何者為多項式 <b class='eq'>5x(5x−2)−4(5x−2)²</b> 的因式分解？</div>
+    <div class="opts" data-q="1" data-ans="C">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>(5x−2)(25x−8)</span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>(5x−2)(5x−4)</span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'>(5x−2)(−15x＋8)</span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'>(5x−2)(−20x＋4)</span></span></button>
+    </div>
+    <div class="fb" id="fb1"></div>
+  </div>
+  </div>
+
+  <div class="locked-zone" id="zq2">
+  <div class="q">
+    <div class="q-src">會考 103 年 第 17 題</div>
+    <div class="q-body"><b class='eq'>(3x＋2)(−x⁶＋3x⁵)＋(3x＋2)(−2x⁶＋x⁵)＋(x＋1)(3x⁶−4x⁵)</b> 與下列哪一個式子相同？</div>
+    <div class="opts" data-q="2" data-ans="C">
+      <button class="opt" data-k="A"><span class="k">A</span><span><span class='eq'>(3x⁶−4x⁵)(2x＋1)</span></span></button>
+      <button class="opt" data-k="B"><span class="k">B</span><span><span class='eq'>(3x⁶−4x⁵)(2x＋3)</span></span></button>
+      <button class="opt" data-k="C"><span class="k">C</span><span><span class='eq'>−(3x⁶−4x⁵)(2x＋1)</span></span></button>
+      <button class="opt" data-k="D"><span class="k">D</span><span><span class='eq'>−(3x⁶−4x⁵)(2x＋3)</span></span></button>
+    </div>
+    <div class="fb" id="fb2"></div>
+  </div>
+  </div>
+</section>
+
+<!-- ══ 結案 ══ -->
+<section class="locked-zone" id="z6">
+  <div class="done">
+    <h2>3-1 走完了</h2>
+    <p class="dim">因式與倍式、因式分解、提公因式、平方差、和或差的平方——3-1 全部走完了。</p>
+  </div>
+
+  <div class="quote">
+    <p><strong>3-1 回頭看：</strong></p>
+    <p>因式分解就是 1-1 倒著走：<em>先找公因式，再看能不能套乘法公式</em>。分解完可以乘開驗算，但答案要留在相乘的樣子。</p>
+  </div>
+  <div class="dl">
+    <h4>📄 這一節的會考原題（PDF）</h4>
+    <p>上面的題目在網頁上是重新排版過的。這份 PDF 是<strong>原本考卷上的樣子</strong>——官方排版、原始選項。</p>
+    <p>建議：印出來，<strong>限時 5 分鐘</strong>做完，再對答案。</p>
+    <a class="get" href="pdf/factor_exam.pdf" download>下載原始考題 PDF</a>
+    <p class="meta">3 題 · 112-02、113-10、103-17 · 取自國中教育會考正式試題</p>
+  </div>
+
+  <div class="card">
+    <p><strong>3-1 完成。</strong>回到<a href="index.html" style="color:var(--accent);font-weight:700">單元列表</a>，或用 <a href="factor-steps.html" style="color:var(--accent);font-weight:700">3-1 課本逐題講解</a> 把每一個例題一步一步再看一次。<br>
+    下一節 <a href="cross.html" style="color:var(--accent);font-weight:700">3-2 十字交乘法</a>：當三招都用不上（像 <span class="eq">x²＋5x＋6</span>），還有第四招。</p>
+  </div>
+  <div class="btnrow" style="justify-content:center;margin-top:26px">
+    <a class="btn ghost" href="index.html" style="text-decoration:none">回到單元列表</a>
+  </div>
+  <div style="text-align:center"><button class="reset" id="rst">清除這一課的進度，重新做一次</button></div>
+</section>
+
+<!-- SITENAV:bottom 由 _add_site_nav.py 產生，勿手改 -->
+<div class="sitenav-b"><a class="prev" href="pythag-steps.html"><small>← 上一頁</small><span>2-3 課本逐題講解</span></a><a class="homeb" href="index.html">回八年級首頁</a><a class="next" href="factor-steps.html"><small>下一頁 →</small><span>3-1 課本逐題講解</span></a></div>
+<!-- /SITENAV:bottom -->
+
+<footer>
+  國中數學八上自學站 · 第三章 3-1 提公因式與乘法公式<br>
+  課本例題與隨堂練習取自康軒版第三冊；會考題取自國中教育會考正式試題<br>
+  <a href="index.html" style="color:var(--accent)">單元列表</a> ·
+  <a href="https://yingsioul-art.github.io/jhs7-math/" style="color:var(--accent)">七上數學</a> ·
+  <a href="https://yingsioul-art.github.io/jhs8-science/" style="color:var(--accent)">八上自然</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+const KEY="jhs8-factor-v1", NQ=3;
+const PRAC=[
+ {
+  "src": "課本 p.119 隨堂 (1)",
+  "q": "<b class='eq'>x＋5</b> 是 <b class='eq'>x²＋3x＋15</b> 的因式嗎？",
+  "hint": "用長除法算 (x²＋3x＋15)÷(x＋5)，看餘式是不是 0。",
+  "o": [
+   "不是，餘式是 25",
+   "是，商是 x−2",
+   "是，因為兩個式子都有 x",
+   "不是，餘式是 −25"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>x²＋3x＋15−x(x＋5)＝−2x＋15</span>，<span class='eq'>−2x＋15−(−2)(x＋5)＝25</span>。商 x−2、<b>餘 25</b>，除不盡，所以不是因式。<br>⚠️ 商是 x−2 沒錯，但<b>餘式不是 0 就不是因式</b>。"
+ },
+ {
+  "src": "課本 p.119 隨堂練習",
+  "q": "已知 <b class='eq'>2x²−x−10＝(2x−5)(x＋2)</b>，下列哪一句<b>正確</b>？",
+  "hint": "A＝B×C 時，大的 A 是「倍式」，乘號兩邊的 B、C 是「因式」。",
+  "o": [
+   "2x²−x−10 是 2x−5 的倍式",
+   "2x²−x−10 是 x＋2 的因式",
+   "2x−5 是 2x²−x−10 的倍式",
+   "x＋2 不是 (2x−5)(x＋2) 的因式"
+  ],
+  "a": 0,
+  "why": "2x²−x−10 是乘出來的那個（大的），所以它是 2x−5 和 x＋2 的<b>倍式</b>；2x−5、x＋2 是它的<b>因式</b>。<br>📌 記法：16＝2×8，16 是倍數、2 和 8 是因數。換成多項式也一樣。"
+ },
+ {
+  "src": "課本 p.120 例 1 隨堂",
+  "q": "<b class='eq'>4x−7</b> 是 <b class='eq'>20x²−11x−42</b> 的因式。把 20x²−11x−42 因式分解。",
+  "hint": "用 (20x²−11x−42)÷(4x−7)，商式就是另一個因式。第一步：20x²÷4x＝5x。",
+  "o": [
+   "(4x−7)(5x＋6)",
+   "(4x−7)(5x−6)",
+   "(4x＋7)(5x−6)",
+   "(4x−7)(5x＋35)"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>20x²−11x−42−5x(4x−7)＝24x−42</span>，<span class='eq'>24x−42÷(4x−7)＝6</span>，餘 0。商 5x＋6，所以 <span class='eq'>20x²−11x−42＝(4x−7)(5x＋6)</span>。<br>📌 驗算：乘開 <span class='eq'>20x²＋24x−35x−42</span>，中間 24x−35x＝−11x ✓"
+ },
+ {
+  "src": "課本 p.121 例 2 隨堂",
+  "q": "已知 <b class='eq'>5x²＋34x−7</b> 可因式分解成 <b class='eq'>(5x−1)(x＋m)</b>，則 m 為多少？",
+  "hint": "把 (5x−1)(x＋m) 乘開，常數項是 −1×m，要等於 −7。",
+  "o": [
+   "7",
+   "−7",
+   "34",
+   "35"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>(5x−1)(x＋m)＝5x²＋(5m−1)x−m</span>。常數 <span class='eq'>−m＝−7</span>，所以 m＝7。<br>再用 x 項檢查：<span class='eq'>5×7−1＝34</span> ✓<br>⚠️ m＝−7 是忘了前面還有一個負號（−1×m）。"
+ },
+ {
+  "src": "課本 p.122 隨堂 1",
+  "q": "<b class='eq'>x</b>、<b class='eq'>−3x</b>、<b class='eq'>3x²</b>、<b class='eq'>−3x²</b>，哪些是 <b class='eq'>−3x²</b> 和 <b class='eq'>12x²</b> 的公因式？",
+  "hint": "一個一個試：−3x² 和 12x² 能不能都寫成「它 × 另一個式子」？係數是負的也可以。",
+  "o": [
+   "四個都是",
+   "只有 x 和 −3x",
+   "只有 3x² 和 −3x²",
+   "只有 −3x²"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>12x²＝x·12x＝(−3x)·(−4x)＝3x²·4＝(−3x²)·(−4)</span>，<span class='eq'>−3x²</span> 也都寫得出來。所以<b>四個都是</b>公因式。<br>📌 公因式可以是負的、可以只取一部分。但因式分解時，通常提「最大的」那一個。"
+ },
+ {
+  "src": "課本 p.123 例 3 隨堂 (2)",
+  "q": "因式分解 <b class='eq'>x(2x＋1)−x(x＋2)</b>",
+  "hint": "兩項都有 x，提出來：x[(2x＋1)−(x＋2)]。括號裡的減號要分給 x＋2 的每一項。",
+  "o": [
+   "x(x−1)",
+   "x(x＋3)",
+   "x(3x＋3)",
+   "x(x＋1)"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>x[(2x＋1)−(x＋2)]＝x(2x＋1−x−2)＝x(x−1)</span><br>⚠️ x(x＋3) 是減號只減到 x、沒減到 2；x(3x＋3) 是把減號看成加號。"
+ },
+ {
+  "src": "課本 p.123 例 3 隨堂 (3)",
+  "q": "因式分解 <b class='eq'>(3x−5)²−(3x−5)</b>",
+  "hint": "把 (3x−5) 當成一塊：A²−A＝A(A−1)。提完以後，括號裡還能不能再提？",
+  "o": [
+   "3(3x−5)(x−2)",
+   "(3x−5)²",
+   "(3x−5)(3x−4)",
+   "(3x−5)(3x＋6)"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>(3x−5)(3x−5)−(3x−5)·1＝(3x−5)[(3x−5)−1]＝(3x−5)(3x−6)</span>，3x−6 還能提 3：<span class='eq'>＝3(3x−5)(x−2)</span>。<br>⚠️ (3x−5)² 是把後面那一項的 <b>1 弄丟了</b>——後面那一項提走 (3x−5) 之後還剩 1。"
+ },
+ {
+  "src": "課本 p.124 例 4 隨堂 (1)",
+  "q": "因式分解 <b class='eq'>(x−3)(2x＋1)＋(3−x)(x−1)</b>",
+  "hint": "3−x 和 x−3 差一個負號：(3−x)＝−(x−3)。先把它變成 x−3，前面的 ＋ 會變成 −。",
+  "o": [
+   "(x−3)(x＋2)",
+   "3x(x−3)",
+   "(3−x)(x＋2)",
+   "(x−3)(x−2)"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>＝(x−3)(2x＋1)−(x−3)(x−1)＝(x−3)[(2x＋1)−(x−1)]＝(x−3)(x＋2)</span><br>⚠️ 3x(x−3) 是把 3−x 直接當成 x−3、<b>沒有變號</b>，結果變成相加。"
+ },
+ {
+  "src": "課本 p.124 例 4 隨堂 (2)",
+  "q": "因式分解 <b class='eq'>(2x＋1)(x−1)−(1−x)²</b>",
+  "hint": "平方會吃掉負號：(1−x)²＝(x−1)²。所以這一題<b>不用</b>改前面的減號。",
+  "o": [
+   "(x−1)(x＋2)",
+   "3x(x−1)",
+   "x(x−1)",
+   "(x−1)(x−2)"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>(1−x)²＝(x−1)²</span>，所以 <span class='eq'>＝(x−1)[(2x＋1)−(x−1)]＝(x−1)(x＋2)</span>。<br>⚠️ 3x(x−1) 是以為 (1−x)²＝−(x−1)²。<b>一次方要變號，平方不用。</b>"
+ },
+ {
+  "src": "課本 p.126 例 5 隨堂 (2)",
+  "q": "因式分解 <b class='eq'>36x²−121y²</b>",
+  "hint": "36x²＝(6x)²、121y²＝(11y)²，用平方差 a²−b²＝(a＋b)(a−b)。",
+  "o": [
+   "(6x＋11y)(6x−11y)",
+   "(6x−11y)²",
+   "(36x＋121y)(36x−121y)",
+   "(6x＋11y)²"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>(6x)²−(11y)²＝(6x＋11y)(6x−11y)</span><br>⚠️ (36x＋121y)(36x−121y) 是忘了先開平方：a 是 6x，不是 36x。⚠️ (6x−11y)² 乘開會多出中間項 −132xy。"
+ },
+ {
+  "src": "課本 p.127 例 6 隨堂 (2)",
+  "q": "因式分解 <b class='eq'>16−(2x＋11)²</b>",
+  "hint": "16＝4²，把 (2x＋11) 整個當成 b：[4＋(2x＋11)][4−(2x＋11)]。第二個括號的減號要分給每一項。",
+  "o": [
+   "−(2x＋15)(2x＋7)",
+   "(2x＋15)(2x＋7)",
+   "(2x＋15)(15−2x)",
+   "(2x＋15)(2x−7)"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>[4＋2x＋11][4−2x−11]＝(2x＋15)(−2x−7)＝−(2x＋15)(2x＋7)</span><br>⚠️ (2x＋15)(15−2x) 是減號只減到 2x，<b>11 沒有變成 −11</b>。⚠️ 沒有負號的那個是 −2x−7 提負號時忘了寫在前面。"
+ },
+ {
+  "src": "課本 p.129 例 7 隨堂 (2)",
+  "q": "因式分解 <b class='eq'>121y²＋110y＋25</b>",
+  "hint": "頭 121y²＝(11y)²、尾 25＝5²。中間是不是 2×11y×5？",
+  "o": [
+   "(11y＋5)²",
+   "(11y−5)²",
+   "(11y＋5)(11y−5)",
+   "(121y＋5)²"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>2×11y×5＝110y</span> ✓，中間是正的，用和的平方：<span class='eq'>(11y)²＋2·11y·5＋5²＝(11y＋5)²</span>。<br>⚠️ (11y＋5)(11y−5) 是平方差，乘開只有兩項 121y²−25。"
+ },
+ {
+  "src": "課本 p.130 例 8 隨堂 (2)",
+  "q": "因式分解 <b class='eq'>25y²−120y＋144</b>",
+  "hint": "25y²＝(5y)²、144＝12²。中間 −120y 是不是 −2×5y×12？",
+  "o": [
+   "(5y−12)²",
+   "(5y＋12)²",
+   "(5y＋12)(5y−12)",
+   "(25y−12)²"
+  ],
+  "a": 0,
+  "why": "<span class='eq'>2×5y×12＝120y</span>，中間是負的，用差的平方：<span class='eq'>(5y)²−2·5y·12＋12²＝(5y−12)²</span>。<br>📌 寫完可以乘開驗算一次。<b>十三題做完了。</b>"
+ }
+];
+const FB={
+ "0": {
+  "A": [
+   "3² 是 9，不是 36",
+   "<p>平方差要把 36 寫成某個數的平方：<span class='eq'>36＝6²</span>，所以 <span class='eq'>x²−6²＝(x＋6)(x−6)</span>。3 自己乘自己只有 9。全國 4.26% 選這個。</p>"
+  ],
+  "B": [
+   "36 要拆成「自己乘自己」",
+   "<p>36＝4×9 不是平方。用平方差要寫成 <span class='eq'>x²−6²</span>，因式是 x＋6 和 x−6。全國 3.82% 選這個。</p>"
+  ],
+  "C": [
+   "對了",
+   "<p><span class='eq'>x²−36＝x²−6²＝(x＋6)(x−6)</span>，所以 x−6 是因式。全國通過率 87.4%。</p><p>📌 也可以用除法檢查：<span class='eq'>(x²−36)÷(x−6)＝x＋6</span>，餘 0。</p>"
+  ],
+  "D": [
+   "36 要拆成「自己乘自己」",
+   "<p>36＝9×4，但平方差要的是 <strong>6×6</strong>。驗算：<span class='eq'>(x²−36)÷(x−9)</span> 餘 45，不是 0。全國 4.32% 選這個——是最多人選的錯誤選項。</p>"
+  ]
+ },
+ "1": {
+  "A": [
+   "減號變成加號了",
+   "<p>提出 (5x−2) 後，括號裡是 <span class='eq'>5x<strong>−</strong>4(5x−2)</span>。25x−8 是算成 5x＋4(5x−2)＝5x＋20x−8，減號不見了。全國 10.14% 選這個。</p>"
+  ],
+  "B": [
+   "漏了平方",
+   "<p>後面是 <strong>4(5x−2)²</strong>，有平方。提走一個 (5x−2) 後還剩 <span class='eq'>4(5x−2)</span>，不是 4。全國 12.77% 選這個——<strong>最多人錯在這裡</strong>。</p>"
+  ],
+  "C": [
+   "對了",
+   "<p><span class='eq'>(5x−2)[5x−4(5x−2)]＝(5x−2)(5x−20x＋8)＝(5x−2)(−15x＋8)</span>。全國通過率 64.7%。</p><p>📌 關鍵是看見 <span class='eq'>4(5x−2)²＝(5x−2)·4(5x−2)</span>：平方裡有兩個 (5x−2)，提走一個還留一個。</p>"
+  ],
+  "D": [
+   "括號裡重算一次",
+   "<p>提出 (5x−2) 後括號裡是 <span class='eq'>5x−4(5x−2)＝5x−20x＋8＝−15x＋8</span>。−20x＋4 是漏了前面的 5x、常數也算錯。全國 12.17% 選這個。</p>"
+  ]
+ },
+ "2": {
+  "A": [
+   "少了一個負號",
+   "<p>前兩項提 (3x＋2)：<span class='eq'>(3x＋2)(−3x⁶＋4x⁵)＝−(3x＋2)(3x⁶−4x⁵)</span>，這裡要變號（例 4 的技巧）。合起來是 <span class='eq'>(3x⁶−4x⁵)[(x＋1)−(3x＋2)]＝(3x⁶−4x⁵)(−2x−1)</span>，前面要有負號。</p>"
+  ],
+  "B": [
+   "沒有變號",
+   "<p>−3x⁶＋4x⁵ 和 3x⁶−4x⁵ 差一個負號，要先寫成 <span class='eq'>−(3x⁶−4x⁵)</span>，前面的 ＋ 才會變成 −。括號裡是 <span class='eq'>(x＋1)−(3x＋2)＝−2x−1</span>。</p>"
+  ],
+  "C": [
+   "對了",
+   "<p>① 前兩項有公因式 (3x＋2)：<span class='eq'>(3x＋2)[(−x⁶＋3x⁵)＋(−2x⁶＋x⁵)]＝(3x＋2)(−3x⁶＋4x⁵)</span><br>② 變號：<span class='eq'>＝−(3x＋2)(3x⁶−4x⁵)</span><br>③ 和第三項提 (3x⁶−4x⁵)：<span class='eq'>(3x⁶−4x⁵)[(x＋1)−(3x＋2)]＝(3x⁶−4x⁵)(−2x−1)＝−(3x⁶−4x⁵)(2x＋1)</span></p><p>📌 次方很高不用怕，<strong>把 (3x⁶−4x⁵) 當成一整塊</strong>就好。</p>"
+  ],
+  "D": [
+   "括號裡重算一次",
+   "<p>負號對了。括號裡是 <span class='eq'>(3x＋2)−(x＋1)＝2x＋1</span>，不是 2x＋3：減號要分給 x 和 1。</p>"
+  ]
+ }
+};
+
+let state={};
+try{state=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){state={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+const $=(id)=>document.getElementById(id);
+const TOTAL=PRAC.length+NQ;
+
+/* 打散選項順序 —— 正解不會永遠在同一個位置 */
+PRAC.forEach(function(P){
+  var pairs=P.o.map(function(t,i){return {t:t, ok:(i===P.a)};});
+  for(var i=pairs.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),tmp=pairs[i];pairs[i]=pairs[j];pairs[j]=tmp;}
+  P.o=pairs.map(function(x){return x.t;}); P.a=pairs.findIndex(function(x){return x.ok;});
+});
+
+let pi=0, pDone=(state.prac||0);
+function pDots(){
+  $("pDots").innerHTML=PRAC.map((_,i)=>'<span class="dot'+(i<pDone?" done":(i===pi?" now":""))+'"></span>').join("");
+}
+function pRender(){
+  const P=PRAC[pi];
+  $("pSrc").textContent=P.src;
+  $("pNo").textContent="第 "+(pi+1)+" 題 / 共 "+PRAC.length+" 題";
+  $("pQ").innerHTML=P.q; $("pHint").innerHTML=P.hint; pDots();
+  const solved=pi<pDone;
+  $("pOpts").innerHTML=P.o.map((t,i)=>'<button class="opt'+(solved&&i===P.a?" right locked":(solved?" locked":""))+'" data-i="'+i+'"><span class="k">'+"ABCD"[i]+'</span><span>'+t+'</span></button>').join("");
+  const fb=$("pFb");
+  if(solved){fb.className="prac-fb show ok";fb.innerHTML="<b>答對了</b>　"+P.why;$("pNext").disabled=false}
+  else{fb.className="prac-fb";fb.innerHTML="";$("pNext").disabled=true}
+  $("pNext").textContent=pi>=PRAC.length-1?"完成，進入重點整理":"下一題";
+  $("pOpts").querySelectorAll(".opt").forEach(b=>{
+    b.addEventListener("click",()=>{
+      if(b.classList.contains("locked"))return;
+      const i=+b.dataset.i, P=PRAC[pi], fb=$("pFb");
+      if(i===P.a){
+        b.classList.add("right","locked");
+        $("pOpts").querySelectorAll(".opt").forEach(x=>x.classList.add("locked"));
+        fb.className="prac-fb show ok"; fb.innerHTML="<b>答對了</b>　"+P.why;
+        if(pi>=pDone){pDone=pi+1;state.prac=pDone;save();gate()}
+        $("pNext").disabled=false; pDots();
+      }else{
+        b.classList.add("wrong"); fb.className="prac-fb show no";
+        fb.innerHTML="<b>再想一次</b>　"+P.hint+"<br><span style='color:var(--ink2)'>選錯不扣分，直接再選一個。</span>";
+      }
+    });
+  });
+}
+$("pNext").addEventListener("click",()=>{
+  if(pi<PRAC.length-1){pi++;pRender();document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"})}
+  else{unlock("z4");unlock("z5");$("z4").scrollIntoView({behavior:"smooth",block:"start"})}
+});
+
+function qDone(){return Object.keys(state).filter(k=>/^q\d+$/.test(k)).length}
+function paint(){const d=Math.min(state.prac||0,PRAC.length)+qDone();$("pnum").textContent=d+" / "+TOTAL;$("pfill").style.width=(d/TOTAL*100)+"%"}
+function unlock(id){const el=$(id);if(el&&el.classList.contains("locked-zone")){el.classList.remove("locked-zone");el.classList.add("revealed");setTimeout(()=>el.classList.remove("revealed"),700)}}
+function gate(){
+  if((state.prac||0)>=PRAC.length){unlock("z4");unlock("z5")}
+  for(let i=0;i<NQ;i++){if(state["q"+i]!==undefined){unlock("zs"+i);if(i+1<NQ)unlock("zq"+(i+1));else unlock("z6")}}
+  paint();
+}
+document.querySelectorAll(".opts[data-q]").forEach(box=>{
+  const qi=box.dataset.q, ans=box.dataset.ans;
+  box.querySelectorAll(".opt").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      if(box.dataset.locked)return;
+      const k=btn.dataset.k; state["q"+qi]=k; save(); reveal(qi,k,ans,box,true); gate();
+    });
+  });
+});
+function reveal(qi,k,ans,box,scroll){
+  box.dataset.locked="1";
+  box.querySelectorAll(".opt").forEach(b=>{
+    b.classList.add("locked");
+    if(b.dataset.k===k)b.classList.add("picked",k===ans?"right":"wrong");
+    else if(b.dataset.k===ans)b.classList.add("right");
+  });
+  const f=FB[qi][k], fb=$("fb"+qi);
+  fb.innerHTML="<h4 style='color:"+(k===ans?"var(--green)":"var(--red)")+"'>"+f[0]+"</h4>"+f[1];
+  fb.classList.add("show");
+  if(scroll)setTimeout(()=>fb.scrollIntoView({behavior:"smooth",block:"nearest"}),120);
+}
+
+
+/* 實驗一：平方差剪拼 */
+const NS="http://www.w3.org/2000/svg";
+function E(tag,at,txt){const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e}
+let cutOn=false,pB=null,pBpos=null;
+function sqDraw(){
+  const sa=$("sa"),sb=$("sb");
+  let a=+sa.value,b=+sb.value;
+  sb.max=a-1; if(b>a-1){b=a-1;sb.value=b}
+  $("la").textContent=a; $("lb").textContent=b;
+  const svg=$("sqd"); while(svg.firstChild)svg.removeChild(svg.firstChild);
+  const VW=Math.max(320,Math.min(640,(svg.parentNode.clientWidth||640)-12));
+  const u=Math.min(26,(VW-40)/(a+b+0.5),220/a), X=16, Y=34;
+  svg.setAttribute("viewBox","0 0 "+VW+" "+Math.ceil(Y+a*u+40));
+  /* 被挖掉的角落（虛線） */
+  svg.appendChild(E("rect",{x:X+(a-b)*u,y:Y,width:b*u,height:b*u,fill:"none",stroke:"#b03030","stroke-width":1.5,"stroke-dasharray":"5 4",id:"hole"}));
+  svg.appendChild(E("text",{x:X+(a-b/2)*u,y:Y+b*u/2+5,"text-anchor":"middle","font-size":12,fill:"#b03030",id:"holeT"},"挖掉 "+b+"²"));
+  /* A：下面的長方形 a × (a−b) */
+  svg.appendChild(E("rect",{x:X,y:Y+b*u,width:a*u,height:(a-b)*u,fill:"#eeedfb",stroke:"#4338ca","stroke-width":2}));
+  svg.appendChild(E("text",{x:X+a*u/2,y:Y+b*u+(a-b)*u/2+5,"text-anchor":"middle","font-size":14,"font-weight":700,fill:"#4338ca"},a+"×"+(a-b)));
+  /* B：左上的長方形 (a−b) × b，會轉 90 度搬到右邊 */
+  pB=E("g",{class:"pc"});
+  pB.appendChild(E("rect",{x:0,y:0,width:(a-b)*u,height:b*u,fill:"#e9f5ec",stroke:"#15803d","stroke-width":2}));
+  pB.appendChild(E("text",{x:(a-b)*u/2,y:b*u/2+5,"text-anchor":"middle","font-size":14,"font-weight":700,fill:"#15803d"},(a-b)+"×"+b));
+  svg.appendChild(pB);
+  pBpos={x0:X,y0:Y,x1:X+(a+b)*u,y1:Y+b*u};
+  /* 尺寸標示 */
+  const lab=E("text",{x:X,y:Y-12,"font-size":13.5,fill:"#57525e",id:"dimT"},"");
+  svg.appendChild(lab);
+  setCut(cutOn,false,a,b);
+}
+function setCut(on,anim,a,b){
+  a=a||+$("sa").value; b=b||+$("sb").value;
+  cutOn=on;
+  pB.style.transition=anim?"":"none";
+  pB.style.transform=on?"translate("+pBpos.x1+"px,"+pBpos.y1+"px) rotate(90deg)":"translate("+pBpos.x0+"px,"+pBpos.y0+"px) rotate(0deg)";
+  $("hole").style.opacity=on?0:1; $("holeT").style.opacity=on?0:1;
+  $("dimT").textContent=on?"長 "+a+"＋"+b+"＝"+(a+b)+"，寬 "+a+"−"+b+"＝"+(a-b):"邊長 "+a+" 的正方形，挖掉邊長 "+b+" 的角";
+  $("cut").textContent=on?"↺ 拼回正方形":"✂ 剪開重拼";
+  const v=$("vsq");
+  if(on){v.className="verdict good";v.innerHTML="變成一個長方形：長 <strong>"+(a+b)+"</strong>（a＋b）、寬 <strong>"+(a-b)+"</strong>（a−b）。<br>面積沒有變：<span class='eq'>"+a+"²−"+b+"² ＝ "+(a*a)+"−"+(b*b)+" ＝ "+(a*a-b*b)+" ＝ "+(a+b)+"×"+(a-b)+"</span>。這就是 <strong>a²−b²＝(a＋b)(a−b)</strong>。"}
+  else{v.className="verdict";v.innerHTML="現在的面積是 <span class='eq'>"+a+"²−"+b+"² ＝ "+(a*a-b*b)+"</span>。綠色那一塊可以剪下來、轉個方向，接到紫色的右邊。按「剪開重拼」看看。"}
+}
+$("sa").addEventListener("input",sqDraw); $("sb").addEventListener("input",sqDraw);
+$("cut").addEventListener("click",function(){setCut(!cutOn,true)});
+sqDraw();
+
+/* 實驗二：色紙拼正方形 */
+function tileDraw(){
+  const bx=+$("sbx").value,c1=+$("sc1").value; $("lbx").textContent=bx; $("lc1").textContent=c1;
+  $("tiq").innerHTML="<span>x²</span><span>＋ "+bx+"x</span><span>＋ "+c1+"</span>";
+  const svg=$("tile"); while(svg.firstChild)svg.removeChild(svg.firstChild);
+  const VW=Math.max(320,Math.min(640,(svg.parentNode.clientWidth||640)-12));
+  const h=Math.floor(bx/2), odd=bx%2, need=h*h;
+  const u=Math.min(18,(VW-60)/(5+h+(odd?3:0)+3)), xl=5*u, X=14, Y=14;
+  /* 紅 x² */
+  svg.appendChild(E("rect",{x:X,y:Y,width:xl,height:xl,fill:"#f4c2c2",stroke:"#b03030","stroke-width":2}));
+  svg.appendChild(E("text",{x:X+xl/2,y:Y+xl/2+6,"text-anchor":"middle","font-size":17,"font-weight":700,fill:"#b03030","font-family":"Cambria,Georgia,serif"},"x²"));
+  /* 藍：右邊 h 條直的、下面 h 條橫的 */
+  for(let k=0;k<h;k++){
+    svg.appendChild(E("rect",{x:X+xl+k*u,y:Y,width:u,height:xl,fill:"#cfe0f5",stroke:"#1d5b79","stroke-width":1.3}));
+    svg.appendChild(E("rect",{x:X,y:Y+xl+k*u,width:xl,height:u,fill:"#cfe0f5",stroke:"#1d5b79","stroke-width":1.3}));
+  }
+  /* 角落 h×h：有黃色就填，沒有就虛線 */
+  let used=0;
+  for(let r=0;r<h;r++)for(let k=0;k<h;k++){
+    const filled=used<c1; if(filled)used++;
+    svg.appendChild(E("rect",{x:X+xl+k*u,y:Y+xl+r*u,width:u,height:u,fill:filled?"#fbe7a1":"none",stroke:filled?"#a15c07":"#b03030","stroke-width":filled?1.1:1.2,"stroke-dasharray":filled?"":"3 3"}));
+  }
+  /* 放不下的：落單的藍條、多出來的黃色 */
+  let sx=X+xl+h*u+22, sy=Y;
+  const extraB=odd, extraY=Math.max(0,c1-need);
+  if(extraB){svg.appendChild(E("rect",{x:sx,y:sy,width:u,height:xl,fill:"#cfe0f5",stroke:"#1d5b79","stroke-width":1.3}));sx+=u+10}
+  for(let k=0;k<extraY;k++){
+    const col=k%6,row=Math.floor(k/6);
+    svg.appendChild(E("rect",{x:sx+col*(u*0.8+3),y:sy+row*(u*0.8+3),width:u*0.8,height:u*0.8,fill:"#fbe7a1",stroke:"#a15c07","stroke-width":1}));
+  }
+  const H=Math.max(Y+xl+h*u, sy+Math.ceil(extraY/6)*(u*0.8+3))+16;
+  svg.setAttribute("viewBox","0 0 "+VW+" "+Math.ceil(H));
+  const v=$("vti");
+  if(bx===0&&c1===0){v.className="verdict good";v.innerHTML="只有一張紅色，它本身就是正方形：x²＝x·x。"; return}
+  if(!odd&&c1===need){
+    v.className="verdict good";
+    v.innerHTML="<strong>剛好拼成正方形！</strong>邊長是 <span class='eq'>x＋"+h+"</span>。<br><span class='eq'>x²＋"+bx+"x＋"+c1+" ＝ x²＋2·x·"+h+"＋"+h+"² ＝ (x＋"+h+")²</span>——就是<strong>和的平方公式</strong>。藍色要能平分成兩邊，黃色要剛好是 "+h+"×"+h+" 個。";
+    return;
+  }
+  let msg="<strong>拼不成正方形。</strong>";
+  if(odd)msg+="藍色有 "+bx+" 張，不能平分給右邊和下面，多一張落單。";
+  if(c1<need)msg+="角落需要 "+h+"×"+h+"＝"+need+" 張黃色，<strong>少了 "+(need-c1)+" 張</strong>（紅色虛線格）。";
+  else if(c1>need)msg+="角落只要 "+need+" 張黃色，<strong>多了 "+(c1-need)+" 張</strong>放不進去。";
+  msg+="<br>要拼成正方形，黃色要是藍色張數一半的平方：<span class='eq'>("+bx+"÷2)²</span>"+(odd?"（藍色要是偶數）":"＝"+need)+"。<br>📌 拼不成正方形的，有些還是拼得成長方形，例如 x²＋5x＋6＝(x＋2)(x＋3)——那是 3-2 十字交乘法要教的。";
+  v.className="verdict warn"; v.innerHTML=msg;
+}
+$("sbx").addEventListener("input",tileDraw); $("sc1").addEventListener("input",tileDraw); tileDraw();
+let fW=window.innerWidth;
+window.addEventListener("resize",function(){if(window.innerWidth===fW)return;fW=window.innerWidth;sqDraw();tileDraw()});
+
+
+if(pDone>0&&pDone<PRAC.length)pi=pDone; else if(pDone>=PRAC.length)pi=PRAC.length-1;
+pRender();
+document.querySelectorAll(".opts[data-q]").forEach(box=>{const qi=box.dataset.q,saved=state["q"+qi];if(saved!==undefined)reveal(qi,saved,box.dataset.ans,box,false)});
+gate();
+$("rst").addEventListener("click",()=>{try{localStorage.removeItem(KEY)}catch(e){}location.reload()});
+
+})();
+</script>
+</body>
+</html>

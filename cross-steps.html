@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-2 課本逐題講解｜十字交乘法</title>
+<style>
+:root{
+  --paper:#f8f7f4; --ink:#232026; --ink2:#57525e; --line:#dcd8e0;
+  --accent:#4338ca; --accent-soft:#eeedfb;
+  --teal:#0f6b63; --teal-soft:#e6f2f0;
+  --blue:#1d5b79; --blue-soft:#e8f1f5;
+  --green:#15803d; --green-soft:#e9f5ec;
+  --red:#b03030; --red-soft:#fdeeee;
+  --orange:#a15c07; --orange-soft:#fdf2e3;
+  --mul:#6d28d9; --mul-soft:#f1ebfd;
+  --add:#15803d; --add-soft:#e9f5ec;
+  --shadow:0 1px 2px rgba(35,32,38,.06),0 8px 24px rgba(35,32,38,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:17px;line-height:1.85;letter-spacing:.01em}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 120px}
+header{padding:48px 0 26px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:14px}
+h1{font-size:32px;line-height:1.3;margin:0 0 14px}
+.sub{color:var(--ink2);font-size:15px;margin:0}
+.bar{position:sticky;top:0;z-index:50;background:rgba(248,247,244,.95);
+  border-bottom:1px solid var(--line);margin:0 -20px;padding:9px 20px}
+.bar-inner{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--ink2)}
+.track{flex:1;height:5px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .5s}
+.bar b{font-variant-numeric:tabular-nums}
+.toc{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 0}
+.toc a{font-size:13px;text-decoration:none;color:var(--ink2);background:#fff;border:1px solid var(--line);
+  border-radius:99px;padding:3px 11px}
+.toc a:hover{border-color:var(--accent);color:var(--accent)}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+.step{font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.step .n{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;
+  width:20px;height:20px;line-height:20px;text-align:center;margin-right:8px;letter-spacing:0}
+h2{font-size:24px;line-height:1.4;margin:0 0 18px}
+h3{font-size:18px;margin:30px 0 10px}
+p{margin:0 0 16px}
+.dim{color:var(--ink2)}
+em{font-style:normal;background:linear-gradient(transparent 62%,#bfe6c9 62%);font-weight:600;padding:0 1px}
+
+/* ── 數學排版 ── */
+.m{font-family:"Cambria","Times New Roman",Georgia,serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+.m sup{font-size:.68em;vertical-align:super;line-height:0}
+.sq{white-space:nowrap}
+.rad{border-top:1.3px solid currentColor;padding:0 3px 0 1px;margin-left:-1px}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  font-size:.86em;line-height:1.2;margin:0 3px}
+.frac>span:first-child{border-bottom:1.3px solid currentColor;padding:0 4px 1px}
+.frac>span:last-child{padding-top:2px}
+.co{color:var(--orange);font-weight:700}
+.ci{color:var(--blue);font-weight:700}
+.hl{background:#fff1b8;border-radius:4px;padding:0 3px;animation:pop .9s ease}
+@keyframes pop{0%{background:#ffd84d;transform:scale(1.18)}100%{background:#fff1b8;transform:none}}
+.hl{display:inline-block}
+.st{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;opacity:.55}
+.gd{color:var(--green);font-weight:700}
+.bd{color:var(--red);font-weight:700}
+
+/* ── 兩條規則卡 ── */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.rule{background:#fff;border-radius:14px;padding:18px;box-shadow:var(--shadow);border:2px solid}
+.rule.mul{border-color:var(--mul)}
+.rule.add{border-color:var(--add)}
+.rule .rn{font-size:12.5px;letter-spacing:.14em;font-weight:700;margin-bottom:8px}
+.rule.mul .rn{color:var(--mul)} .rule.add .rn{color:var(--add)}
+.rule .rf{font-size:20px;text-align:center;margin:8px 0 10px}
+.rule p{font-size:14.5px;line-height:1.75;margin:0;color:var(--ink2)}
+.rule p strong{color:var(--ink)}
+@media(max-width:600px){.rules{grid-template-columns:1fr}}
+.ytab{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;
+  overflow:hidden;margin:18px 0;font-size:15px}
+.ytab th,.ytab td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:center}
+.ytab th{background:#eef1eb;font-size:13px}
+.ytab tr:last-child td{border-bottom:0}
+.ytab td:first-child{text-align:left;color:var(--ink2);font-size:13.5px}
+.ytab .cmul{background:var(--mul-soft)} .ytab .cadd{background:var(--add-soft)}
+
+/* ── 實驗室 ── */
+.lab{background:linear-gradient(#fff,#fbfcfa);border:1px solid var(--line);border-radius:16px;
+  padding:20px;margin:22px 0;box-shadow:var(--shadow)}
+.lab-t{font-size:12px;letter-spacing:.18em;color:var(--blue);font-weight:700;margin-bottom:12px}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.chip{padding:6px 13px;border:1.5px solid var(--line);background:#fff;border-radius:99px;
+  cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink2)}
+.chip:hover{border-color:var(--ink2)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.duo{grid-template-columns:1fr}}
+.col{border-radius:12px;padding:12px 14px;min-height:150px}
+.col.add{background:var(--add-soft);border:1.5px solid #b7ddc3}
+.col.mul{background:var(--mul-soft);border:1.5px solid #d6c8f5}
+.col h4{margin:0 0 6px;font-size:14px;letter-spacing:.06em}
+.col.add h4{color:var(--add)} .col.mul h4{color:var(--mul)}
+.col .ln{font-size:19px;line-height:2;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+.col .ln.on{opacity:1;transform:none}
+.col .nt{font-size:13.5px;line-height:1.7;color:var(--ink2);margin-top:6px;opacity:0;transition:opacity .5s}
+.col .nt.on{opacity:1}
+.ybar{margin:12px 0 0;font-size:14.5px;background:#fff;border:1px dashed var(--line);border-radius:10px;padding:9px 12px;color:var(--ink2)}
+.vis{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px}
+svg{max-width:100%;height:auto;display:block}
+.seg{transition:opacity .4s}
+.cell{transition:opacity .35s,fill .35s}
+.btn{padding:8px 17px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+  border-radius:99px;cursor:pointer;font-size:14px;font-family:inherit;font-weight:600}
+.btn:hover{opacity:.86}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn:disabled{opacity:.35;cursor:default}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.sl{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+.sl label{font-size:13.5px;color:var(--ink2)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pill{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.pill .lb{font-size:12.5px;color:var(--ink2)}
+.pill .vl{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+.pill.a{border-color:#b7ddc3;background:var(--add-soft)}
+.pill.b{border-color:#edc4c4;background:var(--red-soft)}
+.pill.c{border-color:#d6c8f5;background:var(--mul-soft)}
+.verdict{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:15px;line-height:1.75;
+  background:var(--blue-soft);border:1px solid #cfe0e8}
+
+/* ── 逐題講解卡 ── */
+.sec-h{margin:34px 0 4px;font-size:13px;letter-spacing:.16em;color:var(--teal);font-weight:700}
+.sec-d{font-size:15px;color:var(--ink2);margin:0 0 6px}
+.wt{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:18px 18px 16px;margin:16px 0 22px;box-shadow:var(--shadow)}
+.wt.done{border-color:var(--green)}
+.wt-top{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:12.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:6px}
+.wt-top .ct{color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+.wt.done .wt-top .ct{color:var(--green)}
+.wt-q{font-size:16.5px;margin-bottom:10px}
+.board{border-left:3px solid var(--line);padding:4px 0 4px 12px;margin:6px 0 10px}
+.line{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:9px;cursor:pointer;
+  animation:slide .5s ease both;flex-wrap:wrap}
+@keyframes slide{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+.line .ex{font-size:20px;line-height:2.1;white-space:normal;min-width:0}
+.line .ex .sq,.line .ex .frac{white-space:nowrap}
+.line.old{opacity:.6}
+.line.old .hl{background:transparent;animation:none;padding:0}
+.line.cur{background:#faf9fd}
+.line.sel{outline:2px solid #c9c5f0;opacity:1}
+.tg{flex-shrink:0;font-size:11.5px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:99px;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;white-space:nowrap}
+.tg.mul{background:var(--mul-soft);color:var(--mul);border:1px solid #d6c8f5}
+.tg.add{background:var(--add-soft);color:var(--add);border:1px solid #b7ddc3}
+.tg.simp{background:var(--orange-soft);color:var(--orange);border:1px solid #ecd3ad}
+.tg.rat{background:var(--blue-soft);color:var(--blue);border:1px solid #cfe0e8}
+.tg.exp{background:var(--teal-soft);color:var(--teal);border:1px solid #bcdcd7}
+.tg.ans{background:var(--ink);color:#fff}
+.tg.bad{background:var(--red-soft);color:var(--red);border:1px solid #edc4c4}
+.tg.chk{background:#f3f1f6;color:var(--ink2);border:1px solid var(--line)}
+.whybox{background:var(--accent-soft);border-radius:0 10px 10px 0;border-left:3px solid var(--accent);
+  padding:10px 14px;font-size:15.5px;line-height:1.85;min-height:48px}
+.whybox .wl{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:2px}
+.whybox.mul{background:var(--mul-soft);border-color:var(--mul)} .whybox.mul .wl{color:var(--mul)}
+.whybox.add{background:var(--add-soft);border-color:var(--add)} .whybox.add .wl{color:var(--add)}
+.whybox.bad{background:var(--red-soft);border-color:var(--red)} .whybox.bad .wl{color:var(--red)}
+.ask{display:none;margin-top:12px;border:2px dashed var(--accent);border-radius:12px;padding:12px 14px;background:#fff}
+.ask.show{display:block;animation:slide .4s ease}
+.ask .aq{font-weight:700;font-size:15.5px;margin-bottom:8px}
+.ask .ao{display:flex;flex-direction:column;gap:7px}
+.ask button{font:inherit;font-size:15.5px;text-align:left;padding:9px 13px;border:1.5px solid var(--line);
+  border-radius:10px;background:#fff;cursor:pointer;color:inherit}
+.ask button:hover{border-color:var(--ink2)}
+.ask button.no{border-color:var(--red);background:var(--red-soft)}
+.ask .af{font-size:14.5px;margin-top:8px;color:var(--red);display:none}
+.ask .af.show{display:block}
+.trap{display:none;margin-top:12px;background:#fdf8e8;border:1px dashed #e3d5a4;border-radius:10px;
+  padding:10px 14px;font-size:14.5px;line-height:1.8;color:#5c4d20}
+.trap.show{display:block;animation:slide .4s ease}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+/* ── 判斷題 ── */
+.tf{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:20px;margin:20px 0;box-shadow:var(--shadow)}
+.tf-q{font-size:24px;text-align:center;margin:10px 0 14px}
+.tf-b{display:flex;gap:10px;justify-content:center}
+.tf-b button{font:inherit;font-size:16px;font-weight:700;padding:10px 26px;border-radius:99px;border:2px solid var(--line);background:#fff;cursor:pointer}
+.tf-b button:hover{border-color:var(--ink2)}
+.tf-fb{display:none;margin-top:14px;padding:12px 14px;border-radius:10px;font-size:15.5px;line-height:1.85}
+.tf-fb.show{display:block;animation:slide .3s ease}
+.tf-fb.ok{background:var(--green-soft);border:1px solid #b7ddc3}
+.tf-fb.no{background:var(--red-soft);border:1px solid #edc4c4}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:6px}
+.dot{width:20px;height:6px;border-radius:99px;background:var(--line)}
+.dot.ok{background:var(--green)} .dot.no{background:var(--red)} .dot.now{background:var(--teal)}
+
+.note{background:var(--blue-soft);border:1px solid #cfe0e8;border-radius:12px;padding:14px 18px;margin:18px 0;font-size:15.5px}
+.note p:last-child{margin:0}
+/* ── 為什麼 √2×√3＝√6 ── */
+.w6h{font-size:12px;letter-spacing:.16em;color:var(--mul);font-weight:700;margin-bottom:10px}
+.w6cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.w6cols{grid-template-columns:1fr}}
+.w6c{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.w6c .lb{font-size:13px;color:var(--ink2);margin-bottom:4px}
+.w6c .ln{font-size:19px;line-height:2;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+.w6c .ln.on{opacity:1;transform:none}
+.w6c .ln small{font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif;font-size:13px;color:var(--ink2)}
+.w6v{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:15px;line-height:1.75;background:var(--green-soft);
+  border:1px solid #b7ddc3;opacity:0;transition:opacity .5s}
+.w6v.on{opacity:1}
+.stage{position:relative;height:150px;margin:6px 0 4px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tok{position:absolute;top:0;left:0;display:flex;align-items:center;justify-content:center;
+  font-family:"Cambria","Times New Roman",Georgia,serif;transition:transform .7s cubic-bezier(.4,0,.2,1),opacity .5s}
+.tok.card{height:54px;border-radius:11px;font-size:21px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.tok.c2{background:#e8f1f5;border:2px solid #1d5b79;color:#1d5b79}
+.tok.c3{background:#fdf2e3;border:2px solid #a15c07;color:#a15c07}
+.tok.c6{background:var(--green-soft);border:2px solid var(--green);color:var(--green)}
+.tok.sym{height:54px;font-size:22px;color:var(--ink2)}
+.cap{background:var(--mul-soft);border-left:3px solid var(--mul);border-radius:0 10px 10px 0;padding:10px 14px;
+  font-size:15.5px;line-height:1.85;min-height:76px}
+.cap .wl{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--mul);margin-bottom:2px}
+.reset{background:none;border:1px solid var(--line);color:var(--ink2);padding:8px 16px;
+  border-radius:99px;cursor:pointer;font-size:13px;font-family:inherit;margin-top:22px}
+footer{padding:30px 0;color:var(--ink2);font-size:13px;line-height:1.9;text-align:center}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<style>
+/* 3-2 的標籤顏色與十字圖 */
+.tf-q.m,.srt-q.m{white-space:normal;font-size:21px;line-height:1.7}
+.tg.pair{background:var(--blue-soft);color:var(--blue);border:1px solid #cfe0e8}
+.tg.sgn{background:var(--orange-soft);color:var(--orange);border:1px solid #ecd3ad}
+.tg.cr{background:var(--mul-soft);color:var(--mul);border:1px solid #d6c8f5}
+.tg.no{background:#f3f1f6;color:var(--red);border:1px solid #edc4c4}
+.tg.com{background:var(--teal-soft);color:var(--teal);border:1px solid #bcdcd7}
+.tg.pf{background:var(--add-soft);color:var(--add);border:1px solid #b7ddc3}
+.whybox.cr{background:var(--mul-soft);border-color:var(--mul)} .whybox.cr .wl{color:var(--mul)}
+.whybox.sgn{background:var(--orange-soft);border-color:var(--orange)} .whybox.sgn .wl{color:var(--orange)}
+.rules3{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
+.rule.pf{border-color:var(--teal)} .rule.pf .rn{color:var(--teal)}
+.tl{transition:transform .9s cubic-bezier(.4,0,.2,1);transform-box:view-box;transform-origin:0 0}
+.dimlab{transition:opacity .5s}
+.srt-q{font-size:24px;text-align:center;margin:10px 0 14px}
+.srt-b{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.srt-b button{font:inherit;font-size:15px;font-weight:700;padding:8px 14px;border-radius:99px;border:2px solid var(--line);background:#fff;cursor:pointer}
+.srt-b button:hover{border-color:var(--ink2)}
+.srt-b button.no{border-color:var(--red);background:var(--red-soft)}
+.srt-b button.ok{border-color:var(--green);background:var(--green-soft)}
+/* 十字交乘的小圖：c{左上}{右上}{左下}{右下} */
+.xc{display:inline-grid;grid-template-columns:auto 18px auto;grid-template-rows:auto auto;align-items:center;
+  vertical-align:middle;line-height:1.15;font-size:.82em;margin:0 6px;column-gap:3px;white-space:nowrap}
+.xc .l1{grid-column:1;grid-row:1;text-align:right}.xc .r1{grid-column:3;grid-row:1}
+.xc .l2{grid-column:1;grid-row:2;text-align:right}.xc .r2{grid-column:3;grid-row:2}
+.xc .k{grid-column:2;grid-row:1/3;align-self:stretch;position:relative;min-height:2.1em}
+.xc .k svg{position:absolute;left:0;top:0;width:100%;height:100%}
+.xc .k line{stroke:var(--mul);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.rule .rf .xc{font-size:.95em}
+@media(prefers-reduced-motion:reduce){.tl{transition:none}}
+</style>
+<style id="sitenav-css">
+.sitenav{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+ padding:10px 0 12px;margin:0 0 6px;border-bottom:1px solid rgba(0,0,0,.08);font-size:13.5px;scrollbar-width:none}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav a{flex:0 0 auto;text-decoration:none;color:#4b5563;background:#fff;border:1px solid rgba(0,0,0,.12);
+ border-radius:99px;padding:4px 12px;line-height:1.6;white-space:nowrap}
+.sitenav a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav a.home{font-weight:700;color:#5b4bdb;border-color:#5b4bdb;background:#fff}
+.sitenav a.now{background:#5b4bdb;color:#fff;border-color:#5b4bdb;font-weight:700}
+.sitenav .sep{flex:0 0 auto;color:#9ca3af;padding:0 2px}
+.sitenav-b{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:34px 0 8px}
+.sitenav-b a{text-decoration:none;color:#374151;background:#fff;border:1px solid rgba(0,0,0,.14);border-radius:12px;
+ padding:12px 14px;line-height:1.5;font-size:14.5px;display:flex;flex-direction:column;justify-content:center}
+.sitenav-b a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav-b a small{font-size:11.5px;color:#9ca3af;letter-spacing:.08em}
+.sitenav-b a.next{text-align:left}
+.sitenav-b a.homeb{justify-content:center;text-align:center;font-weight:700;color:#5b4bdb;border-color:#5b4bdb}
+.sitenav-b span{display:block}
+@media(max-width:640px){.sitenav{flex-wrap:wrap;overflow:visible;gap:6px 5px;font-size:13px}.sitenav a{padding:3px 10px}}
+@media(max-width:520px){.sitenav-b{grid-template-columns:1fr 1fr}.sitenav-b a.homeb{grid-column:1/-1;order:-1}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="wrap">
+
+<!-- SITENAV:top 由 _add_site_nav.py 產生，勿手改 -->
+<nav class="sitenav" aria-label="站內導覽"><a class="home" href="index.html">八年級數學自學站</a><span class="sep">·</span><a class="" href="multiply.html">1-1 乘法公式</a><a class="" href="polynomial.html">1-2 多項式加減</a><a class="" href="division.html">1-3 多項式乘除</a><a class="" href="sqrt.html">2-1 平方根</a><a class="" href="radical.html">2-2 根式運算</a><a class="" href="pythag.html">2-3 畢氏定理</a><a class="" href="factor.html">3-1 提公因式與乘法公式</a><a class="now" href="cross.html">3-2 十字交乘法</a><a class="" href="quadfactor.html">4-1 因式分解解方程式</a><a class="" href="quadformula.html">4-2 配方法與公式解</a><a class="" href="quadapply.html">4-3 應用問題</a><span class="sep">·</span><a class="" href="exam-sections.html">段考・照節次練</a><a class="" href="exam.html">段考・整卷模擬</a></nav>
+<!-- /SITENAV:top -->
+
+<header>
+  <div class="kicker">八年級上 · 第三章 3-2 利用十字交乘法做因式分解 · 課本逐題講解</div>
+  <h1>十字交乘，就是把長方形的長和寬猜回來</h1>
+  <p class="sub">3-1 學了提公因式和乘法公式。這一節的式子像 <span class="m" data-m="x^2+7x+12"></span>，三招都用不上，要用<strong>第四招：十字交乘</strong>。<br>
+  每一行算式前面有一個小標籤：<span class="tg pair">找兩數</span> 是列出乘起來是常數的組合；<span class="tg sgn">正負號</span> 是先想好兩個數的正負；<span class="tg cr">十字</span> 是交叉相乘再相加；<span class="tg no">不合</span> 是試過不對的組合；<span class="tg com">提出</span> 是先提負號或公因數。</p>
+  <div class="toc">
+    <a href="#what">拼成長方形</a><a href="#rules">怎麼找</a><a href="#lab">正負號</a><a href="#secA">A x² 係數是 1</a><a href="#secB">B x² 係數不是 1</a>
+    <a href="#secC">C 先提再拆</a><a href="#secD">D 自我評量與挑錯</a><a href="#quiz">判斷 10 題</a>
+  </div>
+</header>
+
+<div class="bar"><div class="bar-inner"><span>講解看完</span><div class="track"><div class="fill" id="pfill"></div></div><b id="ptext">0 / 0</b></div></div>
+
+<!-- ══ 0 拼成長方形 ══ -->
+<section id="what">
+  <div class="step"><span class="n">0</span>先看一個圖</div>
+  <h2>x²＋7x＋12：一張大正方形、七條長條、十二個小方塊</h2>
+  <p>和 3-1 一樣，<span class="m" data-m="x^2"></span> 是邊長 x 的正方形、<span class="m">x</span> 是長 x 寬 1 的長條、<span class="m">1</span> 是小方塊。選一題，按「拼起來」。</p>
+  <div class="lab">
+    <div class="lab-t">拼拼看 ── 散開的面積 vs 拼好的長方形</div>
+    <div class="chips" id="tlChips"></div>
+    <div class="vis"><svg id="tlSvg" viewBox="0 0 640 300" role="img" aria-label="把 x 平方、長條、小方塊拼成長方形"></svg></div>
+    <div class="btnrow"><button class="btn" id="tlBtn">▶ 拼起來</button></div>
+    <div class="verdict" id="tlTxt"></div>
+  </div>
+  <div class="note"><p>📌 看拼好的圖：右下角的小方塊排成 <strong>a 行 b 列</strong>，個數是 <strong>a×b</strong>，就是常數；長條右邊 a 條、下面 b 條，一共 <strong>a＋b</strong> 條，就是 x 的係數。<br>
+  所以十字交乘要找的兩個數：<strong>乘起來是常數，加起來是 x 的係數</strong>。</p></div>
+</section>
+
+<!-- ══ 1 怎麼找 ══ -->
+<section id="rules">
+  <div class="step"><span class="n">1</span>先看這一張</div>
+  <h2>十字交乘的三個步驟</h2>
+  <div class="rules3">
+    <div class="rule mul">
+      <div class="rn">第一步：列出乘起來是常數的組合（p.135）</div>
+      <div class="rf m" data-m="x^2+7x+12：12＝1×12＝2×6＝3×4"></div>
+      <p>從<strong>常數</strong>開始找，因為乘起來是 12 的整數只有幾組；加起來是 7 的有無限多組。</p>
+    </div>
+    <div class="rule add">
+      <div class="rn">第二步：先想正負號（例 1、例 2）</div>
+      <div class="rf m" data-m="常數＋ → 同號　常數− → 一正一負"></div>
+      <p>常數是正的：兩個數同號，跟 x 項同號。常數是負的：一正一負，<strong>絕對值大的跟 x 項同號</strong>。</p>
+    </div>
+    <div class="rule pf">
+      <div class="rn">第三步：放進十字，交叉相加（p.134、p.138）</div>
+      <div class="rf m" data-m="c{x}{+3}{x}{+4}　3x＋4x＝7x ✓"></div>
+      <p>斜著乘、再相加，等於中間那一項就對了。<strong>答案橫著讀</strong>：(x＋3)(x＋4)。x² 前面不是 1 時，左邊也要拆，右邊上下換位置要另外試。</p>
+    </div>
+  </div>
+  <div class="note"><p>📌 一句話：<strong>先提負號或公因數 → 從常數找兩個數 → 交叉相加檢查 → 橫著讀出答案</strong>。試到一組對的就停（課本 p.140）。</p></div>
+</section>
+
+<!-- ══ 正負號 ══ -->
+<section id="lab">
+  <div class="step"><span class="n">★</span>動手看</div>
+  <h2>還沒拆，先猜兩個數的正負號</h2>
+  <p>不用算出答案，只要看常數和 x 項的正負，判斷兩個數是什麼號。</p>
+  <div class="tf" id="srt">
+    <div class="dots" id="srtDots"></div>
+    <div style="text-align:center;font-size:13px;color:var(--ink2)" id="srtNo"></div>
+    <div class="srt-q m" id="srtQ"></div>
+    <div class="srt-b" id="srtB"></div>
+    <div class="tf-fb" id="srtV"></div>
+    <div class="btnrow" style="justify-content:center"><button class="btn" id="srtNext" disabled>下一題</button></div>
+  </div>
+</section>
+
+<!-- ══ 逐題講解 ══ -->
+<section id="steps">
+  <div class="step"><span class="n">2</span>課本逐題講解</div>
+  <h2>照課本的順序，一題一題拆開</h2>
+  <p>按「下一步」，算式會多寫一行；按「▶ 自動」會自己一步一步播。有 <strong>❓</strong> 的地方會先問你，答對才往下。點已經寫好的任何一行，可以再看一次那一步的說明。</p>
+  <div id="wtList"></div>
+</section>
+
+<!-- ══ 判斷 ══ -->
+<section id="quiz">
+  <div class="step"><span class="n">3</span>最後檢查</div>
+  <h2>對還是錯？10 題（前 3 題是課本 p.143 自我檢核）</h2>
+  <p>先判斷，再看理由。</p>
+  <div class="tf">
+    <div class="dots" id="tfDots"></div>
+    <div style="text-align:center;font-size:13px;color:var(--ink2)" id="tfNo"></div>
+    <div class="tf-q m" id="tfQ"></div>
+    <div class="tf-b"><button id="tfT">⭕ 對</button><button id="tfF">❌ 錯</button></div>
+    <div class="tf-fb" id="tfFb"></div>
+    <div class="btnrow" style="justify-content:center"><button class="btn" id="tfNext" disabled>下一題</button></div>
+  </div>
+  <div style="text-align:center"><button class="reset" id="reset">清除這一頁的進度，重新看一次</button></div>
+</section>
+
+<!-- SITENAV:bottom 由 _add_site_nav.py 產生，勿手改 -->
+<div class="sitenav-b"><a class="prev" href="cross.html"><small>← 上一頁</small><span>3-2 十字交乘法</span></a><a class="homeb" href="index.html">回八年級首頁</a><a class="next" href="quadfactor.html"><small>下一頁 →</small><span>4-1 因式分解解方程式</span></a></div>
+<!-- /SITENAV:bottom -->
+
+<footer>
+  國中數學八上自學站 · 第三章 3-2 利用十字交乘法做因式分解 · 課本逐題講解<br>
+  題目依康軒版第三冊 3-2 的例題、隨堂練習、自我評量順序整理；延伸題取自第 3 章章末「一題多解」
+</footer>
+</div>
+<script>
+(function(){
+"use strict";
+const KEY="jhs8-cross-steps-v1";
+let store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.done=store.done||{};
+
+/* 小型數學標記：c{左上}{右上}{左下}{右下} 十字、f{分子}{分母} 分數、h{..} 新出現的部分、o{..} 被提出來的、
+   x{..} 刪掉、g{..} 對、b{..} 錯、^2 或 ^{..} 次方 */
+const XSVG='<svg viewBox="0 0 10 10" preserveAspectRatio="none"><line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/></svg>';
+function M(s){
+  let i=0;
+  function grp(){i++;let o="";while(i<s.length&&s[i]!=="}")o+=one();i++;return o}
+  function one(){
+    const c=s[i];
+    if("cfhoxgb".indexOf(c)>=0&&s[i+1]==="{"){
+      i++;const a=grp();
+      switch(c){
+        case"c":{const b=grp(),d=grp(),e=grp();return'<span class="xc"><span class="l1">'+a+'</span><span class="k">'+XSVG+'</span><span class="r1">'+b+'</span><span class="l2">'+d+'</span><span class="r2">'+e+'</span></span>'}
+        case"f":{const d=grp();return'<span class="frac"><span>'+a+'</span><span>'+d+'</span></span>'}
+        case"h":return'<span class="hl">'+a+'</span>';
+        case"o":return'<span class="co">'+a+'</span>';
+        case"x":return'<span class="st">'+a+'</span>';
+        case"g":return'<span class="gd">'+a+'</span>';
+        case"b":return'<span class="bd">'+a+'</span>';
+      }
+    }
+    if(c==="^"){i++;if(s[i]==="{")return"<sup>"+grp()+"</sup>";return"<sup>"+s[i++]+"</sup>"}
+    i++;return c;
+  }
+  let o="";while(i<s.length)o+=one();return o;
+}
+/* 說明文字：$...$ 裡面的是算式 */
+function T(s){return s.replace(/\$([^$]+)\$/g,function(_,x){return'<span class="m">'+M(x)+'</span>'})}
+document.querySelectorAll("[data-m]").forEach(function(el){el.innerHTML=M(el.getAttribute("data-m"))});
+
+const TAG={
+  pair:["找兩數","找兩數：列出乘起來是常數的組合"],
+  sgn:["正負號","正負號：先想好兩個數是什麼號"],
+  cr:["十字","十字：斜著乘，再相加"],
+  no:["✗ 不合","不合：交叉加起來不對，換下一組"],
+  com:["提出","提出：先提負號或公因數"],
+  pf:["完全平方","和或差的平方：a²±2ab＋b²＝(a±b)²"],
+  exp:["乘開","乘開：每一項都要乘到"],
+  ans:["答","答案"],
+  bad:["✗ 錯","錯在哪裡"],
+  chk:["檢查","檢查一下"]
+};
+
+/* ───────── 課本題目 ───────── */
+const SECS=[
+{id:"secA",h:"A　二次項係數為 1 的十字交乘法　課本 p.134–137",d:"$x^2+px+q$：找兩個數，<strong>乘起來是 q、加起來是 p</strong>。先從乘積找，再檢查和。",items:[
+ {src:"課本 p.134–135",q:"$x^2+7x+12$ 如果可以分解成 $(x+a)(x+b)$，a、b 是多少？先看 $(x+3)(x+4)$ 乘開。",steps:[
+   {e:"(x+3)(x+4)",w:"先反過來想：1-1 怎麼乘開。"},
+   {t:"exp",e:"＝ x^2 + 4x + 3x + 12 ＝ x^2 + h{7}x + h{12}"},
+   {t:"chk",e:"12 ＝ 3 × 4　（乘積）　　7 ＝ 3 + 4　（和）",w:"常數項是兩個數的<strong>積</strong>，x 的係數是兩個數的<strong>和</strong>。"},
+   {t:"cr",e:"c{x}{+3}{x}{+4}　3x + 4x ＝ 7x",w:"課本把乘開的直式簡寫成一個叉：左邊 $x·x＝x^2$，右邊 $3×4＝12$，斜著乘再相加 $3x+4x＝7x$。這就叫<strong>十字交乘</strong>。"},
+   {t:"ans",e:"x^2+7x+12 ＝ g{(x+3)(x+4)}",w:"等號兩邊對調，就是因式分解。一般來說 $x^2+(a+b)x+ab＝(x+a)(x+b)$。"}
+ ]},
+
+ {src:"課本 p.136　例 1 (1)",q:"因式分解 $x^2+3x+2$",steps:[
+   {e:"x^2 + 3x + 2"},
+   {t:"pair",e:"2 ＝ 1×2 ＝ (−1)×(−2)",w:"把常數 2 拆成兩個整數相乘，只有兩種。"},
+   {t:"cr",e:"c{x}{1}{x}{2}　x + 2x ＝ g{3x}　合",w:"交叉相加要等於 3x。"},
+   {t:"no",e:"c{x}{−1}{x}{−2}　−x − 2x ＝ b{−3x}　不合",w:"課本把另一組也試了：符號反了。"},
+   {t:"ans",e:"＝ g{(x+1)(x+2)}"}
+ ]},
+
+ {src:"課本 p.136　例 1 (2)",q:"因式分解 $x^2−7x+10$",steps:[
+   {e:"x^2 − 7x + 10"},
+   {t:"pair",e:"10 ＝ 1×10 ＝ 2×5 ＝ (−1)×(−10) ＝ (−2)×(−5)",w:"有四種分法。"},
+   {t:"sgn",ask:{q:"❓ 常數 +10、x 項 −7。兩個數是什麼號？",o:["兩個都是負的","兩個都是正的","一正一負"],a:0,no:"乘起來是正的 → 同號；加起來是負的 → 兩個都負。"},e:"同號、加起來是負的 → 兩個都負",w:"這樣只要試 $(−1)×(−10)$ 和 $(−2)×(−5)$。"},
+   {t:"no",e:"c{x}{−1}{x}{−10}　−x − 10x ＝ b{−11x}"},
+   {t:"cr",e:"c{x}{−2}{x}{−5}　−2x − 5x ＝ g{−7x}　合"},
+   {t:"ans",e:"＝ g{(x−2)(x−5)}"}
+ ],trap:"📌 課本把四種都試了：1、10 得 11x，2、5 得 7x，都不合。先想正負號，可以少試一半。"},
+
+ {src:"課本 p.136　隨堂 (1)",q:"因式分解 $x^2+4x+3$",steps:[
+   {e:"x^2 + 4x + 3"},
+   {t:"sgn",e:"3 正、4 正 → 兩個都正；3 ＝ 1×3"},
+   {t:"cr",e:"c{x}{1}{x}{3}　x + 3x ＝ g{4x}"},
+   {t:"ans",e:"＝ g{(x+1)(x+3)}"}
+ ]},
+
+ {src:"課本 p.136　隨堂 (2)",q:"因式分解 $x^2−8x+15$",steps:[
+   {e:"x^2 − 8x + 15"},
+   {t:"sgn",e:"15 正、−8 負 → 兩個都負；15 ＝ (−1)(−15) ＝ (−3)(−5)"},
+   {t:"no",e:"c{x}{−1}{x}{−15}　b{−16x}"},
+   {t:"cr",e:"c{x}{−3}{x}{−5}　−3x − 5x ＝ g{−8x}"},
+   {t:"ans",e:"＝ g{(x−3)(x−5)}"}
+ ]},
+
+ {src:"課本 p.137　例 2 (1)",q:"因式分解 $x^2+4x−21$",steps:[
+   {e:"x^2 + 4x − 21",w:"這次常數是<strong>負的</strong>。"},
+   {t:"pair",e:"−21 ＝ (−1)×21 ＝ 1×(−21) ＝ (−3)×7 ＝ 3×(−7)"},
+   {t:"sgn",ask:{q:"❓ 常數 −21，x 項 +4。兩個數是什麼號？",o:["一正一負，正的比較大","一正一負，負的比較大","兩個都正"],a:0,no:"乘起來是負的 → 一正一負；加起來是正的 → 正的那個絕對值比較大。"},e:"一正一負、加起來是正 → 正的比較大",w:"課本說：x 項的係數 4 為正數，只需考慮兩數和為正的兩種情形。"},
+   {t:"no",e:"c{x}{−1}{x}{21}　−x + 21x ＝ b{20x}"},
+   {t:"cr",e:"c{x}{−3}{x}{7}　−3x + 7x ＝ g{4x}　合"},
+   {t:"ans",e:"＝ g{(x−3)(x+7)}"}
+ ]},
+
+ {src:"課本 p.137　例 2 (2)",q:"因式分解 $x^2−5x−14$",steps:[
+   {e:"x^2 − 5x − 14"},
+   {t:"pair",e:"−14 ＝ (−1)×14 ＝ 1×(−14) ＝ (−2)×7 ＝ 2×(−7)"},
+   {t:"sgn",e:"一正一負、加起來是負 → 負的比較大",w:"只要試 $1×(−14)$ 和 $2×(−7)$。"},
+   {t:"no",e:"c{x}{1}{x}{−14}　x − 14x ＝ b{−13x}"},
+   {t:"cr",e:"c{x}{2}{x}{−7}　2x − 7x ＝ g{−5x}　合"},
+   {t:"ans",e:"＝ g{(x+2)(x−7)}"}
+ ]},
+
+ {src:"課本 p.137　隨堂 (1)",q:"因式分解 $x^2+17x−18$",steps:[
+   {e:"x^2 + 17x − 18"},
+   {t:"sgn",e:"一正一負、正的比較大，而且兩個數相差 17"},
+   {t:"cr",ask:{q:"❓ 乘起來 −18、加起來 17，是哪兩個？",o:["−1 和 18","−2 和 9","1 和 −18"],a:0,no:"−2＋9＝7；1＋(−18)＝−17，正負反了。"},e:"c{x}{−1}{x}{18}　−x + 18x ＝ g{17x}"},
+   {t:"ans",e:"＝ g{(x−1)(x+18)}"}
+ ]},
+
+ {src:"課本 p.137　隨堂 (2)",q:"因式分解 $x^2−13x−30$",steps:[
+   {e:"x^2 − 13x − 30"},
+   {t:"pair",e:"30 ＝ 1×30 ＝ 2×15 ＝ 3×10 ＝ 5×6",w:"一正一負、負的比較大：要找<strong>相差 13</strong> 的一組。"},
+   {t:"no",e:"c{x}{3}{x}{−10}　3x − 10x ＝ b{−7x}",w:"乘起來 −30 對了，但加起來不對。"},
+   {t:"cr",e:"c{x}{2}{x}{−15}　2x − 15x ＝ g{−13x}"},
+   {t:"ans",e:"＝ g{(x+2)(x−15)}"}
+ ],trap:"⚠️ 只看乘積會選錯：$(x+3)(x−10)$ 常數也是 −30，但中間是 −7x。<strong>乘積和交叉和兩個都要對</strong>。"}
+]},
+
+{id:"secB",h:"B　二次項係數不為 1 的十字交乘法　課本 p.138–140",d:"左邊乘出 $x^2$ 項、右邊乘出常數、<strong>交叉相加</strong>是 x 項。右邊兩個數上下換位置，交叉和就不同，要分開試。",items:[
+ {src:"課本 p.138",q:"$x^2$ 也可以拆成 $(−x)·(−x)$。用 $x^2−5x−14$ 試試看。",steps:[
+   {e:"x^2 − 5x − 14"},
+   {t:"no",e:"c{−x}{−1}{−x}{14}　x − 14x ＝ b{−13x}"},
+   {t:"cr",e:"c{−x}{−2}{−x}{7}　2x − 7x ＝ g{−5x}　合",w:"$(−x)·7＝−7x$、$(−2)·(−x)＝2x$。"},
+   {t:"chk",e:"＝ (−x−2)(−x+7) ＝ [−(x+2)][−(x−7)] ＝ (x+2)(x−7)",w:"兩個括號各提一個負號，負負得正，和例 2 的答案一樣。"},
+   {t:"ans",e:"g{(x+2)(x−7)}",w:"所以習慣上，<strong>二次項係數是正的時候，左邊只用正的拆</strong>。"}
+ ]},
+
+ {src:"課本 p.138",q:"用十字交乘把 $(2x+5)(3x+4)$ 乘開。",steps:[
+   {e:"c{2x}{+5}{3x}{+4}",w:"左邊放 2x、3x，右邊放 5、4。"},
+   {t:"cr",e:"左：2x·3x ＝ h{6x^2}　右：5×4 ＝ h{20}"},
+   {t:"cr",e:"交叉：5·3x + 2x·4 ＝ 15x + 8x ＝ h{23x}",w:"x 項的係數 23 是 $5×3+2×4$。"},
+   {t:"ans",e:"(2x+5)(3x+4) ＝ g{6x^2+23x+20}",w:"左右對調，就是 $6x^2+23x+20$ 的因式分解。"}
+ ]},
+
+ {src:"課本 p.139　例 3 (1)",q:"因式分解 $2x^2+15x+7$",steps:[
+   {e:"2x^2 + 15x + 7"},
+   {t:"pair",e:"左：2 ＝ 1×2　右：7 ＝ 1×7（都正）"},
+   {t:"no",e:"c{x}{1}{2x}{7}　x·7 + 1·2x ＝ 7x + 2x ＝ b{9x}",w:"交叉是「左上 × 右下」加「右上 × 左下」。"},
+   {t:"cr",ask:{q:"❓ 把右邊的 1 和 7 上下換位置，交叉和會變嗎？",o:["會變，要再算一次","不會變，一樣是 9x"],a:0,no:"左邊 x 和 2x 不一樣大，所以 7 跟誰相乘會差很多。"},e:"c{x}{7}{2x}{1}　x·1 + 7·2x ＝ x + 14x ＝ g{15x}　合"},
+   {t:"ans",e:"＝ g{(x+7)(2x+1)}",w:"橫著讀：第一列 x、7 → (x+7)；第二列 2x、1 → (2x+1)。"}
+ ]},
+
+ {src:"課本 p.139　例 3 (2)",q:"因式分解 $9x^2−9x+2$",steps:[
+   {e:"9x^2 − 9x + 2"},
+   {t:"pair",e:"左：9 ＝ 1×9 ＝ 3×3　右：2 ＝ (−1)×(−2)",w:"常數正、x 項負 → 右邊兩個都負。"},
+   {t:"no",e:"c{x}{−1}{9x}{−2}　−2x − 9x ＝ b{−11x}"},
+   {t:"no",e:"c{x}{−2}{9x}{−1}　−x − 18x ＝ b{−19x}"},
+   {t:"cr",e:"c{3x}{−1}{3x}{−2}　−6x − 3x ＝ g{−9x}　合",w:"左邊換成 3x、3x 就對了。"},
+   {t:"ans",e:"＝ g{(3x−1)(3x−2)}"}
+ ]},
+
+ {src:"課本 p.139　隨堂 (1)",q:"因式分解 $6x^2+19x+15$",steps:[
+   {e:"6x^2 + 19x + 15"},
+   {t:"pair",e:"左：1×6、2×3　右：1×15、3×5（都正）"},
+   {t:"no",e:"c{2x}{5}{3x}{3}　2x·3 + 5·3x ＝ 6x + 15x ＝ b{21x}"},
+   {t:"cr",e:"c{2x}{3}{3x}{5}　2x·5 + 3·3x ＝ 10x + 9x ＝ g{19x}"},
+   {t:"ans",e:"＝ g{(2x+3)(3x+5)}"}
+ ]},
+
+ {src:"課本 p.139　隨堂 (2)",q:"因式分解 $6x^2−23x+21$",steps:[
+   {e:"6x^2 − 23x + 21"},
+   {t:"sgn",e:"常數 +21、x 項 −23 → 右邊兩個都負：21 ＝ (−1)(−21) ＝ (−3)(−7)"},
+   {t:"no",e:"c{6x}{−7}{x}{−3}　−18x − 7x ＝ b{−25x}"},
+   {t:"cr",e:"c{2x}{−3}{3x}{−7}　2x·(−7) + (−3)·3x ＝ −14x − 9x ＝ g{−23x}"},
+   {t:"ans",e:"＝ g{(2x−3)(3x−7)}"}
+ ]},
+
+ {src:"課本 p.140　例 4 (1)",q:"因式分解 $4x^2+4x−3$",steps:[
+   {e:"4x^2 + 4x − 3",w:"在例 1～3 裡可以發現：<strong>只要有一組試對了，就不用再試其他的</strong>。"},
+   {t:"pair",e:"左：4 ＝ 1×4 ＝ 2×2　右：−3 ＝ (−1)×3 ＝ 1×(−3)"},
+   {t:"cr",e:"c{2x}{−1}{2x}{3}　2x·3 + (−1)·2x ＝ 6x − 2x ＝ g{4x}"},
+   {t:"ans",e:"＝ g{(2x−1)(2x+3)}"}
+ ]},
+
+ {src:"課本 p.140　例 4 (2)",q:"因式分解 $5x^2−23x−10$",steps:[
+   {e:"5x^2 − 23x − 10"},
+   {t:"pair",e:"左：5 ＝ 1×5　右：−10，一正一負"},
+   {t:"cr",e:"c{x}{−5}{5x}{2}　x·2 + (−5)·5x ＝ 2x − 25x ＝ g{−23x}",w:"−5 放在 x 那一列，才能乘出 −25x。"},
+   {t:"ans",e:"＝ g{(x−5)(5x+2)}"}
+ ]},
+
+ {src:"課本 p.140　隨堂 (1)",q:"因式分解 $13x^2+8x−5$",steps:[
+   {e:"13x^2 + 8x − 5"},
+   {t:"no",e:"c{x}{−1}{13x}{5}　5x − 13x ＝ b{−8x}",w:"差一個負號：把兩個數的正負號對調。"},
+   {t:"cr",e:"c{x}{1}{13x}{−5}　−5x + 13x ＝ g{8x}"},
+   {t:"ans",e:"＝ g{(x+1)(13x−5)}"}
+ ],trap:"📌 交叉和剛好差一個負號時，<strong>把右邊兩個數都變號</strong>就對了。"},
+
+ {src:"課本 p.140　隨堂 (2)",q:"因式分解 $5x^2−4x−12$",steps:[
+   {e:"5x^2 − 4x − 12"},
+   {t:"pair",e:"左：x、5x　右：−12 ＝ 1×(−12) ＝ 2×(−6) ＝ 3×(−4) ＝ …"},
+   {t:"no",e:"c{x}{2}{5x}{−6}　−6x + 10x ＝ b{4x}"},
+   {t:"cr",e:"c{x}{−2}{5x}{6}　6x − 10x ＝ g{−4x}"},
+   {t:"ans",e:"＝ g{(x−2)(5x+6)}"}
+ ]}
+]},
+
+{id:"secC",h:"C　綜合應用：先提再拆　課本 p.141–142",d:"先<strong>提出負號或公因數</strong>，讓 $x^2$ 係數變正、數字變小，再用十字交乘或乘法公式。",items:[
+ {src:"課本 p.141　例 5",q:"因式分解 $−x^2+2x+63$",steps:[
+   {e:"−x^2 + 2x + 63",w:"$x^2$ 前面是負的，先提 −1。"},
+   {t:"com",ask:{q:"❓ 提出 −1 以後，括號裡是什麼？",o:["$x^2−2x−63$","$x^2+2x+63$","$x^2−2x+63$"],a:0,no:"提出 −1，括號裡<strong>每一項</strong>都要變號。"},e:"＝ o{−}(x^2 − 2x − 63)"},
+   {t:"cr",e:"c{x}{7}{x}{−9}　7x − 9x ＝ g{−2x}",w:"−63 一正一負、負的比較大：7 和 −9。"},
+   {t:"ans",e:"＝ g{−(x+7)(x−9)}"}
+ ],trap:"📌 課本 Hint：也可以不提 −1，直接拆成 $(x+7)(−x+9)$。十字 x／7、−x／9：$−7x+9x＝2x$。兩個答案是一樣的。"},
+
+ {src:"課本 p.141　隨堂 (1)",q:"因式分解 $−3x^2+11x+4$",steps:[
+   {e:"−3x^2 + 11x + 4"},
+   {t:"com",e:"＝ −(3x^2 − 11x − 4)"},
+   {t:"cr",e:"c{3x}{1}{x}{−4}　3x·(−4) + 1·x ＝ −12x + x ＝ g{−11x}"},
+   {t:"ans",e:"＝ g{−(3x+1)(x−4)}",w:"前面的負號不要忘了寫。"}
+ ]},
+
+ {src:"課本 p.141　隨堂 (2)",q:"因式分解 $−18x^2−45x+17$",steps:[
+   {e:"−18x^2 − 45x + 17"},
+   {t:"com",e:"＝ −(18x^2 + 45x − 17)"},
+   {t:"pair",e:"左：18 ＝ 1×18 ＝ 2×9 ＝ 3×6　右：−17 ＝ (−1)×17 ＝ 1×(−17)",w:"17 是質數，右邊只有兩種，主要是試左邊。"},
+   {t:"cr",e:"c{3x}{−1}{6x}{17}　3x·17 + (−1)·6x ＝ 51x − 6x ＝ g{45x}"},
+   {t:"ans",e:"＝ g{−(3x−1)(6x+17)}"}
+ ]},
+
+ {src:"課本 p.142　例 6",q:"因式分解 $8y^2+40y+50$",steps:[
+   {e:"8y^2 + 40y + 50",w:"三項都是 2 的倍數。"},
+   {t:"com",e:"＝ o{2}(4y^2 + 20y + 25)",w:"先提公因數 2，數字變小。"},
+   {t:"cr",e:"解 1　c{2y}{5}{2y}{5}　10y + 10y ＝ g{20y}"},
+   {t:"pf",e:"解 2　＝ 2[(2y)^2 + 2·2y·5 + 5^2]",w:"括號裡頭尾是平方、中間是 2×2y×5，也可以用和的平方公式。"},
+   {t:"ans",e:"＝ g{2(2y+5)^2}"}
+ ],trap:"📌 課本 Hint：不先提 2 也可以，十字 4y／10、2y／5，得 $(4y+10)(2y+5)$，再從 $4y+10$ 提 2，一樣是 $2(2y+5)^2$。但數字大，比較難找。"},
+
+ {src:"課本 p.142　隨堂 (1)",q:"因式分解 $3x^2+30x+75$",steps:[
+   {e:"3x^2 + 30x + 75"},
+   {t:"com",e:"＝ o{3}(x^2 + 10x + 25)"},
+   {t:"cr",e:"c{x}{5}{x}{5}　5x + 5x ＝ g{10x}",w:"也就是 $x^2+2·x·5+5^2$。"},
+   {t:"ans",e:"＝ g{3(x+5)^2}"}
+ ]},
+
+ {src:"課本 p.142　隨堂 (2)",q:"因式分解 $18y^2−24y+8$",steps:[
+   {e:"18y^2 − 24y + 8"},
+   {t:"com",ask:{q:"❓ 三項的最大公因數是多少？",o:["2","6","8"],a:0,no:"18、24、8 都能被 2 整除；8 不能被 6 整除。"},e:"＝ o{2}(9y^2 − 12y + 4)"},
+   {t:"pf",e:"＝ 2[(3y)^2 − 2·3y·2 + 2^2]",w:"中間 $2×3y×2＝12y$，是負的 → 差的平方。也可以用十字 3y／−2、3y／−2。"},
+   {t:"ans",e:"＝ g{2(3y−2)^2}"}
+ ]}
+]},
+
+{id:"secD",h:"D　自我評量、挑錯題（課本 p.144–145）與一題多解（p.147）",d:"綜合練習。挑錯題先找出<strong>第一個</strong>出錯的那一行。",items:[
+ {src:"課本 p.144　自我評量 2 (3)",q:"因式分解 $10x^2−51x+27$",steps:[
+   {e:"10x^2 − 51x + 27"},
+   {t:"sgn",e:"常數 +27、x 項 −51 → 右邊兩個都負：27 ＝ (−1)(−27) ＝ (−3)(−9)"},
+   {t:"pair",e:"左：10 ＝ 1×10 ＝ 2×5",w:"51 很大，交叉要有一邊乘得很大，試 2x、5x 配 −9、−3。"},
+   {t:"no",e:"c{2x}{−3}{5x}{−9}　−18x − 15x ＝ b{−33x}"},
+   {t:"cr",e:"c{2x}{−9}{5x}{−3}　2x·(−3) + (−9)·5x ＝ −6x − 45x ＝ g{−51x}"},
+   {t:"ans",e:"＝ g{(2x−9)(5x−3)}"}
+ ]},
+
+ {src:"課本 p.144　自我評量 2 (6)",q:"因式分解 $24x^2+30x−9$",steps:[
+   {e:"24x^2 + 30x − 9"},
+   {t:"com",e:"＝ o{3}(8x^2 + 10x − 3)",w:"24、30、9 都是 3 的倍數，先提 3。"},
+   {t:"cr",e:"c{4x}{−1}{2x}{3}　4x·3 + (−1)·2x ＝ 12x − 2x ＝ g{10x}"},
+   {t:"ans",e:"＝ g{3(4x−1)(2x+3)}"}
+ ]},
+
+ {src:"課本 p.145　自我評量 3",q:"若 $x^2+5x−6$ 與 $2x^2+9x−18$ 的公因式為 $x+a$，則 a 是多少？",steps:[
+   {e:"兩個都先分解，再找一樣的那個因式"},
+   {t:"cr",e:"x^2 + 5x − 6：c{x}{6}{x}{−1}　−x + 6x ＝ 5x → (x+6)(x−1)"},
+   {t:"cr",e:"2x^2 + 9x − 18：c{x}{6}{2x}{−3}　−3x + 12x ＝ 9x → (x+6)(2x−3)"},
+   {t:"ans",e:"公因式 x+6，g{a ＝ 6}"}
+ ]},
+
+ {src:"課本 p.145　挑錯題（小翊）",q:"小翊這樣分解 $2x^2−10x−12$：$＝2(x^2−5x−6)＝2(x−3)(x−2)$。錯在哪？",steps:[
+   {e:"2x^2 − 10x − 12"},
+   {t:"com",e:"＝ 2(x^2 − 5x − 6)",w:"先提 2，這一步是對的。"},
+   {t:"bad",e:"c{x}{−3}{x}{−2}　−3x − 2x ＝ −5x　b{但 (−3)×(−2) ＝ +6}",w:"錯在這裡：交叉和對了，<strong>右邊乘起來卻是 +6</strong>，題目要的是 −6。"},
+   {t:"cr",e:"重找：−6 一正一負、負的比較大 → c{x}{−6}{x}{1}　x − 6x ＝ g{−5x}"},
+   {t:"ans",e:"＝ g{2(x−6)(x+1)}"}
+ ]},
+
+ {src:"課本 p.145　挑錯題（小妍）",q:"小妍這樣分解 $2x^2−10x−12$：十字 2x／2、x／−6，得 $(2x−6)(x+2)＝2(x−3)(x+2)$。錯在哪？",steps:[
+   {e:"2x^2 − 10x − 12"},
+   {t:"cr",e:"c{2x}{2}{x}{−6}　2x·(−6) + 2·x ＝ −12x + 2x ＝ g{−10x}",w:"十字本身排對了。"},
+   {t:"bad",e:"b{＝ (2x−6)(x+2)}",w:"錯在這一行：她<strong>斜著讀</strong>，把 2x 和 −6 放在一起。乘開是 $2x^2−2x−12$，不對。"},
+   {t:"chk",e:"橫著讀：第一列 2x、2 → (2x+2)；第二列 x、−6 → (x−6)"},
+   {t:"ans",e:"(2x+2)(x−6) ＝ g{2(x+1)(x−6)}",w:"和小翊的正確答案一樣。"}
+ ]},
+
+ {src:"延伸　課本 p.147 一題多解 ②",q:"因式分解 $(x+1)^2+4(x+1)+4$：全部乘開，再用十字交乘。",steps:[
+   {e:"(x+1)^2 + 4(x+1) + 4"},
+   {t:"exp",e:"＝ x^2+2x+1 + 4x+4 + 4 ＝ x^2 + 6x + 9"},
+   {t:"cr",e:"c{x}{3}{x}{3}　3x + 3x ＝ g{6x}"},
+   {t:"ans",e:"＝ (x+3)(x+3) ＝ g{(x+3)^2}",w:"3-1 講解頁用「設 A＝x+1」做過同一題，答案一樣。"}
+ ]}
+]}
+];
+/* ───────── 逐題講解播放器 ───────── */
+const list=document.getElementById("wtList");
+const ALL=[];
+SECS.forEach(function(sec){
+  const h=document.createElement("div");h.className="sec-h";h.id=sec.id;h.textContent=sec.h;list.appendChild(h);
+  const d=document.createElement("p");d.className="sec-d";d.innerHTML=T(sec.d);list.appendChild(d);
+  sec.items.forEach(function(it){ALL.push(it);build(it,list,sec.id+"-"+sec.items.indexOf(it))});
+});
+
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=b[i];b[i]=b[j];b[j]=t}return b}
+
+function build(it,parent,id){
+  it.id=id;
+  const el=document.createElement("div");el.className="wt";
+  el.innerHTML='<div class="wt-top"><span>'+it.src+'</span><span class="ct"></span></div>'+
+    '<div class="wt-q">'+T(it.q)+'</div><div class="board"></div>'+
+    '<div class="whybox"><div class="wl"></div><div class="wx"></div></div>'+
+    '<div class="ask"><div class="aq"></div><div class="ao"></div><div class="af"></div></div>'+
+    '<div class="ctl"><button class="btn ghost bp">← 上一步</button><button class="btn bn">下一步 →</button>'+
+    '<button class="btn ghost ba">▶ 自動</button></div>'+
+    (it.trap?'<div class="trap">'+T(it.trap)+'</div>':"");
+  parent.appendChild(el);
+  const board=el.querySelector(".board"),wb=el.querySelector(".whybox"),wl=wb.querySelector(".wl"),wx=wb.querySelector(".wx"),
+    ask=el.querySelector(".ask"),bp=el.querySelector(".bp"),bn=el.querySelector(".bn"),ba=el.querySelector(".ba"),
+    trap=el.querySelector(".trap"),ct=el.querySelector(".ct");
+  const S=it.steps, N=S.length;
+  let idx=0, sel=-1, timer=null, asking=false, okMsg="";
+  const answered={};
+  const doneBefore=!!store.done[id];
+  if(doneBefore)S.forEach(function(s,k){if(s.ask)answered[k]=true});
+
+  function lineHTML(k){
+    const s=S[k], tg=s.t?'<span class="tg '+s.t+'">'+TAG[s.t][0]+'</span>':"";
+    return tg+'<span class="ex m">'+M(s.e)+'</span>';
+  }
+  function showWhy(k,extra){
+    const s=S[k];
+    wb.className="whybox"+(s.t==="cr"?" cr":s.t==="sgn"?" sgn":(s.t==="bad"||s.t==="no")?" bad":"");
+    wl.textContent=k===0?"題目":("第 "+k+" 步　"+(s.t?TAG[s.t][1]:""));
+    wx.innerHTML=(extra?'<div style="color:var(--green);font-weight:700">'+extra+'</div>':"")+
+      (s.w?T(s.w):(k===0?"按「下一步」開始。":"照上一行的方法往下算。"));
+  }
+  function render(anim){
+    board.innerHTML="";
+    for(let k=0;k<=idx;k++){
+      const ln=document.createElement("div");
+      ln.className="line"+(k===idx?" cur":" old")+(k===sel?" sel":"");
+      if(!(anim&&k===idx))ln.style.animation="none";
+      ln.innerHTML=lineHTML(k);
+      ln.addEventListener("click",function(){stop();sel=(k===idx?-1:k);render(false);showWhy(k)});
+      board.appendChild(ln);
+    }
+    if(sel<0)showWhy(idx,anim?okMsg:"");
+    okMsg="";
+    bp.disabled=idx===0;
+    const fin=idx===N-1;
+    bn.disabled=fin||asking;
+    bn.textContent=fin?"講解完了 ✓":"下一步 →";
+    ba.disabled=fin||asking;
+    ct.textContent=fin?"✓ 看完了":(idx+" / "+(N-1)+" 步");
+    if(fin){
+      el.classList.add("done");if(trap)trap.classList.add("show");
+      if(!store.done[id]){store.done[id]=1;save();prog()}
+    }else if(trap)trap.classList.remove("show");
+  }
+  function openAsk(k){
+    asking=true;stop();
+    const a=S[k].ask;
+    ask.querySelector(".aq").innerHTML=T(a.q);
+    const ao=ask.querySelector(".ao"),af=ask.querySelector(".af");
+    ao.innerHTML="";af.classList.remove("show");
+    shuffle(a.o.map(function(t,j){return{t:t,j:j}})).forEach(function(o){
+      const b=document.createElement("button");b.innerHTML=T(o.t);
+      b.addEventListener("click",function(){
+        if(o.j===a.a){answered[k]=true;asking=false;ask.classList.remove("show");okMsg="✓ 答對了。";idx=k;sel=-1;render(true)}
+        else{b.classList.add("no");af.innerHTML="再想想："+T(a.no);af.classList.add("show")}
+      });
+      ao.appendChild(b);
+    });
+    ask.classList.add("show");
+    bn.disabled=true;ba.disabled=true;
+  }
+  function next(){
+    if(idx>=N-1||asking)return false;
+    const k=idx+1;
+    sel=-1;
+    if(S[k].ask&&!answered[k]){openAsk(k);return false}
+    idx=k;render(true);return true;
+  }
+  function stop(){if(timer){clearInterval(timer);timer=null;ba.textContent="▶ 自動"}}
+  bn.addEventListener("click",function(){stop();next()});
+  bp.addEventListener("click",function(){stop();if(asking){asking=false;ask.classList.remove("show");render(false);return}if(idx>0){idx--;sel=-1;render(false)}});
+  ba.addEventListener("click",function(){
+    if(timer){stop();return}
+    if(!next())return;
+    ba.textContent="❚❚ 暫停";
+    timer=setInterval(function(){if(!next())stop()},2600);
+  });
+  render(false);
+}
+
+function prog(){
+  const n=ALL.length,d=ALL.filter(function(it){return store.done[it.id]}).length;
+  document.getElementById("pfill").style.width=(d/n*100)+"%";
+  document.getElementById("ptext").textContent=d+" / "+n+" 題";
+}
+prog();
+
+
+const NS="http://www.w3.org/2000/svg";
+function E(tag,at,txt){const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e}
+
+/* ───────── 0：x²＋(a＋b)x＋ab 拼成 (x＋a)(x＋b) ───────── */
+const TLS=[[1,2],[2,3],[3,4]];
+let tlK=2,tlOn=false,TL=[],tlDims=[];
+const tlSvg=document.getElementById("tlSvg"),tlBtn=document.getElementById("tlBtn"),tlTxt=document.getElementById("tlTxt"),tlChips=document.getElementById("tlChips");
+function tlName(a,b){return "x^2+"+(a+b)+"x+"+(a*b)}
+tlChips.innerHTML=TLS.map(function(p,i){return'<button class="chip'+(i===tlK?" on":"")+'" data-i="'+i+'">'+M(tlName(p[0],p[1]))+'</button>'}).join("");
+tlChips.querySelectorAll(".chip").forEach(function(b){b.addEventListener("click",function(){
+  tlK=+b.dataset.i;tlOn=false;tlChips.querySelectorAll(".chip").forEach(function(c,j){c.classList.toggle("on",j===tlK)});tlDraw()})});
+function tlDraw(){
+  while(tlSvg.firstChild)tlSvg.removeChild(tlSvg.firstChild);
+  const a=TLS[tlK][0],b=TLS[tlK][1];
+  const VW=Math.max(320,Math.min(640,(tlSvg.parentNode.clientWidth||640)-12));
+  /* 散開時：第一列 大正方形＋a 條直的；第二列 b 條橫的＋小方塊 */
+  const X=Math.min(120,(VW-40-8*a)/(1+0.27*a),(VW-40)/1.8),U=X*0.25,oy=30;
+  const ox=Math.max(60,(VW-(X+a*U))/2);
+  const pcs=[];
+  pcs.push({w:X,h:X,f:"#f4c2c2",s:"#b03030",l:"x²",at:[ox,oy],z:[10,oy]});
+  for(let i=0;i<a;i++)pcs.push({w:U,h:X,f:"#cfe0f5",s:"#1d5b79",l:"x",at:[ox+X+i*U,oy],z:[X+24+i*(U+8),oy]});
+  const y2=oy+X+18;
+  for(let j=0;j<b;j++)pcs.push({w:X,h:U,f:"#cfe0f5",s:"#1d5b79",l:"x",at:[ox,oy+X+j*U],z:[10,y2+j*(U+6)]});
+  let n=0;
+  for(let i=0;i<a;i++)for(let j=0;j<b;j++){
+    const c=n%a,r=Math.floor(n/a);n++;
+    pcs.push({w:U,h:U,f:"#fbe7a1",s:"#a15c07",l:"1",at:[ox+X+i*U,oy+X+j*U],z:[X+24+c*(U+6),y2+r*(U+6)]});
+  }
+  const H=Math.max(oy+X+b*U, y2+b*(U+6), y2+Math.ceil(a*b/a)*(U+6))+16;
+  tlSvg.setAttribute("viewBox","0 0 "+VW+" "+Math.ceil(H));
+  TL=pcs.map(function(p){
+    const g=E("g",{class:"tl"});
+    g.appendChild(E("rect",{x:0,y:0,width:p.w,height:p.h,fill:p.f,stroke:p.s,"stroke-width":1.5}));
+    if(Math.min(p.w,p.h)>13)g.appendChild(E("text",{x:p.w/2,y:p.h/2+5,"text-anchor":"middle","font-size":p.l==="x²"?18:Math.min(13,U*.6),"font-weight":700,fill:p.s,"font-family":"Cambria,Georgia,serif"},p.l));
+    g.__p=p;tlSvg.appendChild(g);return g;
+  });
+  tlDims=[
+    E("text",{x:ox+(X+a*U)/2,y:oy-10,"text-anchor":"middle","font-size":15,"font-weight":700,fill:"#4338ca","font-family":"Cambria,Georgia,serif",class:"dimlab"},"x＋"+a),
+    E("text",{x:ox-8,y:oy+(X+b*U)/2+5,"text-anchor":"end","font-size":15,"font-weight":700,fill:"#4338ca","font-family":"Cambria,Georgia,serif",class:"dimlab"},"x＋"+b)
+  ];
+  tlDims.forEach(function(d){tlSvg.appendChild(d)});
+  tlSet(tlOn,false);
+}
+function tlSet(on,anim){
+  tlOn=on;
+  const a=TLS[tlK][0],b=TLS[tlK][1];
+  TL.forEach(function(g){const q=on?g.__p.at:g.__p.z;g.style.transition=anim?"":"none";g.style.transform="translate("+q[0]+"px,"+q[1]+"px)"});
+  tlDims.forEach(function(d){d.style.opacity=on?1:0});
+  tlBtn.textContent=on?"↺ 散開":"▶ 拼起來";
+  tlTxt.innerHTML=on?"拼成長方形：長 <b>x＋"+a+"</b>、寬 <b>x＋"+b+"</b>。小方塊排成 "+a+"×"+b+"＝"+(a*b)+" 個，長條是 "+a+"＋"+b+"＝"+(a+b)+" 條。<br>所以 <span class='m'>"+M(tlName(a,b)+"＝(x+"+a+")(x+"+b+")")+"</span>。"
+    :"現在是散開的：1 張 "+M("x^2")+"、"+(a+b)+" 條 x、"+(a*b)+" 個 1，加起來是 <span class='m'>"+M(tlName(a,b))+"</span>。按「拼起來」。";
+}
+tlBtn.addEventListener("click",function(){tlSet(!tlOn,true)});
+tlDraw();
+
+/* ───────── 正負號 ───────── */
+const SIGNS=["兩個都正","兩個都負","一正一負，正的大","一正一負，負的大"];
+const SRT=[
+ {e:"x^2+9x+20",a:0,w:"常數 +20 → 同號；x 項 +9 → 都正：$(x+4)(x+5)$。"},
+ {e:"x^2−9x+20",a:1,w:"常數 +20 → 同號；x 項 −9 → 都負：$(x−4)(x−5)$。"},
+ {e:"x^2+x−20",a:2,w:"常數 −20 → 一正一負；x 項 +1 → 正的大：$(x+5)(x−4)$。"},
+ {e:"x^2−x−20",a:3,w:"常數 −20 → 一正一負；x 項 −1 → 負的大：$(x−5)(x+4)$。"},
+ {e:"x^2−12x+35",a:1,w:"常數正、x 項負 → 都負：$(x−5)(x−7)$。"},
+ {e:"x^2+2x−35",a:2,w:"常數負、x 項正 → 正的大：$(x+7)(x−5)$。"},
+ {e:"x^2−2x−35",a:3,w:"常數負、x 項負 → 負的大：$(x−7)(x+5)$。"},
+ {e:"x^2+12x+35",a:0,w:"常數正、x 項正 → 都正：$(x+5)(x+7)$。"}
+];
+let sq=store.sq||0;const sres=store.sres||[];
+const srtQ=document.getElementById("srtQ"),srtB=document.getElementById("srtB"),srtV=document.getElementById("srtV"),
+  srtNext=document.getElementById("srtNext"),srtDots=document.getElementById("srtDots"),srtNo=document.getElementById("srtNo");
+function srtDotsDraw(){srtDots.innerHTML=SRT.map(function(_,k){return'<span class="dot'+(sres[k]===1?" ok":sres[k]===0?" no":k===sq?" now":"")+'"></span>'}).join("")}
+function srtDraw(){
+  srtDotsDraw();
+  if(sq>=SRT.length){
+    const ok=sres.filter(function(x){return x===1}).length;
+    srtNo.textContent="";srtQ.innerHTML='<span style="font-size:19px;font-family:inherit">8 題判斷完：一次就選對 '+ok+' 題</span>';
+    srtB.innerHTML="";srtNext.style.display="none";
+    srtV.className="tf-fb show ok";srtV.innerHTML=T("記住：<strong>常數看「同號還是異號」，x 項看「誰的號、誰比較大」</strong>。");return;
+  }
+  srtNo.textContent="第 "+(sq+1)+" / "+SRT.length+" 題";
+  srtQ.innerHTML=M(SRT[sq].e);srtV.className="tf-fb";srtNext.disabled=true;srtNext.style.display="";
+  srtB.innerHTML="";
+  SIGNS.forEach(function(t,j){
+    const b=document.createElement("button");b.textContent=t;
+    b.addEventListener("click",function(){
+      if(!srtNext.disabled)return;
+      const q=SRT[sq];
+      if(j===q.a){
+        b.classList.add("ok");if(sres[sq]==null){sres[sq]=1;store.sres=sres;save()}
+        srtV.className="tf-fb show ok";srtV.innerHTML="<strong>對，"+t+"。</strong> "+T(q.w);srtNext.disabled=false;
+      }else{
+        b.classList.add("no");if(sres[sq]==null){sres[sq]=0;store.sres=sres;save()}
+        srtV.className="tf-fb show no";srtV.innerHTML="<strong>不是「"+t+"」，再選一次。</strong>先看常數的正負，再看 x 項。";
+      }
+      srtDotsDraw();
+    });
+    srtB.appendChild(b);
+  });
+}
+srtNext.addEventListener("click",function(){sq++;store.sq=sq;save();srtDraw()});
+srtDraw();
+
+let lastW=window.innerWidth;
+window.addEventListener("resize",function(){if(window.innerWidth===lastW)return;lastW=window.innerWidth;tlDraw()});
+
+/* ───────── 判斷題 ───────── */
+const TF=[
+ {e:"x^2+4x+8 可以用十字交乘法分解成兩個一次式相乘",a:false,w:"8＝1×8＝2×4，加起來是 9 或 6；負的組合加起來是負的。<strong>沒有一組加起來是 4</strong>（p.143 自我檢核 1）。"},
+ {e:"x^2−10x−24＝(x−6)(x−4)",a:false,w:"$(x−6)(x−4)＝x^2−10x+24$，常數是 +24。正確是 $(x−12)(x+2)$（p.143 自我檢核 2）。"},
+ {e:"x^2−4 缺少一次項，但仍可以用十字交乘",a:true,w:"把它看成 $x^2+0x−4$：$c{x}{2}{x}{−2}　2x−2x＝0x$，得 $(x+2)(x−2)$，和平方差的答案一樣（p.143 自我檢核 3）。"},
+ {e:"x^2+x−12＝(x+4)(x−3)",a:true,w:"$4×(−3)＝−12$、$4+(−3)＝1$ ✓"},
+ {e:"2x^2+7x+3＝(2x+3)(x+1)",a:false,w:"$(2x+3)(x+1)＝2x^2+5x+3$。右邊上下要換：$(2x+1)(x+3)$，交叉 $6x+x＝7x$。"},
+ {e:"(−x−2)(−x+7)＝(x+2)(x−7)",a:true,w:"兩個括號各提一個負號，負負得正（課本 p.138）。"},
+ {e:"−x^2+2x+63＝−(x+7)(x−9)",a:true,w:"$−(x^2−2x−63)$，7 和 −9：乘起來 −63、加起來 −2 ✓（課本 p.141 例 5）。"},
+ {e:"4x^2+20x+25＝(2x+5)^2",a:true,w:"十字 2x／5、2x／5：$10x+10x＝20x$ ✓，也是和的平方。"},
+ {e:"6x^2−x−2＝(3x−2)(2x+1)",a:true,w:"交叉 $3x·1+(−2)·2x＝3x−4x＝−x$ ✓，$(−2)×1＝−2$ ✓"},
+ {e:"2x^2−10x−12＝2(x−3)(x−2)",a:false,w:"這就是小翊的錯：$(−3)×(−2)＝+6$，不是 −6。正確是 $2(x−6)(x+1)$（課本 p.145）。"}
+];
+let tq=store.tq||0;const tres=store.tres||[];
+const tfQ=document.getElementById("tfQ"),tfFb=document.getElementById("tfFb"),tfT=document.getElementById("tfT"),tfF=document.getElementById("tfF"),
+  tfNext=document.getElementById("tfNext"),tfDots=document.getElementById("tfDots"),tfNo=document.getElementById("tfNo");
+function tfDraw(){
+  tfDots.innerHTML=TF.map(function(_,k){return'<span class="dot'+(tres[k]===1?" ok":tres[k]===0?" no":k===tq?" now":"")+'"></span>'}).join("");
+  if(tq>=TF.length){
+    const ok=tres.filter(function(x){return x===1}).length;
+    tfNo.textContent="";tfQ.innerHTML='<span style="font-size:19px;font-family:inherit">10 題答完：答對 '+ok+' 題</span>';
+    tfT.style.display=tfF.style.display="none";tfNext.style.display="none";
+    tfFb.className="tf-fb show ok";
+    tfFb.innerHTML=T("記住一句話：<strong>乘積和交叉和兩個都要對，答案橫著讀，寫完乘開驗算。</strong><br>答錯的題目，可以回到上面對應的講解再看一次。");
+    return;
+  }
+  tfNo.textContent="第 "+(tq+1)+" / "+TF.length+" 題";
+  tfQ.innerHTML=M(TF[tq].e);
+  tfT.style.display=tfF.style.display="";tfNext.style.display="";
+  tfT.disabled=tfF.disabled=false;tfNext.disabled=true;tfFb.className="tf-fb";
+}
+function tfAns(v){
+  const q=TF[tq],ok=v===q.a;
+  if(tres[tq]==null){tres[tq]=ok?1:0;store.tres=tres;save()}
+  tfT.disabled=tfF.disabled=true;tfNext.disabled=false;
+  tfFb.className="tf-fb show "+(ok?"ok":"no");
+  tfFb.innerHTML="<strong>"+(ok?"答對了。":"不對。")+"這個說法"+(q.a?"正確":"不正確")+"。</strong> "+T(q.w);
+  tfDots.innerHTML=TF.map(function(_,k){return'<span class="dot'+(tres[k]===1?" ok":tres[k]===0?" no":k===tq?" now":"")+'"></span>'}).join("");
+}
+tfT.addEventListener("click",function(){tfAns(true)});
+tfF.addEventListener("click",function(){tfAns(false)});
+tfNext.addEventListener("click",function(){tq++;store.tq=tq;save();tfDraw()});
+tfDraw();
+
+document.getElementById("reset").addEventListener("click",function(){
+  try{localStorage.removeItem(KEY)}catch(e){}
+  location.reload();
+});
+})();
+</script>
+</body>
+</html>

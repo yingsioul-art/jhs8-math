@@ -4,70 +4,106 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>八年級數學 · 自學站</title>
+<meta name="theme-color" content="#5b4bdb">
 <style>
-:root{--paper:#f8f7f4;--ink:#232026;--ink2:#57525e;--line:#dcd8e0;--accent:#4338ca;--teal:#0f6b63}
+/* 2026-10-23 改版：照七上生物站的島嶼風格，首頁章名當段落、每一節一座島 */
+:root{
+  --bg:#f4f1ff; --card:#ffffff; --ink:#22203a; --sub:#5d5a78; --line:#e3def7;
+  --pri:#5b4bdb; --gold:#f5a524; --teal:#0f6b63;
+  --c21:#ff8a3d; --c22:#e84393; --c23:#22a35a; --c24:#2f80ed; --c25:#9b5de5;
+  --shadow:0 4px 0 rgba(40,30,110,.12), 0 8px 24px rgba(40,30,110,.08);
+  /* 原首頁內文用到的變數名稱 */
+  --paper:var(--bg); --ink2:var(--sub); --accent:var(--pri);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16142a; --card:#221f3d; --ink:#f1efff; --sub:#b4b0d6; --line:#37335e; --pri:#8f82ff; --teal:#5fd3c4;
+    --shadow:0 4px 0 rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16142a; --card:#221f3d; --ink:#f1efff; --sub:#b4b0d6; --line:#37335e; --pri:#8f82ff; --teal:#5fd3c4;
+  --shadow:0 4px 0 rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.25);
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);
-  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
-  font-size:17px;line-height:1.85}
-.wrap{max-width:920px;margin:0 auto;padding:0 20px 80px}
-header{padding:64px 0 30px;border-bottom:2px solid var(--ink)}
-.kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:14px}
-h1{font-size:32px;line-height:1.3;margin:0 0 16px}
-p{margin:0 0 18px}
-.dim{color:var(--ink2)}
-em{font-style:normal;background:linear-gradient(transparent 62%,#cfc9fb 62%);font-weight:600}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+  font-size:17px;line-height:1.7}
+a{color:var(--pri)}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 80px}
+p{margin:0 0 14px}
+strong{font-weight:800}
+em{font-style:normal;background:color-mix(in srgb,var(--gold) 30%,transparent);border-radius:4px;padding:0 3px;font-weight:700}
 .eq{font-family:"Cambria","Times New Roman",Georgia,serif}
 .eq sup{font-size:.68em;vertical-align:super;line-height:0}
-h2{font-size:15px;letter-spacing:.14em;color:var(--ink2);margin:44px 0 16px;font-weight:700}
-a.unit{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);
-  border-radius:14px;padding:22px;margin-bottom:14px;transition:border-color .15s,transform .15s;
-  box-shadow:0 1px 2px rgba(35,32,38,.05),0 8px 24px rgba(35,32,38,.05)}
-a.unit:hover{border-color:var(--ink);transform:translateY(-2px)}
-.u-ch{font-size:12px;letter-spacing:.14em;color:var(--accent);font-weight:700;margin-bottom:8px}
-.u-t{font-size:21px;font-weight:700;margin-bottom:8px;line-height:1.4}
-.u-d{font-size:15px;color:var(--ink2);line-height:1.75;margin-bottom:14px}
-.u-m{display:flex;gap:7px;flex-wrap:wrap}
-.tag{font-size:12px;padding:3px 10px;border:1px solid var(--line);border-radius:99px;color:var(--ink2)}
-.hwcard{display:block;text-decoration:none;color:inherit;background:#fffdf7;
-  border:1px solid #e6cf9a;border-left:4px solid #d9a441;border-radius:14px;
-  padding:18px 20px;margin:-4px 0 22px;transition:border-color .15s,transform .15s}
-.hwcard:hover{border-color:#c08d2a;transform:translateY(-2px)}
-.hw-k{font-size:12px;letter-spacing:.14em;color:#a9761a;font-weight:700;margin-bottom:6px}
-.hw-t{font-size:17px;font-weight:700;margin-bottom:6px}
-.hw-d{font-size:14.5px;color:var(--ink2);line-height:1.75}
-.soon{background:#f3f1f6;border-style:dashed;opacity:.72;cursor:default}
-.soon:hover{border-color:var(--line);transform:none}
-.why{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:30px 0}
-.why p:last-child{margin:0}
-footer{padding:40px 0 0;font-size:13px;color:var(--ink2);line-height:1.9;border-top:1px solid var(--line);margin-top:44px}
-footer a{color:var(--teal)}
-
-.howto{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:24px;margin:30px 0}
-.howto h3{font-size:19px;margin:0 0 12px;line-height:1.4}
-.howto h4{font-size:15.5px;margin:24px 0 8px;color:var(--accent);letter-spacing:.02em}
-.howto p{font-size:15.5px;line-height:1.8;margin:0 0 14px}
-.howto p:last-child{margin:0}
+/* 頂部橫幅 */
+.hero{padding:26px 22px;border-radius:24px;color:#fff;background:linear-gradient(135deg,#5b4bdb,#9b5de5 60%,#f15bb5);
+  box-shadow:var(--shadow);margin-top:16px;position:relative;overflow:hidden}
+.hero .kicker{font-size:13px;letter-spacing:.18em;font-weight:800;opacity:.9;margin-bottom:8px}
+.hero h1{margin:0 0 10px;font-size:30px;line-height:1.3;color:#fff}
+.hero p{margin:0;opacity:.95;font-size:15.5px}
+.hero em{background:rgba(255,255,255,.25);color:#fff}
+.hero .blob{position:absolute;right:-18px;top:-30px;font-size:120px;opacity:.18;transform:rotate(-12deg)}
+/* 使用說明（可收合） */
+details.fold{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:14px 20px;margin:16px 0}
+details.fold>summary{cursor:pointer;font-size:15.5px;font-weight:800;color:var(--pri);min-height:32px}
+details.fold[open]>summary{margin-bottom:10px}
+.howto h3{font-size:19px;margin:6px 0 12px;line-height:1.4}
+.howto h4{font-size:15.5px;margin:22px 0 8px;color:var(--pri)}
+.howto p,.why p{font-size:15.5px;line-height:1.8}
 .steps{counter-reset:t;list-style:none;padding:0;margin:0 0 8px}
 .steps li{counter-increment:t;position:relative;padding:6px 0 6px 38px;font-size:15px;line-height:1.65}
-.steps li::before{content:counter(t);position:absolute;left:0;top:7px;width:24px;height:24px;
-  background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:12px;font-weight:700}
-
-/* ── 入口方塊（2026-09-10 改版：原本是一長串卡片，改成格線） ── */
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:14px;margin:0 0 14px}
-.tiles a.unit,.tiles .soon{display:flex;flex-direction:column;margin-bottom:0;padding:19px 21px}
-.tiles .u-t{font-size:18.5px;margin-bottom:7px}
-.tiles .u-d{font-size:14.5px;line-height:1.72;margin-bottom:12px;flex:1}
-.tiles .u-m{margin-top:auto}
-.tiles .tag{font-size:11.5px;padding:2px 9px}
-details.fold{background:#fff;border:1px solid var(--line);border-radius:14px;
-  padding:14px 20px;margin:24px 0}
-details.fold>summary{cursor:pointer;font-size:15px;font-weight:700;color:var(--accent)}
-details.fold[open]>summary{margin-bottom:10px}
-details.fold .howto,details.fold .why{border:0;padding:0;margin:14px 0 0;background:transparent}
-@media(max-width:560px){.tiles{grid-template-columns:1fr}}
+.steps li::before{content:counter(t);position:absolute;left:0;top:7px;width:26px;height:26px;background:var(--pri);color:#fff;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+.why{border-top:2px dashed var(--line);margin-top:18px;padding-top:14px}
+.why p:last-child{margin:0}
+h2.sect{font-size:18px;color:var(--ink);margin:30px 0 4px;font-weight:800}
+h2.sect small{font-size:14px;color:var(--sub);font-weight:700;margin-left:6px}
+.legend{font-size:14px;color:var(--sub);margin:0}
+/* 每一節一座島 */
+.islands{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:12px}
+@media (max-width:700px){.islands{grid-template-columns:1fr}}
+.isl{background:var(--card);border-radius:22px;padding:16px;box-shadow:var(--shadow);border-left:8px solid var(--c)}
+.isl-h{display:flex;gap:14px;align-items:center;margin-bottom:10px}
+.isl-h .ic{font-size:36px;width:62px;height:62px;border-radius:18px;display:grid;place-items:center;
+  background:color-mix(in srgb,var(--c) 18%,transparent);flex:none}
+.isl-h .ch{display:inline-block;border-radius:999px;padding:1px 10px;font-size:12px;font-weight:800;
+  background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--ink)}
+.isl-h b{display:block;font-size:1.15em;line-height:1.35;margin-top:2px}
+.pg{display:flex;gap:10px;align-items:flex-start;text-decoration:none;color:inherit;border:2px solid var(--line);
+  background:var(--card);border-radius:16px;padding:10px 12px;margin-top:8px;transition:transform .12s,border-color .12s}
+.pg:hover{border-color:var(--c);transform:translateY(-2px)}
+.pg:active{transform:translateY(1px)}
+.pg .k{flex:none;font-size:12px;font-weight:800;border-radius:10px;padding:3px 8px;margin-top:2px;white-space:nowrap}
+.k.unit{background:color-mix(in srgb,var(--pri) 14%,transparent);color:var(--pri)}
+.k.note{background:color-mix(in srgb,var(--c24) 16%,transparent);color:var(--c24)}
+.k.exam{background:color-mix(in srgb,var(--gold) 26%,transparent);color:#8a5a00}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .k.exam{color:#ffd36b}}
+:root[data-theme="dark"] .k.exam{color:#ffd36b}
+.pg .t{font-weight:800;line-height:1.4;display:block}
+.pg .d{font-size:14px;color:var(--sub);line-height:1.6;display:block;margin-top:2px}
+.pg .done{font-size:12.5px;color:var(--c23);font-weight:800;display:block;margin-top:2px}
+/* 下方段考方塊（EXAMSEC 區塊由 _build_exam_pages.py 產生，沿用 a.unit 標記） */
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:12px}
+@media (max-width:700px){.tiles{grid-template-columns:1fr}}
+.tiles a.unit{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--card);border-radius:18px;
+  padding:16px 18px;box-shadow:var(--shadow);border-top:6px solid var(--gold);transition:transform .12s}
+.tiles a.unit:hover{transform:translateY(-2px)}
+.u-ch{font-size:12.5px;letter-spacing:.06em;color:#8a5a00;font-weight:800;margin-bottom:6px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .u-ch{color:#ffd36b}}
+:root[data-theme="dark"] .u-ch{color:#ffd36b}
+.u-t{font-size:18px;font-weight:800;margin-bottom:6px;line-height:1.4}
+.u-d{font-size:14.5px;color:var(--sub);line-height:1.72;margin-bottom:12px;flex:1}
+.u-m{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto}
+.tag{font-size:11.5px;padding:2px 9px;border:1px solid var(--line);border-radius:99px;color:var(--sub)}
+footer{padding:30px 0 0;font-size:13px;color:var(--sub);line-height:1.9;border-top:1px solid var(--line);margin-top:36px}
+footer a{color:var(--teal)}
+/* 站內導覽（_add_site_nav.py 的樣式寫死白底）：配合本頁顏色與深色模式 */
+.wrap .sitenav{border-bottom-color:var(--line)}
+.wrap .sitenav a{background:var(--card);color:var(--sub);border-color:var(--line)}
+.wrap .sitenav a.now{background:var(--pri);color:#fff;border-color:var(--pri)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 <style id="sitenav-css">
 .sitenav{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
@@ -75,17 +111,17 @@ details.fold .howto,details.fold .why{border:0;padding:0;margin:14px 0 0;backgro
 .sitenav::-webkit-scrollbar{display:none}
 .sitenav a{flex:0 0 auto;text-decoration:none;color:#4b5563;background:#fff;border:1px solid rgba(0,0,0,.12);
  border-radius:99px;padding:4px 12px;line-height:1.6;white-space:nowrap}
-.sitenav a:hover{border-color:#4338ca;color:#4338ca}
-.sitenav a.home{font-weight:700;color:#4338ca;border-color:#4338ca;background:#fff}
-.sitenav a.now{background:#4338ca;color:#fff;border-color:#4338ca;font-weight:700}
+.sitenav a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav a.home{font-weight:700;color:#5b4bdb;border-color:#5b4bdb;background:#fff}
+.sitenav a.now{background:#5b4bdb;color:#fff;border-color:#5b4bdb;font-weight:700}
 .sitenav .sep{flex:0 0 auto;color:#9ca3af;padding:0 2px}
 .sitenav-b{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:34px 0 8px}
 .sitenav-b a{text-decoration:none;color:#374151;background:#fff;border:1px solid rgba(0,0,0,.14);border-radius:12px;
  padding:12px 14px;line-height:1.5;font-size:14.5px;display:flex;flex-direction:column;justify-content:center}
-.sitenav-b a:hover{border-color:#4338ca;color:#4338ca}
+.sitenav-b a:hover{border-color:#5b4bdb;color:#5b4bdb}
 .sitenav-b a small{font-size:11.5px;color:#9ca3af;letter-spacing:.08em}
 .sitenav-b a.next{text-align:left}
-.sitenav-b a.homeb{justify-content:center;text-align:center;font-weight:700;color:#4338ca;border-color:#4338ca}
+.sitenav-b a.homeb{justify-content:center;text-align:center;font-weight:700;color:#5b4bdb;border-color:#5b4bdb}
 .sitenav-b span{display:block}
 @media(max-width:640px){.sitenav{flex-wrap:wrap;overflow:visible;gap:6px 5px;font-size:13px}.sitenav a{padding:3px 10px}}
 @media(max-width:520px){.sitenav-b{grid-template-columns:1fr 1fr}.sitenav-b a.homeb{grid-column:1/-1;order:-1}}
@@ -98,14 +134,14 @@ details.fold .howto,details.fold .why{border:0;padding:0;margin:14px 0 0;backgro
 <nav class="sitenav" aria-label="站內導覽"><a class="now" href="index.html">八年級數學自學站</a><span class="sep">·</span><a class="" href="multiply.html">1-1 乘法公式</a><a class="" href="polynomial.html">1-2 多項式加減</a><a class="" href="division.html">1-3 多項式乘除</a><a class="" href="sqrt.html">2-1 平方根</a><a class="" href="radical.html">2-2 根式運算</a><span class="sep">·</span><a class="" href="exam-sections.html">段考・照節次練</a><a class="" href="exam.html">段考・整卷模擬</a></nav>
 <!-- /SITENAV:top -->
 
-<header>
+<div class="hero"><div class="blob">📐</div>
   <div class="kicker">國中數學 · 八年級上（第三冊）</div>
-  <h1>先看出來，<br>再動筆</h1>
-  <p class="dim">數學不是算得快的人贏，是<em>知道哪一題不用算</em>的人贏。這裡每一節都先丟一題「硬算會來不及」的會考題，讓你找出出題老師藏起來的那條捷徑——公式是最後才登場的。</p>
-</header>
+  <h1>先看出來，再動筆</h1>
+  <p>數學不是算得快的人贏，是<em>知道哪一題不用算</em>的人贏。這裡每一節都先丟一題「硬算會來不及」的會考題，讓你找出出題老師藏起來的那條捷徑——公式是最後才登場的。</p>
+</div>
 
 <details class="fold">
-  <summary>這個網站怎麼用？（第一次來再看就好）</summary>
+  <summary>📖 這個網站怎麼用？（第一次來再看就好）</summary>
 <div class="howto">
   <h3>這個網站怎麼用</h3>
   <p><strong>它不是題庫。</strong>每一課都是一條完整的路，從一個問題走到一個答案，中間有很多可以自己動手拉、拖、拆的地方。一課大約 20–30 分鐘。</p>
@@ -140,75 +176,43 @@ details.fold .howto,details.fold .why{border:0;padding:0;margin:14px 0 0;backgro
 </div>
 </details>
 
-<h2>單元　·　照課本章節順序</h2>
+<p class="legend" style="margin-top:22px">每座島＝課本一節，裡面有：<b style="color:var(--pri)">互動單元</b>（先看再算）、<b style="color:var(--c24)">講解／作業檢討</b>、<b style="color:#b97300">段考題</b>（學校原題）。</p>
 
-<div class="tiles">
-<a class="unit" href="multiply.html">
-  <div class="u-ch">①　第 1 章 · 1-1 乘法公式</div>
-  <div class="u-t">不要算，先看</div>
-  <div class="u-d">四個算式，每個都要算兩次三位數平方再相乘。硬算十分鐘，看穿只要十秒——因為其中三個根本是同一個。<br>最後回頭問一件事：這條公式，當初的人怎麼知道它是對的？</div>
-  <div class="u-m">
-    <span class="tag">6 題</span><span class="tag">算式拆解器 ×2</span><span class="tag">認形狀練習</span>
-    <span class="tag">剪貼證明</span><span class="tag">會考 114-10</span>
-  </div>
-</a>
+<h2 class="sect">🏝️ 第 1 章<small>1-1～1-3</small></h2>
+<div class="islands">
+<section class="isl" style="--c:var(--c21)">
+  <div class="isl-h"><span class="ic">✖️</span><div><span class="ch">1-1</span><b>乘法公式</b></div></div>
+  <a class="pg" href="multiply.html" data-key="jhs8-multiply-v2" data-total="14" data-mode="q"><span class="k unit">互動單元</span><span><span class="t">① 不要算，先看</span><span class="d">四個算式硬算十分鐘，看穿只要十秒。算式拆解器 ×2、認形狀練習、剪貼證明、會考 114-10。</span></span></a>
+  <a class="pg" href="multiply.html#hw" data-key="jhs8-multiply-hw-v1" data-total="8" data-mode="h"><span class="k note">作業檢討</span><span><span class="t">你的作業，錯的地方排成一條線</span><span class="d">熟練 ④ ⑤ 錯題檢討：順著用你會，反著用還沒開始——把起手式拆給你看。8 題。</span></span></a>
+  <a class="pg" href="ex-1-1.html"><span class="k exam">段考題</span><span><span class="t">1-1 段考原題</span><span class="d">112～114 學年第一次段考裡屬於 1-1 的 22 題，原卷裁圖。</span></span></a>
+</section>
+<section class="isl" style="--c:var(--c22)">
+  <div class="isl-h"><span class="ic">➕</span><div><span class="ch">1-2</span><b>多項式與其加減運算</b></div></div>
+  <a class="pg" href="polynomial.html" data-key="jhs8-polynomial-v1" data-total="10" data-mode="q"><span class="k unit">互動單元</span><span><span class="t">② 先排整齊，再算</span><span class="d">13 年只考過 1 題，但下一節的 8 題全部踩在它上面。8 題課本練習、拆項器、會考 114-02。</span></span></a>
+  <a class="pg" href="ex-1-2.html"><span class="k exam">段考題</span><span><span class="t">1-2 段考原題</span><span class="d">112～114 學年第一次段考裡屬於 1-2 的 19 題，原卷裁圖。</span></span></a>
+</section>
+<section class="isl" style="--c:var(--c23)">
+  <div class="isl-h"><span class="ic">➗</span><div><span class="ch">1-3</span><b>多項式的乘除運算</b></div></div>
+  <a class="pg" href="division.html" data-key="jhs8-division-v2" data-total="12" data-mode="q"><span class="k unit">互動單元</span><span><span class="t">③ 什麼時候可以停下來</span><span class="d">多項式除法真正會錯的只有最後那一下——該收手時有沒有收手。一步一步除給你看、會考 111-02。</span></span></a>
+  <a class="pg" href="ex-1-3.html"><span class="k exam">段考題</span><span><span class="t">1-3 段考原題</span><span class="d">112～114 學年第一次段考裡屬於 1-3 的 23 題，原卷裁圖。</span></span></a>
+</section>
 </div>
 
-<a class="hwcard" href="multiply.html#hw">
-  <div class="hw-k">回家作業　·　熟練 ④ ⑤　錯題檢討</div>
-  <div class="hw-t">你的作業，錯的地方排成一條線</div>
-  <div class="hw-d">已經長成「平方 減 平方」的題目你全對；只是「兩個數相乘」的題目一題錯、兩題空白。<br>
-  同一條公式，順著用你會，反著用還沒開始——這一區把起手式拆給你看。<span class="tag" style="margin-left:6px">8 題</span></div>
-</a>
-
-<div class="tiles">
-<a class="unit" href="polynomial.html">
-  <div class="u-ch">②　第 1 章 · 1-2 多項式與其加減運算</div>
-  <div class="u-t">先排整齊，再算</div>
-  <div class="u-d">13 年只考過 1 題，是全冊考最少的一節——<strong>但下一節的 8 題全部踩在它上面</strong>。什麼是次數、什麼是同類項、括號前面是減號時怎麼辦。<br>最後回頭看：數學曾經是用「寫作文」的。</div>
-  <div class="u-m">
-    <span class="tag">8 題課本練習</span><span class="tag">合併示範</span><span class="tag">拆項器</span>
-    <span class="tag">會考 114-02</span><span class="tag">下一節的地基</span>
-  </div>
-</a>
-<a class="unit" href="division.html">
-  <div class="u-ch">③　第 1 章 · 1-3 多項式的乘除運算</div>
-  <div class="u-t">什麼時候可以停下來</div>
-  <div class="u-d">多項式除法的每一步都很機械，真正會錯的只有最後那一下——<strong>該收手時有沒有收手</strong>。除過頭就會冒出 2/x，那已經不是多項式了。<br>最後回頭看：這個停止條件，是歐幾里得兩千三百年前就寫好的。</div>
-  <div class="u-m">
-    <span class="tag">6 題</span><span class="tag">一步一步除給你看</span>
-    <span class="tag">會考 111-02</span><span class="tag">13 年考 5 題</span>
-  </div>
-</a>
-<a class="unit" href="sqrt.html">
-  <div class="u-ch">④　第 2 章 · 2-1 平方根與近似值</div>
-  <div class="u-t">把它夾在兩個整數中間</div>
-  <div class="u-d"><span class="eq">√2022</span> 沒有計算機要怎麼估？全體通過 75%，但<strong>「待加強」那群只有 28.8%</strong>——差別不是聰明，是腦中有沒有一張平方表。<br>最後回頭看：一個算不完的數，兩千五百年前是禁忌。</div>
-  <div class="u-m">
-    <span class="tag">5 題</span><span class="tag">夾擠器</span><span class="tag">四千年前的算法</span>
-    <span class="tag">會考 111-06</span><span class="tag">最會分人的一題</span>
-  </div>
-</a>
-<a class="unit" href="radical.html">
-  <div class="u-ch">⑤　第 2 章 · 2-2 根式的運算</div>
-  <div class="u-t">根號裡面能搬什麼出來</div>
-  <div class="u-d">整節只有兩個動作：<strong>把平方數搬出根號、把根號趕出分母</strong>。最常見的錯是把 <span class="eq">√9＋√16</span> 寫成 <span class="eq">√25</span>——課本 p.93 的挑錯題就是這個。<br>最後回頭看：沒有計算機的年代，為什麼一定要有理化。</div>
-  <div class="u-m">
-    <span class="tag">10 題課本練習</span><span class="tag">化簡器</span><span class="tag">根號能不能拆</span>
-    <span class="tag">會考 9 題</span><span class="tag">第 2 章最大考點</span>
-  </div>
-</a>
+<h2 class="sect">🏝️ 第 2 章<small>2-1～2-2</small></h2>
+<div class="islands">
+<section class="isl" style="--c:var(--c24)">
+  <div class="isl-h"><span class="ic">🎯</span><div><span class="ch">2-1</span><b>平方根與近似值</b></div></div>
+  <a class="pg" href="sqrt.html" data-key="jhs8-sqrt-v2" data-total="12" data-mode="q"><span class="k unit">互動單元</span><span><span class="t">④ 把它夾在兩個整數中間</span><span class="d">√2022 沒有計算機要怎麼估？「待加強」那群只有 28.8% 答對。夾擠器、四千年前的算法、會考 111-06。</span></span></a>
+  <a class="pg" href="ex-2-1.html"><span class="k exam">段考題</span><span><span class="t">2-1 段考原題</span><span class="d">112～114 學年第一次段考裡屬於 2-1 的 22 題，原卷裁圖。</span></span></a>
+</section>
+<section class="isl" style="--c:var(--c25)">
+  <div class="isl-h"><span class="ic">📐</span><div><span class="ch">2-2</span><b>根式的運算</b></div></div>
+  <a class="pg" href="radical.html" data-key="jhs8-radical-v1" data-total="19" data-mode="q" data-pmax="10"><span class="k unit">互動單元</span><span><span class="t">⑤ 根號裡面能搬什麼出來</span><span class="d">把平方數搬出根號、把根號趕出分母；最常見的錯是把 √9＋√16 寫成 √25。10 題課本練習、化簡器、會考 9 題。</span></span></a>
+  <a class="pg" href="radical-steps.html"><span class="k note">課本講解</span><span><span class="t">這一步，是乘還是加？</span><span class="d">課本 2-2 的例題和隨堂練習逐題講解，每一步都說為什麼可以這樣做。20 題講解、判斷 10 題。</span></span></a>
+</section>
 </div>
-<a class="hwcard" href="radical-steps.html">
-  <div class="hw-k">課本逐題講解　·　2-2 根式的運算</div>
-  <div class="hw-t">這一步，是乘還是加？</div>
-  <div class="hw-d">課本 2-2 的例題和隨堂練習，按一下往下寫一行，每一步都說<strong>為什麼可以這樣做</strong>。<br>
-  特別拆開乘法和加法：<span class="eq">2√3×3√3＝18</span>，<span class="eq">2√3＋3√3＝5√3</span>——用線段和面積的動畫看出差別。<span class="tag" style="margin-left:6px">20 題講解</span><span class="tag">判斷 10 題</span></div>
-</a>
 
-
-<h2>段考　·　你們學校真正考過的卷</h2>
-
+<h2 class="sect">🏫 段考 · 你們學校真正考過的卷</h2>
 <div class="tiles">
 <a class="unit" href="exam.html">
   <div class="u-ch">整卷模擬　·　112～114 學年度</div>
@@ -239,5 +243,23 @@ details.fold .howto,details.fold .why{border:0;padding:0;margin:14px 0 0;backgro
 </footer>
 
 </div>
+<script>
+// 互動單元的進度：直接讀各單元頁自己存的 localStorage，算法和單元頁頂端的進度條相同
+// （課本練習做到第幾題 state.prac，加上會考題 q0、q1… 的數量；作業檢討區算 h1～h8）
+(function(){
+  function done(a){
+    try{
+      var s=JSON.parse(localStorage.getItem(a.dataset.key)||"{}"), keys=Object.keys(s);
+      if(a.dataset.mode==="h") return keys.filter(function(k){return /^h\d+$/.test(k)}).length;
+      var p=+s.prac||0; if(a.dataset.pmax) p=Math.min(p,+a.dataset.pmax);
+      return p+keys.filter(function(k){return /^q\d+$/.test(k)}).length;
+    }catch(e){ return 0; }
+  }
+  document.querySelectorAll(".pg[data-key]").forEach(function(a){
+    var t=+a.dataset.total, n=Math.min(done(a), t);
+    if(n>0){ var s=document.createElement("span"); s.className="done"; s.textContent=(n>=t?"✅ 已做完 ":"已做 ")+n+" / "+t+" 題"; a.querySelector(".d").after(s); }
+  });
+})();
+</script>
 </body>
 </html>

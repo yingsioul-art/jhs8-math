@@ -1,0 +1,26 @@
+/* 全站外觀（2026-10-23）：照七上生物站的配色與卡片、按鈕樣式，和自然站 jhs8-science 同一套。
+   各頁原本的 <style> 不動，這支放在 </head> 前最後載入，只覆蓋顏色、圓角、陰影。
+   數學站「答錯」原本就用 --red／--no（紅色），沒有和主色共用，所以不必另外改回紅色。 */
+:root{
+  --paper:#f4f1ff; --ink:#22203a; --ink2:#5d5a78; --line:#e3def7;
+  --accent:#5b4bdb; --accent-soft:#ece9ff; --gold:#f5a524;
+  --shadow:0 4px 0 rgba(40,30,110,.10), 0 8px 24px rgba(40,30,110,.07);
+}
+em{background:linear-gradient(transparent 62%,#ffe08a 62%)}
+
+/* 回首頁（只加在原本沒有回首頁連結的頁面） */
+.th-home{display:inline-block;margin:12px 16px 0;padding:6px 14px;border-radius:999px;background:#fff;color:var(--accent);
+  border:2px solid var(--line);font-size:14px;font-weight:700;text-decoration:none}
+.th-home:hover{border-color:var(--accent)}
+
+@media screen{
+  /* 卡片：圓角加大、立體陰影 */
+  .card,a.card,.fcard,.lab,.prac,.q,.howto,.pcard,.pmeta,.sheet,details.ans,.rule,.wt,.tf,.dl{
+    border-radius:18px;box-shadow:var(--shadow)}
+  /* 主要按鈕：立體、按下去會沉 */
+  .btn:not(.ghost),button.go,.dl a.get{border-radius:14px;box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 60%,#000);transition:transform .08s}
+  .btn:not(.ghost):active,button.go:active,.dl a.get:active{transform:translateY(3px);box-shadow:0 1px 0 color-mix(in srgb,var(--accent) 60%,#000)}
+  .btn:disabled,button.go[disabled]{box-shadow:none}
+  .btn.ghost{border-radius:14px;border-width:2px}
+  .opt{border-radius:14px}
+}

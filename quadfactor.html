@@ -100,7 +100,10 @@ em{font-style:normal;background:linear-gradient(transparent 62%,#bfe6c9 62%);fon
 .prac-top .src{color:var(--teal);letter-spacing:.08em}
 .dots{display:flex;gap:5px;margin-bottom:16px;flex-wrap:wrap}
 .dot{width:22px;height:6px;border-radius:99px;background:var(--line);transition:background .3s}
-.dot.done{background:var(--green)}
+.dot.done{background:var(--green);padding:0;text-align:left}  /* 10/24：下面結案區的 .done 會把做完的進度點撐成長條，這裡蓋回來 */
+.dot.go{cursor:pointer;position:relative}
+.dot.go::after{content:"";position:absolute;left:-3px;right:-3px;top:-12px;bottom:-12px}  /* 做過的點可以點回去看；加大觸控範圍 */
+.dot.cur{outline:2px solid var(--teal);outline-offset:2px}
 .dot.now{background:var(--teal)}
 .prac-q{font-size:17.5px;line-height:2;margin-bottom:8px}
 .prac-hint{font-size:14.5px;color:var(--ink2);margin-bottom:16px;line-height:1.7}
@@ -395,7 +398,7 @@ svg{max-width:100%;height:auto;display:block}
     <div class="prac-hint" id="pHint"></div>
     <div class="opts" id="pOpts"></div>
     <div class="prac-fb" id="pFb"></div>
-    <div class="btnrow"><button class="btn" id="pNext" disabled>下一題</button></div>
+    <div class="btnrow"><button class="btn ghost" id="pPrev" type="button" style="display:none">◀ 上一題</button><button class="btn" id="pNext" disabled>下一題</button></div>
   </div>
 </section>
 
@@ -1054,8 +1057,13 @@ PRAC.forEach(function(P){
 
 let pi=0, pDone=(state.prac||0);
 function pDots(){
-  $("pDots").innerHTML=PRAC.map((_,i)=>'<span class="dot'+(i<pDone?" done":(i===pi?" now":""))+'"></span>').join("");
+  /* 10/24：做過的題目（和目前做到的那題）可以點回去看 */
+  $("pDots").innerHTML=PRAC.map((_,i)=>'<span class="dot'+(i<pDone?" done":(i===pi?" now":""))+(i===pi?" cur":"")+(i!==pi&&i<=pDone&&i<PRAC.length?" go":"")+'" data-i="'+i+'" title="第 '+(i+1)+' 題"></span>').join("");
 }
+$("pDots").addEventListener("click",e=>{
+  const d=e.target.closest(".dot"); if(!d)return;
+  const i=+d.dataset.i; if(i!==pi&&i<=pDone&&i<PRAC.length){pi=i;pRender();document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"})}
+});
 function pRender(){
   const P=PRAC[pi];
   $("pSrc").textContent=P.src;
@@ -1067,6 +1075,7 @@ function pRender(){
   if(solved){fb.className="prac-fb show ok";fb.innerHTML="<b>答對了</b><div class='sp-box'></div>";StepPlay.mount(fb.querySelector(".sp-box"),P.why);$("pNext").disabled=false}
   else{fb.className="prac-fb";fb.innerHTML="";$("pNext").disabled=true}
   $("pNext").textContent=pi>=PRAC.length-1?"完成，進入重點整理":"下一題";
+  $("pPrev").style.display=pi>0?"":"none";
   $("pOpts").querySelectorAll(".opt").forEach(b=>{
     b.addEventListener("click",()=>{
       if(b.classList.contains("locked"))return;
@@ -1086,7 +1095,20 @@ function pRender(){
       }
     });
   });
+  /* 10/24：拆解鷹架（只有單元 js 定義了 decompHook、而且這題有 decomp 才啟用；其他節完全不走這段） */
+  if(typeof decompHook==="function"){
+    const dz0=$("pDec"); if(dz0){if(typeof decompUnhook==="function")decompUnhook(); dz0.remove();}
+    $("pOpts").style.display=""; $("pHint").style.display="";
+    if(P.decomp){
+      const dz=document.createElement("div"); dz.id="pDec"; $("pQ").after(dz);
+      if(!solved){$("pOpts").style.display="none"; $("pHint").style.display="none";}
+      decompHook(P,dz,solved,function(){$("pOpts").style.display=""; $("pHint").style.display="";});
+    }
+  }
 }
+$("pPrev").addEventListener("click",()=>{
+  if(pi>0){pi--;pRender();document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"})}
+});
 $("pNext").addEventListener("click",()=>{
   if(pi<PRAC.length-1){pi++;pRender();document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"})}
   else{unlock("z4");unlock("z5");$("z4").scrollIntoView({behavior:"smooth",block:"start"})}

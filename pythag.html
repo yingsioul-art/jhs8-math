@@ -100,7 +100,10 @@ em{font-style:normal;background:linear-gradient(transparent 62%,#bfe6c9 62%);fon
 .prac-top .src{color:var(--teal);letter-spacing:.08em}
 .dots{display:flex;gap:5px;margin-bottom:16px;flex-wrap:wrap}
 .dot{width:22px;height:6px;border-radius:99px;background:var(--line);transition:background .3s}
-.dot.done{background:var(--green)}
+.dot.done{background:var(--green);padding:0;text-align:left}  /* 10/24：下面結案區的 .done 會把做完的進度點撐成長條，這裡蓋回來 */
+.dot.go{cursor:pointer;position:relative}
+.dot.go::after{content:"";position:absolute;left:-3px;right:-3px;top:-12px;bottom:-12px}  /* 做過的點可以點回去看；加大觸控範圍 */
+.dot.cur{outline:2px solid var(--teal);outline-offset:2px}
 .dot.now{background:var(--teal)}
 .prac-q{font-size:17.5px;line-height:2;margin-bottom:8px}
 .prac-hint{font-size:14.5px;color:var(--ink2);margin-bottom:16px;line-height:1.7}
@@ -198,6 +201,111 @@ svg{max-width:100%;height:auto;display:block}
 .prac-q svg,.q-body svg{margin:12px auto 4px}
 .rope-c{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}
 
+/* ── 找出直角三角形（拆解鷹架）── */
+.gate{background:#fff;border:2px solid var(--accent);border-radius:16px;padding:20px;margin:22px 0;box-shadow:var(--shadow)}
+.dz-groups{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.dz-gchip{min-height:40px;padding:6px 12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink2);font:inherit;font-size:14px;cursor:pointer}
+.dz-gchip.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.dz-gchip.done:not(.on){border-color:#9fd3b0;color:var(--green)}
+.dz-gchip:disabled{opacity:.45;cursor:default}
+.dz-ghead{background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:15px;line-height:1.7}
+.dz-ghead .gt{display:block;color:var(--accent);font-weight:700}
+.dz-badge{display:inline-block;font-size:12.5px;color:var(--green);border:1px solid #9fd3b0;border-radius:99px;padding:0 9px;margin-left:6px;vertical-align:middle}
+.dz-how{font-size:15.5px}
+.dz-how ol{margin:6px 0 0;padding-left:22px}
+.dz-fig{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;margin:10px 0 6px}
+.dz-fig svg{margin:0 auto;width:100%;touch-action:manipulation;-webkit-user-select:none;user-select:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.dz-seg{stroke:#232026;stroke-width:1.8;stroke-linecap:round}
+.dz-dash{stroke-dasharray:6 5}
+.dz-cand{stroke:#4338ca;stroke-width:2.2;stroke-dasharray:6 5;stroke-linecap:round}
+.dz-cand.bad{stroke:#b03030}
+.dz-clab{font-size:14px;font-weight:700;fill:#4338ca;paint-order:stroke;stroke:#fff;stroke-width:3px}
+.dz-clab.bad{fill:#b03030}
+.dz-new{stroke:#15803d;stroke-width:2.6;stroke-linecap:round;transition:stroke-dashoffset .7s ease}
+.dz-bad{stroke:#b03030;stroke-width:2.4;stroke-dasharray:4 4}
+.dz-ra{fill:none;stroke:#232026;stroke-width:1.3}
+.dz-ra-new{stroke:#15803d;stroke-width:2.2;animation:dzPop .5s ease .55s both}
+@keyframes dzPop{from{opacity:0}to{opacity:1}}
+.dz-elab,.dz-plab{font-size:14px;fill:#232026;font-family:Cambria,Georgia,"Noto Sans TC",serif;paint-order:stroke;stroke:#fff;stroke-width:3px;stroke-linejoin:round}
+.dz-elab.q{fill:#15803d;font-weight:700;font-style:italic}
+.dz-plab{font-size:13.5px}
+.dz-dot{display:none}
+.dz-pt.pin .dz-dot{display:inline;fill:#232026}
+.dz-pt.aux .dz-dot{display:inline;fill:#57525e}
+.dz-pt.tap .dz-dot{display:inline;fill:#fff;stroke:#4338ca;stroke-width:2.2}
+.dz-pt.sel .dz-dot{fill:#4338ca;stroke:#4338ca}
+.dz-hl{stroke:#f5a524;stroke-width:9;stroke-linecap:round;opacity:.6;animation:dzBlink .45s ease 4 alternate}
+.dz-goal{stroke:#f5a524;stroke-width:7;stroke-linecap:round;opacity:.35}
+@keyframes dzBlink{from{opacity:.15}to{opacity:.75}}
+.dz-known{stroke:#2563eb;stroke-width:6;stroke-linecap:round;opacity:.55}
+.dz-hyp{stroke:#ea580c;stroke-width:6;stroke-linecap:round;opacity:.75}
+.dz-hyplab{font-size:13px;font-weight:700;fill:#c2410c;paint-order:stroke;stroke:#fff;stroke-width:3px}
+.dz-face{stroke:none}
+.dz-face.ok{fill:#bfe6c9;opacity:.85}
+.dz-face.bad{fill:#f4c4c4;opacity:.8}
+.dz-tools{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin:0 0 6px}
+.dz-tbtn{min-height:36px;padding:4px 12px;border:1.5px solid var(--line);border-radius:99px;background:#fff;color:var(--accent);font:inherit;font-size:13.5px;cursor:pointer}
+.dz-step{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;background:#fff}
+.dz-step.done{background:var(--green-soft);border-color:#b7ddc3;padding:8px 12px}
+.dz-step.done .dz-ask{display:none}
+.dz-h{font-weight:700;font-size:15px;color:var(--accent)}
+.dz-step.done .dz-h{color:var(--green);font-size:13.5px}
+.dz-ask{font-size:15.5px;line-height:1.7;margin:4px 0 8px}
+.dz-opts{display:flex;flex-direction:column;gap:7px}
+.dz-opt{min-height:44px;padding:9px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;font:inherit;font-size:15.5px;line-height:1.6;text-align:left;cursor:pointer;color:inherit}
+.dz-chips{display:flex;flex-wrap:wrap;gap:8px}
+.dz-chip{min-height:44px;min-width:52px;padding:8px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;font:inherit;font-size:16px;cursor:pointer;color:inherit}
+.dz-opt.no,.dz-chip.no{border-color:var(--red);background:var(--red-soft);animation:dzShake .3s}
+.dz-opt.ok,.dz-chip.ok{border-color:var(--green);background:var(--green-soft)}
+@keyframes dzShake{0%,100%{transform:none}30%{transform:translateX(-4px)}70%{transform:translateX(4px)}}
+.dz-fb{font-size:15px;line-height:1.7;margin-top:6px}
+.dz-fb:empty{display:none}
+.dz-fb.no{color:#8a2525}
+.dz-fb.ok{color:#14532d;margin-top:2px}
+.dz-free{color:var(--ink2);font-size:13px;margin-left:4px}
+.dz-end{margin:10px 0 4px;padding:10px 14px;border-radius:10px;background:var(--green-soft);color:#14532d;font-weight:700}
+.dz-step .prac-fb{margin-top:12px}
+/* 版面：題目區｜分隔線｜步驟區（左右／上下，可拖曳） */
+.dz-split{display:flex;height:calc(100vh - 64px);height:calc(100dvh - 64px);min-height:440px;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;margin:10px 0;scroll-margin-top:52px}
+.dz-qp,.dz-sp{overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:10px 12px;position:relative;min-width:0;min-height:0}
+.dz-split.lr{flex-direction:row}
+.dz-split.lr .dz-qp{flex:0 0 var(--dz-r,46%);min-width:130px}
+.dz-split.lr .dz-sp{min-width:130px}
+.dz-split.tb .dz-fig svg{max-height:max(150px,calc(var(--dz-h,320px) - 110px))}  /* 圖要整張看得到：高度跟著題目區縮放，viewBox 保持比例 */
+.dz-split.lr .dz-fig svg{max-height:max(220px,calc(100vh - 230px))}
+.dz-split.lr .dz-sp{flex:1 1 0}
+.dz-split.tb{flex-direction:column}
+.dz-split.tb .dz-qp{flex:0 0 var(--dz-h,320px)}
+.dz-split.tb .dz-sp{flex:1 1 0}
+.dz-gut{flex:0 0 20px;background:var(--accent-soft);touch-action:none;-webkit-user-select:none;user-select:none;position:relative;z-index:2}
+.dz-split.lr .dz-gut{cursor:col-resize;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.dz-split.tb .dz-gut{cursor:row-resize;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.dz-gut::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:99px;background:var(--accent);opacity:.55}
+.dz-split.lr .dz-gut::after{width:4px;height:44px}
+.dz-split.tb .dz-gut::after{width:44px;height:4px}
+.dz-gut:hover::after,body.dz-drag .dz-gut::after{opacity:1}
+body.dz-drag,body.dz-drag *{-webkit-user-select:none!important;user-select:none!important;cursor:inherit}
+.dz-modebar,.dz-sbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.dz-sbar{position:sticky;top:-10px;z-index:3;background:#fff;padding:6px 0;margin-top:-4px;border-bottom:1px solid var(--line)}
+.dz-mbl{font-size:12.5px;color:var(--ink2);letter-spacing:.1em}
+.dz-mb,.dz-sbar button{min-height:34px;padding:3px 12px;border:1.5px solid var(--line);border-radius:99px;background:#fff;color:var(--ink2);font:inherit;font-size:13.5px;cursor:pointer}
+.dz-mb.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.dz-qtext{margin:4px 0}
+.dz-qp .prac-q{font-size:16.5px;line-height:1.85}
+/* 完成的步驟：收成一行，點一下展開 */
+.dz-step.done{text-align:left;cursor:pointer}
+.dz-sum{display:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14.5px;color:#14532d}
+.dz-sum b{color:var(--green);margin-right:2px}
+.dz-sum::before{content:"▸ ";color:var(--green)}
+.dz-step.done.fold{padding:6px 12px}
+.dz-step.done.fold .dz-sum{display:block}
+.dz-step.done.fold>:not(.dz-sum){display:none}
+.dz-step.done:not(.fold) .dz-h::before{content:"▾ "}
+.dz-cand.hot{stroke:#f59e0b;stroke-width:4.2}
+.dz-clab.hot{fill:#b45309;font-size:17px}
+.dz-cand.bad.hot{stroke:#b03030}
+@media (max-width:480px){.gate{padding:14px 12px}.dz-step{padding:10px 11px}}
+
 </style>
 <style id="sitenav-css">
 .sitenav{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
@@ -255,7 +363,8 @@ svg{max-width:100%;height:auto;display:block}
     <ol class="flow">
       <li><strong>先把五件事認熟</strong>：直角三角形的名字、畢氏定理、求第三邊、三角形的高、坐標上兩點的距離</li>
       <li><strong>兩個實驗</strong>：方格上的三個正方形；古埃及人用 12 個結的繩子拉出直角</li>
-      <li><strong>用課本的隨堂練習動手做</strong>（12 題）</li>
+      <li><strong>找出直角三角形</strong>：6 組 28 題，先把圖拆開，看出直角三角形在哪、要不要補線</li>
+      <li><strong>用課本的隨堂練習動手做</strong>（12 題，每題先拆圖再選答案）</li>
       <li>重點整理，最後是<strong>會考挑戰 6 題</strong></li>
       <li>想看每一題怎麼一步一步算，另有 <a href='pythag-steps.html' style='color:var(--accent);font-weight:700'>2-3 課本逐題講解</a></li>
     </ol>
@@ -365,11 +474,38 @@ svg{max-width:100%;height:auto;display:block}
 
 </section>
 
+<!-- ══ 找出直角三角形（10/24 拆解鷹架）══ -->
+<section id="zg">
+  <div class="step"><span class="n">拆</span>找出直角三角形</div>
+  <h2>公式會套了，難的是：直角三角形藏在哪裡？</h2>
+  <p>題目常常不直接給你直角三角形，它藏在等腰三角形、四邊形、坐標、梯子裡。這一關<strong>先拆圖、再計算</strong>。答錯不扣分，看提示再選。</p>
+  <div class="card dz-how">
+    <p style="margin:0"><strong>每一題都照這四步拆：</strong></p>
+    <ol>
+      <li>題目要求的是<strong>哪一條線段</strong>？</li>
+      <li><strong>直角在哪裡</strong>？圖上沒有的話，要<strong>補哪一條線</strong>？</li>
+      <li><strong>哪一個是直角三角形</strong>（而且有兩條邊知道）？</li>
+      <li>哪兩邊<strong>已知</strong>？哪一邊是<strong>斜邊</strong>？</li>
+    </ol>
+    <p class="dim" style="margin:8px 0 0;font-size:14.5px">前 5 組各練一種拆法：每組前 2 題四步都會問；後 2 題只問補線，要你自己在圖上<strong>點兩個點連線</strong>。最後的混合組只給圖，卡住可以叫出四步提示。做完一組，下一組才會打開。</p>
+  </div>
+  <div class="gate" id="gate">
+    <div class="dz-groups" id="gGroups"></div>
+    <div class="dz-ghead" id="gHead"></div>
+    <div class="prac-top"><span class="src" id="gSrc"></span><span id="gNo"></span></div>
+    <div class="dots" id="gDots"></div>
+    <div class="prac-q" id="gQ"></div>
+    <div id="gBox"></div>
+    <div class="btnrow"><button class="btn ghost" id="gPrev" type="button" style="display:none">◀ 上一題</button><button class="btn" id="gNext" disabled>下一題</button></div>
+  </div>
+  <p class="dim" id="gProg" style="font-size:14px"></p>
+</section>
+
 <!-- ══ 3 課本練習 ══ -->
 <section>
   <div class="step"><span class="n">3</span>動手練</div>
   <h2>照課本的順序，一題一題來</h2>
-  <p>下面 12 題<strong>全部出自課本 2-3 的隨堂練習</strong>，順序照課本：<em>求第三邊 → 斜邊上的高 → 等腰與正三角形 → 對角線與竹竿 → 坐標上兩點的距離</em>。每一題都先問自己：<strong>斜邊是哪一條？</strong></p>
+  <p>下面 12 題<strong>全部出自課本 2-3 的隨堂練習</strong>，順序照課本：<em>求第三邊 → 斜邊上的高 → 等腰與正三角形 → 對角線與竹竿 → 坐標上兩點的距離</em>。每一題都要<strong>先拆圖</strong>（斜邊是哪一條、直角在哪、要不要補線），拆好了才能選答案。</p>
 
   <div class="prac">
     <div class="prac-top"><span class="src" id="pSrc"></span><span id="pNo"></span></div>
@@ -378,7 +514,7 @@ svg{max-width:100%;height:auto;display:block}
     <div class="prac-hint" id="pHint"></div>
     <div class="opts" id="pOpts"></div>
     <div class="prac-fb" id="pFb"></div>
-    <div class="btnrow"><button class="btn" id="pNext" disabled>下一題</button></div>
+    <div class="btnrow"><button class="btn ghost" id="pPrev" type="button" style="display:none">◀ 上一題</button><button class="btn" id="pNext" disabled>下一題</button></div>
   </div>
 </section>
 
@@ -799,7 +935,7 @@ const KEY="jhs8-pythag-v1", NQ=6;
 const PRAC=[
  {
   "src": "課本 p.98 例 1 隨堂 (1)",
-  "q": "求斜邊 <b class='eq'>a</b> 的長。<svg viewBox=\"0 0 240 135\" style=\"max-width:230px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"40.0,30.0 40.0,110.0 200.0,30.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><polyline points=\"40.0,39.0 49.0,39.0 49.0,30.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"120.0\" y=\"22.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">8</text><text x=\"28.0\" y=\"75.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">6</text><text x=\"130.0\" y=\"86.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">a</text></svg>",
+  "q": "求斜邊 <b class='eq'>a</b> 的長。",
   "hint": "直角在左上角，a 在直角對面，是斜邊。a² ＝ 6² ＋ 8²。",
   "o": [
    "10",
@@ -808,11 +944,130 @@ const PRAC=[
    "100"
   ],
   "a": 0,
-  "why": "<span class='eq'>a<sup>2</sup>＝36＋64＝100</span>，<span class='eq'>a＝10</span>。<br>⚠️ 14 是 6＋8，邊長不能直接相加；100 是 a²，還沒開根號；2√<span class=\"rad\">7</span> 是用減的（64−36＝28），但 a 是斜邊，要用加的。"
+  "why": "<span class='eq'>a<sup>2</sup>＝36＋64＝100</span>，<span class='eq'>a＝10</span>。<br>⚠️ 14 是 6＋8，邊長不能直接相加；100 是 a²，還沒開根號；2√<span class=\"rad\">7</span> 是用減的（64−36＝28），但 a 是斜邊，要用加的。",
+  "decomp": {
+   "fig": {
+    "pts": {
+     "A": [
+      40.0,
+      30.0,
+      0,
+      0
+     ],
+     "B": [
+      40.0,
+      110.0,
+      0,
+      0
+     ],
+     "C": [
+      200.0,
+      30.0,
+      0,
+      0
+     ]
+    },
+    "segs": [
+     [
+      "A",
+      "B"
+     ],
+     [
+      "B",
+      "C"
+     ],
+     [
+      "C",
+      "A"
+     ]
+    ],
+    "dash": [],
+    "ra": [
+     [
+      "A",
+      "B",
+      "C"
+     ]
+    ],
+    "lab": [
+     [
+      "A",
+      "C",
+      "8",
+      0,
+      -8
+     ],
+     [
+      "A",
+      "B",
+      "6",
+      -12,
+      5
+     ],
+     [
+      "B",
+      "C",
+      "a",
+      10,
+      16,
+      0.5,
+      "q"
+     ]
+    ],
+    "tap": [],
+    "show": [
+     "A",
+     "B",
+     "C"
+    ],
+    "plab": {
+     "A": "",
+     "B": "",
+     "C": ""
+    },
+    "dots": [],
+    "under": "",
+    "vb": [
+     9.2,
+     -4.0,
+     204.8,
+     128.0
+    ],
+    "maxw": 230,
+    "en": {
+     "A|C": "邊 8",
+     "A|B": "邊 6",
+     "B|C": "邊 a"
+    }
+   },
+   "mode": "hyp",
+   "sh": {
+    "edges": [
+     [
+      "A",
+      "B"
+     ],
+     [
+      "B",
+      "C"
+     ],
+     [
+      "A",
+      "C"
+     ]
+    ],
+    "a": [
+     "B",
+     "C"
+    ],
+    "hint": "斜邊在直角的<b>對面</b>，不會碰到直角符號（小方框）。",
+    "ok": "對！這條在直角的對面，是斜邊。"
+   }
+  }
  },
  {
   "src": "課本 p.98 例 1 隨堂 (2)",
-  "q": "求 <b class='eq'>b</b> 的長。<svg viewBox=\"0 0 200 175\" style=\"max-width:180px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"50.0,20.0 50.0,150.0 140.0,150.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><polyline points=\"50.0,141.0 59.0,141.0 59.0,150.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"38.0\" y=\"90.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">b</text><text x=\"95.0\" y=\"168.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">7</text><text x=\"111.0\" y=\"83.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">10</text></svg>",
+  "q": "求 <b class='eq'>b</b> 的長。",
   "hint": "直角在左下角，直角對面的 10 才是斜邊，b 是股。b² ＝ 10² − 7²。",
   "o": [
    "√<span class=\"rad\">51</span>",
@@ -821,11 +1076,130 @@ const PRAC=[
    "51"
   ],
   "a": 0,
-  "why": "<span class='eq'>b<sup>2</sup>＝100−49＝51</span>，51＝3×17 沒有平方數，<span class='eq'>b＝√<span class=\"rad\">51</span></span>。<br>⚠️ √<span class=\"rad\">149</span> 是 100＋49：把 b 當成斜邊了，可是 √<span class=\"rad\">149</span>≈12.2 比斜邊 10 還長，不可能。3 是 10−7。"
+  "why": "<span class='eq'>b<sup>2</sup>＝100−49＝51</span>，51＝3×17 沒有平方數，<span class='eq'>b＝√<span class=\"rad\">51</span></span>。<br>⚠️ √<span class=\"rad\">149</span> 是 100＋49：把 b 當成斜邊了，可是 √<span class=\"rad\">149</span>≈12.2 比斜邊 10 還長，不可能。3 是 10−7。",
+  "decomp": {
+   "fig": {
+    "pts": {
+     "A": [
+      50.0,
+      20.0,
+      0,
+      0
+     ],
+     "B": [
+      50.0,
+      150.0,
+      0,
+      0
+     ],
+     "C": [
+      140.0,
+      150.0,
+      0,
+      0
+     ]
+    },
+    "segs": [
+     [
+      "A",
+      "B"
+     ],
+     [
+      "B",
+      "C"
+     ],
+     [
+      "C",
+      "A"
+     ]
+    ],
+    "dash": [],
+    "ra": [
+     [
+      "B",
+      "A",
+      "C"
+     ]
+    ],
+    "lab": [
+     [
+      "A",
+      "B",
+      "b",
+      -12,
+      5,
+      0.5,
+      "q"
+     ],
+     [
+      "B",
+      "C",
+      "7",
+      0,
+      18
+     ],
+     [
+      "A",
+      "C",
+      "10",
+      16,
+      -2
+     ]
+    ],
+    "tap": [],
+    "show": [
+     "A",
+     "B",
+     "C"
+    ],
+    "plab": {
+     "A": "",
+     "B": "",
+     "C": ""
+    },
+    "dots": [],
+    "under": "",
+    "vb": [
+     19.2,
+     6.0,
+     134.8,
+     179.0
+    ],
+    "maxw": 180,
+    "en": {
+     "A|B": "邊 b",
+     "B|C": "邊 7",
+     "A|C": "邊 10"
+    }
+   },
+   "mode": "hyp",
+   "sh": {
+    "edges": [
+     [
+      "A",
+      "B"
+     ],
+     [
+      "B",
+      "C"
+     ],
+     [
+      "A",
+      "C"
+     ]
+    ],
+    "a": [
+     "A",
+     "C"
+    ],
+    "hint": "斜邊在直角的<b>對面</b>，不會碰到直角符號。直角在左下角。",
+    "ok": "對！10 在直角的對面，是斜邊，b 是股。"
+   }
+  }
  },
  {
   "src": "課本 p.98 例 1 隨堂 (3)",
-  "q": "求斜邊 <b class='eq'>c</b> 的長。<svg viewBox=\"0 0 280 100\" style=\"max-width:260px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"30.0,30.0 30.0,65.0 250.0,30.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><polyline points=\"30.0,39.0 39.0,39.0 39.0,30.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"18.0\" y=\"52.5\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">7</text><text x=\"140.0\" y=\"22.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">24</text><text x=\"140.0\" y=\"69.5\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">c</text></svg>",
+  "q": "求斜邊 <b class='eq'>c</b> 的長。",
   "hint": "c 在直角對面，是斜邊。24² ＝ 576。",
   "o": [
    "25",
@@ -834,11 +1208,130 @@ const PRAC=[
    "625"
   ],
   "a": 0,
-  "why": "<span class='eq'>c<sup>2</sup>＝49＋576＝625</span>，<span class='eq'>25×25＝625</span>，<span class='eq'>c＝25</span>。<br>📌 7、24、25 是課本 p.109 列的常見組合之一，記起來很省時間。"
+  "why": "<span class='eq'>c<sup>2</sup>＝49＋576＝625</span>，<span class='eq'>25×25＝625</span>，<span class='eq'>c＝25</span>。<br>📌 7、24、25 是課本 p.109 列的常見組合之一，記起來很省時間。",
+  "decomp": {
+   "fig": {
+    "pts": {
+     "A": [
+      30.0,
+      30.0,
+      0,
+      0
+     ],
+     "B": [
+      30.0,
+      65.0,
+      0,
+      0
+     ],
+     "C": [
+      250.0,
+      30.0,
+      0,
+      0
+     ]
+    },
+    "segs": [
+     [
+      "A",
+      "B"
+     ],
+     [
+      "B",
+      "C"
+     ],
+     [
+      "C",
+      "A"
+     ]
+    ],
+    "dash": [],
+    "ra": [
+     [
+      "A",
+      "B",
+      "C"
+     ]
+    ],
+    "lab": [
+     [
+      "A",
+      "B",
+      "7",
+      -12,
+      5
+     ],
+     [
+      "A",
+      "C",
+      "24",
+      0,
+      -8
+     ],
+     [
+      "B",
+      "C",
+      "c",
+      0,
+      22,
+      0.5,
+      "q"
+     ]
+    ],
+    "tap": [],
+    "show": [
+     "A",
+     "B",
+     "C"
+    ],
+    "plab": {
+     "A": "",
+     "B": "",
+     "C": ""
+    },
+    "dots": [],
+    "under": "",
+    "vb": [
+     -0.8,
+     -4.0,
+     264.8,
+     90.5
+    ],
+    "maxw": 260,
+    "en": {
+     "A|B": "邊 7",
+     "A|C": "邊 24",
+     "B|C": "邊 c"
+    }
+   },
+   "mode": "hyp",
+   "sh": {
+    "edges": [
+     [
+      "A",
+      "B"
+     ],
+     [
+      "B",
+      "C"
+     ],
+     [
+      "A",
+      "C"
+     ]
+    ],
+    "a": [
+     "B",
+     "C"
+    ],
+    "hint": "斜邊在直角的<b>對面</b>，不會碰到直角符號（小方框）。",
+    "ok": "對！這條在直角的對面，是斜邊。"
+   }
+  }
  },
  {
   "src": "課本 p.99 例 2 隨堂 (1)(2)",
-  "q": "四邊形 ABCD 中，∠A＝∠C＝90°，AB＝4、BC＝3、AD＝5，求 <b class='eq'>CD</b>。<svg viewBox=\"0 0 220 230\" style=\"max-width:200px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"40.0,30.0 170.0,30.0 111.6,165.0 40.0,134.0\" fill=\"#e6f2f0\" stroke=\"#0f6b63\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"40.0\" y1=\"134.0\" x2=\"170.0\" y2=\"30.0\" stroke=\"#0f6b63\" stroke-width=\"1.6\"/><polyline points=\"40.0,39.0 49.0,39.0 49.0,30.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><polyline points=\"103.3,161.4 106.9,153.1 115.2,156.7\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"30.0\" y=\"26.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"180.0\" y=\"26.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">D</text><text x=\"28.0\" y=\"142.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"117.6\" y=\"181.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"105.0\" y=\"22.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">5</text><text x=\"28.0\" y=\"87.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">4</text><text x=\"69.8\" y=\"165.5\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">3</text></svg>",
+  "q": "四邊形 ABCD 中，∠A＝∠C＝90°，AB＝4、BC＝3、AD＝5，求 <b class='eq'>CD</b>。",
   "hint": "對角線 BD 把四邊形切成兩個直角三角形。先在 △ABD 求 BD，再到 △BCD 求 CD。",
   "o": [
    "4√<span class=\"rad\">2</span>",
@@ -847,11 +1340,273 @@ const PRAC=[
    "4"
   ],
   "a": 0,
-  "why": "△ABD：<span class='eq'>BD<sup>2</sup>＝16＋25＝41</span>。<br>△BCD 的直角在 C，BD 是斜邊：<span class='eq'>CD<sup>2</sup>＝41−9＝32</span>，<span class='eq'>CD＝√<span class=\"rad\">32</span>＝4√<span class=\"rad\">2</span></span>。<br>⚠️ √<span class=\"rad\">41</span> 是 BD，只做了一半；5√<span class=\"rad\">2</span>＝√<span class=\"rad\">50</span> 是 41＋9，把 CD 當成斜邊了。"
+  "why": "△ABD：<span class='eq'>BD<sup>2</sup>＝16＋25＝41</span>。<br>△BCD 的直角在 C，BD 是斜邊：<span class='eq'>CD<sup>2</sup>＝41−9＝32</span>，<span class='eq'>CD＝√<span class=\"rad\">32</span>＝4√<span class=\"rad\">2</span></span>。<br>⚠️ √<span class=\"rad\">41</span> 是 BD，只做了一半；5√<span class=\"rad\">2</span>＝√<span class=\"rad\">50</span> 是 41＋9，把 CD 當成斜邊了。",
+  "decomp": {
+   "fig": {
+    "pts": {
+     "A": [
+      40.0,
+      30.0,
+      -6,
+      -3
+     ],
+     "D": [
+      170.0,
+      30.0,
+      6,
+      -3
+     ],
+     "B": [
+      40.0,
+      134.0,
+      -6,
+      10
+     ],
+     "C": [
+      111.6,
+      165.0,
+      5,
+      14
+     ]
+    },
+    "segs": [
+     [
+      "A",
+      "D"
+     ],
+     [
+      "D",
+      "C"
+     ],
+     [
+      "C",
+      "B"
+     ],
+     [
+      "B",
+      "A"
+     ]
+    ],
+    "dash": [],
+    "ra": [
+     [
+      "A",
+      "B",
+      "D"
+     ],
+     [
+      "C",
+      "B",
+      "D"
+     ]
+    ],
+    "lab": [
+     [
+      "A",
+      "D",
+      "5",
+      0,
+      -8
+     ],
+     [
+      "A",
+      "B",
+      "4",
+      -11,
+      4
+     ],
+     [
+      "B",
+      "C",
+      "3",
+      -7,
+      15
+     ]
+    ],
+    "tap": [],
+    "show": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "plab": {},
+    "dots": [],
+    "under": "",
+    "vb": [
+     10.2,
+     -4.0,
+     188.9,
+     200.0
+    ],
+    "maxw": 230
+   },
+   "s1": {
+    "ask": "要求的是哪一條線段？",
+    "o": [
+     [
+      "CD",
+      [
+       "C",
+       "D"
+      ]
+     ],
+     [
+      "BC",
+      [
+       "B",
+       "C"
+      ]
+     ],
+     [
+      "AD",
+      [
+       "A",
+       "D"
+      ]
+     ]
+    ],
+    "a": 0,
+    "hint": "題目最後問：「求 CD」。",
+    "ok": ""
+   },
+   "s2": {
+    "cands": [
+     {
+      "segs": [
+       [
+        "A",
+        "C"
+       ]
+      ],
+      "hint": "AC 會把 ∠A、∠C 兩個直角劈開，切出來的 △ABC、△ACD 都沒有直角。"
+     },
+     {
+      "segs": [
+       [
+        "B",
+        "D"
+       ]
+      ],
+      "hint": ""
+     }
+    ],
+    "a": 1,
+    "ra": [],
+    "ok": "對！BD 把四邊形切成 △ABD 和 △BCD，∠A、∠C 都還完整，兩個都是直角三角形。",
+    "hint": "直角在 A 和 C。補的線不能把直角劈開。",
+    "sol": [
+     {
+      "segs": [
+       [
+        "B",
+        "D"
+       ]
+      ],
+      "ra": [],
+      "ok": "對！BD 把四邊形切成兩個直角三角形。"
+     }
+    ],
+    "none": false,
+    "lhint": "直角在 A 和 C。補的線不能把直角劈開。",
+    "wrong": {}
+   },
+   "rounds": [
+    {
+     "tris": [
+      {
+       "v": [
+        "A",
+        "B",
+        "D"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "A",
+         "B"
+        ],
+        [
+         "A",
+         "D"
+        ]
+       ],
+       "hyp": [
+        "B",
+        "D"
+       ],
+       "note": "AB＝4、AD＝5",
+       "why": "",
+       "okm": ""
+      },
+      {
+       "v": [
+        "B",
+        "C",
+        "D"
+       ],
+       "ok": false,
+       "known": [],
+       "hyp": null,
+       "note": "",
+       "why": "△BCD 是直角三角形，可是現在只知道 BC，BD 還不知道。先做另一個。",
+       "okm": ""
+      }
+     ],
+     "hint": "",
+     "ask": "先找：哪一個直角三角形，<b>兩條邊已經知道</b>？"
+    },
+    {
+     "tris": [
+      {
+       "v": [
+        "B",
+        "C",
+        "D"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "B",
+         "C"
+        ],
+        [
+         "B",
+         "D"
+        ]
+       ],
+       "hyp": [
+        "B",
+        "D"
+       ],
+       "note": "BD 是上一個三角形的斜邊，算得出來（BD²＝41）",
+       "why": "",
+       "okm": ""
+      },
+      {
+       "v": [
+        "A",
+        "B",
+        "D"
+       ],
+       "ok": false,
+       "known": [],
+       "hyp": null,
+       "note": "",
+       "why": "△ABD 剛剛用過了，它沒有 CD。",
+       "okm": ""
+      }
+     ],
+     "hint": "",
+     "ask": "BD 可以從 △ABD 算出來了。接著用哪一個直角三角形求 CD？"
+    }
+   ],
+   "mode": "cand"
+  }
  },
  {
   "src": "課本 p.100 例 3 隨堂",
-  "q": "直角三角形 ABC 中，∠ABC 和 ∠BDC 都是直角，AC＝2.5、BC＝2，求 <b class='eq'>BD</b>。<svg viewBox=\"0 0 270 165\" style=\"max-width:260px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"20.0,120.0 102.8,9.6 250.0,120.0\" fill=\"#fbf3d9\" stroke=\"#a15c07\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"102.8\" y1=\"9.6\" x2=\"102.8\" y2=\"120.0\" stroke=\"#a15c07\" stroke-width=\"1.6\" stroke-dasharray=\"5 4\"/><polyline points=\"97.4,16.8 104.6,22.2 110.0,15.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><polyline points=\"102.8,112.0 110.8,112.0 110.8,120.0\" fill=\"none\" stroke=\"#232026\" stroke-width=\"1.3\"/><text x=\"10.0\" y=\"125.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"102.8\" y=\"1.6\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"260.0\" y=\"125.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"102.8\" y=\"138.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">D</text><text x=\"186.4\" y=\"58.8\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"135.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#a15c07\" font-family=\"Cambria,Georgia,serif\">2.5</text></svg>",
+  "q": "直角三角形 ABC 中，∠ABC 和 ∠BDC 都是直角，AC＝2.5、BC＝2，求 <b class='eq'>BD</b>。",
   "hint": "先求另一股 AB。再用面積算兩次：½ × AB × BC ＝ ½ × AC × BD。",
   "o": [
    "1.2",
@@ -860,11 +1615,195 @@ const PRAC=[
    "2.4"
   ],
   "a": 0,
-  "why": "<span class='eq'>AB<sup>2</sup>＝6.25−4＝2.25</span>，<span class='eq'>AB＝1.5</span>。<br>面積：<span class='eq'>1.5×2＝2.5×BD</span>，<span class='eq'>BD＝3÷2.5＝1.2</span>。<br>⚠️ 1.5 是 AB；1.25 是 AC 的一半——高不是斜邊的一半。"
+  "why": "<span class='eq'>AB<sup>2</sup>＝6.25−4＝2.25</span>，<span class='eq'>AB＝1.5</span>。<br>面積：<span class='eq'>1.5×2＝2.5×BD</span>，<span class='eq'>BD＝3÷2.5＝1.2</span>。<br>⚠️ 1.5 是 AB；1.25 是 AC 的一半——高不是斜邊的一半。",
+  "decomp": {
+   "fig": {
+    "pts": {
+     "A": [
+      20.0,
+      120.0,
+      -6,
+      5
+     ],
+     "B": [
+      102.8,
+      9.6,
+      0,
+      -7
+     ],
+     "C": [
+      250.0,
+      120.0,
+      6,
+      5
+     ],
+     "D": [
+      102.8,
+      120.0,
+      0,
+      17
+     ]
+    },
+    "segs": [
+     [
+      "A",
+      "B"
+     ],
+     [
+      "B",
+      "C"
+     ],
+     [
+      "C",
+      "A"
+     ],
+     [
+      "B",
+      "D"
+     ]
+    ],
+    "dash": [],
+    "ra": [
+     [
+      "B",
+      "A",
+      "C"
+     ],
+     [
+      "D",
+      "B",
+      "C"
+     ]
+    ],
+    "lab": [
+     [
+      "B",
+      "C",
+      "2",
+      10,
+      -6
+     ],
+     [
+      "A",
+      "C",
+      "2.5",
+      0,
+      18,
+      0.62
+     ]
+    ],
+    "tap": [],
+    "show": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "plab": {},
+    "dots": [],
+    "under": "",
+    "vb": [
+     -9.2,
+     -23.4,
+     288.4,
+     178.4
+    ],
+    "maxw": 260
+   },
+   "mode": "cand",
+   "s1": {
+    "ask": "要求的是哪一條線段？",
+    "o": [
+     [
+      "BD",
+      [
+       "B",
+       "D"
+      ]
+     ],
+     [
+      "AB",
+      [
+       "A",
+       "B"
+      ]
+     ],
+     [
+      "AC",
+      [
+       "A",
+       "C"
+      ]
+     ]
+    ],
+    "a": 0,
+    "hint": "題目問 BD 的長。",
+    "ok": ""
+   },
+   "rounds": [
+    {
+     "tris": [
+      {
+       "v": [
+        "A",
+        "B",
+        "C"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "A",
+         "C"
+        ],
+        [
+         "B",
+         "C"
+        ]
+       ],
+       "hyp": [
+        "A",
+        "C"
+       ],
+       "note": "AC＝2.5、BC＝2；先求 AB，再用面積算 BD",
+       "why": "",
+       "okm": ""
+      },
+      {
+       "v": [
+        "A",
+        "B",
+        "D"
+       ],
+       "ok": false,
+       "known": [],
+       "hyp": null,
+       "note": "",
+       "why": "△ABD 是直角三角形，可是一條邊都還不知道。",
+       "okm": ""
+      },
+      {
+       "v": [
+        "B",
+        "D",
+        "C"
+       ],
+       "ok": false,
+       "known": [],
+       "hyp": null,
+       "note": "",
+       "why": "△BDC 是直角三角形，可是只知道 BC。",
+       "okm": ""
+      }
+     ],
+     "hint": "",
+     "ask": "BD 所在的兩個小三角形，都只知道一條邊或更少。哪一個直角三角形，<b>兩條邊已經知道</b>？"
+    }
+   ]
+  }
  },
  {
   "src": "課本 p.101 例 4 隨堂",
-  "q": "等腰三角形 ABC 中，AB＝AC＝15、BC＝18，求 △ABC 的<b>面積</b>。<svg viewBox=\"0 0 148 122\" style=\"max-width:200px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"74.0,20.0 20.0,92.0 128.0,92.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"2\" stroke-linejoin=\"round\"/><text x=\"74.0\" y=\"14.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">A</text><text x=\"10.0\" y=\"97.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">B</text><text x=\"138.0\" y=\"97.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">C</text><text x=\"33.0\" y=\"56.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">15</text><text x=\"115.0\" y=\"56.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">15</text><text x=\"74.0\" y=\"112.0\" text-anchor=\"middle\" font-size=\"14\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">18</text></svg>",
+  "q": "等腰三角形 ABC 中，AB＝AC＝15、BC＝18，求 △ABC 的<b>面積</b>。",
   "hint": "從 A 往 BC 畫高，BC 被分成兩半，各 9。高² ＝ 15² − 9²。",
   "o": [
    "108",
@@ -873,7 +1812,264 @@ const PRAC=[
    "54"
   ],
   "a": 0,
-  "why": "<span class='eq'>高<sup>2</sup>＝225−81＝144</span>，高＝12。面積＝<span class='eq'>½×18×12＝108</span>。<br>⚠️ 216 忘了乘 ½；135 是 ½×18×15，把腰當成高了——腰是斜的，比高長；54 是只算了一半的三角形。"
+  "why": "<span class='eq'>高<sup>2</sup>＝225−81＝144</span>，高＝12。面積＝<span class='eq'>½×18×12＝108</span>。<br>⚠️ 216 忘了乘 ½；135 是 ½×18×15，把腰當成高了——腰是斜的，比高長；54 是只算了一半的三角形。",
+  "decomp": {
+   "fig": {
+    "pts": {
+     "A": [
+      147.0,
+      34.0,
+      0,
+      -7
+     ],
+     "B": [
+      30.0,
+      190.0,
+      -6,
+      5
+     ],
+     "C": [
+      264.0,
+      190.0,
+      6,
+      5
+     ],
+     "D": [
+      147.0,
+      190.0,
+      0,
+      17
+     ],
+     "E": [
+      182.1,
+      80.8,
+      7,
+      4
+     ],
+     "F": [
+      88.5,
+      190.0,
+      0,
+      17
+     ]
+    },
+    "segs": [
+     [
+      "A",
+      "B"
+     ],
+     [
+      "B",
+      "C"
+     ],
+     [
+      "C",
+      "A"
+     ]
+    ],
+    "dash": [],
+    "ra": [],
+    "lab": [
+     [
+      "A",
+      "B",
+      "15",
+      -12,
+      0
+     ],
+     [
+      "A",
+      "C",
+      "15",
+      12,
+      0
+     ],
+     [
+      "B",
+      "C",
+      "18",
+      0,
+      18,
+      0.8
+     ]
+    ],
+    "tap": [],
+    "show": [
+     "A",
+     "B",
+     "C"
+    ],
+    "plab": {},
+    "dots": [],
+    "under": "",
+    "vb": [
+     0.8,
+     1.0,
+     292.4,
+     224.0
+    ],
+    "maxw": 300
+   },
+   "s1": {
+    "ask": "題目要 △ABC 的面積。面積＝½×底×高，底 BC＝18 已經有了，還缺哪一條線段？",
+    "o": [
+     [
+      "BC 上的高（從 A 垂直畫到 BC，圖上還沒有）",
+      null
+     ],
+     [
+      "腰 AB",
+      [
+       "A",
+       "B"
+      ]
+     ],
+     [
+      "底 BC",
+      [
+       "B",
+       "C"
+      ]
+     ]
+    ],
+    "a": 0,
+    "hint": "底已經知道是 18。面積還要「高」——高是從頂點<b>垂直</b>畫到底邊的線，腰是斜的，不是高。",
+    "ok": ""
+   },
+   "s2": {
+    "cands": [
+     {
+      "segs": [
+       [
+        "B",
+        "E"
+       ]
+      ],
+      "hint": "BE 沒有和 AC 垂直，切出來的兩個三角形都沒有直角。"
+     },
+     {
+      "segs": [
+       [
+        "A",
+        "D"
+       ]
+      ],
+      "hint": ""
+     },
+     {
+      "segs": [
+       [
+        "A",
+        "F"
+       ]
+      ],
+      "hint": "AF 是斜的，沒有和 BC 垂直。"
+     }
+    ],
+    "a": 1,
+    "ra": [
+     [
+      "D",
+      "A",
+      "C"
+     ]
+    ],
+    "ok": "對！AD 和 BC 垂直，D 是 BC 的中點，BD＝DC＝9。",
+    "hint": "高要和底邊 BC 垂直（夾 90°）。等腰三角形的高，會剛好落在底邊的正中間。",
+    "sol": [
+     {
+      "segs": [
+       [
+        "A",
+        "D"
+       ]
+      ],
+      "ra": [
+       [
+        "D",
+        "A",
+        "C"
+       ]
+      ],
+      "ok": "對！AD 和 BC 垂直，D 是 BC 的中點。"
+     }
+    ],
+    "none": false,
+    "lhint": "高要和底邊 BC 垂直（夾 90°）。等腰三角形的高，會剛好落在底邊的正中間。",
+    "wrong": {}
+   },
+   "rounds": [
+    {
+     "tris": [
+      {
+       "v": [
+        "A",
+        "B",
+        "D"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "A",
+         "B"
+        ],
+        [
+         "B",
+         "D"
+        ]
+       ],
+       "hyp": [
+        "A",
+        "B"
+       ],
+       "note": "BD＝18÷2＝9",
+       "why": "",
+       "okm": ""
+      },
+      {
+       "v": [
+        "A",
+        "D",
+        "C"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "A",
+         "C"
+        ],
+        [
+         "D",
+         "C"
+        ]
+       ],
+       "hyp": [
+        "A",
+        "C"
+       ],
+       "note": "DC＝18÷2＝9",
+       "why": "",
+       "okm": ""
+      },
+      {
+       "v": [
+        "A",
+        "B",
+        "C"
+       ],
+       "ok": false,
+       "known": [],
+       "hyp": null,
+       "note": "",
+       "why": "△ABC 的三個角都不是 90°，它不是直角三角形。剛剛補的 AD 把它切成兩半，看那兩半。",
+       "okm": ""
+      }
+     ],
+     "hint": "找有直角符號的三角形。"
+    }
+   ],
+   "mode": "cand"
+  }
  },
  {
   "src": "課本 p.103 例 5 隨堂 1",
@@ -886,11 +2082,274 @@ const PRAC=[
    "高 10√<span class=\"rad\">3</span>，面積 100√<span class=\"rad\">3</span>"
   ],
   "a": 0,
-  "why": "<span class='eq'>高＝<span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>2</span></span>×10＝5√<span class=\"rad\">3</span></span>，<span class='eq'>面積＝<span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>4</span></span>×100＝25√<span class=\"rad\">3</span></span>。<br>驗算：<span class='eq'>½×10×5√<span class=\"rad\">3</span>＝25√<span class=\"rad\">3</span></span>。⚠️ 50√<span class=\"rad\">3</span> 是底×高忘了 ½；高 5 是把高當成邊長的一半。"
+  "why": "<span class='eq'>高＝<span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>2</span></span>×10＝5√<span class=\"rad\">3</span></span>，<span class='eq'>面積＝<span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>4</span></span>×100＝25√<span class=\"rad\">3</span></span>。<br>驗算：<span class='eq'>½×10×5√<span class=\"rad\">3</span>＝25√<span class=\"rad\">3</span></span>。⚠️ 50√<span class=\"rad\">3</span> 是底×高忘了 ½；高 5 是把高當成邊長的一半。",
+  "decomp": {
+   "fig": {
+    "pts": {
+     "A": [
+      130.0,
+      26.8,
+      0,
+      -7
+     ],
+     "B": [
+      30.0,
+      200.0,
+      -6,
+      5
+     ],
+     "C": [
+      230.0,
+      200.0,
+      6,
+      5
+     ],
+     "D": [
+      130.0,
+      200.0,
+      0,
+      17
+     ],
+     "E": [
+      180.0,
+      200.0,
+      0,
+      17
+     ],
+     "F": [
+      150.0,
+      61.4,
+      7,
+      2
+     ]
+    },
+    "segs": [
+     [
+      "A",
+      "B"
+     ],
+     [
+      "B",
+      "C"
+     ],
+     [
+      "C",
+      "A"
+     ]
+    ],
+    "dash": [],
+    "ra": [],
+    "lab": [
+     [
+      "A",
+      "B",
+      "10",
+      -12,
+      0
+     ],
+     [
+      "A",
+      "C",
+      "10",
+      12,
+      0
+     ],
+     [
+      "B",
+      "C",
+      "10",
+      0,
+      18,
+      0.25
+     ]
+    ],
+    "tap": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "E"
+    ],
+    "show": [
+     "A",
+     "B",
+     "C"
+    ],
+    "plab": {},
+    "dots": [],
+    "under": "",
+    "vb": [
+     0.8,
+     -6.2,
+     258.4,
+     241.2
+    ],
+    "maxw": 300
+   },
+   "s1": {
+    "ask": "要求正三角形的高。高是哪一條？",
+    "o": [
+     [
+      "從 A 垂直畫到 BC 的線段（圖上還沒有）",
+      null
+     ],
+     [
+      "邊 AB",
+      [
+       "A",
+       "B"
+      ]
+     ],
+     [
+      "邊 BC",
+      [
+       "B",
+       "C"
+      ]
+     ]
+    ],
+    "a": 0,
+    "hint": "三條邊都是 10，不用求。高是從頂點<b>垂直</b>畫到對邊的線。",
+    "ok": ""
+   },
+   "s2": {
+    "cands": [
+     {
+      "segs": [
+       [
+        "A",
+        "E"
+       ]
+      ],
+      "hint": "AE 是斜的，沒有和 BC 垂直。"
+     },
+     {
+      "segs": [
+       [
+        "B",
+        "F"
+       ]
+      ],
+      "hint": "BF 沒有和 AC 垂直，切不出直角。"
+     },
+     {
+      "segs": [
+       [
+        "A",
+        "D"
+       ]
+      ],
+      "hint": ""
+     }
+    ],
+    "a": 2,
+    "ra": [
+     [
+      "D",
+      "A",
+      "C"
+     ]
+    ],
+    "ok": "對！AD 和 BC 垂直。正三角形的高會落在底邊中點，BD＝5。",
+    "hint": "高要和底邊垂直。正三角形的高會落在底邊的正中間。",
+    "sol": [
+     {
+      "segs": [
+       [
+        "A",
+        "D"
+       ]
+      ],
+      "ra": [
+       [
+        "D",
+        "A",
+        "C"
+       ]
+      ],
+      "ok": "對！AD 和 BC 垂直。正三角形的高落在底邊中點，BD＝10÷2＝5。"
+     }
+    ],
+    "none": false,
+    "lhint": "這條線沒有和底邊垂直。高要從頂點 A 垂直畫到 BC，落在 BC 的正中間。",
+    "wrong": {}
+   },
+   "rounds": [
+    {
+     "tris": [
+      {
+       "v": [
+        "A",
+        "B",
+        "D"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "A",
+         "B"
+        ],
+        [
+         "B",
+         "D"
+        ]
+       ],
+       "hyp": [
+        "A",
+        "B"
+       ],
+       "note": "BD＝10÷2＝5",
+       "why": "",
+       "okm": ""
+      },
+      {
+       "v": [
+        "A",
+        "D",
+        "C"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "A",
+         "C"
+        ],
+        [
+         "D",
+         "C"
+        ]
+       ],
+       "hyp": [
+        "A",
+        "C"
+       ],
+       "note": "DC＝10÷2＝5",
+       "why": "",
+       "okm": ""
+      },
+      {
+       "v": [
+        "A",
+        "B",
+        "C"
+       ],
+       "ok": false,
+       "known": [],
+       "hyp": null,
+       "note": "",
+       "why": "△ABC 三個角都是 60°，不是直角三角形。看 AD 切出來的兩半。",
+       "okm": ""
+      }
+     ],
+     "hint": ""
+    }
+   ],
+   "mode": "cand"
+  }
  },
  {
   "src": "課本 p.103 例 5 隨堂 2",
-  "q": "上半部是 5 個邊長 2 的正三角形，下半部是 5 個邊長 2 的正方形，求整個圖形的面積。<svg viewBox=\"0 0 220 108\" style=\"max-width:240px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"10.0,54.6 50.0,54.6 50.0,94.6 10.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"10.0,54.6 50.0,54.6 30.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"50.0,54.6 90.0,54.6 90.0,94.6 50.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"50.0,54.6 90.0,54.6 70.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"90.0,54.6 130.0,54.6 130.0,94.6 90.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"90.0,54.6 130.0,54.6 110.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"130.0,54.6 170.0,54.6 170.0,94.6 130.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"130.0,54.6 170.0,54.6 150.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"170.0,54.6 210.0,54.6 210.0,94.6 170.0,94.6\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"170.0,54.6 210.0,54.6 190.0,20.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><text x=\"30.0\" y=\"79.6\" text-anchor=\"middle\" font-size=\"13\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"30.0\" y=\"48.6\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text></svg>",
+  "q": "上半部是 5 個邊長 2 的正三角形，下半部是 5 個邊長 2 的正方形，求整個圖形的面積。",
   "hint": "一個邊長 2 的正三角形面積 ＝ <span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>4</span></span> × 2²。一個正方形 ＝ 2×2。",
   "o": [
    "20＋5√<span class=\"rad\">3</span>",
@@ -899,11 +2358,222 @@ const PRAC=[
    "25√<span class=\"rad\">3</span>"
   ],
   "a": 0,
-  "why": "正三角形：<span class='eq'><span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>4</span></span>×4＝√<span class=\"rad\">3</span></span>，5 個是 5√<span class=\"rad\">3</span>；正方形 5 個是 20。共 <span class='eq'>20＋5√<span class=\"rad\">3</span></span>。<br>⚠️ 20 和 5√<span class=\"rad\">3</span> 不是同類，<b>不能合成 25√<span class=\"rad\">3</span></b>（2-2 學過）。20＋20√<span class=\"rad\">3</span> 是忘了除以 4。"
+  "why": "正三角形：<span class='eq'><span class=\"frac\"><span>√<span class=\"rad\">3</span></span><span>4</span></span>×4＝√<span class=\"rad\">3</span></span>，5 個是 5√<span class=\"rad\">3</span>；正方形 5 個是 20。共 <span class='eq'>20＋5√<span class=\"rad\">3</span></span>。<br>⚠️ 20 和 5√<span class=\"rad\">3</span> 不是同類，<b>不能合成 25√<span class=\"rad\">3</span></b>（2-2 學過）。20＋20√<span class=\"rad\">3</span> 是忘了除以 4。",
+  "decomp": {
+   "fig": {
+    "pts": {
+     "A": [
+      45.0,
+      16.0,
+      0,
+      -6
+     ],
+     "B": [
+      20.0,
+      59.3,
+      -6,
+      3
+     ],
+     "C": [
+      70.0,
+      59.3,
+      5,
+      -3
+     ],
+     "D": [
+      45.0,
+      59.3,
+      0,
+      15
+     ],
+     "X": [
+      20.0,
+      109.3,
+      -6,
+      12
+     ]
+    },
+    "segs": [
+     [
+      "A",
+      "B"
+     ],
+     [
+      "B",
+      "C"
+     ],
+     [
+      "C",
+      "A"
+     ]
+    ],
+    "dash": [],
+    "ra": [],
+    "lab": [
+     [
+      "A",
+      "B",
+      "2",
+      -10,
+      0
+     ],
+     [
+      "B",
+      "X",
+      "2",
+      -9,
+      4
+     ]
+    ],
+    "tap": [],
+    "show": [
+     "A",
+     "B",
+     "C"
+    ],
+    "plab": {},
+    "dots": [],
+    "under": "<polygon points=\"20.0,59.3 70.0,59.3 70.0,109.3 20.0,109.3\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.4\"/><polygon points=\"70.0,59.3 120.0,59.3 120.0,109.3 70.0,109.3\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.4\"/><polygon points=\"70.0,59.3 120.0,59.3 95.0,16.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.4\"/><polygon points=\"120.0,59.3 170.0,59.3 170.0,109.3 120.0,109.3\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.4\"/><polygon points=\"120.0,59.3 170.0,59.3 145.0,16.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.4\"/><polygon points=\"170.0,59.3 220.0,59.3 220.0,109.3 170.0,109.3\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.4\"/><polygon points=\"170.0,59.3 220.0,59.3 195.0,16.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.4\"/><polygon points=\"220.0,59.3 270.0,59.3 270.0,109.3 220.0,109.3\" fill=\"#e8f1f5\" stroke=\"#1d5b79\" stroke-width=\"1.4\"/><polygon points=\"220.0,59.3 270.0,59.3 245.0,16.0\" fill=\"#eeedfb\" stroke=\"#4338ca\" stroke-width=\"1.4\"/>",
+    "vb": [
+     -9.2,
+     -16.0,
+     293.2,
+     154.3
+    ],
+    "maxw": 290
+   },
+   "mode": "cand",
+   "s1": {
+    "ask": "一個正三角形的面積＝½×底×高。底是 2，還缺什麼？",
+    "o": [
+     [
+      "正三角形的高（圖上還沒有）",
+      null
+     ],
+     [
+      "正方形的邊長",
+      null
+     ],
+     [
+      "整排房子的寬",
+      null
+     ]
+    ],
+    "a": 0,
+    "hint": "底有了，面積還缺「高」。",
+    "ok": ""
+   },
+   "s2": {
+    "cands": [
+     {
+      "segs": [
+       [
+        "A",
+        "X"
+       ]
+      ],
+      "hint": "AX 斜斜的穿過正方形，沒有夾出直角。"
+     },
+     {
+      "segs": [
+       [
+        "A",
+        "D"
+       ]
+      ],
+      "hint": ""
+     }
+    ],
+    "a": 1,
+    "ra": [
+     [
+      "D",
+      "A",
+      "C"
+     ]
+    ],
+    "ok": "對！AD 和 BC 垂直，D 是 BC 的中點，BD＝1。",
+    "hint": "高要從頂點 A 垂直畫到底邊 BC。",
+    "sol": [],
+    "none": false,
+    "lhint": "高要從頂點 A 垂直畫到底邊 BC。",
+    "wrong": {}
+   },
+   "rounds": [
+    {
+     "tris": [
+      {
+       "v": [
+        "A",
+        "B",
+        "D"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "A",
+         "B"
+        ],
+        [
+         "B",
+         "D"
+        ]
+       ],
+       "hyp": [
+        "A",
+        "B"
+       ],
+       "note": "AB＝2、BD＝2÷2＝1",
+       "why": "",
+       "okm": ""
+      },
+      {
+       "v": [
+        "A",
+        "D",
+        "C"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "A",
+         "C"
+        ],
+        [
+         "D",
+         "C"
+        ]
+       ],
+       "hyp": [
+        "A",
+        "C"
+       ],
+       "note": "AC＝2、DC＝2÷2＝1",
+       "why": "",
+       "okm": ""
+      },
+      {
+       "v": [
+        "A",
+        "B",
+        "C"
+       ],
+       "ok": false,
+       "known": [],
+       "hyp": null,
+       "note": "",
+       "why": "△ABC 是正三角形，三個角都是 60°，不是直角三角形。",
+       "okm": ""
+      }
+     ],
+     "hint": ""
+    }
+   ]
+  }
  },
  {
   "src": "課本 p.104 例 6 隨堂",
-  "q": "一條編織帶由 5 個相連的正方形斜排組成，每個正方形邊長 2 公分。編織帶總長大約幾公分？（√<span class=\"rad\">2</span>≒1.4）<svg viewBox=\"0 0 110 238\" style=\"max-width:110px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><polygon points=\"20.0,12.0 62.4,12.0 62.4,224.1 20.0,224.1\" fill=\"#fbf3d9\" stroke=\"#a15c07\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/><polygon points=\"41.2,12.0 62.4,33.2 41.2,54.4 20.0,33.2\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><polygon points=\"41.2,54.4 62.4,75.6 41.2,96.9 20.0,75.6\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><polygon points=\"41.2,96.9 62.4,118.1 41.2,139.3 20.0,118.1\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><polygon points=\"41.2,139.3 62.4,160.5 41.2,181.7 20.0,160.5\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><polygon points=\"41.2,181.7 62.4,202.9 41.2,224.1 20.0,202.9\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><text x=\"26.6\" y=\"24.6\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"55.8\" y=\"24.6\" text-anchor=\"middle\" font-size=\"12\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><line x1=\"76.4\" y1=\"12.0\" x2=\"76.4\" y2=\"224.1\" stroke=\"#15803d\" stroke-width=\"2\"/><text x=\"84.4\" y=\"118.1\" text-anchor=\"start\" font-size=\"15\" fill=\"#15803d\" font-weight=\"700\" font-family=\"Cambria,Georgia,serif\">？</text></svg>",
+  "q": "一條編織帶由 5 個相連的正方形斜排組成，每個正方形邊長 2 公分。編織帶總長大約幾公分？（√<span class=\"rad\">2</span>≒1.4）",
   "hint": "正方形是轉 45° 放的，編織帶的長是 5 條<b>對角線</b>接起來。對角線² ＝ 2² ＋ 2²。",
   "o": [
    "14",
@@ -912,11 +2582,231 @@ const PRAC=[
    "28"
   ],
   "a": 0,
-  "why": "<span class='eq'>對角線＝√<span class=\"rad\">4＋4</span>＝√<span class=\"rad\">8</span>＝2√<span class=\"rad\">2</span></span>，5 條是 <span class='eq'>10√<span class=\"rad\">2</span>≒14</span> 公分。<br>⚠️ 10 是 5 個邊長相加——但正方形是斜放的，上下兩個角之間是對角線，比邊長。"
+  "why": "<span class='eq'>對角線＝√<span class=\"rad\">4＋4</span>＝√<span class=\"rad\">8</span>＝2√<span class=\"rad\">2</span></span>，5 條是 <span class='eq'>10√<span class=\"rad\">2</span>≒14</span> 公分。<br>⚠️ 10 是 5 個邊長相加——但正方形是斜放的，上下兩個角之間是對角線，比邊長。",
+  "decomp": {
+   "fig": {
+    "pts": {
+     "A": [
+      54.0,
+      16.0,
+      0,
+      -5
+     ],
+     "B": [
+      78.1,
+      40.0,
+      7,
+      5
+     ],
+     "C": [
+      54.0,
+      64.1,
+      8,
+      10
+     ],
+     "D": [
+      30.0,
+      40.0,
+      -6,
+      5
+     ],
+     "M": [
+      66.1,
+      28.0,
+      7,
+      -2
+     ]
+    },
+    "segs": [
+     [
+      "A",
+      "B"
+     ],
+     [
+      "B",
+      "C"
+     ],
+     [
+      "C",
+      "D"
+     ],
+     [
+      "D",
+      "A"
+     ]
+    ],
+    "dash": [],
+    "ra": [],
+    "lab": [
+     [
+      "A",
+      "D",
+      "2",
+      -9,
+      -3
+     ],
+     [
+      "D",
+      "C",
+      "2",
+      -9,
+      12
+     ]
+    ],
+    "tap": [],
+    "show": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "plab": {},
+    "dots": [],
+    "under": "<polygon points=\"30.0,16.0 78.1,16.0 78.1,256.4 30.0,256.4\" fill=\"#fbf3d9\" stroke=\"#a15c07\" stroke-width=\"1.4\"/><polygon points=\"54.0,64.1 78.1,88.1 54.0,112.2 30.0,88.1\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.3\"/><polygon points=\"54.0,112.2 78.1,136.2 54.0,160.2 30.0,136.2\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.3\"/><polygon points=\"54.0,160.2 78.1,184.3 54.0,208.3 30.0,184.3\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.3\"/><polygon points=\"54.0,208.3 78.1,232.4 54.0,256.4 30.0,232.4\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.3\"/><line x1=\"94.1\" y1=\"16.0\" x2=\"94.1\" y2=\"256.4\" stroke=\"#15803d\" stroke-width=\"2\"/><text x=\"102.1\" y=\"141.0\" text-anchor=\"start\" font-size=\"15\" fill=\"#15803d\" font-family=\"Cambria,Georgia,serif\">？</text>",
+    "vb": [
+     0.8,
+     -15.0,
+     121.3,
+     285.4
+    ],
+    "maxw": 170
+   },
+   "s1": {
+    "ask": "編織帶的總長，等於什麼？",
+    "o": [
+     [
+      "5 條「上下方向」的對角線接起來",
+      null
+     ],
+     [
+      "5 個邊長加起來",
+      null
+     ],
+     [
+      "帶子的寬",
+      null
+     ]
+    ],
+    "a": 0,
+    "hint": "正方形是轉 45° 斜放的，從最上面到最下面，經過的是每個正方形上下兩個角之間的線。",
+    "ok": ""
+   },
+   "s2": {
+    "cands": [
+     {
+      "segs": [
+       [
+        "D",
+        "M"
+       ]
+      ],
+      "hint": "DM 沒有把正方形切成直角三角形。"
+     },
+     {
+      "segs": [
+       [
+        "A",
+        "C"
+       ]
+      ],
+      "hint": ""
+     }
+    ],
+    "a": 1,
+    "ra": [
+     [
+      "D",
+      "A",
+      "C"
+     ]
+    ],
+    "ok": "對！AC 是正方形的對角線。帶子的長＝5 條這樣的對角線。正方形的角 D 是直角。",
+    "hint": "帶子的長是上下方向。把一個正方形最上面和最下面的角連起來。",
+    "sol": [
+     {
+      "segs": [
+       [
+        "A",
+        "C"
+       ]
+      ],
+      "ra": [
+       [
+        "D",
+        "A",
+        "C"
+       ]
+      ],
+      "ok": "對！AC 是對角線，正方形的角 D 是直角。"
+     }
+    ],
+    "none": false,
+    "lhint": "帶子的長是上下方向。把一個正方形最上面和最下面的角連起來。",
+    "wrong": {}
+   },
+   "rounds": [
+    {
+     "tris": [
+      {
+       "v": [
+        "A",
+        "C",
+        "D"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "A",
+         "D"
+        ],
+        [
+         "D",
+         "C"
+        ]
+       ],
+       "hyp": [
+        "A",
+        "C"
+       ],
+       "note": "AD＝DC＝2（正方形的邊）",
+       "why": "",
+       "okm": ""
+      },
+      {
+       "v": [
+        "A",
+        "B",
+        "C"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "A",
+         "B"
+        ],
+        [
+         "B",
+         "C"
+        ]
+       ],
+       "hyp": [
+        "A",
+        "C"
+       ],
+       "note": "AB＝BC＝2（正方形的邊）",
+       "why": "",
+       "okm": ""
+      }
+     ],
+     "hint": ""
+    }
+   ],
+   "mode": "cand"
+  }
  },
  {
   "src": "課本 p.105 例 7 隨堂",
-  "q": "梯子長 2 公尺、牆高 1.2 公尺，梯子原本頂端剛好靠在牆頂（虛線）。梯腳往牆壁移近 1.1 公尺後，梯子凸出牆頂的部分是多少公尺？<svg viewBox=\"0 0 260 180\" style=\"max-width:260px;margin:12px auto 4px\" role=\"img\" aria-label=\"題目附圖\"><rect x=\"200\" y=\"52.0\" width=\"26\" height=\"108.0\" fill=\"#f3d9d0\" stroke=\"#b03030\" stroke-width=\"1.4\"/><line x1=\"10.0\" y1=\"160.0\" x2=\"250.0\" y2=\"160.0\" stroke=\"#232026\" stroke-width=\"1.6\"/><line x1=\"56.0\" y1=\"160.0\" x2=\"200.0\" y2=\"52.0\" stroke=\"#232026\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/><line x1=\"155.0\" y1=\"160.0\" x2=\"224.2\" y2=\"-6.2\" stroke=\"#4338ca\" stroke-width=\"3.2\"/><text x=\"240.0\" y=\"106.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">1.2</text><text x=\"105.5\" y=\"178.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">1.1</text><text x=\"116.0\" y=\"102.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#232026\" font-family=\"Cambria,Georgia,serif\">2</text><text x=\"236.2\" y=\"-2.2\" text-anchor=\"middle\" font-size=\"14\" fill=\"#15803d\" font-weight=\"700\" font-family=\"Cambria,Georgia,serif\">？</text></svg>",
+  "q": "梯子長 2 公尺、牆高 1.2 公尺，梯子原本頂端剛好靠在牆頂（虛線）。梯腳往牆壁移近 1.1 公尺後，梯子凸出牆頂的部分是多少公尺？",
   "hint": "先算原本梯腳離牆多遠：√(2² − 1.2²)。移近 1.1 後剩多少？再算梯腳到牆頂那一段有多長。",
   "o": [
    "0.7",
@@ -925,7 +2815,272 @@ const PRAC=[
    "0.5"
   ],
   "a": 0,
-  "why": "原本：<span class='eq'>√<span class=\"rad\">4−1.44</span>＝√<span class=\"rad\">2.56</span>＝1.6</span>；移近後剩 <span class='eq'>1.6−1.1＝0.5</span>。<br>梯腳到牆頂：<span class='eq'>√<span class=\"rad\">0.25＋1.44</span>＝√<span class=\"rad\">1.69</span>＝1.3</span>，凸出 <span class='eq'>2−1.3＝0.7</span> 公尺。<br>⚠️ 1.3 是還在牆頂以下的那一段；0.5 是梯腳到牆的距離。"
+  "why": "原本：<span class='eq'>√<span class=\"rad\">4−1.44</span>＝√<span class=\"rad\">2.56</span>＝1.6</span>；移近後剩 <span class='eq'>1.6−1.1＝0.5</span>。<br>梯腳到牆頂：<span class='eq'>√<span class=\"rad\">0.25＋1.44</span>＝√<span class=\"rad\">1.69</span>＝1.3</span>，凸出 <span class='eq'>2−1.3＝0.7</span> 公尺。<br>⚠️ 1.3 是還在牆頂以下的那一段；0.5 是梯腳到牆的距離。",
+  "decomp": {
+   "fig": {
+    "pts": {
+     "A": [
+      56.0,
+      160.0,
+      0,
+      17
+     ],
+     "B": [
+      155.0,
+      160.0,
+      0,
+      17
+     ],
+     "C": [
+      200.0,
+      160.0,
+      0,
+      17
+     ],
+     "D": [
+      200.0,
+      52.0,
+      -7,
+      -4
+     ],
+     "E": [
+      224.2,
+      -6.2,
+      8,
+      2
+     ],
+     "M": [
+      200.0,
+      106.0,
+      -7,
+      4
+     ]
+    },
+    "segs": [
+     [
+      "B",
+      "E"
+     ],
+     [
+      "C",
+      "D"
+     ]
+    ],
+    "dash": [
+     [
+      "A",
+      "D"
+     ]
+    ],
+    "ra": [],
+    "lab": [
+     [
+      "C",
+      "D",
+      "1.2",
+      44,
+      4
+     ],
+     [
+      "A",
+      "B",
+      "1.1",
+      0,
+      32
+     ],
+     [
+      "A",
+      "D",
+      "2",
+      -10,
+      -6
+     ],
+     [
+      "D",
+      "E",
+      "？",
+      13,
+      4,
+      0.5,
+      "q"
+     ]
+    ],
+    "tap": [],
+    "show": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "E"
+    ],
+    "plab": {},
+    "dots": [],
+    "under": "<rect x=\"200\" y=\"52.0\" width=\"26\" height=\"108.0\" fill=\"#f3d9d0\" stroke=\"#b03030\" stroke-width=\"1.2\"/><line x1=\"10.0\" y1=\"160.0\" x2=\"250.0\" y2=\"160.0\" stroke=\"#232026\" stroke-width=\"1.6\"/>",
+    "vb": [
+     -4,
+     -30.2,
+     274.2,
+     239.2
+    ],
+    "maxw": 270
+   },
+   "s1": {
+    "ask": "要求的是哪一段？",
+    "o": [
+     [
+      "DE（凸出牆頂的那一段）",
+      [
+       "D",
+       "E"
+      ]
+     ],
+     [
+      "BD",
+      [
+       "B",
+       "D"
+      ]
+     ],
+     [
+      "AB",
+      [
+       "A",
+       "B"
+      ]
+     ]
+    ],
+    "a": 0,
+    "hint": "題目問「梯子凸出牆頂的部分」，就是牆頂 D 以上那一段。",
+    "ok": ""
+   },
+   "s2": {
+    "cands": [
+     {
+      "segs": [
+       [
+        "A",
+        "E"
+       ]
+      ],
+      "hint": "AE 和地面、牆都不垂直，夾不出直角。"
+     },
+     {
+      "segs": [
+       [
+        "B",
+        "M"
+       ]
+      ],
+      "hint": "BM 斜斜的，沒有夾出直角。"
+     }
+    ],
+    "a": -1,
+    "ra": [
+     [
+      "C",
+      "A",
+      "D"
+     ]
+    ],
+    "ok": "對！牆和地面垂直，直角就在牆腳 C，不用補線。",
+    "hint": "牆是直立的，地面是平的。牆和地面夾幾度？",
+    "sol": [],
+    "none": false,
+    "lhint": "牆是直立的，地面是平的。牆和地面夾幾度？",
+    "wrong": {}
+   },
+   "rounds": [
+    {
+     "tris": [
+      {
+       "v": [
+        "A",
+        "C",
+        "D"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "A",
+         "D"
+        ],
+        [
+         "C",
+         "D"
+        ]
+       ],
+       "hyp": [
+        "A",
+        "D"
+       ],
+       "note": "AD＝2（原本的梯子）、CD＝1.2（牆高）",
+       "why": "",
+       "okm": ""
+      },
+      {
+       "v": [
+        "B",
+        "C",
+        "D"
+       ],
+       "ok": false,
+       "known": [],
+       "hyp": null,
+       "note": "",
+       "why": "△BCD 是直角三角形，可是 BC 還不知道。先算原本梯子那一個。",
+       "okm": ""
+      }
+     ],
+     "hint": "",
+     "ask": "先找：哪一個直角三角形，<b>兩條邊已經知道</b>？"
+    },
+    {
+     "tris": [
+      {
+       "v": [
+        "B",
+        "C",
+        "D"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "B",
+         "C"
+        ],
+        [
+         "C",
+         "D"
+        ]
+       ],
+       "hyp": [
+        "B",
+        "D"
+       ],
+       "note": "AC＝1.6 算出來了，BC＝1.6−1.1＝0.5",
+       "why": "",
+       "okm": ""
+      },
+      {
+       "v": [
+        "A",
+        "C",
+        "D"
+       ],
+       "ok": false,
+       "known": [],
+       "hyp": null,
+       "note": "",
+       "why": "△ACD 剛剛用過了。",
+       "okm": ""
+      }
+     ],
+     "hint": "",
+     "ask": "原本梯腳離牆 AC＝1.6。往牆移 1.1 後，接著用哪一個直角三角形？"
+    }
+   ],
+   "mode": "cand"
+  }
  },
  {
   "src": "課本 p.106 例 8 隨堂 (1)",
@@ -938,7 +3093,138 @@ const PRAC=[
    "4"
   ],
   "a": 0,
-  "why": "<span class='eq'>|1−(−6)|＝|7|＝7</span>。<br>⚠️ 5 是 1＋(−6) 再拿掉負號——要<b>相減</b>；−7 是 (−6)−1，距離要取絕對值，不會是負的。"
+  "why": "<span class='eq'>|1−(−6)|＝|7|＝7</span>。<br>⚠️ 5 是 1＋(−6) 再拿掉負號——要<b>相減</b>；−7 是 (−6)−1，距離要取絕對值，不會是負的。",
+  "decomp": {
+   "fig": {
+    "pts": {
+     "A": [
+      210.0,
+      84.0,
+      0,
+      18
+     ],
+     "B": [
+      56.0,
+      84.0,
+      0,
+      18
+     ],
+     "O": [
+      188.0,
+      40.0,
+      0,
+      0
+     ],
+     "P": [
+      210.0,
+      40.0,
+      0,
+      0
+     ],
+     "Q": [
+      56.0,
+      40.0,
+      0,
+      0
+     ]
+    },
+    "segs": [
+     [
+      "A",
+      "B"
+     ]
+    ],
+    "dash": [],
+    "ra": [],
+    "lab": [],
+    "tap": [],
+    "show": [
+     "A",
+     "B"
+    ],
+    "plab": {
+     "A": "A(1, −2)",
+     "B": "B(−6, −2)",
+     "O": "",
+     "P": "",
+     "Q": ""
+    },
+    "dots": [
+     "A",
+     "B"
+    ],
+    "under": "<line x1=\"34.0\" y1=\"106.0\" x2=\"34.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"56.0\" y1=\"106.0\" x2=\"56.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"78.0\" y1=\"106.0\" x2=\"78.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"100.0\" y1=\"106.0\" x2=\"100.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"122.0\" y1=\"106.0\" x2=\"122.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"144.0\" y1=\"106.0\" x2=\"144.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"166.0\" y1=\"106.0\" x2=\"166.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"188.0\" y1=\"106.0\" x2=\"188.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"210.0\" y1=\"106.0\" x2=\"210.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"232.0\" y1=\"106.0\" x2=\"232.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"106.0\" x2=\"232.0\" y2=\"106.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"84.0\" x2=\"232.0\" y2=\"84.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"62.0\" x2=\"232.0\" y2=\"62.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"40.0\" x2=\"232.0\" y2=\"40.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"18.0\" x2=\"232.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"188.0\" y1=\"106.0\" x2=\"188.0\" y2=\"18.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"197.0\" y=\"22.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">y</text><line x1=\"34.0\" y1=\"40.0\" x2=\"232.0\" y2=\"40.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"237.0\" y=\"44.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">x</text><text x=\"183.0\" y=\"53.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#8d88a0\" font-family=\"Cambria,Georgia,serif\">O</text>",
+    "vb": [
+     8.6,
+     4,
+     245.2,
+     116
+    ],
+    "maxw": 260
+   },
+   "mode": "cand",
+   "s1": {
+    "ask": "要求的是哪一條線段？",
+    "o": [
+     [
+      "AB",
+      [
+       "A",
+       "B"
+      ]
+     ],
+     [
+      "A 到 x 軸的距離",
+      null
+     ],
+     [
+      "B 到原點的距離",
+      null
+     ]
+    ],
+    "a": 0,
+    "hint": "題目要 A、B 兩點的距離。",
+    "ok": ""
+   },
+   "s2": {
+    "cands": [
+     {
+      "segs": [
+       [
+        "A",
+        "P"
+       ],
+       [
+        "B",
+        "Q"
+       ]
+      ],
+      "hint": "畫了也用不到。先看 A、B 的 y 坐標。"
+     },
+     {
+      "segs": [
+       [
+        "A",
+        "O"
+       ],
+       [
+        "O",
+        "B"
+       ]
+      ],
+      "hint": "畫了也用不到。先看 A、B 的 y 坐標。"
+     }
+    ],
+    "a": -1,
+    "ra": [],
+    "ok": "對！y 坐標都是 −2，在同一條水平線上，直接用 x 坐標相減就好。",
+    "hint": "A、B 的 y 坐標一樣嗎？",
+    "sol": [],
+    "none": false,
+    "lhint": "A、B 的 y 坐標一樣嗎？",
+    "wrong": {}
+   }
+  }
  },
  {
   "src": "課本 p.108 例 9 隨堂",
@@ -951,7 +3237,217 @@ const PRAC=[
    "65"
   ],
   "a": 0,
-  "why": "x 差 <span class='eq'>2−1＝1</span>，y 差 <span class='eq'>(−3)−5＝−8</span>：<span class='eq'>CD＝√<span class=\"rad\">1<sup>2</sup>＋(−8)<sup>2</sup></span>＝√<span class=\"rad\">65</span></span>。<br>⚠️ √<span class=\"rad\">5</span> 是把 −3 和 5 算成差 2（−3＋5）；y 從 −3 到 5 要走 8 格。9 是 1＋8 直接相加——兩股不能直接加，要平方再加。<b>12 題做完了。</b>"
+  "why": "x 差 <span class='eq'>2−1＝1</span>，y 差 <span class='eq'>(−3)−5＝−8</span>：<span class='eq'>CD＝√<span class=\"rad\">1<sup>2</sup>＋(−8)<sup>2</sup></span>＝√<span class=\"rad\">65</span></span>。<br>⚠️ √<span class=\"rad\">5</span> 是把 −3 和 5 算成差 2（−3＋5）；y 從 −3 到 5 要走 8 格。9 是 1＋8 直接相加——兩股不能直接加，要平方再加。<b>12 題做完了。</b>",
+  "decomp": {
+   "fig": {
+    "pts": {
+     "C": [
+      100.0,
+      216.0,
+      7,
+      5
+     ],
+     "D": [
+      78.0,
+      40.0,
+      7,
+      0
+     ],
+     "E": [
+      78.0,
+      216.0,
+      -7,
+      14
+     ],
+     "O": [
+      56.0,
+      150.0,
+      -6,
+      -5
+     ],
+     "F": [
+      100.0,
+      150.0,
+      0,
+      0
+     ],
+     "H": [
+      78.0,
+      150.0,
+      0,
+      0
+     ]
+    },
+    "segs": [
+     [
+      "C",
+      "D"
+     ]
+    ],
+    "dash": [],
+    "ra": [],
+    "lab": [],
+    "tap": [],
+    "show": [
+     "C",
+     "D"
+    ],
+    "plab": {
+     "C": "C(2, −3)",
+     "D": "D(1, 5)",
+     "E": "E(1, −3)",
+     "O": "",
+     "F": "",
+     "H": ""
+    },
+    "dots": [
+     "C",
+     "D"
+    ],
+    "under": "<line x1=\"34.0\" y1=\"238.0\" x2=\"34.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"56.0\" y1=\"238.0\" x2=\"56.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"78.0\" y1=\"238.0\" x2=\"78.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"100.0\" y1=\"238.0\" x2=\"100.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"122.0\" y1=\"238.0\" x2=\"122.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"144.0\" y1=\"238.0\" x2=\"144.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"238.0\" x2=\"144.0\" y2=\"238.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"216.0\" x2=\"144.0\" y2=\"216.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"194.0\" x2=\"144.0\" y2=\"194.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"172.0\" x2=\"144.0\" y2=\"172.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"150.0\" x2=\"144.0\" y2=\"150.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"128.0\" x2=\"144.0\" y2=\"128.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"106.0\" x2=\"144.0\" y2=\"106.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"84.0\" x2=\"144.0\" y2=\"84.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"62.0\" x2=\"144.0\" y2=\"62.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"40.0\" x2=\"144.0\" y2=\"40.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"18.0\" x2=\"144.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"56.0\" y1=\"238.0\" x2=\"56.0\" y2=\"18.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"65.0\" y=\"22.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">y</text><line x1=\"34.0\" y1=\"150.0\" x2=\"144.0\" y2=\"150.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"149.0\" y=\"154.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">x</text><text x=\"51.0\" y=\"163.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#8d88a0\" font-family=\"Cambria,Georgia,serif\">O</text>",
+    "vb": [
+     -2.6,
+     4,
+     183.2,
+     248
+    ],
+    "maxw": 240
+   },
+   "s1": {
+    "ask": "要求的是哪一條線段？",
+    "o": [
+     [
+      "CD",
+      [
+       "C",
+       "D"
+      ]
+     ],
+     [
+      "C 到 x 軸的距離",
+      null
+     ],
+     [
+      "D 到 y 軸的距離",
+      null
+     ]
+    ],
+    "a": 0,
+    "hint": "題目要的是 C、D 兩點的距離，就是線段 CD。",
+    "ok": ""
+   },
+   "s2": {
+    "cands": [
+     {
+      "segs": [
+       [
+        "C",
+        "O"
+       ],
+       [
+        "O",
+        "D"
+       ]
+      ],
+      "hint": "連到原點的線和 CD 圍不出直角。"
+     },
+     {
+      "segs": [
+       [
+        "C",
+        "E"
+       ],
+       [
+        "E",
+        "D"
+       ]
+      ],
+      "hint": ""
+     },
+     {
+      "segs": [
+       [
+        "C",
+        "F"
+       ],
+       [
+        "D",
+        "H"
+       ]
+      ],
+      "hint": "這兩條都是鉛垂線，彼此平行，圍不出三角形。"
+     }
+    ],
+    "a": 1,
+    "ra": [
+     [
+      "E",
+      "C",
+      "D"
+     ]
+    ],
+    "ok": "對！CE 是水平線、ED 是鉛垂線，在 E(1, −3) 夾出直角。",
+    "hint": "過一點畫<b>水平線</b>、過另一點畫<b>鉛垂線</b>，兩條線的交點就是直角。",
+    "sol": [
+     {
+      "segs": [
+       [
+        "C",
+        "E"
+       ],
+       [
+        "E",
+        "D"
+       ]
+      ],
+      "ra": [
+       [
+        "E",
+        "C",
+        "D"
+       ]
+      ],
+      "ok": "對！CE 水平、ED 鉛垂，直角在 E。"
+     }
+    ],
+    "none": false,
+    "lhint": "過一點畫<b>水平線</b>、過另一點畫<b>鉛垂線</b>，兩條線的交點就是直角。",
+    "wrong": {}
+   },
+   "rounds": [
+    {
+     "tris": [
+      {
+       "v": [
+        "C",
+        "E",
+        "D"
+       ],
+       "ok": true,
+       "known": [
+        [
+         "C",
+         "E"
+        ],
+        [
+         "E",
+         "D"
+        ]
+       ],
+       "hyp": [
+        "C",
+        "D"
+       ],
+       "note": "CE＝|2−1|＝1、ED＝|5−(−3)|＝8（數格子）",
+       "why": "",
+       "okm": ""
+      }
+     ],
+     "hint": ""
+    }
+   ],
+   "mode": "cand"
+  }
  }
 ];
 const FB={
@@ -1080,8 +3576,13 @@ PRAC.forEach(function(P){
 
 let pi=0, pDone=(state.prac||0);
 function pDots(){
-  $("pDots").innerHTML=PRAC.map((_,i)=>'<span class="dot'+(i<pDone?" done":(i===pi?" now":""))+'"></span>').join("");
+  /* 10/24：做過的題目（和目前做到的那題）可以點回去看 */
+  $("pDots").innerHTML=PRAC.map((_,i)=>'<span class="dot'+(i<pDone?" done":(i===pi?" now":""))+(i===pi?" cur":"")+(i!==pi&&i<=pDone&&i<PRAC.length?" go":"")+'" data-i="'+i+'" title="第 '+(i+1)+' 題"></span>').join("");
 }
+$("pDots").addEventListener("click",e=>{
+  const d=e.target.closest(".dot"); if(!d)return;
+  const i=+d.dataset.i; if(i!==pi&&i<=pDone&&i<PRAC.length){pi=i;pRender();document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"})}
+});
 function pRender(){
   const P=PRAC[pi];
   $("pSrc").textContent=P.src;
@@ -1093,6 +3594,7 @@ function pRender(){
   if(solved){fb.className="prac-fb show ok";fb.innerHTML="<b>答對了</b><div class='sp-box'></div>";StepPlay.mount(fb.querySelector(".sp-box"),P.why);$("pNext").disabled=false}
   else{fb.className="prac-fb";fb.innerHTML="";$("pNext").disabled=true}
   $("pNext").textContent=pi>=PRAC.length-1?"完成，進入重點整理":"下一題";
+  $("pPrev").style.display=pi>0?"":"none";
   $("pOpts").querySelectorAll(".opt").forEach(b=>{
     b.addEventListener("click",()=>{
       if(b.classList.contains("locked"))return;
@@ -1112,7 +3614,20 @@ function pRender(){
       }
     });
   });
+  /* 10/24：拆解鷹架（只有單元 js 定義了 decompHook、而且這題有 decomp 才啟用；其他節完全不走這段） */
+  if(typeof decompHook==="function"){
+    const dz0=$("pDec"); if(dz0){if(typeof decompUnhook==="function")decompUnhook(); dz0.remove();}
+    $("pOpts").style.display=""; $("pHint").style.display="";
+    if(P.decomp){
+      const dz=document.createElement("div"); dz.id="pDec"; $("pQ").after(dz);
+      if(!solved){$("pOpts").style.display="none"; $("pHint").style.display="none";}
+      decompHook(P,dz,solved,function(){$("pOpts").style.display=""; $("pHint").style.display="";});
+    }
+  }
 }
+$("pPrev").addEventListener("click",()=>{
+  if(pi>0){pi--;pRender();document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"})}
+});
 $("pNext").addEventListener("click",()=>{
   if(pi<PRAC.length-1){pi++;pRender();document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"})}
   else{unlock("z4");unlock("z5");$("z4").scrollIntoView({behavior:"smooth",block:"start"})}
@@ -1211,6 +3726,324 @@ document.querySelectorAll("#rc .chip").forEach(c=>c.addEventListener("click",()=
   ri=+c.dataset.i; document.querySelectorAll("#rc .chip").forEach(x=>x.classList.toggle("on",x===c)); ropeDraw();
 }));
 ropeDraw();
+
+/* ══ 找出直角三角形：拆解引擎（2026-10-24；資料與這段程式都在 pythag_decomp.py）══ */
+var DZ=(function(){
+var NS="http://www.w3.org/2000/svg", CN="甲乙丙丁";
+function mk(t,at,par){var e=document.createElementNS(NS,t);for(var k in at)if(at[k]!=null)e.setAttribute(k,at[k]);if(par)par.appendChild(e);return e}
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+function K(a,b){return a<b?a+"|"+b:b+"|"+a}
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function dSeg(p,a,b){var dx=b[0]-a[0],dy=b[1]-a[1],L=dx*dx+dy*dy,t=L?((p.x-a[0])*dx+(p.y-a[1])*dy)/L:0;t=Math.max(0,Math.min(1,t));var x=a[0]+t*dx-p.x,y=a[1]+t*dy-p.y;return Math.sqrt(x*x+y*y)}
+function area(a,b,c){return Math.abs((b[0]-a[0])*(c[1]-a[1])-(c[0]-a[0])*(b[1]-a[1]))/2}
+function inTri(p,a,b,c){var q=[p.x,p.y];return Math.abs(area(a,b,q)+area(b,c,q)+area(c,a,q)-area(a,b,c))<0.5}
+function tname(v){return "△"+v.join("")}
+
+/* ── 畫圖：點、邊、直角符號、標籤；點擊一律換算成 SVG 坐標，再找最近的點／線／三角形（觸控範圍 26px）── */
+function Figure(host,f){
+  var F={f:f,P:f.pts,has:{},solid:{},pe:{}};
+  var box=el("div","dz-fig");host.appendChild(box);
+  var svg=mk("svg",{viewBox:f.vb.join(" "),role:"img","aria-label":"題目附圖"},box);
+  svg.style.maxWidth=Math.round((f.maxw||300)*1.35)+"px";F.svg=svg;
+  var L={};["under","faces","base","cand","drawn","marks","hl","labs","pts","tmp"].forEach(function(n){L[n]=mk("g",{"class":"dz-L"+n},svg)});F.L=L;
+  if(f.under)L.under.innerHTML=f.under;
+  function xy(n){return F.P[n]}F.xy=xy;
+  F.line=function(a,b,layer,cls){var p=xy(a),q=xy(b);return mk("line",{x1:p[0],y1:p[1],x2:q[0],y2:q[1],"class":cls},L[layer])};
+  (f.segs||[]).forEach(function(s){F.line(s[0],s[1],"base","dz-seg");F.has[K(s[0],s[1])]=1});
+  (f.dash||[]).forEach(function(s){F.line(s[0],s[1],"base","dz-seg dz-dash");F.has[K(s[0],s[1])]=1});
+  F.ra=function(m,cls){var p=xy(m[0]),u=xy(m[1]),v=xy(m[2]),s=10;function d(a){var dx=a[0]-p[0],dy=a[1]-p[1],l=Math.sqrt(dx*dx+dy*dy)||1;return [dx/l*s,dy/l*s]}var du=d(u),dv=d(v);
+    return mk("polyline",{points:[[p[0]+du[0],p[1]+du[1]],[p[0]+du[0]+dv[0],p[1]+du[1]+dv[1]],[p[0]+dv[0],p[1]+dv[1]]].map(function(z){return z[0].toFixed(1)+","+z[1].toFixed(1)}).join(" "),"class":cls||"dz-ra"},L.marks)};
+  (f.ra||[]).forEach(function(m){F.ra(m)});
+  (f.lab||[]).forEach(function(l){var p=xy(l[0]),q=xy(l[1]),t=(l[5]==null?.5:l[5]);
+    var e=mk("text",{x:(p[0]+(q[0]-p[0])*t+(l[3]||0)).toFixed(1),y:(p[1]+(q[1]-p[1])*t+(l[4]||0)).toFixed(1),"class":"dz-elab"+(l[6]?" "+l[6]:""),"text-anchor":"middle"},L.labs);e.textContent=l[2]});
+  Object.keys(F.P).forEach(function(n){var p=F.P[n],g=mk("g",{"class":"dz-pt","data-n":n},L.pts);g.style.display="none";
+    mk("circle",{cx:p[0],cy:p[1],r:3.5,"class":"dz-dot"},g);
+    var s=(f.plab&&f.plab[n]!=null)?f.plab[n]:n;
+    if(s){var dx=p[2]||0,t=mk("text",{x:p[0]+dx,y:p[1]+(p[3]||0),"class":"dz-plab","text-anchor":dx>3?"start":(dx<-3?"end":"middle")},g);t.textContent=s}
+    F.pe[n]=g});
+  F.pt=function(n,cls){var g=F.pe[n];if(!g)return;g.style.display="";
+    if(!cls){F.solid[n]=1;return}
+    g.classList.add(cls);g.firstChild.setAttribute("r",cls==="tap"?8:3.2)};
+  F.prune=function(){Object.keys(F.pe).forEach(function(n){var g=F.pe[n];g.classList.remove("tap","sel","aux");g.firstChild.setAttribute("r",3.5);if(!F.solid[n]&&!g.classList.contains("pin"))g.style.display="none"})};
+  (f.show||[]).forEach(function(n){F.pt(n)});
+  (f.dots||[]).forEach(function(n){F.pt(n);F.pe[n].classList.add("pin")});
+  F.hl=function(a,b,cls){return F.line(a,b,"hl",cls||"dz-hl")};
+  F.clear=function(layer){var g=L[layer];while(g.firstChild)g.removeChild(g.firstChild)};
+  F.grow=function(a,b){var e=F.line(a,b,"drawn","dz-new"),p=xy(a),q=xy(b),len=Math.sqrt((q[0]-p[0])*(q[0]-p[0])+(q[1]-p[1])*(q[1]-p[1]));
+    e.style.strokeDasharray=len;e.style.strokeDashoffset=len;e.getBoundingClientRect();
+    requestAnimationFrame(function(){requestAnimationFrame(function(){e.style.strokeDashoffset=0})});
+    F.has[K(a,b)]=1;F.pt(a);F.pt(b);return e};
+  F.face=function(v,cls){return mk("polygon",{points:v.map(function(n){return xy(n)[0]+","+xy(n)[1]}).join(" "),"class":cls},L.faces)};
+  F.flash=function(node){setTimeout(function(){if(node.parentNode)node.parentNode.removeChild(node)},900)};
+  F.toSvg=function(ev){var m=svg.getScreenCTM();if(!m)return null;var pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;return pt.matrixTransform(m.inverse())};
+  F.R=function(){var r=svg.getBoundingClientRect(),sc=Math.min(r.width/f.vb[2],r.height/f.vb[3])||1;return 26/sc};  /* 觸控範圍固定 26px（圖縮小時換算成 SVG 單位會變大）*/
+  svg.addEventListener("click",function(ev){if(!F.onTap)return;var p=F.toSvg(ev);if(p)F.onTap(p)});
+  F.near=function(p,names){var best=null,bd=F.R();names.forEach(function(n){var q=xy(n),d=Math.sqrt((q[0]-p.x)*(q[0]-p.x)+(q[1]-p.y)*(q[1]-p.y));if(d<bd){bd=d;best=n}});return best};
+  F.nearSeg=function(p,groups){var best=-1,bd=F.R();groups.forEach(function(segs,i){segs.forEach(function(s){var d=dSeg(p,xy(s[0]),xy(s[1]));if(d<bd){bd=d;best=i}})});return best};
+  F.pickTri=function(p,tris){var best=-1,ba=1e9;tris.forEach(function(t,i){var a=xy(t.v[0]),b=xy(t.v[1]),c=xy(t.v[2]);if(inTri(p,a,b,c)){var ar=area(a,b,c);if(ar<ba){ba=ar;best=i}}});return best};
+  return F;
+}
+
+/* ── 版面：題目區（題幹＋圖）｜分隔線｜步驟區；左右或上下，比例可拖曳，設定存 localStorage ── */
+var LKEY="dz-layout-"+KEY;
+function lget(){try{return JSON.parse(localStorage.getItem(LKEY)||"null")||{}}catch(e){return {}}}
+function lset(o){try{localStorage.setItem(LKEY,JSON.stringify(o))}catch(e){}}
+function lmode(){var L=lget();return L.mode||(window.innerWidth<700?"tb":"lr")}
+function widen(w,on){if(!w)return;var cw=document.documentElement.clientWidth;
+  if(on&&cw>=760){var pw=w.parentNode.clientWidth,W=Math.min(1180,cw-32);w.style.maxWidth="none";w.style.width=W+"px";w.style.marginLeft=Math.round((pw-W)/2)+"px"}
+  else{w.style.width="";w.style.marginLeft="";w.style.maxWidth=""}}
+function applyOne(sp){var L=lget(),m=lmode();sp.classList.toggle("lr",m==="lr");sp.classList.toggle("tb",m==="tb");
+  sp.style.setProperty("--dz-r",(L.r||46)+"%");sp.style.setProperty("--dz-h",(L.h||Math.round(window.innerHeight*0.42))+"px");
+  Array.prototype.forEach.call(sp.querySelectorAll(".dz-mb"),function(b){b.classList.toggle("on",b.dataset.m===m);b.setAttribute("aria-pressed",b.dataset.m===m)});
+  widen(sp._widen,m==="lr")}
+function applyAll(){Array.prototype.forEach.call(document.querySelectorAll(".dz-split"),applyOne)}
+window.addEventListener("resize",applyAll);
+function frame(host,opt){
+  if(opt.qnode&&opt.qnode.parentNode)opt.qnode.parentNode.removeChild(opt.qnode);
+  (opt.after||[]).forEach(function(n){if(n&&n.parentNode)n.parentNode.removeChild(n)});
+  host.innerHTML="";
+  var sp=el("div","dz-split"),qp=el("div","dz-qp"),gut=el("div","dz-gut"),st=el("div","dz-sp");
+  sp._widen=opt.widen||null;
+  gut.setAttribute("role","separator");gut.setAttribute("aria-label","拖曳調整兩區大小");gut.title="拖曳調整大小";
+  sp.appendChild(qp);sp.appendChild(gut);sp.appendChild(st);host.appendChild(sp);
+  var mb=el("div","dz-modebar");mb.innerHTML='<span class="dz-mbl">版面</span><button type="button" class="dz-mb" data-m="lr">⇆ 左右</button><button type="button" class="dz-mb" data-m="tb">⇅ 上下</button>';
+  qp.appendChild(mb);
+  Array.prototype.forEach.call(mb.querySelectorAll(".dz-mb"),function(b){b.onclick=function(){var L=lget();L.mode=b.dataset.m;lset(L);applyAll();sp.scrollIntoView({block:"start",behavior:"smooth"})}});
+  if(opt.qnode)qp.appendChild(opt.qnode);else if(opt.qhtml!=null)qp.appendChild(el("div","prac-q dz-qtext",opt.qhtml));
+  var sb=el("div","dz-sbar");sb.innerHTML='<span class="dz-mbl">步驟</span><button type="button" data-x="1">全部展開</button><button type="button" data-x="0">全部收起</button>';
+  st.appendChild(sb);
+  Array.prototype.forEach.call(sb.querySelectorAll("button"),function(b){b.onclick=function(){Array.prototype.forEach.call(st.querySelectorAll(".dz-step.done"),function(d){d.classList.toggle("fold",b.dataset.x!=="1")})}});
+  gut.addEventListener("pointerdown",function(e){e.preventDefault();try{gut.setPointerCapture(e.pointerId)}catch(_){}
+    document.body.classList.add("dz-drag");
+    function mv(ev){var r=sp.getBoundingClientRect(),L=lget();
+      if(sp.classList.contains("lr")){var mn=Math.max(22,140/r.width*100);L.r=Math.round(Math.max(mn,Math.min(100-mn,(ev.clientX-r.left)/r.width*100)))}
+      else{L.h=Math.max(110,Math.min(r.height-130,Math.round(ev.clientY-r.top)))}
+      lset(L);applyOne(sp)}
+    function up(){gut.removeEventListener("pointermove",mv);gut.removeEventListener("pointerup",up);gut.removeEventListener("pointercancel",up);document.body.classList.remove("dz-drag");applyAll()}
+    gut.addEventListener("pointermove",mv);gut.addEventListener("pointerup",up);gut.addEventListener("pointercancel",up)});
+  applyOne(sp);
+  return {sp:sp,qp:qp,st:st};
+}
+function focusIn(st,node,top){if(!node)return;setTimeout(function(){var y=0,n=node;while(n&&n!==st){y+=n.offsetTop;n=n.offsetParent}st.scrollTo({top:Math.max(0,y-(top||46)),behavior:"smooth"})},40)}
+
+/* ── 做一題：opt.mode＝cand／line／mixed／hyp；opt.calc＝要不要接計算題；opt.onDone＝做完；opt.replay＝回看（自動填好正解、步驟收起）── */
+function run(host,it,opt){
+  var S=frame(host,opt);
+  var mode=opt.mode||it.mode||"cand",RP=!!opt.replay;
+  var F=Figure(S.qp,it.fig);
+  var tools=el("div","dz-tools");S.qp.appendChild(tools);
+  var log=el("div","dz-log");S.st.appendChild(log);
+  (opt.after||[]).forEach(function(n){if(n)S.st.appendChild(n)});
+  function tbtn(t,fn){var b=el("button","dz-tbtn",t);b.type="button";b.onclick=fn;tools.appendChild(b);return b}
+  if(mode==="mixed")tbtn("💡 卡住了？叫出四步提示",function(){run(host,it,Object.assign({},opt,{mode:"cand",replay:false}))});
+  tbtn("↺ 這一題重來",function(){run(host,it,Object.assign({},opt,{replay:false}))});
+  function ename(g){var k=K(g[0],g[1]);return (it.fig.en&&it.fig.en[k])||(g[0]+g[1])}
+  function panel(title,ask,short){var d=el("div","dz-step");d.appendChild(el("div","dz-h",title));if(ask)d.appendChild(el("div","dz-ask",ask));
+    var body=el("div","dz-body");d.appendChild(body);var fb=el("div","dz-fb");d.appendChild(fb);log.appendChild(d);
+    if(!RP)focusIn(S.st,d);
+    return {d:d,body:body,
+      no:function(m){fb.className="dz-fb no";fb.innerHTML="<b>再想想</b>　"+m+"<span class='dz-free'>（不扣分，再選一次）</span>"},
+      say:function(m){fb.className="dz-fb";fb.innerHTML=m||""},
+      done:function(m){F.onTap=null;d.classList.add("done","fold");body.innerHTML="";fb.className="dz-fb ok";fb.innerHTML="✔ "+m;
+        var sm=el("div","dz-sum",'<b>'+(short||"")+' ✓</b> '+m.replace(/<br>/g,"　"));d.insertBefore(sm,d.firstChild);
+        d.addEventListener("click",function(ev){if(ev.target.closest("button,a"))return;d.classList.toggle("fold")})}}}
+  function chips(P,list,fn){var w=el("div","dz-chips");list.forEach(function(t,i){var b=el("button","dz-chip",t);b.type="button";b.onclick=function(){fn(i)};w.appendChild(b)});P.body.appendChild(w);return w}
+  function bad(b){if(!b)return;b.classList.remove("no");void b.offsetWidth;b.classList.add("no")}
+
+  var steps=[];
+  if(mode==="hyp")steps.push(stHyp);
+  else if(mode==="line"||mode==="mixed")steps.push(stLine);
+  else{if(it.s1)steps.push(stS1);if(it.s2)steps.push(stCand);(it.rounds||[]).forEach(function(r,ri){steps.push(function(nx){stTri(r,ri,nx)})})}
+  if(opt.calc&&it.calc)steps.push(stCalc);
+  var si=0;
+  function next(){if(si<steps.length){steps[si++](next)}else if(!opt.calc){var e=el("div","dz-end",RP?"✔ 這題拆過了（點上面的步驟可以展開重看）":"✔ 拆好了！往下選答案。");log.appendChild(e);if(!RP)focusIn(S.st,e);if(opt.onDone)opt.onDone()}}
+
+  /* ① 要求哪一條 */
+  function stS1(nx){var s=it.s1,P=panel("① 題目要求的是哪一條線段？",s.ask,"①");
+    var w=el("div","dz-opts"),ok=null;P.body.appendChild(w);
+    shuf(s.o.map(function(_,i){return i})).forEach(function(i){var o=s.o[i],b=el("button","dz-opt",o[0]);b.type="button";w.appendChild(b);
+      b.onclick=function(){F.clear("hl");if(o[1])F.hl(o[1][0],o[1][1]);
+        if(i===s.a){F.clear("hl");if(o[1])F.hl(o[1][0],o[1][1],"dz-goal");P.done(s.ok||("要求的是："+o[0]));nx()}
+        else{bad(b);P.no(s.hint)}};if(i===s.a)ok=b});
+    if(RP)ok.onclick()}
+
+  /* ② 候選虛線甲乙丙＋不用補線：標籤放在各自線段上、離其他虛線最遠的位置；點選時高亮那條虛線 */
+  function stCand(nx){var s=it.s2,cs=s.cands||[],P=panel("② 直角在哪裡？要補線嗎？",s.ask||(cs.length?"圖上的虛線"+CN.slice(0,cs.length).split("").join("、")+"，補哪一條才會出現能用的直角三角形？如果直角三角形已經在圖上，選「不用補線」。":"直角在哪裡？"),"②");
+    var placed=[],base=(it.fig.segs||[]).concat(it.fig.dash||[]);
+    cs.forEach(function(c,i){c.segs.forEach(function(g){F.line(g[0],g[1],"cand","dz-cand dz-c"+i);F.pt(g[0],"aux");F.pt(g[1],"aux")})});
+    cs.forEach(function(c,i){var lp=c.lp,best=-1;
+      if(!lp){c.segs.forEach(function(g){var p=F.xy(g[0]),q=F.xy(g[1]),dx=q[0]-p[0],dy=q[1]-p[1],L=Math.sqrt(dx*dx+dy*dy)||1,nx0=-dy/L*11,ny0=dx/L*11;
+        [.5,.42,.58,.34,.66,.26,.74].forEach(function(t){[1,-1].forEach(function(sg){var x=p[0]+dx*t+nx0*sg,y=p[1]+dy*t+ny0*sg,pt={x:x,y:y},sc=1e9;
+          cs.forEach(function(o,j){if(j!==i)o.segs.forEach(function(h){sc=Math.min(sc,dSeg(pt,F.xy(h[0]),F.xy(h[1])))})});
+          placed.forEach(function(z){sc=Math.min(sc,Math.sqrt((z[0]-x)*(z[0]-x)+(z[1]-y)*(z[1]-y)))});
+          base.forEach(function(h){sc=Math.min(sc,dSeg(pt,F.xy(h[0]),F.xy(h[1]))*1.6)});
+          Object.keys(F.P).forEach(function(n){var z=F.P[n];sc=Math.min(sc,Math.sqrt((z[0]-x)*(z[0]-x)+(z[1]-y)*(z[1]-y))*1.2)});
+          sc-=Math.abs(t-.5)*12;if(sc>best){best=sc;lp=[x,y]}})})})}
+      placed.push(lp);
+      var t=mk("text",{x:lp[0].toFixed(1),y:(lp[1]+5).toFixed(1),"class":"dz-clab dz-c"+i,"text-anchor":"middle"},F.L.cand);t.textContent=CN[i]});
+    function hot(i,on){Array.prototype.forEach.call(F.L.cand.querySelectorAll(".dz-c"+i),function(x){x.classList.toggle("hot",on)})}
+    function hotOnly(i){cs.forEach(function(_,j){hot(j,j===i)})}
+    var w=chips(P,cs.map(function(c,i){return CN[i]}).concat(["不用補線"]),function(i){pick(i===cs.length?-1:i)});
+    cs.forEach(function(_,i){var b=w.children[i];b.addEventListener("pointerenter",function(){hotOnly(i)});b.addEventListener("pointerleave",function(){hot(i,false)});b.addEventListener("focus",function(){hotOnly(i)});b.addEventListener("blur",function(){hot(i,false)})});
+    function pick(i){var b=w.children[i<0?cs.length:i];
+      if(i===s.a){F.clear("cand");if(i>=0)cs[i].segs.forEach(function(g){F.grow(g[0],g[1])});
+        (s.ra||[]).forEach(function(m){F.ra(m,"dz-ra dz-ra-new")});F.prune();P.done(s.ok);nx()}
+      else{bad(b);hotOnly(i);if(i>=0)Array.prototype.forEach.call(F.L.cand.querySelectorAll(".dz-c"+i),function(x){x.classList.add("bad")});
+        P.no(i<0?(s.hint||"圖上還找不到能用的直角三角形，要補一條線。"):(cs[i].hint||s.hint))}}
+    F.onTap=function(p){var i=F.nearSeg(p,cs.map(function(c){return c.segs}));if(i>=0){hotOnly(i);pick(i)}};
+    if(RP)pick(s.a)}
+
+  /* ② 自己點兩點連線 */
+  function stLine(nx){var s=it.s2,P=panel(mode==="mixed"?"先拆圖：要補線嗎？":"② 補線：自己畫",s.lask||"在圖上<b>依序點兩個點</b>，把它們連成一條線。如果直角三角形已經在圖上，按「不用補線」。","補線");
+    var tap=it.fig.tap||[];tap.forEach(function(n){F.pt(n,"tap")});
+    var alts=(s.sol||[]).map(function(a){return {ra:a.ra||[],ok:a.ok,keys:a.segs.map(function(g){return K(g[0],g[1])})}});
+    var mine=[],drawn=[],sel=null;
+    chips(P,["↺ 擦掉重畫","不用補線"],function(i){if(i===0)reset();else none()});
+    function reset(){drawn.forEach(function(e){e.parentNode&&e.parentNode.removeChild(e)});drawn=[];mine.forEach(function(k){delete F.has[k]});mine=[];if(sel)F.pe[sel].classList.remove("sel");sel=null;P.say("")}
+    function none(){if(s.none){reset();(s.ra||[]).forEach(function(m){F.ra(m,"dz-ra dz-ra-new")});F.prune();P.done(s.ok);nx()}
+      else P.no(s.nohint||"這題要補線喔：圖上還找不到能用的直角三角形。")}
+    F.onTap=function(p){var n=F.near(p,tap);if(!n)return;
+      if(sel===null){sel=n;F.pe[n].classList.add("sel");P.say("已選 <b>"+n+"</b>，再點另一個點。");return}
+      F.pe[sel].classList.remove("sel");
+      if(n===sel){sel=null;P.say("");return}
+      var a=sel;sel=null;tryLine(a,n)};
+    function tryLine(a,b){var k=K(a,b);
+      if(F.has[k]){P.no("這條線圖上已經有了。要補的是圖上<b>還沒有</b>的線。");return}
+      var cons=alts.filter(function(al){return al.keys.indexOf(k)>=0&&mine.every(function(m){return al.keys.indexOf(m)>=0})});
+      if(cons.length){mine.push(k);drawn.push(F.grow(a,b));
+        var fin=cons.filter(function(al){return al.keys.length===mine.length})[0];
+        if(fin){fin.ra.forEach(function(m){F.ra(m,"dz-ra dz-ra-new")});F.prune();P.done(fin.ok||s.ok);nx()}
+        else P.say("✔ 這條對了，還要再補一條。")}
+      else{var e=F.line(a,b,"tmp","dz-bad");F.flash(e);P.no((s.wrong&&s.wrong[k])||s.lhint||s.hint)}}
+    if(RP){if(s.none)none();else s.sol[0].segs.forEach(function(g){tryLine(g[0],g[1])})}}
+
+  /* ③ 哪一個是直角三角形 → ④ 已知邊與斜邊 */
+  function stTri(r,ri,nx){if(ri){F.clear("hl");F.clear("faces")}
+    var P=panel((ri?"第二個三角形 · ":"")+"③ 哪一個是直角三角形？",r.ask||"點圖上的三角形（或下面的按鈕）：哪一個是<b>直角三角形</b>，而且<b>有兩條邊知道長度</b>？",(ri?"第二個 ":"")+"③");
+    var w=chips(P,r.tris.map(function(t){return tname(t.v)}),function(i){pick(i)});
+    F.onTap=function(p){var i=F.pickTri(p,r.tris);if(i>=0)pick(i)};
+    function pick(i){var t=r.tris[i];
+      if(t.ok){F.clear("faces");F.face(t.v,"dz-face ok");P.done(tname(t.v)+" 是直角三角形"+(t.okm?"："+t.okm:"。"));stEdge(t,ri,nx)}
+      else{bad(w.children[i]);F.flash(F.face(t.v,"dz-face bad"));P.no(t.why||r.hint||"這個三角形用不上。")}}
+    if(RP){for(var i=0;i<r.tris.length;i++)if(r.tris[i].ok){pick(i);break}}}
+  function stEdge(t,ri,nx){var v=t.v,E=[[v[0],v[1]],[v[1],v[2]],[v[0],v[2]]],kn=(t.known||[]).map(function(g){return K(g[0],g[1])}),hy=K(t.hyp[0],t.hyp[1]);
+    var P=panel((ri?"第二個三角形 · ":"")+"④ 哪兩邊已知？哪一邊是斜邊？","",(ri?"第二個 ":"")+"④");
+    var askEl=el("div","dz-ask");P.d.insertBefore(askEl,P.body);
+    var got=[],phase=kn.length?"k":"h";
+    function setAsk(){askEl.innerHTML=phase==="k"?"點出<b>已經知道長度</b>的兩條邊（題目給的，或一眼就算得出來的）。已選 "+got.length+" / "+kn.length:"這三條邊裡，哪一條是<b>斜邊</b>？（直角對面那一條）"}
+    setAsk();
+    var w=chips(P,E.map(ename),function(i){pick(i)});
+    F.onTap=function(p){var i=F.nearSeg(p,E.map(function(g){return [g]}));if(i>=0)pick(i)};
+    function pick(i){var g=E[i],k=K(g[0],g[1]),b=w.children[i];
+      if(phase==="k"){
+        if(kn.indexOf(k)>=0){if(got.indexOf(k)<0){got.push(k);F.hl(g[0],g[1],"dz-known");b.classList.add("ok")}
+          if(got.length>=kn.length){phase="h";P.say("✔ 已知："+got.map(function(x){return x.replace("|","")}).join("、")+"（藍色）");Array.prototype.forEach.call(w.children,function(x){x.classList.remove("ok","no")})}
+          setAsk()}
+        else{bad(b);P.no("這條邊的長度還不知道——它可能就是要算的那一條。")}}
+      else{
+        if(k===hy){F.hl(g[0],g[1],"dz-hyp");var p=F.xy(g[0]),q=F.xy(g[1]);var ddx=q[0]-p[0],ddy=q[1]-p[1],dl=Math.sqrt(ddx*ddx+ddy*ddy)||1,nx0=-ddy/dl,ny0=ddx/dl,cx0=(F.xy(v[0])[0]+F.xy(v[1])[0]+F.xy(v[2])[0])/3,cy0=(F.xy(v[0])[1]+F.xy(v[1])[1]+F.xy(v[2])[1])/3,mx=(p[0]+q[0])/2,my=(p[1]+q[1])/2;if((cx0-mx)*nx0+(cy0-my)*ny0<0){nx0=-nx0;ny0=-ny0}  /* 「斜邊」字放在三角形裡面，避開外側的邊長數字 */
+          var tx=mk("text",{x:(mx+nx0*14).toFixed(1),y:(my+ny0*14+4).toFixed(1),"class":"dz-hyplab","text-anchor":"middle"},F.L.hl);tx.textContent="斜邊";
+          P.done((kn.length?"已知 "+(t.known.map(ename).join("、"))+"；":"")+"斜邊是 "+ename(t.hyp)+"（橘色）"+(t.note?"<br>"+t.note:""));nx()}
+        else{bad(b);P.no("斜邊在直角的<b>對面</b>，不會碰到直角。先找直角在哪一個頂點。")}}}
+    if(RP){E.forEach(function(g,i){if(kn.indexOf(K(g[0],g[1]))>=0)pick(i)});E.forEach(function(g,i){if(phase==="h"&&K(g[0],g[1])===hy)pick(i)})}}
+
+  /* 只問斜邊（練習 1～3 題） */
+  function stHyp(nx){var s=it.sh,P=panel("先找斜邊",s.ask||"點圖上的<b>斜邊</b>（或下面的按鈕）。","斜邊");var E=s.edges;
+    var w=chips(P,E.map(ename),function(i){pick(i)});
+    F.onTap=function(p){var i=F.nearSeg(p,E.map(function(g){return [g]}));if(i>=0)pick(i)};
+    function pick(i){var g=E[i];if(K(g[0],g[1])===K(s.a[0],s.a[1])){F.hl(g[0],g[1],"dz-hyp");P.done(s.ok);nx()}else{bad(w.children[i]);P.no(s.hint)}}
+    if(RP)E.forEach(function(g,i){if(K(g[0],g[1])===K(s.a[0],s.a[1]))pick(i)})}
+
+  /* 計算（關卡用）：答對才播「一步一步看」 */
+  function stCalc(nx){var c=it.calc,P=panel(mode==="mixed"?"算算看":"⑤ 拆好了，算算看",c.ask,"⑤");
+    var w=el("div","opts");P.body.appendChild(w);var locked=false,okb=null;
+    shuf(c.o.map(function(_,i){return i})).forEach(function(oi,j){var b=el("button","opt",'<span class="k">'+"ABCD"[j]+'</span><span>'+c.o[oi]+'</span>');b.type="button";w.appendChild(b);
+      b.onclick=function(){if(locked)return;
+        if(oi===c.a){locked=true;b.classList.add("right");Array.prototype.forEach.call(w.children,function(x){x.classList.add("locked")});
+          P.say("");var fb=el("div","prac-fb show ok","<b>答對了</b>　一步一步看怎麼算：<div class='sp-box'></div>");P.d.appendChild(fb);
+          StepPlay.mount(fb.querySelector(".sp-box"),c.why,{autoplay:!RP});focusIn(S.st,RP?P.d:fb);if(opt.onDone&&!RP)opt.onDone();nx()}
+        else{b.classList.add("wrong");P.no(c.hint||"再算一次。")}};if(oi===c.a)okb=b});
+    if(RP)okb.onclick()}
+
+  next();
+  return S;
+}
+
+/* 回看：照正解自動走完、步驟收起（點一下可展開） */
+function show(host,it,opt){return run(host,it,Object.assign({},opt||{},{replay:true,mode:it.mode==="mixed"?"cand":it.mode}))}
+
+return {run:run,show:show,focusIn:focusIn};
+})();
+
+/* 練習題的拆解掛勾（_ch8_core 的 pRender 看到這個函式才會啟用）：題目區放題幹＋圖，步驟區放拆解＋選項＋解析 */
+function decompHook(P,host,solved,done){
+  var o={qnode:$("pQ"),after:[$("pHint"),$("pOpts"),$("pFb")],widen:document.querySelector(".prac")};
+  if(solved){var S=DZ.show(host,P.decomp,Object.assign(o,{calc:false}));DZ.focusIn(S.st,$("pFb"));$("pOpts").onclick=null;return}
+  var S2=DZ.run(host,P.decomp,Object.assign(o,{mode:P.decomp.mode,calc:false,onDone:function(){done();DZ.focusIn(S2.st,$("pHint"))}}));
+  $("pOpts").onclick=function(){DZ.focusIn(S2.st,$("pFb"))};
+}
+/* 換題前把題幹、選項、回饋放回練習框原位（_ch8_core 移除 #pDec 前呼叫） */
+function decompUnhook(){
+  var pr=document.querySelector(".prac"),dec=$("pDec"),row=$("pNext").parentNode;
+  if(dec)pr.insertBefore($("pQ"),dec);
+  ["pHint","pOpts","pFb"].forEach(function(id){pr.insertBefore($(id),row)});
+  pr.style.width="";pr.style.marginLeft="";pr.style.maxWidth="";
+}
+var GATE=[{"short": "① 補高", "title": "第 1 組：補高", "how": "等腰三角形、正三角形、梯形：從頂點往底邊畫一條<b>垂直</b>的線，切出直角三角形。", "items": [{"fig": {"pts": {"A": [147.0, 34.0, 0, -7], "B": [30.0, 190.0, -6, 5], "C": [264.0, 190.0, 6, 5], "D": [147.0, 190.0, 0, 17], "E": [182.1, 80.8, 7, 4], "F": [88.5, 190.0, 0, 17]}, "segs": [["A", "B"], ["B", "C"], ["C", "A"]], "dash": [], "ra": [], "lab": [["A", "B", "15", -12, 0], ["A", "C", "15", 12, 0], ["B", "C", "18", 0, 18, 0.8]], "tap": [], "show": ["A", "B", "C"], "plab": {}, "dots": [], "under": "", "vb": [0.8, 1.0, 292.4, 224.0], "maxw": 300}, "s1": {"ask": "題目要 △ABC 的面積。面積＝½×底×高，底 BC＝18 已經有了，還缺哪一條線段？", "o": [["BC 上的高（從 A 垂直畫到 BC，圖上還沒有）", null], ["腰 AB", ["A", "B"]], ["底 BC", ["B", "C"]]], "a": 0, "hint": "底已經知道是 18。面積還要「高」——高是從頂點<b>垂直</b>畫到底邊的線，腰是斜的，不是高。", "ok": ""}, "s2": {"cands": [{"segs": [["B", "E"]], "hint": "BE 沒有和 AC 垂直，切出來的兩個三角形都沒有直角。"}, {"segs": [["A", "D"]], "hint": ""}, {"segs": [["A", "F"]], "hint": "AF 是斜的，沒有和 BC 垂直。"}], "a": 1, "ra": [["D", "A", "C"]], "ok": "對！AD 和 BC 垂直，D 是 BC 的中點，BD＝DC＝9。", "hint": "高要和底邊 BC 垂直（夾 90°）。等腰三角形的高，會剛好落在底邊的正中間。", "sol": [{"segs": [["A", "D"]], "ra": [["D", "A", "C"]], "ok": "對！AD 和 BC 垂直，D 是 BC 的中點。"}], "none": false, "lhint": "高要和底邊 BC 垂直（夾 90°）。等腰三角形的高，會剛好落在底邊的正中間。", "wrong": {}}, "rounds": [{"tris": [{"v": ["A", "B", "D"], "ok": true, "known": [["A", "B"], ["B", "D"]], "hyp": ["A", "B"], "note": "BD＝18÷2＝9", "why": "", "okm": ""}, {"v": ["A", "D", "C"], "ok": true, "known": [["A", "C"], ["D", "C"]], "hyp": ["A", "C"], "note": "DC＝18÷2＝9", "why": "", "okm": ""}, {"v": ["A", "B", "C"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△ABC 的三個角都不是 90°，它不是直角三角形。剛剛補的 AD 把它切成兩半，看那兩半。", "okm": ""}], "hint": "找有直角符號的三角形。"}], "calc": {"ask": "所以 △ABC 的面積是多少？", "o": ["108", "216", "135", "54"], "a": 0, "why": "BD＝18÷2＝9<br>AD<sup>2</sup>＝15<sup>2</sup>−9<sup>2</sup>＝225−81＝144<br>AD＝12<br>面積＝½×18×12＝108", "val": 108.0, "hint": "先算高 AD：AD²＝15²−9²。面積別忘了乘 ½。"}, "id": "g1-1", "src": "課本 p.101 例 4 隨堂", "q": "等腰三角形 ABC 中，AB＝AC＝15、BC＝18，求 △ABC 的<b>面積</b>。", "mode": "cand"}, {"fig": {"pts": {"A": [116.0, 38.0, 0, -7], "D": [217.8, 38.0, 0, -7], "B": [20.0, 110.0, -6, 5], "C": [265.8, 110.0, 6, 5], "E": [116.0, 110.0, 0, 17]}, "segs": [["A", "D"], ["D", "C"], ["C", "B"], ["B", "A"], ["A", "E"], ["D", "E"]], "dash": [], "ra": [["E", "A", "C"]], "lab": [["A", "B", "10", -11, -3], ["B", "E", "8", 0, 17], ["D", "E", "6√3", 16, 12]], "tap": [], "show": ["A", "B", "C", "D", "E"], "plab": {}, "dots": [], "under": "", "vb": [-9.2, 5.0, 304.2, 139.0], "maxw": 300}, "s1": {"ask": "要求的是哪一條線段？", "o": [["AD", ["A", "D"]], ["DE", ["D", "E"]], ["AE", ["A", "E"]]], "a": 0, "hint": "再讀一次題目最後一句：「則 AD 的長度為何？」", "ok": ""}, "s2": {"cands": [{"segs": [["A", "C"]], "hint": "AC 切出來的 △ABC、△ACD 都沒有直角。"}, {"segs": [["B", "D"]], "hint": "BD 切出來的三角形都沒有直角。"}], "a": -1, "ra": [["A", "D", "E"]], "ok": "對！AD∥BC、AE⊥BC，所以 AE 也和 AD 垂直：∠DAE＝90°，直角就在 A，不用補線。", "hint": "AE 和 BC 垂直，而 AD 和 BC 平行。那 AE 和 AD 夾幾度？", "sol": [], "none": false, "lhint": "AE 和 BC 垂直，而 AD 和 BC 平行。那 AE 和 AD 夾幾度？", "wrong": {}}, "rounds": [{"tris": [{"v": ["A", "B", "E"], "ok": true, "known": [["A", "B"], ["B", "E"]], "hyp": ["A", "B"], "note": "AB＝10、BE＝8", "why": "", "okm": ""}, {"v": ["A", "E", "D"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△AED 是直角三角形，可是現在只知道 DE，AE 還不知道。先做另一個。", "okm": ""}], "hint": "", "ask": "先找：哪一個直角三角形，<b>兩條邊已經知道</b>？"}, {"tris": [{"v": ["A", "E", "D"], "ok": true, "known": [["A", "E"], ["D", "E"]], "hyp": ["D", "E"], "note": "AE 是上一個三角形算出來的（AE＝6）", "why": "", "okm": ""}, {"v": ["A", "B", "E"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△ABE 剛剛用過了，它沒有 AD。", "okm": ""}], "hint": "", "ask": "從 △ABE 算出 AE＝6 了。接著用哪一個直角三角形求 AD？"}], "calc": {"ask": "AD 的長度為何？", "o": ["8", "9", "6√<span class=\"rad\">2</span>", "6√<span class=\"rad\">3</span>"], "a": 2, "why": "AE<sup>2</sup>＝10<sup>2</sup>−8<sup>2</sup>＝36<br>AE＝6<br>AD<sup>2</sup>＝(6√<span class=\"rad\">3</span>)<sup>2</sup>−6<sup>2</sup>＝108−36＝72<br>AD＝√<span class=\"rad\">72</span>＝6√<span class=\"rad\">2</span>", "val": 8.48528137423857, "hint": "△AED 的斜邊是 DE（對著 A 的直角）：AD²＝DE²−AE²。"}, "id": "g1-2", "src": "會考 103 年 第 3 題", "q": "梯形 ABCD 中，AD∥BC，E 在 BC 上且 AE⊥BC。AB＝10、BE＝8、DE＝6√<span class=\"rad\">3</span>，求 <b>AD</b>。", "mode": "cand"}, {"fig": {"pts": {"A": [130.0, 26.8, 0, -7], "B": [30.0, 200.0, -6, 5], "C": [230.0, 200.0, 6, 5], "D": [130.0, 200.0, 0, 17], "E": [180.0, 200.0, 0, 17], "F": [150.0, 61.4, 7, 2]}, "segs": [["A", "B"], ["B", "C"], ["C", "A"]], "dash": [], "ra": [], "lab": [["A", "B", "10", -12, 0], ["A", "C", "10", 12, 0], ["B", "C", "10", 0, 18, 0.25]], "tap": ["A", "B", "C", "D", "E"], "show": ["A", "B", "C"], "plab": {}, "dots": [], "under": "", "vb": [0.8, -6.2, 258.4, 241.2], "maxw": 300}, "s1": {"ask": "要求正三角形的高。高是哪一條？", "o": [["從 A 垂直畫到 BC 的線段（圖上還沒有）", null], ["邊 AB", ["A", "B"]], ["邊 BC", ["B", "C"]]], "a": 0, "hint": "三條邊都是 10，不用求。高是從頂點<b>垂直</b>畫到對邊的線。", "ok": ""}, "s2": {"cands": [{"segs": [["A", "E"]], "hint": "AE 是斜的，沒有和 BC 垂直。"}, {"segs": [["B", "F"]], "hint": "BF 沒有和 AC 垂直，切不出直角。"}, {"segs": [["A", "D"]], "hint": ""}], "a": 2, "ra": [["D", "A", "C"]], "ok": "對！AD 和 BC 垂直。正三角形的高會落在底邊中點，BD＝5。", "hint": "高要和底邊垂直。正三角形的高會落在底邊的正中間。", "sol": [{"segs": [["A", "D"]], "ra": [["D", "A", "C"]], "ok": "對！AD 和 BC 垂直。正三角形的高落在底邊中點，BD＝10÷2＝5。"}], "none": false, "lhint": "這條線沒有和底邊垂直。高要從頂點 A 垂直畫到 BC，落在 BC 的正中間。", "wrong": {}}, "rounds": [{"tris": [{"v": ["A", "B", "D"], "ok": true, "known": [["A", "B"], ["B", "D"]], "hyp": ["A", "B"], "note": "BD＝10÷2＝5", "why": "", "okm": ""}, {"v": ["A", "D", "C"], "ok": true, "known": [["A", "C"], ["D", "C"]], "hyp": ["A", "C"], "note": "DC＝10÷2＝5", "why": "", "okm": ""}, {"v": ["A", "B", "C"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△ABC 三個角都是 60°，不是直角三角形。看 AD 切出來的兩半。", "okm": ""}], "hint": ""}], "calc": {"ask": "正三角形 ABC 的高是多少？", "o": ["5√<span class=\"rad\">3</span>", "5", "10√<span class=\"rad\">3</span>", "5√<span class=\"rad\">5</span>"], "a": 0, "why": "BD＝10÷2＝5<br>AD<sup>2</sup>＝10<sup>2</sup>−5<sup>2</sup>＝75<br>AD＝√<span class=\"rad\">75</span>＝5√<span class=\"rad\">3</span>", "val": 8.660254037844387, "hint": "AD 是股，斜邊是 AB＝10：AD²＝10²−5²。"}, "id": "g1-3", "src": "課本 p.103 例 5 隨堂 1", "q": "正三角形 ABC 的邊長是 <b>10</b>，求它的<b>高</b>。", "mode": "line"}, {"fig": {"pts": {"A": [90.0, 110.0, 0, -7], "D": [210.0, 110.0, 0, -7], "B": [30.0, 190.0, -6, 5], "C": [270.0, 190.0, 6, 5], "E": [90.0, 190.0, 0, 17], "G": [210.0, 190.0, 0, 17], "M": [178.8, 190.0, 0, 17]}, "segs": [["A", "D"], ["D", "C"], ["C", "B"], ["B", "A"]], "dash": [], "ra": [], "lab": [["A", "D", "6", 0, -7, 0.5], ["B", "C", "12", 0, -7, 0.5], ["A", "B", "5", -11, -2], ["D", "C", "5", 11, -2]], "tap": ["A", "B", "C", "D", "E", "G", "M"], "show": ["A", "B", "C", "D"], "plab": {}, "dots": [], "under": "", "vb": [0.8, 77.0, 298.4, 147.0], "maxw": 300}, "s2": {"cands": [], "a": -1, "ra": [], "ok": "", "hint": "", "sol": [{"segs": [["A", "E"]], "ra": [["E", "A", "C"]], "ok": "對！AE 和 BC 垂直。AEGD 是長方形，EG＝AD＝6。"}, {"segs": [["D", "G"]], "ra": [["G", "D", "B"]], "ok": "對！DG 和 BC 垂直。AEGD 是長方形，EG＝AD＝6。"}], "none": false, "lhint": "高要和底邊 BC 垂直。從 A（或 D）往下，找<b>正下方</b>的那個點。", "wrong": {}}, "calc": {"ask": "梯形 ABCD 的高是多少？", "o": ["4", "3", "√<span class=\"rad\">34</span>", "√<span class=\"rad\">11</span>"], "a": 0, "why": "EG＝AD＝6<br>BE＝(12−6)÷2＝3<br>AE<sup>2</sup>＝5<sup>2</sup>−3<sup>2</sup>＝16<br>AE＝4", "val": 4.0, "hint": "兩邊各多出 (12−6)÷2＝3。腰 5 是斜邊。"}, "id": "g1-4", "src": "自編類題", "q": "等腰梯形 ABCD 中，AD∥BC，AD＝6、BC＝12、AB＝CD＝5，求梯形的<b>高</b>。", "mode": "line"}]}, {"short": "② 連對角線", "title": "第 2 組：連對角線切開四邊形", "how": "四邊形：連一條<b>對角線</b>，把它切成兩個三角形，再找有直角的那一個。直角不能被劈開。", "items": [{"fig": {"pts": {"A": [40.0, 30.0, -6, -3], "D": [170.0, 30.0, 6, -3], "B": [40.0, 134.0, -6, 10], "C": [111.6, 165.0, 5, 14]}, "segs": [["A", "D"], ["D", "C"], ["C", "B"], ["B", "A"]], "dash": [], "ra": [["A", "B", "D"], ["C", "B", "D"]], "lab": [["A", "D", "5", 0, -8], ["A", "B", "4", -11, 4], ["B", "C", "3", -7, 15]], "tap": [], "show": ["A", "B", "C", "D"], "plab": {}, "dots": [], "under": "", "vb": [10.2, -4.0, 188.9, 200.0], "maxw": 230}, "s1": {"ask": "要求的是哪一條線段？", "o": [["CD", ["C", "D"]], ["BC", ["B", "C"]], ["AD", ["A", "D"]]], "a": 0, "hint": "題目最後問：「求 CD」。", "ok": ""}, "s2": {"cands": [{"segs": [["A", "C"]], "hint": "AC 會把 ∠A、∠C 兩個直角劈開，切出來的 △ABC、△ACD 都沒有直角。"}, {"segs": [["B", "D"]], "hint": ""}], "a": 1, "ra": [], "ok": "對！BD 把四邊形切成 △ABD 和 △BCD，∠A、∠C 都還完整，兩個都是直角三角形。", "hint": "直角在 A 和 C。補的線不能把直角劈開。", "sol": [{"segs": [["B", "D"]], "ra": [], "ok": "對！BD 把四邊形切成兩個直角三角形。"}], "none": false, "lhint": "直角在 A 和 C。補的線不能把直角劈開。", "wrong": {}}, "rounds": [{"tris": [{"v": ["A", "B", "D"], "ok": true, "known": [["A", "B"], ["A", "D"]], "hyp": ["B", "D"], "note": "AB＝4、AD＝5", "why": "", "okm": ""}, {"v": ["B", "C", "D"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△BCD 是直角三角形，可是現在只知道 BC，BD 還不知道。先做另一個。", "okm": ""}], "hint": "", "ask": "先找：哪一個直角三角形，<b>兩條邊已經知道</b>？"}, {"tris": [{"v": ["B", "C", "D"], "ok": true, "known": [["B", "C"], ["B", "D"]], "hyp": ["B", "D"], "note": "BD 是上一個三角形的斜邊，算得出來（BD²＝41）", "why": "", "okm": ""}, {"v": ["A", "B", "D"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△ABD 剛剛用過了，它沒有 CD。", "okm": ""}], "hint": "", "ask": "BD 可以從 △ABD 算出來了。接著用哪一個直角三角形求 CD？"}], "calc": {"ask": "CD 的長是多少？", "o": ["4√<span class=\"rad\">2</span>", "√<span class=\"rad\">41</span>", "5√<span class=\"rad\">2</span>", "4"], "a": 0, "why": "BD<sup>2</sup>＝4<sup>2</sup>＋5<sup>2</sup>＝41<br>CD<sup>2</sup>＝41−3<sup>2</sup>＝32<br>CD＝√<span class=\"rad\">32</span>＝4√<span class=\"rad\">2</span>", "val": 5.656854249492381, "hint": "△BCD 的直角在 C，斜邊是 BD：CD²＝BD²−BC²。"}, "id": "g2-1", "src": "課本 p.99 例 2 隨堂", "q": "四邊形 ABCD 中，∠A＝∠C＝90°，AB＝4、BC＝3、AD＝5，求 <b>CD</b>。", "mode": "cand"}, {"fig": {"pts": {"A": [30.0, 30.0, -6, -3], "D": [246.0, 30.0, 6, -3], "B": [30.0, 120.0, -6, 10], "C": [246.0, 120.0, 6, 10], "M": [138.0, 120.0, 0, 17]}, "segs": [["A", "D"], ["D", "C"], ["C", "B"], ["B", "A"]], "dash": [], "ra": [["A", "B", "D"], ["B", "A", "C"], ["C", "B", "D"], ["D", "A", "C"]], "lab": [["A", "B", "5", -11, 4], ["B", "C", "12", 0, 18, 0.25]], "tap": [], "show": ["A", "B", "C", "D"], "plab": {}, "dots": [], "under": "", "vb": [0.2, 1.0, 274.9, 154.0], "maxw": 300}, "s1": {"ask": "要求的是哪一條線段？", "o": [["對角線 AC（圖上還沒有）", null], ["AB", ["A", "B"]], ["BC", ["B", "C"]]], "a": 0, "hint": "題目問的是長方形的對角線 AC。", "ok": ""}, "s2": {"cands": [{"segs": [["A", "M"]], "hint": "AM 切出來的 △ABM 是直角三角形沒錯，可是它沒有 AC。"}, {"segs": [["M", "D"]], "hint": "MD 和 AC 沒有關係。"}, {"segs": [["A", "C"]], "hint": ""}], "a": 2, "ra": [], "ok": "對！對角線 AC 把長方形切成兩個直角三角形（長方形的四個角都是直角）。", "hint": "要求 AC，就把 AC 畫出來。", "sol": [], "none": false, "lhint": "要求 AC，就把 AC 畫出來。", "wrong": {}}, "rounds": [{"tris": [{"v": ["A", "B", "C"], "ok": true, "known": [["A", "B"], ["B", "C"]], "hyp": ["A", "C"], "note": "AB＝5、BC＝12", "why": "", "okm": ""}, {"v": ["A", "C", "D"], "ok": true, "known": [["C", "D"], ["A", "D"]], "hyp": ["A", "C"], "note": "CD＝AB＝5、AD＝BC＝12（長方形對邊一樣長）", "why": "", "okm": ""}], "hint": ""}], "calc": {"ask": "對角線 AC 的長是多少？", "o": ["13", "17", "√<span class=\"rad\">119</span>", "60"], "a": 0, "why": "AC<sup>2</sup>＝5<sup>2</sup>＋12<sup>2</sup>＝25＋144＝169<br>AC＝13", "val": 13.0, "hint": "AC 是斜邊，用加的：AC²＝5²＋12²。"}, "id": "g2-2", "src": "自編類題", "q": "長方形 ABCD 中，AB＝5、BC＝12，求對角線 <b>AC</b> 的長。", "mode": "cand"}, {"fig": {"pts": {"A": [30.0, 50.0, -6, -3], "D": [190.0, 50.0, 6, -3], "B": [30.0, 130.0, -6, 10], "C": [190.0, 130.0, 6, 10], "P": [110.0, 90.0, 9, 5], "Q": [110.0, 10.0, 9, 4], "R": [110.0, 170.0, 0, 17], "M": [110.0, 50.0, 0, 0]}, "segs": [["Q", "D"], ["D", "C"], ["C", "R"], ["R", "B"], ["B", "A"], ["A", "Q"], ["A", "D"], ["B", "C"]], "dash": [], "ra": [], "lab": [["A", "B", "2", -11, 4], ["A", "D", "4", 14, 15, 0.5]], "tap": ["Q", "A", "B", "R", "C", "D", "P"], "show": ["A", "B", "C", "D", "P", "Q", "R"], "plab": {"M": ""}, "dots": ["P"], "under": "", "vb": [0.2, -12.0, 218.9, 216.0], "maxw": 230}, "s2": {"cands": [], "a": -1, "ra": [], "ok": "", "hint": "", "sol": [{"segs": [["A", "C"]], "ra": [["B", "A", "C"]], "ok": "對！P 在對角線 AC 上，PA 是對角線的一半；Q 和 P 對稱，QA＝PA。"}, {"segs": [["B", "D"]], "ra": [["A", "B", "D"]], "ok": "對！P 在對角線 BD 上，PA＝PD＝對角線的一半；Q 和 P 對稱，QA＝PA。"}, {"segs": [["Q", "P"]], "ra": [["M", "Q", "D"]], "ok": "也可以！QP 和 AD 垂直，交在 AD 的中點：一股是 2，一股是 1。"}], "none": false, "lhint": "P 是矩形兩條對角線的交點。把一條對角線畫出來看看。", "wrong": {}}, "calc": {"ask": "六邊形 QABRCD 的周長為何？", "o": ["12", "4＋2√<span class=\"rad\">6</span>", "4＋4√<span class=\"rad\">3</span>", "4＋4√<span class=\"rad\">5</span>"], "a": 3, "why": "AC<sup>2</sup>＝2<sup>2</sup>＋4<sup>2</sup>＝20<br>AC＝√<span class=\"rad\">20</span>＝2√<span class=\"rad\">5</span><br>PA＝AC÷2＝√<span class=\"rad\">5</span><br>QA＝PA＝√<span class=\"rad\">5</span>（對稱）<br>周長＝2＋2＋4×√<span class=\"rad\">5</span>＝4＋4√<span class=\"rad\">5</span>", "val": 12.94427190999916, "hint": "QA、QD、RB、RC 四條一樣長，都等於對角線的一半。"}, "id": "g2-3", "src": "會考 109 年 第 17 題", "q": "P 是矩形 ABCD 兩條對角線的交點。把 P 以 AD、BC 為對稱軸畫出對稱點 Q、R，形成六邊形 QABRCD。AB＝2、AD＝4，求六邊形的<b>周長</b>。", "mode": "line"}, {"fig": {"pts": {"A": [40.0, 92.0, -6, -3], "B": [40.0, 200.0, -6, 12], "C": [184.0, 200.0, 6, 12], "D": [194.8, 110.6, 7, 0]}, "segs": [["A", "B"], ["B", "C"], ["C", "D"], ["D", "A"]], "dash": [], "ra": [["B", "A", "C"], ["D", "A", "C"]], "lab": [["A", "B", "6", -11, 4], ["B", "C", "8", 0, 17], ["C", "D", "5", 11, 6]], "tap": ["A", "B", "C", "D"], "show": ["A", "B", "C", "D"], "plab": {}, "dots": [], "under": "", "vb": [10.2, 63.0, 214.7, 171.0], "maxw": 230}, "s2": {"cands": [], "a": -1, "ra": [], "ok": "", "hint": "", "sol": [{"segs": [["A", "C"]], "ra": [], "ok": "對！AC 把四邊形切成 △ABC 和 △ACD，直角在 B 和 D，兩個都是直角三角形。"}], "none": false, "lhint": "補的線不能把直角（B、D）劈開。", "wrong": {"B|D": "BD 會把 ∠B、∠D 兩個直角劈開，切出來的三角形都沒有直角。試試另一條對角線。"}}, "calc": {"ask": "AD 的長是多少？", "o": ["5√<span class=\"rad\">3</span>", "5√<span class=\"rad\">5</span>", "√<span class=\"rad\">11</span>", "5"], "a": 0, "why": "AC<sup>2</sup>＝6<sup>2</sup>＋8<sup>2</sup>＝100<br>AC＝10<br>AD<sup>2</sup>＝10<sup>2</sup>−5<sup>2</sup>＝75<br>AD＝√<span class=\"rad\">75</span>＝5√<span class=\"rad\">3</span>", "val": 8.660254037844387, "hint": "△ACD 的直角在 D，斜邊是 AC：AD²＝AC²−CD²。"}, "id": "g2-4", "src": "自編類題", "q": "四邊形 ABCD 中，∠B＝∠D＝90°，AB＝6、BC＝8、CD＝5，求 <b>AD</b>。", "mode": "line"}]}, {"short": "③ 坐標兩點", "title": "第 3 組：坐標上的兩點", "how": "過一點畫<b>水平線</b>、過另一點畫<b>鉛垂線</b>，兩條線的交點就是直角。兩點在同一條水平線（或鉛垂線）上，就不用補線。", "items": [{"fig": {"pts": {"C": [100.0, 216.0, 7, 5], "D": [78.0, 40.0, 7, 0], "E": [78.0, 216.0, -7, 14], "O": [56.0, 150.0, -6, -5], "F": [100.0, 150.0, 0, 0], "H": [78.0, 150.0, 0, 0]}, "segs": [["C", "D"]], "dash": [], "ra": [], "lab": [], "tap": [], "show": ["C", "D"], "plab": {"C": "C(2, −3)", "D": "D(1, 5)", "E": "E(1, −3)", "O": "", "F": "", "H": ""}, "dots": ["C", "D"], "under": "<line x1=\"34.0\" y1=\"238.0\" x2=\"34.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"56.0\" y1=\"238.0\" x2=\"56.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"78.0\" y1=\"238.0\" x2=\"78.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"100.0\" y1=\"238.0\" x2=\"100.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"122.0\" y1=\"238.0\" x2=\"122.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"144.0\" y1=\"238.0\" x2=\"144.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"238.0\" x2=\"144.0\" y2=\"238.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"216.0\" x2=\"144.0\" y2=\"216.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"194.0\" x2=\"144.0\" y2=\"194.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"172.0\" x2=\"144.0\" y2=\"172.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"150.0\" x2=\"144.0\" y2=\"150.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"128.0\" x2=\"144.0\" y2=\"128.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"106.0\" x2=\"144.0\" y2=\"106.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"84.0\" x2=\"144.0\" y2=\"84.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"62.0\" x2=\"144.0\" y2=\"62.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"40.0\" x2=\"144.0\" y2=\"40.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"18.0\" x2=\"144.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"56.0\" y1=\"238.0\" x2=\"56.0\" y2=\"18.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"65.0\" y=\"22.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">y</text><line x1=\"34.0\" y1=\"150.0\" x2=\"144.0\" y2=\"150.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"149.0\" y=\"154.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">x</text><text x=\"51.0\" y=\"163.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#8d88a0\" font-family=\"Cambria,Georgia,serif\">O</text>", "vb": [-2.6, 4, 183.2, 248], "maxw": 240}, "s1": {"ask": "要求的是哪一條線段？", "o": [["CD", ["C", "D"]], ["C 到 x 軸的距離", null], ["D 到 y 軸的距離", null]], "a": 0, "hint": "題目要的是 C、D 兩點的距離，就是線段 CD。", "ok": ""}, "s2": {"cands": [{"segs": [["C", "O"], ["O", "D"]], "hint": "連到原點的線和 CD 圍不出直角。"}, {"segs": [["C", "E"], ["E", "D"]], "hint": ""}, {"segs": [["C", "F"], ["D", "H"]], "hint": "這兩條都是鉛垂線，彼此平行，圍不出三角形。"}], "a": 1, "ra": [["E", "C", "D"]], "ok": "對！CE 是水平線、ED 是鉛垂線，在 E(1, −3) 夾出直角。", "hint": "過一點畫<b>水平線</b>、過另一點畫<b>鉛垂線</b>，兩條線的交點就是直角。", "sol": [{"segs": [["C", "E"], ["E", "D"]], "ra": [["E", "C", "D"]], "ok": "對！CE 水平、ED 鉛垂，直角在 E。"}], "none": false, "lhint": "過一點畫<b>水平線</b>、過另一點畫<b>鉛垂線</b>，兩條線的交點就是直角。", "wrong": {}}, "rounds": [{"tris": [{"v": ["C", "E", "D"], "ok": true, "known": [["C", "E"], ["E", "D"]], "hyp": ["C", "D"], "note": "CE＝|2−1|＝1、ED＝|5−(−3)|＝8（數格子）", "why": "", "okm": ""}], "hint": ""}], "calc": {"ask": "C、D 兩點的距離是多少？", "o": ["√<span class=\"rad\">65</span>", "√<span class=\"rad\">5</span>", "9", "65"], "a": 0, "why": "CE＝|2−1|＝1<br>ED＝|5−(−3)|＝8<br>CD<sup>2</sup>＝1<sup>2</sup>＋8<sup>2</sup>＝65<br>CD＝√<span class=\"rad\">65</span>", "val": 8.06225774829855, "hint": "兩股是「x 差多少」和「y 差多少」，平方再加。"}, "id": "g3-1", "src": "課本 p.108 例 9 隨堂", "q": "求 <b class='eq'>C(2, −3)</b>、<b class='eq'>D(1, 5)</b> 兩點的距離。", "mode": "cand"}, {"fig": {"pts": {"A": [202.0, 42.0, 0, -9], "B": [58.0, 42.0, 0, -9], "O": [154.0, 114.0, 0, 0], "P": [202.0, 114.0, 0, 0], "Q": [58.0, 114.0, 0, 0]}, "segs": [["A", "B"]], "dash": [], "ra": [], "lab": [], "tap": [], "show": ["A", "B"], "plab": {"A": "A(2, 3)", "B": "B(−4, 3)", "O": "", "P": "", "Q": ""}, "dots": ["A", "B"], "under": "<line x1=\"34.0\" y1=\"138.0\" x2=\"34.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"58.0\" y1=\"138.0\" x2=\"58.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"82.0\" y1=\"138.0\" x2=\"82.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"106.0\" y1=\"138.0\" x2=\"106.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"130.0\" y1=\"138.0\" x2=\"130.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"154.0\" y1=\"138.0\" x2=\"154.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"178.0\" y1=\"138.0\" x2=\"178.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"202.0\" y1=\"138.0\" x2=\"202.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"226.0\" y1=\"138.0\" x2=\"226.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"138.0\" x2=\"226.0\" y2=\"138.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"114.0\" x2=\"226.0\" y2=\"114.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"90.0\" x2=\"226.0\" y2=\"90.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"66.0\" x2=\"226.0\" y2=\"66.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"42.0\" x2=\"226.0\" y2=\"42.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"18.0\" x2=\"226.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"154.0\" y1=\"138.0\" x2=\"154.0\" y2=\"18.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"163.0\" y=\"22.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">y</text><line x1=\"34.0\" y1=\"114.0\" x2=\"226.0\" y2=\"114.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"231.0\" y=\"118.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">x</text><text x=\"149.0\" y=\"127.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#8d88a0\" font-family=\"Cambria,Georgia,serif\">O</text>", "vb": [14.2, 4, 228.0, 148], "maxw": 260}, "s1": {"ask": "要求的是哪一條線段？", "o": [["AB", ["A", "B"]], ["A 到 x 軸的距離", null], ["B 到原點的距離", null]], "a": 0, "hint": "題目要 A、B 兩點的距離。", "ok": ""}, "s2": {"cands": [{"segs": [["A", "P"], ["B", "Q"]], "hint": "畫了也用不到。先看 A、B 的 y 坐標。"}, {"segs": [["A", "O"], ["O", "B"]], "hint": "畫了也用不到。先看 A、B 的 y 坐標。"}], "a": -1, "ra": [], "ok": "對！A、B 的 y 坐標都是 3，在同一條水平線上。直接用 x 坐標相減就好，不用畢氏定理。", "hint": "A、B 的 y 坐標一樣嗎？一樣的話，它們在同一條水平線上。", "sol": [], "none": false, "lhint": "A、B 的 y 坐標一樣嗎？一樣的話，它們在同一條水平線上。", "wrong": {}}, "calc": {"ask": "A、B 兩點的距離是多少？", "o": ["6", "2", "−6", "12"], "a": 0, "why": "y 坐標都是 3：同一條水平線<br>AB＝|2−(−4)|＝6", "val": 6, "hint": "距離＝|x 坐標的差|，減負數要變加。"}, "id": "g3-2", "src": "課本 p.106 例 8 (1)", "q": "求 <b class='eq'>A(2, 3)</b>、<b class='eq'>B(−4, 3)</b> 兩點的距離。", "mode": "cand"}, {"fig": {"pts": {"P": [54.0, 38.0, 0, -9], "Q": [174.0, 198.0, 0, 18], "R": [174.0, 38.0, 8, -4], "S": [54.0, 198.0, -8, 14], "O": [94.0, 58.0, 6, -5]}, "segs": [["P", "Q"]], "dash": [], "ra": [], "lab": [], "tap": ["P", "Q", "R", "S", "O"], "show": ["P", "Q"], "plab": {"P": "P(−2, 1)", "Q": "Q(4, −7)", "O": ""}, "dots": ["P", "Q"], "under": "<line x1=\"34.0\" y1=\"218.0\" x2=\"34.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"54.0\" y1=\"218.0\" x2=\"54.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"74.0\" y1=\"218.0\" x2=\"74.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"94.0\" y1=\"218.0\" x2=\"94.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"114.0\" y1=\"218.0\" x2=\"114.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"134.0\" y1=\"218.0\" x2=\"134.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"154.0\" y1=\"218.0\" x2=\"154.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"174.0\" y1=\"218.0\" x2=\"174.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"194.0\" y1=\"218.0\" x2=\"194.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"218.0\" x2=\"194.0\" y2=\"218.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"198.0\" x2=\"194.0\" y2=\"198.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"178.0\" x2=\"194.0\" y2=\"178.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"158.0\" x2=\"194.0\" y2=\"158.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"138.0\" x2=\"194.0\" y2=\"138.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"118.0\" x2=\"194.0\" y2=\"118.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"98.0\" x2=\"194.0\" y2=\"98.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"78.0\" x2=\"194.0\" y2=\"78.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"58.0\" x2=\"194.0\" y2=\"58.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"38.0\" x2=\"194.0\" y2=\"38.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"18.0\" x2=\"194.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"94.0\" y1=\"218.0\" x2=\"94.0\" y2=\"18.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"103.0\" y=\"22.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">y</text><line x1=\"34.0\" y1=\"58.0\" x2=\"194.0\" y2=\"58.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"199.0\" y=\"62.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">x</text><text x=\"89.0\" y=\"71.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#8d88a0\" font-family=\"Cambria,Georgia,serif\">O</text>", "vb": [10.2, 3.0, 207.6, 230.0], "maxw": 250}, "s2": {"cands": [], "a": -1, "ra": [], "ok": "", "hint": "", "sol": [{"segs": [["P", "R"], ["R", "Q"]], "ra": [["R", "P", "Q"]], "ok": "對！PR 是水平線、RQ 是鉛垂線，直角在 R(4, 1)。"}, {"segs": [["P", "S"], ["S", "Q"]], "ra": [["S", "P", "Q"]], "ok": "對！PS 是鉛垂線、SQ 是水平線，直角在 S(−2, −7)。"}], "none": false, "lhint": "要畫的是水平線（左右）或鉛垂線（上下），不是斜線。", "wrong": {}, "lask": "過 P、Q 畫一條<b>水平線</b>、一條<b>鉛垂線</b>，圍出直角三角形。在圖上依序點兩個點連一條線（要連兩條）。"}, "calc": {"ask": "P、Q 兩點的距離是多少？", "o": ["10", "14", "2√<span class=\"rad\">7</span>", "100"], "a": 0, "why": "x 差：|4−(−2)|＝6<br>y 差：|−7−1|＝8<br>PQ<sup>2</sup>＝6<sup>2</sup>＋8<sup>2</sup>＝100<br>PQ＝10", "val": 10.0, "hint": "兩股是 6 和 8，平方再加，最後開根號。"}, "id": "g3-3", "src": "自編類題", "q": "求 <b class='eq'>P(−2, 1)</b>、<b class='eq'>Q(4, −7)</b> 兩點的距離。", "mode": "line"}, {"fig": {"pts": {"A": [58.0, 114.0, 0, 18], "B": [202.0, 42.0, 0, -9], "C": [202.0, 114.0, 8, 5], "D": [58.0, 42.0, -8, 5], "O": [130.0, 66.0, -6, -5]}, "segs": [["A", "B"]], "dash": [], "ra": [], "lab": [], "tap": ["A", "B", "C", "D", "O"], "show": ["A", "B"], "plab": {"A": "A(−3, −2)", "B": "B(3, 1)", "O": ""}, "dots": ["A", "B"], "under": "<line x1=\"34.0\" y1=\"138.0\" x2=\"34.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"58.0\" y1=\"138.0\" x2=\"58.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"82.0\" y1=\"138.0\" x2=\"82.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"106.0\" y1=\"138.0\" x2=\"106.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"130.0\" y1=\"138.0\" x2=\"130.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"154.0\" y1=\"138.0\" x2=\"154.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"178.0\" y1=\"138.0\" x2=\"178.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"202.0\" y1=\"138.0\" x2=\"202.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"226.0\" y1=\"138.0\" x2=\"226.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"138.0\" x2=\"226.0\" y2=\"138.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"114.0\" x2=\"226.0\" y2=\"114.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"90.0\" x2=\"226.0\" y2=\"90.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"66.0\" x2=\"226.0\" y2=\"66.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"42.0\" x2=\"226.0\" y2=\"42.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"18.0\" x2=\"226.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"130.0\" y1=\"138.0\" x2=\"130.0\" y2=\"18.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"139.0\" y=\"22.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">y</text><line x1=\"34.0\" y1=\"66.0\" x2=\"226.0\" y2=\"66.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"231.0\" y=\"70.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">x</text><text x=\"125.0\" y=\"79.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#8d88a0\" font-family=\"Cambria,Georgia,serif\">O</text>", "vb": [10.6, 4, 231.6, 148], "maxw": 260}, "s2": {"cands": [], "a": -1, "ra": [], "ok": "", "hint": "", "sol": [{"segs": [["A", "C"], ["C", "B"]], "ra": [["C", "A", "B"]], "ok": "對！AC 水平、CB 鉛垂，直角在 C(3, −2)。"}, {"segs": [["A", "D"], ["D", "B"]], "ra": [["D", "A", "B"]], "ok": "對！AD 鉛垂、DB 水平，直角在 D(−3, 1)。"}], "none": false, "lhint": "要畫的是水平線（左右）或鉛垂線（上下），不是斜線。", "wrong": {}, "lask": "過 A、B 畫一條水平線、一條鉛垂線，圍出直角三角形（要連兩條）。"}, "calc": {"ask": "A、B 兩點的距離是多少？", "o": ["3√<span class=\"rad\">5</span>", "9", "3√<span class=\"rad\">3</span>", "5"], "a": 0, "why": "x 差：|3−(−3)|＝6<br>y 差：|1−(−2)|＝3<br>AB<sup>2</sup>＝6<sup>2</sup>＋3<sup>2</sup>＝45<br>AB＝√<span class=\"rad\">45</span>＝3√<span class=\"rad\">5</span>", "val": 6.708203932499369, "hint": "兩股是 6 和 3：AB²＝36＋9。"}, "id": "g3-4", "src": "自編類題", "q": "求 <b class='eq'>A(−3, −2)</b>、<b class='eq'>B(3, 1)</b> 兩點的距離。", "mode": "line"}]}, {"short": "④ 生活情境", "title": "第 4 組：生活情境找直角", "how": "牆和地面、竿子和地面、正方形的角：直角常常藏在「直立的」和「平放的」交界。", "items": [{"fig": {"pts": {"A": [56.0, 160.0, 0, 17], "B": [155.0, 160.0, 0, 17], "C": [200.0, 160.0, 0, 17], "D": [200.0, 52.0, -7, -4], "E": [224.2, -6.2, 8, 2], "M": [200.0, 106.0, -7, 4]}, "segs": [["B", "E"], ["C", "D"]], "dash": [["A", "D"]], "ra": [], "lab": [["C", "D", "1.2", 44, 4], ["A", "B", "1.1", 0, 32], ["A", "D", "2", -10, -6], ["D", "E", "？", 13, 4, 0.5, "q"]], "tap": [], "show": ["A", "B", "C", "D", "E"], "plab": {}, "dots": [], "under": "<rect x=\"200\" y=\"52.0\" width=\"26\" height=\"108.0\" fill=\"#f3d9d0\" stroke=\"#b03030\" stroke-width=\"1.2\"/><line x1=\"10.0\" y1=\"160.0\" x2=\"250.0\" y2=\"160.0\" stroke=\"#232026\" stroke-width=\"1.6\"/>", "vb": [-4, -30.2, 274.2, 239.2], "maxw": 270}, "s1": {"ask": "要求的是哪一段？", "o": [["DE（凸出牆頂的那一段）", ["D", "E"]], ["BD", ["B", "D"]], ["AB", ["A", "B"]]], "a": 0, "hint": "題目問「梯子凸出牆頂的部分」，就是牆頂 D 以上那一段。", "ok": ""}, "s2": {"cands": [{"segs": [["A", "E"]], "hint": "AE 和地面、牆都不垂直，夾不出直角。"}, {"segs": [["B", "M"]], "hint": "BM 斜斜的，沒有夾出直角。"}], "a": -1, "ra": [["C", "A", "D"]], "ok": "對！牆和地面垂直，直角就在牆腳 C，不用補線。", "hint": "牆是直立的，地面是平的。牆和地面夾幾度？", "sol": [], "none": false, "lhint": "牆是直立的，地面是平的。牆和地面夾幾度？", "wrong": {}}, "rounds": [{"tris": [{"v": ["A", "C", "D"], "ok": true, "known": [["A", "D"], ["C", "D"]], "hyp": ["A", "D"], "note": "AD＝2（原本的梯子）、CD＝1.2（牆高）", "why": "", "okm": ""}, {"v": ["B", "C", "D"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△BCD 是直角三角形，可是 BC 還不知道。先算原本梯子那一個。", "okm": ""}], "hint": "", "ask": "先找：哪一個直角三角形，<b>兩條邊已經知道</b>？"}, {"tris": [{"v": ["B", "C", "D"], "ok": true, "known": [["B", "C"], ["C", "D"]], "hyp": ["B", "D"], "note": "AC＝1.6 算出來了，BC＝1.6−1.1＝0.5", "why": "", "okm": ""}, {"v": ["A", "C", "D"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△ACD 剛剛用過了。", "okm": ""}], "hint": "", "ask": "原本梯腳離牆 AC＝1.6。往牆移 1.1 後，接著用哪一個直角三角形？"}], "calc": {"ask": "梯子凸出牆頂的部分 DE 是多少公尺？", "o": ["0.7", "1.3", "0.8", "0.5"], "a": 0, "why": "AC<sup>2</sup>＝2<sup>2</sup>−1.2<sup>2</sup>＝2.56<br>AC＝1.6<br>BC＝1.6−1.1＝0.5<br>BD<sup>2</sup>＝0.5<sup>2</sup>＋1.2<sup>2</sup>＝1.69<br>BD＝1.3<br>DE＝2−1.3＝0.7", "val": 0.7, "hint": "梯子全長 2，扣掉梯腳到牆頂的 BD。"}, "id": "g4-1", "src": "課本 p.105 例 7 隨堂", "q": "梯子長 2 公尺、牆高 1.2 公尺。虛線 AD 是原本的梯子，頂端剛好靠在牆頂 D。梯腳往牆壁移近 1.1 公尺（從 A 到 B）後，梯子凸出牆頂的部分 DE 是多少公尺？", "mode": "cand"}, {"fig": {"pts": {"A": [54.0, 16.0, 0, -5], "B": [78.1, 40.0, 7, 5], "C": [54.0, 64.1, 8, 10], "D": [30.0, 40.0, -6, 5], "M": [66.1, 28.0, 7, -2]}, "segs": [["A", "B"], ["B", "C"], ["C", "D"], ["D", "A"]], "dash": [], "ra": [], "lab": [["A", "D", "2", -9, -3], ["D", "C", "2", -9, 12]], "tap": [], "show": ["A", "B", "C", "D"], "plab": {}, "dots": [], "under": "<polygon points=\"30.0,16.0 78.1,16.0 78.1,256.4 30.0,256.4\" fill=\"#fbf3d9\" stroke=\"#a15c07\" stroke-width=\"1.4\"/><polygon points=\"54.0,64.1 78.1,88.1 54.0,112.2 30.0,88.1\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.3\"/><polygon points=\"54.0,112.2 78.1,136.2 54.0,160.2 30.0,136.2\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.3\"/><polygon points=\"54.0,160.2 78.1,184.3 54.0,208.3 30.0,184.3\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.3\"/><polygon points=\"54.0,208.3 78.1,232.4 54.0,256.4 30.0,232.4\" fill=\"#fdeeee\" stroke=\"#232026\" stroke-width=\"1.3\"/><line x1=\"94.1\" y1=\"16.0\" x2=\"94.1\" y2=\"256.4\" stroke=\"#15803d\" stroke-width=\"2\"/><text x=\"102.1\" y=\"141.0\" text-anchor=\"start\" font-size=\"15\" fill=\"#15803d\" font-family=\"Cambria,Georgia,serif\">？</text>", "vb": [0.8, -15.0, 121.3, 285.4], "maxw": 170}, "s1": {"ask": "編織帶的總長，等於什麼？", "o": [["5 條「上下方向」的對角線接起來", null], ["5 個邊長加起來", null], ["帶子的寬", null]], "a": 0, "hint": "正方形是轉 45° 斜放的，從最上面到最下面，經過的是每個正方形上下兩個角之間的線。", "ok": ""}, "s2": {"cands": [{"segs": [["D", "M"]], "hint": "DM 沒有把正方形切成直角三角形。"}, {"segs": [["A", "C"]], "hint": ""}], "a": 1, "ra": [["D", "A", "C"]], "ok": "對！AC 是正方形的對角線。帶子的長＝5 條這樣的對角線。正方形的角 D 是直角。", "hint": "帶子的長是上下方向。把一個正方形最上面和最下面的角連起來。", "sol": [{"segs": [["A", "C"]], "ra": [["D", "A", "C"]], "ok": "對！AC 是對角線，正方形的角 D 是直角。"}], "none": false, "lhint": "帶子的長是上下方向。把一個正方形最上面和最下面的角連起來。", "wrong": {}}, "rounds": [{"tris": [{"v": ["A", "C", "D"], "ok": true, "known": [["A", "D"], ["D", "C"]], "hyp": ["A", "C"], "note": "AD＝DC＝2（正方形的邊）", "why": "", "okm": ""}, {"v": ["A", "B", "C"], "ok": true, "known": [["A", "B"], ["B", "C"]], "hyp": ["A", "C"], "note": "AB＝BC＝2（正方形的邊）", "why": "", "okm": ""}], "hint": ""}], "calc": {"ask": "編織帶的總長大約是幾公分？（√<span class=\"rad\">2</span>≒1.4）", "o": ["14", "10", "20", "28"], "a": 0, "why": "AC<sup>2</sup>＝2<sup>2</sup>＋2<sup>2</sup>＝8<br>AC＝√<span class=\"rad\">8</span>＝2√<span class=\"rad\">2</span><br>5 條：5×2√<span class=\"rad\">2</span>＝10√<span class=\"rad\">2</span><br>10√<span class=\"rad\">2</span>≒10×1.4＝14", "val": 14.0, "hint": "一條對角線是 2√2，有 5 條。"}, "id": "g4-2", "src": "課本 p.104 例 6 隨堂", "q": "一條編織帶由 5 個相連的正方形斜排組成，每個正方形邊長 2 公分。編織帶的總長大約是幾公分？（√<span class=\"rad\">2</span>≒1.4）", "mode": "cand"}, {"fig": {"pts": {"A": [40.0, 56.0, 0, -7], "B": [40.0, 200.0, -6, 14], "C": [232.0, 136.0, 7, -4], "D": [232.0, 200.0, 6, 15], "E": [40.0, 136.0, -7, 5], "F": [104.0, 200.0, 0, 17]}, "segs": [["A", "B"], ["C", "D"], ["A", "C"]], "dash": [], "ra": [], "lab": [["A", "B", "9", -10, 4, 0.3], ["C", "D", "4", 10, 4], ["B", "D", "12", 0, 17, 0.72], ["A", "C", "？", 4, -9, 0.5, "q"]], "tap": ["A", "B", "C", "D", "E", "F"], "show": ["A", "B", "C", "D"], "plab": {}, "dots": [], "under": "<line x1=\"18.0\" y1=\"200.0\" x2=\"258.0\" y2=\"200.0\" stroke=\"#232026\" stroke-width=\"1.6\"/>", "vb": [4, 23.0, 268, 211.0], "maxw": 270}, "s2": {"cands": [], "a": -1, "ra": [], "ok": "", "hint": "", "sol": [{"segs": [["C", "E"]], "ra": [["E", "A", "C"]], "ok": "對！CE 是水平線，和竿子 AB 垂直。EB＝CD＝4，EC＝BD＝12。"}], "none": false, "lhint": "從矮竿的頂端 C，畫一條水平線到高竿上。", "wrong": {"C|F": "CF 是斜的，和地面不垂直。", "B|C": "BC 是斜的，夾不出直角。"}}, "calc": {"ask": "繩子 AC 有多長？", "o": ["13", "15", "4√<span class=\"rad\">10</span>", "12"], "a": 0, "why": "AE＝9−4＝5<br>EC＝BD＝12<br>AC<sup>2</sup>＝5<sup>2</sup>＋12<sup>2</sup>＝169<br>AC＝13", "val": 13.0, "hint": "直角三角形 AEC：一股是高度差 9−4，一股是兩竿距離 12。"}, "id": "g4-3", "src": "自編類題", "q": "兩根竿子立在平地上，高竿 AB＝9 公尺、矮竿 CD＝4 公尺，兩竿相距 BD＝12 公尺。兩根竿子的頂端拉一條繩子 AC，繩子多長？", "mode": "line"}, {"fig": {"pts": {"A": [20.0, 190.0, -6, 5], "B": [236.0, 127.0, 0, -7], "C": [290.0, 127.0, 6, -4], "D": [290.0, 190.0, 6, 15], "F": [236.0, 190.0, 0, 17], "G": [155.0, 190.0, 0, 17]}, "segs": [["A", "D"], ["D", "C"], ["C", "B"], ["B", "A"]], "dash": [], "ra": [], "lab": [["A", "D", "30", 0, 17, 0.25], ["C", "D", "7", 10, 4], ["B", "C", "6", 0, -7]], "tap": ["A", "B", "C", "D", "F", "G"], "show": ["A", "B", "C", "D"], "plab": {}, "dots": [], "under": "", "vb": [-9.2, 94.0, 328.4, 130.0], "maxw": 300}, "s2": {"cands": [], "a": -1, "ra": [], "ok": "", "hint": "", "sol": [{"segs": [["B", "F"]], "ra": [["F", "A", "B"]], "ok": "對！BF 和地面垂直。AF＝30−6＝24，BF＝CD＝7。"}], "none": false, "lhint": "從斜坡的頂端 B，往地面畫一條<b>垂直</b>的線，找 B 正下方的點。", "wrong": {}}, "calc": {"ask": "斜坡 AB 有多長？", "o": ["25", "31", "√<span class=\"rad\">949</span>", "17"], "a": 0, "why": "AF＝30−6＝24<br>BF＝CD＝7<br>AB<sup>2</sup>＝24<sup>2</sup>＋7<sup>2</sup>＝576＋49＝625<br>AB＝25", "val": 25.0, "hint": "AF 不是 30：要扣掉台面 6。"}, "id": "g4-4", "src": "自編類題", "q": "斜坡從地面 A 點通到舞台邊 B 點。舞台高 CD＝7 公尺、台面 BC＝6 公尺，地面上 A 到舞台後牆底 D 是 30 公尺。斜坡 AB 多長？", "mode": "line"}]}, {"short": "⑤ 斜邊上的高", "title": "第 5 組：斜邊上的高", "how": "從直角頂點往斜邊畫垂直線。同一個直角三角形的面積，用「兩股」算一次、用「斜邊×高」再算一次。", "items": [{"fig": {"pts": {"A": [20.0, 170.0, -6, 5], "C": [280.0, 170.0, 6, 5], "B": [58.5, 77.7, 0, -7], "D": [58.5, 170.0, 0, 17], "M": [150.0, 170.0, 0, 17], "E": [220.2, 170.0, 0, 17]}, "segs": [["A", "B"], ["B", "C"], ["C", "A"]], "dash": [], "ra": [["B", "A", "C"]], "lab": [["A", "B", "10", -10, -4], ["B", "C", "24", 6, -8]], "tap": [], "show": ["A", "B", "C"], "plab": {}, "dots": [], "under": "", "vb": [-9.2, 44.7, 318.4, 159.3], "maxw": 300}, "s1": {"ask": "要求的是哪一條線段？", "o": [["斜邊 AC 上的高（從 B 垂直畫到 AC，圖上還沒有）", null], ["AB", ["A", "B"]], ["AC", ["A", "C"]]], "a": 0, "hint": "題目要的是「斜邊 AC 上的高」。", "ok": ""}, "s2": {"cands": [{"segs": [["B", "M"]], "hint": "BM 是斜的，沒有和 AC 垂直；高一定要垂直。"}, {"segs": [["B", "E"]], "hint": "BE 是斜的，沒有和 AC 垂直。"}, {"segs": [["B", "D"]], "hint": ""}], "a": 2, "ra": [["D", "B", "C"]], "ok": "對！BD 和 AC 垂直，就是斜邊 AC 上的高。", "hint": "高要和 AC 垂直（夾 90°）。", "sol": [{"segs": [["B", "D"]], "ra": [["D", "B", "C"]], "ok": "對！BD 和 AC 垂直。"}], "none": false, "lhint": "高要和 AC 垂直（夾 90°）。", "wrong": {}}, "rounds": [{"tris": [{"v": ["A", "B", "C"], "ok": true, "known": [["A", "B"], ["B", "C"]], "hyp": ["A", "C"], "note": "AB＝10、BC＝24；先求斜邊 AC，再用面積算 BD", "why": "", "okm": ""}, {"v": ["A", "B", "D"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△ABD 是直角三角形，可是只知道 AB 一條邊。", "okm": ""}, {"v": ["B", "D", "C"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△BDC 是直角三角形，可是只知道 BC 一條邊。", "okm": ""}], "hint": "", "ask": "BD 所在的兩個小三角形，都只知道一條邊。哪一個直角三角形，<b>兩條邊已經知道</b>？"}], "calc": {"ask": "斜邊 AC 上的高 BD 是多少？", "o": ["<span class=\"frac\"><span>120</span><span>13</span></span>", "12", "13", "<span class=\"frac\"><span>240</span><span>13</span></span>"], "a": 0, "why": "AC<sup>2</sup>＝10<sup>2</sup>＋24<sup>2</sup>＝676<br>AC＝26<br>面積算兩次：½×10×24＝½×26×BD<br>240＝26×BD<br>BD＝240÷26＝<span class=\"frac\"><span>120</span><span>13</span></span>", "val": 9.23076923076923, "hint": "同一個三角形的面積：兩股算一次、斜邊×高再算一次。"}, "id": "g5-1", "src": "課本 p.100 例 3", "q": "直角三角形 ABC 中，∠ABC＝90°，AB＝10、BC＝24。求斜邊 AC 上的<b>高</b>。", "mode": "cand"}, {"fig": {"pts": {"A": [24.0, 26.0, -6, -3], "D": [184.0, 26.0, 6, -3], "B": [24.0, 146.0, -6, 12], "C": [184.0, 146.0, 6, 12], "E": [24.0, 102.8, -7, 5], "F": [81.6, 26.0, 0, -7], "P": [81.6, 102.8, 8, 13]}, "segs": [["A", "D"], ["D", "C"], ["C", "B"], ["B", "A"], ["B", "D"], ["E", "P"], ["F", "P"], ["E", "F"]], "dash": [], "ra": [["E", "A", "P"], ["F", "A", "P"], ["A", "B", "D"]], "lab": [["A", "B", "6", -11, 4, 0.3], ["A", "D", "8", 0, -7, 0.72]], "tap": [], "show": ["A", "B", "C", "D", "E", "F", "P"], "plab": {}, "dots": ["P"], "under": "", "vb": [-6.2, -7.0, 219.4, 182.0], "maxw": 240}, "s1": {"ask": "AEPF 四個角都是直角，是長方形。EF 和哪一條線段一樣長？", "o": [["AP（長方形 AEPF 的另一條對角線，圖上還沒有）", null], ["BD", ["B", "D"]], ["PD", ["P", "D"]]], "a": 0, "hint": "長方形的兩條對角線一樣長。AEPF 的對角線是 EF 和哪一條？", "ok": ""}, "s2": {"cands": [{"segs": [["E", "D"]], "hint": "ED 和 EF 沒有關係。"}, {"segs": [["A", "P"]], "hint": ""}, {"segs": [["P", "C"]], "hint": "PC 不在長方形 AEPF 裡。"}], "a": 1, "ra": [["P", "A", "D"]], "ok": "對！EF＝AP。P 在 BD 上走，AP 和 BD 垂直的時候最短（圖上的 P 就放在那裡）——AP 就是斜邊 BD 上的高。", "hint": "EF 是長方形 AEPF 的一條對角線，把另一條對角線畫出來。", "sol": [{"segs": [["A", "P"]], "ra": [["P", "A", "D"]], "ok": "對！EF＝AP，AP 和 BD 垂直時最短。"}], "none": false, "lhint": "EF 是長方形 AEPF 的一條對角線，把另一條對角線畫出來。", "wrong": {}}, "rounds": [{"tris": [{"v": ["A", "B", "D"], "ok": true, "known": [["A", "B"], ["A", "D"]], "hyp": ["B", "D"], "note": "AB＝6、AD＝8；先求 BD，再用面積算 AP", "why": "", "okm": ""}, {"v": ["A", "B", "P"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△ABP 是直角三角形，可是只知道 AB。", "okm": ""}, {"v": ["A", "P", "D"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△APD 是直角三角形，可是只知道 AD。", "okm": ""}], "hint": "", "ask": "哪一個直角三角形，<b>兩條邊已經知道</b>？"}], "calc": {"ask": "EF 的長度最小為多少？", "o": ["<span class=\"frac\"><span>14</span><span>5</span></span>", "<span class=\"frac\"><span>24</span><span>5</span></span>", "5", "7"], "a": 1, "why": "BD<sup>2</sup>＝6<sup>2</sup>＋8<sup>2</sup>＝100<br>BD＝10<br>面積算兩次：6×8＝10×AP<br>AP＝48÷10＝<span class=\"frac\"><span>24</span><span>5</span></span><br>EF＝AP＝<span class=\"frac\"><span>24</span><span>5</span></span>", "val": 4.8, "hint": "EF＝AP，AP 最短的時候是斜邊 BD 上的高：6×8＝10×AP。"}, "id": "g5-2", "src": "會考 112 年 第 23 題", "q": "矩形 ABCD 中，AB＝6、AD＝8，P 從 B 沿著 BD 往 D 移動。過 P 作 AB 的垂線交 AB 於 E，作 AD 的垂線交 AD 於 F。<b>EF</b> 最小是多少？", "mode": "cand"}, {"fig": {"pts": {"A": [20.0, 170.0, -6, 5], "B": [280.0, 170.0, 6, 5], "C": [241.5, 77.7, 0, -7], "D": [241.5, 170.0, 0, 17], "M": [150.0, 170.0, 0, 17]}, "segs": [["A", "C"], ["C", "B"], ["A", "B"]], "dash": [], "ra": [["C", "A", "B"]], "lab": [["A", "C", "12", -6, -9], ["C", "B", "5", 11, -2]], "tap": ["A", "B", "C", "D", "M"], "show": ["A", "B", "C"], "plab": {}, "dots": [], "under": "", "vb": [-9.2, 44.7, 318.4, 159.3], "maxw": 300}, "s2": {"cands": [], "a": -1, "ra": [], "ok": "", "hint": "", "sol": [{"segs": [["C", "D"]], "ra": [["D", "C", "A"]], "ok": "對！CD 和 AB 垂直，C 到 AB 的距離就是 CD。"}], "none": false, "lhint": "「距離」要走垂直的那一條。從 C 往 AB 畫垂直線。", "wrong": {"C|M": "CM 是斜的，沒有和 AB 垂直。「距離」要走垂直的那一條。"}}, "calc": {"ask": "C 到 AB 的距離是多少？", "o": ["<span class=\"frac\"><span>60</span><span>13</span></span>", "<span class=\"frac\"><span>13</span><span>2</span></span>", "<span class=\"frac\"><span>30</span><span>13</span></span>", "5"], "a": 0, "why": "AB<sup>2</sup>＝12<sup>2</sup>＋5<sup>2</sup>＝169<br>AB＝13<br>面積算兩次：12×5＝13×CD<br>CD＝<span class=\"frac\"><span>60</span><span>13</span></span>", "val": 4.615384615384615, "hint": "先求斜邊 AB，再用面積算兩次。"}, "id": "g5-3", "src": "自編類題", "q": "直角三角形 ABC 中，∠C＝90°，AC＝12、BC＝5。C 到 AB 的<b>距離</b>是多少？", "mode": "line"}, {"fig": {"pts": {"A": [117.2, 50.4, 0, -7], "B": [20.0, 180.0, -6, 5], "C": [290.0, 180.0, 6, 5], "D": [117.2, 180.0, 0, 17], "E": [155.0, 180.0, 0, 17]}, "segs": [["A", "B"], ["A", "C"], ["B", "C"]], "dash": [], "ra": [["A", "B", "C"]], "lab": [["A", "B", "15", -11, -3], ["A", "C", "20", 10, -6]], "tap": ["A", "B", "C", "D", "E"], "show": ["A", "B", "C"], "plab": {}, "dots": [], "under": "", "vb": [-9.2, 17.4, 328.4, 196.6], "maxw": 300}, "s2": {"cands": [], "a": -1, "ra": [], "ok": "", "hint": "", "sol": [{"segs": [["A", "D"]], "ra": [["D", "A", "C"]], "ok": "對！AD 和 BC 垂直，就是斜邊 BC 上的高。"}], "none": false, "lhint": "斜邊上的高要和斜邊 BC 垂直，從直角頂點 A 往下畫。", "wrong": {"A|E": "AE 是斜的，沒有和 BC 垂直。"}}, "calc": {"ask": "斜邊 BC 上的高 AD 是多少？", "o": ["12", "<span class=\"frac\"><span>25</span><span>2</span></span>", "6", "10"], "a": 0, "why": "BC<sup>2</sup>＝15<sup>2</sup>＋20<sup>2</sup>＝625<br>BC＝25<br>面積算兩次：15×20＝25×AD<br>AD＝300÷25＝12", "val": 12.0, "hint": "先求斜邊 BC，再用面積算兩次。"}, "id": "g5-4", "src": "自編類題", "q": "直角三角形 ABC 中，∠A＝90°，AB＝15、AC＝20。求斜邊 BC 上的<b>高</b>。", "mode": "line"}]}, {"short": "⑥ 混合", "title": "混合組：不告訴你是哪一種", "how": "", "items": [{"fig": {"pts": {"A": [30.0, 26.0, -6, -3], "D": [180.0, 26.0, 6, -3], "B": [30.0, 196.0, -6, 12], "C": [180.0, 196.0, 6, 12], "E": [30.0, 116.0, -7, 5], "F": [30.0, 176.0, -7, 5]}, "segs": [["A", "D"], ["D", "C"], ["C", "B"], ["B", "A"]], "dash": [], "ra": [["B", "A", "C"]], "lab": [["A", "D", "5", 0, -7, 0.5], ["D", "C", "17/3", 22, 4]], "tap": ["A", "B", "C", "D", "E", "F"], "show": ["A", "B", "C", "D"], "plab": {}, "dots": [], "under": "<path d=\"M180.0,26.0 A150.0,150.0 0 0 1 30.0,176.0\" fill=\"none\" stroke=\"#4338ca\" stroke-width=\"1.5\"/><path d=\"M180.0,26.0 A170.0,170.0 0 0 0 30.0,116.0\" fill=\"none\" stroke=\"#a15c07\" stroke-width=\"1.5\"/>", "vb": [-0.2, -7.0, 232.2, 232.0], "maxw": 230}, "s1": {"ask": "要求 EF。EF＝BE−BF，而 BF 用「半徑一樣長」就知道（AF＝AD＝5）。還要先算哪一段？", "o": [["BE", ["B", "E"]], ["AE", ["A", "E"]], ["CD", ["C", "D"]]], "a": 0, "hint": "EF＝BE−BF。BF 已經有辦法了，剩下 BE。", "ok": ""}, "s2": {"cands": [{"segs": [["C", "F"]], "hint": "CF 不是半徑，長度不知道。"}, {"segs": [["C", "E"]], "hint": ""}, {"segs": [["D", "E"]], "hint": "DE 不是半徑，長度不知道。"}], "a": 1, "ra": [], "ok": "對！CE 和 CD 是同一個圓的半徑，CE＝17/3。△EBC 的直角在 B（矩形的角）。", "hint": "E 在以 C 為圓心的弧上。把圓心 C 和 E 連起來，就是半徑。", "sol": [{"segs": [["C", "E"]], "ra": [], "ok": "對！CE 是半徑，CE＝CD＝17/3；△EBC 的直角在 B。"}], "none": false, "lhint": "E 在以 C 為圓心的弧上。把圓心 C 和 E 連起來，就是半徑。", "wrong": {}}, "rounds": [{"tris": [{"v": ["E", "B", "C"], "ok": true, "known": [["C", "E"], ["B", "C"]], "hyp": ["C", "E"], "note": "CE＝CD＝17/3（同一個圓的半徑）、BC＝AD＝5", "why": "", "okm": ""}], "hint": ""}], "calc": {"ask": "EF 的長度為何？", "o": ["2", "3", "<span class=\"frac\"><span>2</span><span>3</span></span>", "<span class=\"frac\"><span>7</span><span>3</span></span>"], "a": 0, "why": "BF＝<span class=\"frac\"><span>17</span><span>3</span></span>−5＝<span class=\"frac\"><span>2</span><span>3</span></span><br>CE＝CD＝<span class=\"frac\"><span>17</span><span>3</span></span><br>BE<sup>2</sup>＝(<span class=\"frac\"><span>17</span><span>3</span></span>)<sup>2</sup>−5<sup>2</sup>＝<span class=\"frac\"><span>64</span><span>9</span></span><br>BE＝<span class=\"frac\"><span>8</span><span>3</span></span><br>EF＝<span class=\"frac\"><span>8</span><span>3</span></span>−<span class=\"frac\"><span>2</span><span>3</span></span>＝2", "val": 2.0000000000000004, "hint": "BE 用畢氏（斜邊 CE），BF 用半徑，EF＝BE−BF。"}, "id": "m-1", "src": "會考 105 年 第 20 題", "q": "以矩形 ABCD 的 A 為圓心、AD 長為半徑畫弧，交 AB 於 F；再以 C 為圓心、CD 長為半徑畫弧，交 AB 於 E。AD＝5、CD＝<span class=\"frac\"><span>17</span><span>3</span></span>，求 <b>EF</b>。", "mode": "mixed"}, {"fig": {"pts": {"A": [138.0, 26.0, 0, -7], "B": [30.0, 170.0, -6, 5], "C": [246.0, 170.0, 6, 5], "D": [138.0, 170.0, 0, 17], "E": [192.0, 170.0, 0, 17], "F": [170.4, 69.2, 7, 2]}, "segs": [["A", "B"], ["B", "C"], ["C", "A"]], "dash": [], "ra": [], "lab": [["A", "B", "10", -12, 0], ["A", "C", "10", 12, 0], ["B", "C", "12", 0, 18, 0.25]], "tap": ["A", "B", "C", "D", "E"], "show": ["A", "B", "C"], "plab": {}, "dots": [], "under": "", "vb": [0.8, -7.0, 274.4, 212.0], "maxw": 300}, "s1": {"ask": "面積＝½×底×高。底 BC＝12 有了，還缺哪一條？", "o": [["BC 上的高（圖上還沒有）", null], ["腰 AB", ["A", "B"]], ["底 BC", ["B", "C"]]], "a": 0, "hint": "還缺「高」。腰是斜的，不是高。", "ok": ""}, "s2": {"cands": [{"segs": [["A", "E"]], "hint": "AE 是斜的，沒有和 BC 垂直。"}, {"segs": [["B", "F"]], "hint": "BF 沒有和 AC 垂直。"}, {"segs": [["A", "D"]], "hint": ""}], "a": 2, "ra": [["D", "A", "C"]], "ok": "對！AD 和 BC 垂直，D 是 BC 的中點，BD＝6。", "hint": "等腰三角形的高，從頂點 A 垂直落在底邊的正中間。", "sol": [{"segs": [["A", "D"]], "ra": [["D", "A", "C"]], "ok": "對！AD 和 BC 垂直，D 是 BC 的中點，BD＝6。"}], "none": false, "lhint": "高要從 A 垂直畫到 BC，落在 BC 的正中間。", "wrong": {}}, "rounds": [{"tris": [{"v": ["A", "B", "D"], "ok": true, "known": [["A", "B"], ["B", "D"]], "hyp": ["A", "B"], "note": "BD＝12÷2＝6", "why": "", "okm": ""}, {"v": ["A", "D", "C"], "ok": true, "known": [["A", "C"], ["D", "C"]], "hyp": ["A", "C"], "note": "DC＝12÷2＝6", "why": "", "okm": ""}, {"v": ["A", "B", "C"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△ABC 沒有直角。看 AD 切出來的兩半。", "okm": ""}], "hint": ""}], "calc": {"ask": "△ABC 的面積是多少？", "o": ["48", "96", "60", "24"], "a": 0, "why": "BD＝12÷2＝6<br>AD<sup>2</sup>＝10<sup>2</sup>−6<sup>2</sup>＝64<br>AD＝8<br>面積＝½×12×8＝48", "val": 48.0, "hint": "高 AD²＝10²−6²。面積別忘了 ½。"}, "id": "m-2", "src": "自編類題", "q": "等腰三角形 ABC 中，AB＝AC＝10、BC＝12，求 △ABC 的<b>面積</b>。", "mode": "mixed"}, {"fig": {"pts": {"E": [50.0, 34.0, 0, -9], "F": [130.0, 226.0, 0, 18], "G": [130.0, 34.0, 8, -4], "H": [50.0, 226.0, -8, 14], "O": [114.0, 82.0, 6, 13], "X": [50.0, 82.0, 0, 0], "Y": [130.0, 82.0, 0, 0]}, "segs": [["E", "F"]], "dash": [], "ra": [], "lab": [], "tap": ["E", "F", "G", "H", "O"], "show": ["E", "F"], "plab": {"E": "E(−4, 3)", "F": "F(1, −9)", "X": "", "Y": "", "O": ""}, "dots": ["E", "F"], "under": "<line x1=\"34.0\" y1=\"242.0\" x2=\"34.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"50.0\" y1=\"242.0\" x2=\"50.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"66.0\" y1=\"242.0\" x2=\"66.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"82.0\" y1=\"242.0\" x2=\"82.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"98.0\" y1=\"242.0\" x2=\"98.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"114.0\" y1=\"242.0\" x2=\"114.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"130.0\" y1=\"242.0\" x2=\"130.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"146.0\" y1=\"242.0\" x2=\"146.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"242.0\" x2=\"146.0\" y2=\"242.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"226.0\" x2=\"146.0\" y2=\"226.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"210.0\" x2=\"146.0\" y2=\"210.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"194.0\" x2=\"146.0\" y2=\"194.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"178.0\" x2=\"146.0\" y2=\"178.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"162.0\" x2=\"146.0\" y2=\"162.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"146.0\" x2=\"146.0\" y2=\"146.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"130.0\" x2=\"146.0\" y2=\"130.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"114.0\" x2=\"146.0\" y2=\"114.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"98.0\" x2=\"146.0\" y2=\"98.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"82.0\" x2=\"146.0\" y2=\"82.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"66.0\" x2=\"146.0\" y2=\"66.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"50.0\" x2=\"146.0\" y2=\"50.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"34.0\" x2=\"146.0\" y2=\"34.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"34.0\" y1=\"18.0\" x2=\"146.0\" y2=\"18.0\" stroke=\"#e4e1ec\" stroke-width=\"1\"/><line x1=\"114.0\" y1=\"242.0\" x2=\"114.0\" y2=\"18.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"123.0\" y=\"22.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">y</text><line x1=\"34.0\" y1=\"82.0\" x2=\"146.0\" y2=\"82.0\" stroke=\"#8d88a0\" stroke-width=\"1.4\"/><text x=\"151.0\" y=\"86.0\" text-anchor=\"start\" font-size=\"13\" fill=\"#8d88a0\" font-style=\"italic\" font-family=\"Cambria,Georgia,serif\">x</text><text x=\"109.0\" y=\"95.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#8d88a0\" font-family=\"Cambria,Georgia,serif\">O</text>", "vb": [6.2, -1.0, 167.6, 262.0], "maxw": 230}, "s1": {"ask": "要求的是哪一條線段？", "o": [["EF", ["E", "F"]], ["E 到 x 軸的距離", null], ["F 到原點的距離", null]], "a": 0, "hint": "題目要 E、F 兩點的距離。", "ok": ""}, "s2": {"cands": [{"segs": [["E", "O"], ["O", "F"]], "hint": "連到原點的線圍不出直角。"}, {"segs": [["E", "G"], ["G", "F"]], "hint": ""}, {"segs": [["E", "X"], ["F", "Y"]], "hint": "兩條都是鉛垂線，彼此平行，圍不出三角形。"}], "a": 1, "ra": [["G", "E", "F"]], "ok": "對！EG 水平、GF 鉛垂，直角在 G(1, 3)。", "hint": "過一點畫水平線、過另一點畫鉛垂線，交點就是直角。", "sol": [{"segs": [["E", "G"], ["G", "F"]], "ra": [["G", "E", "F"]], "ok": "對！EG 水平、GF 鉛垂，直角在 G(1, 3)。"}, {"segs": [["E", "H"], ["H", "F"]], "ra": [["H", "E", "F"]], "ok": "對！EH 鉛垂、HF 水平，直角在 H(−4, −9)。"}], "none": false, "lhint": "要畫的是水平線（左右）或鉛垂線（上下），不是斜線。", "wrong": {}, "lask": "在圖上依序點兩個點連線。這題要連兩條。"}, "rounds": [{"tris": [{"v": ["E", "G", "F"], "ok": true, "known": [["E", "G"], ["G", "F"]], "hyp": ["E", "F"], "note": "EG＝|1−(−4)|＝5、GF＝|3−(−9)|＝12", "why": "", "okm": ""}], "hint": ""}], "calc": {"ask": "E、F 兩點的距離是多少？", "o": ["13", "17", "√<span class=\"rad\">119</span>", "169"], "a": 0, "why": "x 差：|1−(−4)|＝5<br>y 差：|−9−3|＝12<br>EF<sup>2</sup>＝5<sup>2</sup>＋12<sup>2</sup>＝169<br>EF＝13", "val": 13.0, "hint": "兩股是 5 和 12，平方再加，最後開根號。"}, "id": "m-3", "src": "自編類題", "q": "求 <b class='eq'>E(−4, 3)</b>、<b class='eq'>F(1, −9)</b> 兩點的距離。", "mode": "mixed"}, {"fig": {"pts": {"A": [20.0, 20.0, -6, -3], "D": [180.0, 20.0, 6, -3], "B": [20.0, 180.0, -6, 12], "C": [180.0, 180.0, 8, 13], "R": [140.0, 20.0, 0, -7], "S": [180.0, 50.0, -7, 15], "P": [180.0, 300.0, 0, 17], "Q": [300.0, 140.0, 7, 5]}, "segs": [["A", "D"], ["D", "C"], ["C", "B"], ["B", "A"], ["B", "P"], ["P", "Q"], ["Q", "R"], ["R", "B"]], "dash": [], "ra": [], "lab": [], "tap": ["A", "B", "C", "D", "R", "S", "P", "Q"], "show": ["A", "B", "C", "D", "P", "Q", "R"], "plab": {}, "dots": [], "under": "<polygon points=\"140.0,20.0 20.0,180.0 180.0,180.0 180.0,50.0\" fill=\"#e4e1ee\" stroke=\"none\" stroke-width=\"1.4\"/>", "vb": [-9.2, -13.0, 339.4, 347.0], "maxw": 270}, "s1": {"ask": "四邊形 RBCS 的面積＝正方形 ABCD 扣掉 △ABR 和 △RDS。要先算出哪兩段？", "o": [["AR 和 DS", null], ["BP 和 PQ", null], ["BC 和 CD", null]], "a": 0, "hint": "△ABR、△RDS 都是直角三角形，要知道它們的兩股：AR 和 DS 還不知道。", "ok": ""}, "s2": {"cands": [{"segs": [["B", "D"]], "hint": "BD 切出來的三角形沒有用到 S。"}, {"segs": [["B", "S"]], "hint": ""}, {"segs": [["R", "C"]], "hint": "RC 切出來的三角形都沒有直角。"}], "a": 1, "ra": [["R", "B", "S"], ["C", "B", "D"]], "ok": "對！BS 在 △BRS（直角在 R）和 △BCS（直角在 C）裡都是斜邊，可以算兩次。", "hint": "找一條線，讓它<b>同時</b>是兩個直角三角形的斜邊。", "sol": [{"segs": [["B", "S"]], "ra": [["R", "B", "S"], ["C", "B", "D"]], "ok": "對！BS 在 △BRS 和 △BCS 裡都是斜邊，可以算兩次。"}], "none": false, "lhint": "找一條線，讓它同時是兩個直角三角形的斜邊。", "wrong": {}}, "rounds": [{"tris": [{"v": ["A", "B", "R"], "ok": true, "known": [["A", "B"], ["B", "R"]], "hyp": ["B", "R"], "note": "AB＝4（4²＝16）、BR＝5（5²＝25），所以 AR＝3、RD＝1", "why": "", "okm": ""}, {"v": ["B", "R", "S"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△BRS 是直角三角形，可是現在只知道 BR。", "okm": ""}, {"v": ["B", "C", "S"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△BCS 是直角三角形，可是現在只知道 BC。", "okm": ""}], "hint": "", "ask": "先找：哪一個直角三角形，<b>兩條邊已經知道</b>？"}, {"tris": [{"v": ["B", "C", "S"], "ok": true, "known": [["B", "C"], ["C", "S"]], "hyp": ["B", "S"], "note": "設 DS＝y，CS＝4−y（用 y 表示）", "why": "", "okm": ""}, {"v": ["B", "R", "S"], "ok": true, "known": [["B", "R"], ["R", "S"]], "hyp": ["B", "S"], "note": "設 DS＝y，RS²＝1²＋y²（△RDS 也是直角三角形）", "why": "", "okm": ""}, {"v": ["A", "B", "R"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△ABR 剛剛用過了。", "okm": ""}], "hint": "", "ask": "AR＝3、RD＝1。設 DS＝y：BS 在兩個直角三角形裡都是斜邊，點其中一個。"}], "calc": {"ask": "四邊形 RBCS 的面積為何？", "o": ["8", "<span class=\"frac\"><span>17</span><span>2</span></span>", "<span class=\"frac\"><span>28</span><span>3</span></span>", "<span class=\"frac\"><span>77</span><span>8</span></span>"], "a": 3, "why": "AR<sup>2</sup>＝5<sup>2</sup>−4<sup>2</sup>＝9，AR＝3，RD＝1<br>設 DS＝y：BS<sup>2</sup>＝4<sup>2</sup>＋(4−y)<sup>2</sup><br>BS<sup>2</sup>＝5<sup>2</sup>＋1<sup>2</sup>＋y<sup>2</sup><br>16＋16−8y＋y<sup>2</sup>＝26＋y<sup>2</sup><br>y＝<span class=\"frac\"><span>3</span><span>4</span></span><br>面積＝16−6−½×1×<span class=\"frac\"><span>3</span><span>4</span></span>＝<span class=\"frac\"><span>77</span><span>8</span></span>", "val": 9.625, "hint": "BS² 用兩個三角形各算一次，列等式解 y。"}, "id": "m-4", "src": "會考 106 年 第 26 題", "q": "兩正方形 ABCD、BPQR 重疊，R 在 AD 上，CD 與 QR 相交於 S。兩正方形的面積分別是 16、25，求四邊形 RBCS（灰色）的<b>面積</b>。", "mode": "mixed"}, {"fig": {"pts": {"A": [60.0, 56.0, 0, -7], "B": [60.0, 200.0, -6, 14], "C": [60.0, 92.0, -7, 5], "D": [204.0, 200.0, 0, 17], "M": [132.0, 200.0, 0, 17]}, "segs": [["A", "B"], ["C", "D"]], "dash": [], "ra": [], "lab": [["B", "C", "9", -10, 14, 0.5], ["B", "D", "12", 0, 17, 0.3]], "tap": ["A", "B", "C", "D"], "show": ["A", "B", "C", "D"], "plab": {}, "dots": [], "under": "<line x1=\"20.0\" y1=\"200.0\" x2=\"244.0\" y2=\"200.0\" stroke=\"#232026\" stroke-width=\"1.6\"/>", "vb": [6, 23.0, 252, 211.0], "maxw": 240}, "s1": {"ask": "要求的是哪一條線段？", "o": [["CD（鋼索）", ["C", "D"]], ["AB", ["A", "B"]], ["BD", ["B", "D"]]], "a": 0, "hint": "題目問的是鋼索的長。", "ok": ""}, "s2": {"cands": [{"segs": [["A", "D"]], "hint": "鋼索是從 C 拉的，不是 A。AD 用不到。"}, {"segs": [["C", "M"]], "hint": "CM 不是鋼索，用不到。"}], "a": -1, "ra": [["B", "A", "D"]], "ok": "對！電線桿和地面本來就垂直，直角在 B，不用補線。", "hint": "電線桿是直立的，地面是平的，直角已經在圖上了。", "sol": [], "none": true, "lhint": "電線桿和地面本來就垂直，直角已經在 B 了。這題不用補線，按「不用補線」。", "wrong": {}}, "rounds": [{"tris": [{"v": ["C", "B", "D"], "ok": true, "known": [["C", "B"], ["B", "D"]], "hyp": ["C", "D"], "note": "CB＝9（不是 12！鋼索綁在 C）、BD＝12", "why": "", "okm": ""}], "hint": ""}], "calc": {"ask": "鋼索 CD 有多長？", "o": ["15", "12√<span class=\"rad\">2</span>", "21", "3√<span class=\"rad\">7</span>"], "a": 0, "why": "CB＝9、BD＝12<br>CD<sup>2</sup>＝9<sup>2</sup>＋12<sup>2</sup>＝81＋144＝225<br>CD＝15", "val": 15.0, "hint": "股是 CB＝9（鋼索綁在 C，不是桿頂 A）。"}, "id": "m-5", "src": "自編類題", "q": "電線桿 AB 高 12 公尺，立在平地上。一條鋼索從桿上的 C 點（離地 9 公尺）拉到地面的 D 點，BD＝12 公尺。鋼索 CD 多長？", "mode": "mixed"}, {"fig": {"pts": {"A": [40.0, 80.0, -7, 4], "B": [40.0, 200.0, -6, 13], "C": [160.0, 200.0, 6, 12], "D": [94.7, 55.3, 0, -7]}, "segs": [["A", "B"], ["B", "C"], ["C", "D"], ["D", "A"]], "dash": [], "ra": [["B", "A", "C"], ["D", "A", "C"]], "lab": [["A", "B", "4", -11, 4], ["B", "C", "4", 0, 17], ["A", "D", "2", -9, -5]], "tap": ["A", "B", "C", "D"], "show": ["A", "B", "C", "D"], "plab": {}, "dots": [], "under": "", "vb": [9.8, 22.3, 179.4, 211.7], "maxw": 220}, "s1": {"ask": "要求的是哪一條線段？", "o": [["CD", ["C", "D"]], ["AD", ["A", "D"]], ["BC", ["B", "C"]]], "a": 0, "hint": "題目問 CD。", "ok": ""}, "s2": {"cands": [{"segs": [["B", "D"]], "hint": "BD 會把 ∠B、∠D 兩個直角劈開。"}, {"segs": [["A", "C"]], "hint": ""}], "a": 1, "ra": [], "ok": "對！AC 把四邊形切成 △ABC 和 △ACD，直角在 B 和 D。", "hint": "補的線不能把直角（B、D）劈開。", "sol": [{"segs": [["A", "C"]], "ra": [], "ok": "對！AC 把四邊形切成兩個直角三角形（直角在 B、D）。"}], "none": false, "lhint": "補的線不能把直角（B、D）劈開。", "wrong": {"B|D": "BD 會把 ∠B、∠D 兩個直角劈開，切出來的三角形都沒有直角。"}}, "rounds": [{"tris": [{"v": ["A", "B", "C"], "ok": true, "known": [["A", "B"], ["B", "C"]], "hyp": ["A", "C"], "note": "AB＝BC＝4", "why": "", "okm": ""}, {"v": ["A", "C", "D"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△ACD 是直角三角形，可是現在只知道 AD。先做另一個。", "okm": ""}], "hint": "", "ask": "先找：哪一個直角三角形，<b>兩條邊已經知道</b>？"}, {"tris": [{"v": ["A", "C", "D"], "ok": true, "known": [["A", "D"], ["A", "C"]], "hyp": ["A", "C"], "note": "AC 是上一個三角形的斜邊（AC²＝32）", "why": "", "okm": ""}, {"v": ["A", "B", "C"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△ABC 剛剛用過了。", "okm": ""}], "hint": "", "ask": "AC 算得出來了。接著用哪一個直角三角形求 CD？"}], "calc": {"ask": "CD 的長是多少？", "o": ["2√<span class=\"rad\">7</span>", "6", "2√<span class=\"rad\">3</span>", "4"], "a": 0, "why": "AC<sup>2</sup>＝4<sup>2</sup>＋4<sup>2</sup>＝32<br>CD<sup>2</sup>＝32−2<sup>2</sup>＝28<br>CD＝√<span class=\"rad\">28</span>＝2√<span class=\"rad\">7</span>", "val": 5.291502622129181, "hint": "△ACD 的直角在 D，斜邊是 AC：CD²＝AC²−AD²。"}, "id": "m-6", "src": "自編類題", "q": "四邊形 ABCD 中，∠B＝∠D＝90°，AB＝BC＝4、AD＝2，求 <b>CD</b>。", "mode": "mixed"}, {"fig": {"pts": {"A": [20.0, 20.0, -6, -3], "D": [120.0, 20.0, 0, -7], "B": [20.0, 120.0, -7, 5], "C": [120.0, 120.0, 7, 13], "G": [80.0, 120.0, -5, -6], "E": [20.0, 180.0, -6, 13], "F": [80.0, 180.0, 0, 17], "H": [230.0, 180.0, 0, 17], "I": [270.0, 80.0, 7, 5]}, "segs": [["A", "D"], ["D", "C"], ["C", "B"], ["B", "A"], ["B", "E"], ["E", "F"], ["F", "G"], ["F", "H"], ["D", "G"], ["G", "H"], ["H", "I"], ["I", "D"]], "dash": [], "ra": [], "lab": [["A", "B", "5", -11, 4], ["B", "G", "3", 0, -6]], "tap": ["A", "B", "C", "D", "E", "F", "G", "H", "I"], "show": ["A", "B", "C", "D", "E", "F", "G", "H", "I"], "plab": {}, "dots": [], "under": "<polygon points=\"80.0,120.0 80.0,180.0 230.0,180.0\" fill=\"#e4e1ee\" stroke=\"none\" stroke-width=\"1.4\"/>", "vb": [-10.2, -13.0, 310.4, 227.0], "maxw": 290}, "s1": {"ask": "△GFH 的面積＝½×GF×FH，GF＝3 有了。還缺哪一段？", "o": [["FH", ["F", "H"]], ["GH", ["G", "H"]], ["DG", ["D", "G"]]], "a": 0, "hint": "△GFH 的直角在 F，兩股是 GF 和 FH。", "ok": ""}, "s2": {"cands": [{"segs": [["G", "I"]], "hint": "GI 和 DH 一樣長，可是 I 的位置不好算。"}, {"segs": [["C", "H"]], "hint": "CH 夾不出能用的直角。"}, {"segs": [["D", "H"]], "hint": ""}], "a": 2, "ra": [["G", "D", "H"]], "ok": "對！DH 是 △DGH 的斜邊（矩形的角 ∠DGH＝90°）；D、H 都放得上坐標，DH 還可以用距離公式再算一次。", "hint": "找一條線：它是一個直角三角形的斜邊，兩端的點又都放得上坐標。", "sol": [{"segs": [["D", "H"]], "ra": [["G", "D", "H"]], "ok": "對！DH 是 △DGH 的斜邊，也可以用坐標距離算一次。"}], "none": false, "lhint": "找一條線：它是一個直角三角形的斜邊，兩端的點又都放得上坐標。", "wrong": {"G|I": "GI 和 DH 一樣長，可是 I 的位置不好算。換一條試試。"}}, "rounds": [{"tris": [{"v": ["D", "C", "G"], "ok": true, "known": [["D", "C"], ["C", "G"]], "hyp": ["D", "G"], "note": "DC＝5、CG＝5−3＝2", "why": "", "okm": ""}, {"v": ["D", "G", "H"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△DGH 是直角三角形，可是現在兩條邊都還不知道。先做另一個。", "okm": ""}], "hint": "", "ask": "先找：哪一個直角三角形，<b>兩條邊已經知道</b>？"}, {"tris": [{"v": ["D", "G", "H"], "ok": true, "known": [], "hyp": ["D", "H"], "note": "DG²＝29；設 FH＝x，GH²＝3²＋x²", "why": "", "okm": ""}, {"v": ["D", "C", "G"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△DCG 剛剛用過了。", "okm": ""}], "hint": "", "ask": "DG²＝29 算出來了。△DGH 的直角在 G，點它，再找它的斜邊。"}], "calc": {"ask": "△GFH 的面積為何？", "o": ["10", "11", "<span class=\"frac\"><span>15</span><span>2</span></span>", "<span class=\"frac\"><span>45</span><span>4</span></span>"], "a": 3, "why": "DG<sup>2</sup>＝5<sup>2</sup>＋2<sup>2</sup>＝29<br>設 FH＝x：GH<sup>2</sup>＝3<sup>2</sup>＋x<sup>2</sup><br>△DGH：DH<sup>2</sup>＝29＋9＋x<sup>2</sup><br>坐標：DH<sup>2</sup>＝(x−2)<sup>2</sup>＋8<sup>2</sup><br>38＋x<sup>2</sup>＝x<sup>2</sup>−4x＋68<br>x＝7.5<br>面積＝½×3×7.5＝<span class=\"frac\"><span>45</span><span>4</span></span>", "val": 11.25, "hint": "DH² 用 △DGH 算一次、用坐標距離算一次，兩個相等。"}, "id": "m-7", "src": "會考 104 年 第 23 題", "q": "兩正方形 ABCD、BEFG 和矩形 DGHI 如圖，G、F 分別在 BC、EH 上。AB＝5、BG＝3，求 △GFH（灰色）的<b>面積</b>。", "mode": "mixed"}, {"fig": {"pts": {"A": [20.0, 170.0, -6, 5], "B": [275.0, 170.0, 6, 5], "C": [111.8, 47.6, 0, -7], "D": [111.8, 170.0, 0, 17], "M": [147.5, 170.0, 0, 17]}, "segs": [["A", "C"], ["C", "B"], ["A", "B"]], "dash": [], "ra": [["C", "A", "B"]], "lab": [["A", "C", "9", -10, -3], ["C", "B", "12", 10, -6]], "tap": ["A", "B", "C", "D", "M"], "show": ["A", "B", "C"], "plab": {}, "dots": [], "under": "", "vb": [-9.2, 14.6, 313.4, 189.4], "maxw": 300}, "s1": {"ask": "要求的是什麼？", "o": [["C 到 AB 的距離（從 C 垂直畫到 AB，圖上還沒有）", null], ["AB", ["A", "B"]], ["AC", ["A", "C"]]], "a": 0, "hint": "「點到線的距離」是垂直的那一段。", "ok": ""}, "s2": {"cands": [{"segs": [["C", "M"]], "hint": "CM 是斜的，沒有和 AB 垂直。"}, {"segs": [["C", "D"]], "hint": ""}], "a": 1, "ra": [["D", "C", "B"]], "ok": "對！CD 和 AB 垂直，C 到 AB 的距離就是 CD。", "hint": "距離要走垂直的那一條。", "sol": [{"segs": [["C", "D"]], "ra": [["D", "C", "B"]], "ok": "對！CD 和 AB 垂直，C 到 AB 的距離就是 CD。"}], "none": false, "lhint": "「距離」要走垂直的那一條。從 C 往 AB 畫垂直線。", "wrong": {"C|M": "CM 是斜的，沒有和 AB 垂直。"}}, "rounds": [{"tris": [{"v": ["A", "B", "C"], "ok": true, "known": [["A", "C"], ["B", "C"]], "hyp": ["A", "B"], "note": "AC＝9、BC＝12；先求 AB，再用面積算 CD", "why": "", "okm": ""}, {"v": ["A", "C", "D"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△ACD 是直角三角形，可是只知道 AC。", "okm": ""}, {"v": ["B", "C", "D"], "ok": false, "known": [], "hyp": null, "note": "", "why": "△BCD 是直角三角形，可是只知道 BC。", "okm": ""}], "hint": "", "ask": "哪一個直角三角形，<b>兩條邊已經知道</b>？"}], "calc": {"ask": "C 到 AB 的距離是多少？", "o": ["<span class=\"frac\"><span>36</span><span>5</span></span>", "<span class=\"frac\"><span>15</span><span>2</span></span>", "<span class=\"frac\"><span>18</span><span>5</span></span>", "9"], "a": 0, "why": "AB<sup>2</sup>＝9<sup>2</sup>＋12<sup>2</sup>＝225<br>AB＝15<br>面積算兩次：9×12＝15×CD<br>CD＝108÷15＝<span class=\"frac\"><span>36</span><span>5</span></span>", "val": 7.2, "hint": "先求斜邊 AB，再用面積算兩次。"}, "id": "m-8", "src": "自編類題", "q": "直角三角形 ABC 中，∠C＝90°，AC＝9、BC＝12。C 到 AB 的<b>距離</b>是多少？", "mode": "mixed"}]}];
+
+/* ══ 關卡「找出直角三角形」：6 組 28 題，進度存 localStorage（"dz-"＋KEY）══ */
+(function(){
+  var GKEY="dz-"+KEY,gs={};
+  try{gs=JSON.parse(localStorage.getItem(GKEY)||"{}")}catch(e){gs={}}
+  if(!gs.d)gs.d={};
+  function gsave(){try{localStorage.setItem(GKEY,JSON.stringify(gs))}catch(e){}}
+  function gDone(g){return GATE[g].items.every(function(it){return gs.d[it.id]})}
+  function gOpen(g){return g===0||gDone(g-1)}
+  function nAll(){var n=0;GATE.forEach(function(g){n+=g.items.length});return n}
+  function nDone(){var n=0;GATE.forEach(function(g){g.items.forEach(function(it){if(gs.d[it.id])n++})});return n}
+  function firstUndone(g){var its=GATE[g].items;for(var i=0;i<its.length;i++)if(!gs.d[its[i].id])return i;return 0}
+  var gi=0,ii=0;
+  for(var g=0;g<GATE.length;g++){gi=g;if(!gDone(g))break}
+  ii=firstUndone(gi);
+  function groups(){
+    $("gGroups").innerHTML=GATE.map(function(g,i){return '<button type="button" class="dz-gchip'+(i===gi?" on":"")+(gDone(i)?" done":"")+'" data-g="'+i+'"'+(gOpen(i)?"":" disabled")+'>'+(gOpen(i)?"":"🔒 ")+g.short+(gDone(i)?" ✓":"")+'</button>'}).join("");
+    Array.prototype.forEach.call($("gGroups").children,function(b){b.addEventListener("click",function(){if(b.disabled)return;gi=+b.dataset.g;ii=firstUndone(gi);render()})});
+  }
+  function canGo(i){var G=GATE[gi];return !!gs.d[G.items[i].id]||i===firstUndone(gi)}
+  function dots(){var G=GATE[gi];$("gDots").innerHTML=G.items.map(function(x,i){return '<span class="dot'+(gs.d[x.id]?" done":(i===ii?" now":""))+(i===ii?" cur":"")+(i!==ii&&canGo(i)?" go":"")+'" data-i="'+i+'" title="第 '+(i+1)+' 題"></span>'}).join("")}
+  $("gDots").addEventListener("click",function(e){var d=e.target.closest(".dot");if(!d)return;var i=+d.dataset.i;if(i!==ii&&canGo(i)){ii=i;render()}});
+  function prog(){$("gProg").textContent="找出直角三角形：完成 "+nDone()+" / "+nAll()+" 題"}
+  function nextLabel(){var G=GATE[gi];return ii<G.items.length-1?"下一題":(gi<GATE.length-1?"下一組："+GATE[gi+1].short:"全部完成！往下到「動手練」")}
+  function render(){
+    var G=GATE[gi],it=G.items[ii];
+    groups();dots();prog();
+    $("gHead").innerHTML="<span class='gt'>"+G.title+"</span>"+(G.how||"");
+    $("gHead").style.display="";
+    $("gSrc").textContent=it.src;
+    $("gNo").textContent="第 "+(ii+1)+" 題 / 共 "+G.items.length+" 題";
+    var done=!!gs.d[it.id];
+    $("gQ").style.display="none";
+    $("gPrev").style.display=(ii>0||gi>0)?"":"none";
+    $("gNext").disabled=!gs.d[it.id];
+    $("gNext").textContent=nextLabel();
+    var o={mode:it.mode,calc:true,widen:$("gate"),qhtml:it.q+(done?' <span class="dz-badge">做過了：下面是你拆好的樣子，按「這一題重來」可以再做一次</span>':''),
+      onDone:function(){gs.d[it.id]=1;gsave();$("gNext").disabled=false;$("gNext").textContent=nextLabel();groups();dots();prog()}};
+    if(done)DZ.show($("gBox"),it,o);else DZ.run($("gBox"),it,o);
+  }
+  $("gNext").addEventListener("click",function(){
+    var G=GATE[gi];
+    if(ii<G.items.length-1)ii++;
+    else if(gi<GATE.length-1){gi++;ii=firstUndone(gi)}
+    else{document.querySelector(".prac").scrollIntoView({behavior:"smooth",block:"start"});return}
+    render();$("gate").scrollIntoView({behavior:"smooth",block:"start"});
+  });
+  $("gPrev").addEventListener("click",function(){
+    if(ii>0)ii--;else if(gi>0){gi--;ii=GATE[gi].items.length-1}else return;
+    render();$("gate").scrollIntoView({behavior:"smooth",block:"start"});
+  });
+  $("rst").addEventListener("click",function(){try{localStorage.removeItem(GKEY);localStorage.removeItem("dz-layout-"+KEY)}catch(e){}});
+  render();
+})();
 
 
 if(pDone>0&&pDone<PRAC.length)pi=pDone; else if(pDone>=PRAC.length)pi=PRAC.length-1;

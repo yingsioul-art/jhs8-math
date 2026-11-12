@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5-1 資料整理與統計圖表 · 計算熟練 · 八上</title>
+<style>
+:root{--paper:#f7f8f5;--ink:#20261f;--ink2:#525c50;--line:#d8ded4;--accent:#4338ca;--ok:#1f7a4d;--no:#b3402f;--warm:#b5762a;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:26px 16px 90px}
+header{text-align:center;padding:12px 0 4px}
+.kick{font-size:12px;letter-spacing:.18em;color:var(--accent);font-weight:700}
+h1{font-size:25px;margin:.25em 0 .3em;line-height:1.5}
+.sub{color:var(--ink2);font-size:14.5px}
+.bar{position:sticky;top:0;z-index:9;background:color-mix(in srgb,var(--paper) 94%,transparent);backdrop-filter:blur(6px);
+ border-bottom:1px solid var(--line);margin:18px -16px 0;padding:9px 16px;display:flex;align-items:center;gap:12px;font-size:14px}
+.bar .tr{flex:1;height:8px;background:#e9ece6;border-radius:99px;overflow:hidden}
+.bar .fl{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .4s}
+.bar b{color:var(--accent);font-variant-numeric:tabular-nums}
+.howto{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:16px 0;font-size:14.5px;line-height:1.8}
+.howto summary{cursor:pointer;font-weight:700}
+.howto ul{margin:6px 0 0;padding-left:1.3em}
+.howto code{background:#f1f0fb;border-radius:5px;padding:0 5px;font-family:inherit}
+h2.grp{font-size:18.5px;margin:34px 0 4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;line-height:1.5}
+h2.grp .no{font-size:13px;color:#fff;background:var(--accent);border-radius:99px;padding:1px 11px}
+h2.grp .ref{font-size:12.5px;font-weight:400;color:var(--ink2);border:1px solid var(--line);border-radius:99px;padding:0 9px}
+.intro{font-size:15px;color:var(--ink);margin:6px 0 4px}
+.intro .note,.note{font-size:13px;color:var(--ink2)}
+svg.chart{width:100%;max-width:640px;height:auto;display:block;margin:8px auto;color:var(--ink)}
+table.tb{border-collapse:collapse;margin:8px 0;font-size:14px;width:100%}
+table.tb th,table.tb td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+table.tb th{white-space:nowrap;background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px 12px;margin:14px 0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-bottom:6px}
+.qn{display:inline-block;min-width:26px;height:26px;line-height:26px;text-align:center;font-size:13px;font-weight:700;color:#fff;background:var(--ink2);border-radius:99px}
+.q.done .qn{background:var(--ok)}
+.dn{display:none;color:var(--ok);font-weight:700}
+.q.done .dn{display:inline}
+.qt{font-size:16.5px;line-height:1.9;overflow-wrap:anywhere}
+.part{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pl{font-size:14px;color:var(--ink2);font-weight:700}
+input.in{font:inherit;font-size:16px;padding:6px 10px;border:1.5px solid var(--line);border-radius:9px;min-width:0;flex:1 1 220px;max-width:420px;background:#fff;color:#111}
+input.in.sm{flex:0 1 140px}
+input.in:focus{outline:none;border-color:var(--accent)}
+.unit{font-size:14px;color:var(--ink2)}
+.mk{font-size:13.5px;font-weight:700}
+.mk.ok{color:var(--ok)}.mk.no{color:var(--no)}
+button.ch{font:inherit;font-size:15px;cursor:pointer;background:#fbfbf9;border:1.5px solid var(--line);border-radius:9px;padding:5px 14px;color:var(--ink)}
+button.ch.sel{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,#fff);font-weight:700}
+.keys{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.keys button{font:inherit;font-size:14px;min-width:36px;padding:3px 8px;border-radius:8px;border:1px solid var(--line);background:#fff;color:#333;cursor:pointer}
+.tools{display:flex;gap:8px;margin-top:12px;align-items:center;flex-wrap:wrap}
+button.go{font:inherit;font-size:15px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:7px 18px}
+button.rv{font:inherit;font-size:14px;cursor:pointer;background:#fff;border:1.5px solid var(--warm);color:var(--warm);border-radius:10px;padding:6px 14px}
+.fb{font-size:14.5px;font-weight:700}
+.fb.ok{color:var(--ok)}.fb.no{color:var(--no)}
+.sol{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+.sol-h{font-size:12.5px;letter-spacing:.1em;color:var(--warm);font-weight:700}
+.sol-b{font-size:16px;line-height:2}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.92em;line-height:1.25;margin:0 2px}
+.frac>span:first-child{border-bottom:1.3px solid currentColor;padding:0 4px}
+.rad{border-top:1.3px solid currentColor;padding:0 3px 0 1px;margin-left:-1px}
+.frac .rad{border-top-width:1px}
+.cx{display:inline-grid;grid-template-columns:auto auto;gap:0 30px;padding:2px 12px;vertical-align:middle;line-height:1.6;margin:2px 4px;
+ background:linear-gradient(to top right,transparent calc(50% - .7px),var(--warm) 50%,transparent calc(50% + .7px)),
+ linear-gradient(to bottom right,transparent calc(50% - .7px),var(--warm) 50%,transparent calc(50% + .7px))}
+.cx i{font-style:normal;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:22px}
+a.card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px 17px}
+a.card .cn{font-size:16.5px;font-weight:700;line-height:1.5}
+a.card .cp{font-size:12.5px;color:#fff;background:var(--accent);border-radius:99px;padding:2px 10px;display:inline-block;margin-top:7px}
+a.card .cm{font-size:13px;color:var(--ink2);margin-top:9px;display:flex;align-items:center;gap:8px}
+a.card .pr{flex:1;height:6px;background:#e9ece6;border-radius:99px;overflow:hidden}
+a.card .pr i{display:block;height:100%;width:0;background:var(--ok);border-radius:99px}
+footer{padding:30px 0 0;font-size:13px;color:var(--ink2);line-height:1.9;border-top:1px solid var(--line);margin-top:36px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#17161f;--ink:#ece9ff;--ink2:#b1adc8;--line:#3a3752;--card:#211f2e}
+ :root:not([data-theme="light"]) input.in,:root:not([data-theme="light"]) .keys button,:root:not([data-theme="light"]) button.rv{background:#2a2838;color:#eee}
+ :root:not([data-theme="light"]) button.ch{background:#2a2838}}
+</style>
+<style id="sitenav-css">
+.sitenav{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+ padding:10px 0 12px;margin:0 0 6px;border-bottom:1px solid rgba(0,0,0,.08);font-size:13.5px;scrollbar-width:none}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav a{flex:0 0 auto;text-decoration:none;color:#4b5563;background:#fff;border:1px solid rgba(0,0,0,.12);
+ border-radius:99px;padding:4px 12px;line-height:1.6;white-space:nowrap}
+.sitenav a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav a.home{font-weight:700;color:#5b4bdb;border-color:#5b4bdb;background:#fff}
+.sitenav a.now{background:#5b4bdb;color:#fff;border-color:#5b4bdb;font-weight:700}
+.sitenav .sep{flex:0 0 auto;color:#9ca3af;padding:0 2px}
+.sitenav-b{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:34px 0 8px}
+.sitenav-b a{text-decoration:none;color:#374151;background:#fff;border:1px solid rgba(0,0,0,.14);border-radius:12px;
+ padding:12px 14px;line-height:1.5;font-size:14.5px;display:flex;flex-direction:column;justify-content:center}
+.sitenav-b a:hover{border-color:#5b4bdb;color:#5b4bdb}
+.sitenav-b a small{font-size:11.5px;color:#9ca3af;letter-spacing:.08em}
+.sitenav-b a.next{text-align:left}
+.sitenav-b a.homeb{justify-content:center;text-align:center;font-weight:700;color:#5b4bdb;border-color:#5b4bdb}
+.sitenav-b span{display:block}
+@media(max-width:640px){.sitenav{flex-wrap:wrap;overflow:visible;gap:6px 5px;font-size:13px}.sitenav a{padding:3px 10px}}
+@media(max-width:520px){.sitenav-b{grid-template-columns:1fr 1fr}.sitenav-b a.homeb{grid-column:1/-1;order:-1}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="wrap">
+
+<!-- SITENAV:top 由 _add_site_nav.py 產生，勿手改 -->
+<nav class="sitenav" aria-label="站內導覽"><a class="home" href="index.html">八年級數學自學站</a><span class="sep">·</span><a class="" href="multiply.html">1-1 乘法公式</a><a class="" href="polynomial.html">1-2 多項式加減</a><a class="" href="division.html">1-3 多項式乘除</a><a class="" href="sqrt.html">2-1 平方根</a><a class="" href="radical.html">2-2 根式運算</a><a class="" href="pythag.html">2-3 畢氏定理</a><a class="" href="factor.html">3-1 提公因式與乘法公式</a><a class="" href="cross.html">3-2 十字交乘法</a><a class="" href="quadfactor.html">4-1 因式分解解方程式</a><a class="" href="quadformula.html">4-2 配方法與公式解</a><a class="" href="quadapply.html">4-3 應用問題</a><span class="sep">·</span><a class="now" href="drill.html">計算熟練</a><span class="sep">·</span><a class="" href="exam-sections.html">段考・照節次練</a><a class="" href="exam.html">段考・整卷模擬</a></nav>
+<!-- /SITENAV:top -->
+<header><div class="kick">計算熟練　·　講義 p.32–34</div><h1>5-1 資料整理與統計圖表</h1><div class="sub">共 <b>10</b> 題，每題都有一步一步的解法</div></header>
+<div class="bar"><span>本頁進度</span><div class="tr"><div class="fl" id="fill"></div></div><b id="cnt">0</b><button class="tiny" id="reset" type="button" style="font:inherit;font-size:12.5px;border:1px solid var(--line);background:none;border-radius:8px;padding:2px 9px;color:var(--ink2);cursor:pointer">清除進度</button></div><details class="howto" open><summary>怎麼作答（第一次先看）</summary><ul>
+<li>先在紙上算，再把答案打進格子，按「對答案」。答對會自動出現<b>一步一步的解法</b>；答錯可以再試，真的不會再按「看一步一步解法」。</li>
+<li>平方打 <code>^2</code> 或按下面的「²」鍵：<code>(x+3)^2</code>。分數用斜線：<code>3/4</code>、<code>-5/3</code>。根號用「√」鍵：<code>(5+√6)/2</code>、<code>9±√15</code>。</li>
+<li>方程式有兩個解用逗號或「或」隔開：<code>x=3, x=-5</code> 或 <code>3, -5</code>；重根寫一個就好；沒有解寫「無解」。</li>
+<li>因式分解要<b>分解到不能再分解</b>，括號裡還有公因數要先提出來；順序、正負號換寫法（例如 (7−x) 寫成 −(x−7)）都算對。</li>
+<li>解答是本站自己算的（講義沒有附解答），標「非官方」；有疑問請問老師。</li>
+</ul></details><h2 class="grp" id="g1"><span class="no">熟練 1</span>報讀累積次數分配折線圖<span class="ref">對應課本 p.206 例 1</span></h2><div class="intro">下圖為基隆市和臺中市某天 6:00AM 到 6:00PM 的累積雨量折線圖，試回答下列問題。<svg class="chart" viewBox="0 0 600 360" role="img" aria-label="累積雨量（毫米）"><g font-size="12" fill="currentColor"><line x1="62" y1="296.0" x2="582" y2="296.0" stroke="currentColor" stroke-opacity=".55"/><text x="56" y="300.0" text-anchor="end">0</text><line x1="62" y1="270.5" x2="582" y2="270.5" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="274.5" text-anchor="end">20</text><line x1="62" y1="245.1" x2="582" y2="245.1" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="249.1" text-anchor="end">40</text><line x1="62" y1="219.6" x2="582" y2="219.6" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="223.6" text-anchor="end">60</text><line x1="62" y1="194.2" x2="582" y2="194.2" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="198.2" text-anchor="end">80</text><line x1="62" y1="168.7" x2="582" y2="168.7" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="172.7" text-anchor="end">100</text><line x1="62" y1="143.3" x2="582" y2="143.3" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="147.3" text-anchor="end">120</text><line x1="62" y1="117.8" x2="582" y2="117.8" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="121.8" text-anchor="end">140</text><line x1="62" y1="92.4" x2="582" y2="92.4" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="96.4" text-anchor="end">160</text><line x1="62" y1="66.9" x2="582" y2="66.9" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="70.9" text-anchor="end">180</text><line x1="62" y1="41.5" x2="582" y2="41.5" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="45.5" text-anchor="end">200</text><line x1="62" y1="16.0" x2="582" y2="16.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="20.0" text-anchor="end">220</text><line x1="62" y1="16" x2="62" y2="296" stroke="currentColor" stroke-opacity=".55"/><path d="M71 300 l4 -8 M77 300 l4 -8" stroke="currentColor" fill="none"/><line x1="96.0" y1="296" x2="96.0" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="100.0" y="312" text-anchor="end" transform="rotate(-50 100.0 312)">6:00AM</text><line x1="135.7" y1="296" x2="135.7" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="139.7" y="312" text-anchor="end" transform="rotate(-50 139.7 312)">7:00AM</text><line x1="175.3" y1="296" x2="175.3" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="179.3" y="312" text-anchor="end" transform="rotate(-50 179.3 312)">8:00AM</text><line x1="215.0" y1="296" x2="215.0" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="219.0" y="312" text-anchor="end" transform="rotate(-50 219.0 312)">9:00AM</text><line x1="254.7" y1="296" x2="254.7" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="258.7" y="312" text-anchor="end" transform="rotate(-50 258.7 312)">10:00AM</text><line x1="294.3" y1="296" x2="294.3" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="298.3" y="312" text-anchor="end" transform="rotate(-50 298.3 312)">11:00AM</text><line x1="334.0" y1="296" x2="334.0" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="338.0" y="312" text-anchor="end" transform="rotate(-50 338.0 312)">12:00PM</text><line x1="373.7" y1="296" x2="373.7" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="377.7" y="312" text-anchor="end" transform="rotate(-50 377.7 312)">1:00PM</text><line x1="413.3" y1="296" x2="413.3" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="417.3" y="312" text-anchor="end" transform="rotate(-50 417.3 312)">2:00PM</text><line x1="453.0" y1="296" x2="453.0" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="457.0" y="312" text-anchor="end" transform="rotate(-50 457.0 312)">3:00PM</text><line x1="492.7" y1="296" x2="492.7" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="496.7" y="312" text-anchor="end" transform="rotate(-50 496.7 312)">4:00PM</text><line x1="532.3" y1="296" x2="532.3" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="536.3" y="312" text-anchor="end" transform="rotate(-50 536.3 312)">5:00PM</text><line x1="572.0" y1="296" x2="572.0" y2="301" stroke="currentColor" stroke-opacity=".55"/><text x="576.0" y="312" text-anchor="end" transform="rotate(-50 576.0 312)">6:00PM</text><text x="596" y="354" text-anchor="end">時間</text><text x="14" y="156" transform="rotate(-90 14 156)" text-anchor="middle">累積雨量（毫米）</text><polyline points="96.0,296.0 135.7,296.0 175.3,276.9 215.0,270.5 254.7,270.5 294.3,251.5 334.0,232.4 373.7,219.6 413.3,194.2 453.0,156.0 492.7,92.4 532.3,73.3 572.0,28.7" fill="none" stroke="#dc2626" stroke-width="2"/><path d="M96.0 290.5 l5 8.5 h-10 z" fill="#dc2626"/><path d="M135.7 290.5 l5 8.5 h-10 z" fill="#dc2626"/><path d="M175.3 271.4 l5 8.5 h-10 z" fill="#dc2626"/><path d="M215.0 265.0 l5 8.5 h-10 z" fill="#dc2626"/><path d="M254.7 265.0 l5 8.5 h-10 z" fill="#dc2626"/><path d="M294.3 246.0 l5 8.5 h-10 z" fill="#dc2626"/><path d="M334.0 226.9 l5 8.5 h-10 z" fill="#dc2626"/><path d="M373.7 214.1 l5 8.5 h-10 z" fill="#dc2626"/><path d="M413.3 188.7 l5 8.5 h-10 z" fill="#dc2626"/><path d="M453.0 150.5 l5 8.5 h-10 z" fill="#dc2626"/><path d="M492.7 86.9 l5 8.5 h-10 z" fill="#dc2626"/><path d="M532.3 67.8 l5 8.5 h-10 z" fill="#dc2626"/><path d="M572.0 23.2 l5 8.5 h-10 z" fill="#dc2626"/><polyline points="96.0,296.0 135.7,289.6 175.3,270.5 215.0,219.6 254.7,181.5 294.3,168.7 334.0,168.7 373.7,162.4 413.3,143.3 453.0,130.5 492.7,105.1 532.3,98.7 572.0,98.7" fill="none" stroke="#2563eb" stroke-width="2"/><circle cx="96.0" cy="296.0" r="4" fill="#2563eb"/><circle cx="135.7" cy="289.6" r="4" fill="#2563eb"/><circle cx="175.3" cy="270.5" r="4" fill="#2563eb"/><circle cx="215.0" cy="219.6" r="4" fill="#2563eb"/><circle cx="254.7" cy="181.5" r="4" fill="#2563eb"/><circle cx="294.3" cy="168.7" r="4" fill="#2563eb"/><circle cx="334.0" cy="168.7" r="4" fill="#2563eb"/><circle cx="373.7" cy="162.4" r="4" fill="#2563eb"/><circle cx="413.3" cy="143.3" r="4" fill="#2563eb"/><circle cx="453.0" cy="130.5" r="4" fill="#2563eb"/><circle cx="492.7" cy="105.1" r="4" fill="#2563eb"/><circle cx="532.3" cy="98.7" r="4" fill="#2563eb"/><circle cx="572.0" cy="98.7" r="4" fill="#2563eb"/><text x="133.7" y="279.6" text-anchor="middle" font-weight="700" fill="#2563eb">5</text><text x="240.7" y="173.5" text-anchor="middle" font-weight="700" fill="#2563eb">90</text><text x="373.7" y="184.4" text-anchor="middle" font-weight="700" fill="#2563eb">105</text><text x="441.0" y="120.5" text-anchor="middle" font-weight="700" fill="#2563eb">130</text><text x="508.7" y="123.1" text-anchor="middle" font-weight="700" fill="#2563eb">150</text><path d="M80 20 l5 8.5 h-10 z" fill="#dc2626"/><text x="90" y="30">臺中市</text><circle cx="80" cy="44" r="4" fill="#2563eb"/><text x="90" y="48">基隆市</text></g></svg><p class="note">※ 圖依講義重畫：有標數字的點照講義，其他點是估讀；算的時候以講義原圖為準，答案只差幾毫米不影響結論。</p></div><div class="q" id="q5-1-1-1" data-q="5-1-1-1"><div class="qh"><span class="qn">1</span><span class="dn">✓ 已答對</span></div><div class="qt">哪一個縣市在這天 6:00AM 到 2:00PM（不含 2:00PM）的累積雨量較多？</div><div class="part" data-p="0"><button type="button" class="ch" data-o="0">基隆市</button><button type="button" class="ch" data-o="1">臺中市</button><button type="button" class="ch" data-o="2">一樣多</button><span class="mk"></span></div><div class="tools"><button type="button" class="go">對答案</button><span class="fb"></span><button type="button" class="rv" hidden>還是不會？看一步一步解法（會看到答案）</button></div><div class="sol" hidden><div class="sol-h">一步一步解　·　本站自解（非官方）</div><div class="sol-b"></div></div></div><div class="q" id="q5-1-1-2" data-q="5-1-1-2"><div class="qh"><span class="qn">2</span><span class="dn">✓ 已答對</span></div><div class="qt">依中央氣象局針對大雨及豪雨的雨量分級定義如下：<table class="tb"><tr><th>大雨</th><td>24 小時累積雨量達 80 毫米以上，或時雨量達 40 毫米以上之降雨現象。</td></tr><tr><th>豪雨</th><td>24 小時累積雨量達 200 毫米以上，或 3 小時累積雨量達 100 毫米以上之降雨現象。</td></tr><tr><th>超大豪雨</th><td>24 小時累積雨量達 350 毫米以上，或 3 小時累積雨量達 200 毫米以上之降雨現象。</td></tr></table>試問當天 6:00AM 到 12:00PM（不含 12:00PM），臺中市和基隆市是否達到大雨及豪雨標準，分級為何？</div><div class="part" data-p="0"><span class="pl">臺中市</span><button type="button" class="ch" data-o="0">未達大雨</button><button type="button" class="ch" data-o="1">大雨</button><button type="button" class="ch" data-o="2">豪雨</button><span class="mk"></span></div><div class="part" data-p="1"><span class="pl">基隆市</span><button type="button" class="ch" data-o="0">未達大雨</button><button type="button" class="ch" data-o="1">大雨</button><button type="button" class="ch" data-o="2">豪雨</button><span class="mk"></span></div><div class="tools"><button type="button" class="go">對答案</button><span class="fb"></span><button type="button" class="rv" hidden>還是不會？看一步一步解法（會看到答案）</button></div><div class="sol" hidden><div class="sol-h">一步一步解　·　本站自解（非官方）</div><div class="sol-b"></div></div></div><div class="q" id="q5-1-1-3" data-q="5-1-1-3"><div class="qh"><span class="qn">3</span><span class="dn">✓ 已答對</span></div><div class="qt">哪一個縣市在這天 2:00PM 到 6:00PM 的降雨量較多？</div><div class="part" data-p="0"><button type="button" class="ch" data-o="0">基隆市</button><button type="button" class="ch" data-o="1">臺中市</button><button type="button" class="ch" data-o="2">一樣多</button><span class="mk"></span></div><div class="tools"><button type="button" class="go">對答案</button><span class="fb"></span><button type="button" class="rv" hidden>還是不會？看一步一步解法（會看到答案）</button></div><div class="sol" hidden><div class="sol-h">一步一步解　·　本站自解（非官方）</div><div class="sol-b"></div></div></div><h2 class="grp" id="g2"><span class="no">熟練 2</span>報讀相對次數分配折線圖<span class="ref">對應課本 p.216 例 2</span></h2><div class="intro">下圖為暑假參加「公主郵輪沖繩跳島之旅」成員年齡相對次數分配折線圖，試回答下列問題。<svg class="chart" viewBox="0 0 600 320" role="img" aria-label="年齡相對次數分配折線圖"><g font-size="12" fill="currentColor"><line x1="62" y1="270.0" x2="582" y2="270.0" stroke="currentColor" stroke-opacity=".55"/><text x="56" y="274.0" text-anchor="end">0</text><line x1="62" y1="238.2" x2="582" y2="238.2" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="242.2" text-anchor="end">4</text><line x1="62" y1="206.5" x2="582" y2="206.5" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="210.5" text-anchor="end">8</text><line x1="62" y1="174.8" x2="582" y2="174.8" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="178.8" text-anchor="end">12</text><line x1="62" y1="143.0" x2="582" y2="143.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="147.0" text-anchor="end">16</text><line x1="62" y1="111.2" x2="582" y2="111.2" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="115.2" text-anchor="end">20</text><line x1="62" y1="79.5" x2="582" y2="79.5" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="83.5" text-anchor="end">24</text><line x1="62" y1="47.8" x2="582" y2="47.8" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="51.8" text-anchor="end">28</text><line x1="62" y1="16.0" x2="582" y2="16.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="20.0" text-anchor="end">32</text><line x1="62" y1="16" x2="62" y2="270" stroke="currentColor" stroke-opacity=".55"/><line x1="131.3" y1="270" x2="131.3" y2="275" stroke="currentColor" stroke-opacity=".55"/><text x="131.3" y="290" text-anchor="middle">10</text><line x1="200.7" y1="270" x2="200.7" y2="275" stroke="currentColor" stroke-opacity=".55"/><text x="200.7" y="290" text-anchor="middle">20</text><line x1="270.0" y1="270" x2="270.0" y2="275" stroke="currentColor" stroke-opacity=".55"/><text x="270.0" y="290" text-anchor="middle">30</text><line x1="339.3" y1="270" x2="339.3" y2="275" stroke="currentColor" stroke-opacity=".55"/><text x="339.3" y="290" text-anchor="middle">40</text><line x1="408.7" y1="270" x2="408.7" y2="275" stroke="currentColor" stroke-opacity=".55"/><text x="408.7" y="290" text-anchor="middle">50</text><line x1="478.0" y1="270" x2="478.0" y2="275" stroke="currentColor" stroke-opacity=".55"/><text x="478.0" y="290" text-anchor="middle">60</text><line x1="547.3" y1="270" x2="547.3" y2="275" stroke="currentColor" stroke-opacity=".55"/><text x="547.3" y="290" text-anchor="middle">70</text><text x="596" y="314" text-anchor="end">年齡（歲）</text><text x="14" y="143" transform="rotate(-90 14 143)" text-anchor="middle">相對次數（%）</text><polyline points="96.7,190.6 166.0,206.5 235.3,143.0 304.7,31.9 374.0,111.2 443.3,190.6 512.7,222.4" fill="none" stroke="#2563eb" stroke-width="2"/><circle cx="96.7" cy="190.6" r="4" fill="#2563eb"/><text x="96.7" y="181.6" text-anchor="middle" font-weight="700" fill="#2563eb">10</text><circle cx="166.0" cy="206.5" r="4" fill="#2563eb"/><text x="166.0" y="197.5" text-anchor="middle" font-weight="700" fill="#2563eb">8</text><circle cx="235.3" cy="143.0" r="4" fill="#2563eb"/><text x="235.3" y="134.0" text-anchor="middle" font-weight="700" fill="#2563eb">16</text><circle cx="304.7" cy="31.9" r="4" fill="#2563eb"/><text x="304.7" y="22.9" text-anchor="middle" font-weight="700" fill="#2563eb">30</text><circle cx="374.0" cy="111.2" r="4" fill="#2563eb"/><text x="374.0" y="102.2" text-anchor="middle" font-weight="700" fill="#2563eb">20</text><circle cx="443.3" cy="190.6" r="4" fill="#2563eb"/><text x="443.3" y="181.6" text-anchor="middle" font-weight="700" fill="#2563eb">10</text><circle cx="512.7" cy="222.4" r="4" fill="#2563eb"/><text x="512.7" y="213.4" text-anchor="middle" font-weight="700" fill="#2563eb">6</text></g></svg><p class="note">※ 每個點畫在那一組的中間：10 那個點代表 0～10 歲、8 代表 10～20 歲，依此類推。</p></div><div class="q" id="q5-1-2-1" data-q="5-1-2-1"><div class="qh"><span class="qn">1</span><span class="dn">✓ 已答對</span></div><div class="qt">若小米的年齡為 20 歲，試問郵輪上的成員比小米年輕的人數占全部成員的百分比（%）為多少？</div><div class="part" data-p="0"><input class="in sm" placeholder="答案（分數寫 3/4）" autocomplete="off" autocapitalize="off" spellcheck="false"><span class="unit">%</span><span class="mk"></span></div><div class="tools"><button type="button" class="go">對答案</button><span class="fb"></span><button type="button" class="rv" hidden>還是不會？看一步一步解法（會看到答案）</button></div><div class="sol" hidden><div class="sol-h">一步一步解　·　本站自解（非官方）</div><div class="sol-b"></div></div></div><div class="q" id="q5-1-2-2" data-q="5-1-2-2"><div class="qh"><span class="qn">2</span><span class="dn">✓ 已答對</span></div><div class="qt">30 歲以上（含），未滿 50 歲的成員，占全部成員的百分比（%）為多少？</div><div class="part" data-p="0"><input class="in sm" placeholder="答案（分數寫 3/4）" autocomplete="off" autocapitalize="off" spellcheck="false"><span class="unit">%</span><span class="mk"></span></div><div class="tools"><button type="button" class="go">對答案</button><span class="fb"></span><button type="button" class="rv" hidden>還是不會？看一步一步解法（會看到答案）</button></div><div class="sol" hidden><div class="sol-h">一步一步解　·　本站自解（非官方）</div><div class="sol-b"></div></div></div><div class="q" id="q5-1-2-3" data-q="5-1-2-3"><div class="qh"><span class="qn">3</span><span class="dn">✓ 已答對</span></div><div class="qt">已知郵輪全部成員共有 300 人，則年齡在 40 歲以上（含）的人數為多少人？</div><div class="part" data-p="0"><input class="in sm" placeholder="答案（分數寫 3/4）" autocomplete="off" autocapitalize="off" spellcheck="false"><span class="unit">人</span><span class="mk"></span></div><div class="tools"><button type="button" class="go">對答案</button><span class="fb"></span><button type="button" class="rv" hidden>還是不會？看一步一步解法（會看到答案）</button></div><div class="sol" hidden><div class="sol-h">一步一步解　·　本站自解（非官方）</div><div class="sol-b"></div></div></div><h2 class="grp" id="g3"><span class="no">熟練 3</span>累積相對次數分配折線圖的比較<span class="ref">對應課本 p.218 例 3</span></h2><div class="intro">下圖為甲、乙兩班數學段考分數的累積相對次數分配折線圖，試回答下列問題。<svg class="chart" viewBox="0 0 600 330" role="img" aria-label="累積相對次數（%）"><g font-size="12" fill="currentColor"><line x1="62" y1="266.0" x2="582" y2="266.0" stroke="currentColor" stroke-opacity=".55"/><text x="56" y="270.0" text-anchor="end">0</text><line x1="62" y1="241.0" x2="582" y2="241.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="245.0" text-anchor="end">10</text><line x1="62" y1="216.0" x2="582" y2="216.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="220.0" text-anchor="end">20</text><line x1="62" y1="191.0" x2="582" y2="191.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="195.0" text-anchor="end">30</text><line x1="62" y1="166.0" x2="582" y2="166.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="170.0" text-anchor="end">40</text><line x1="62" y1="141.0" x2="582" y2="141.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="145.0" text-anchor="end">50</text><line x1="62" y1="116.0" x2="582" y2="116.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="120.0" text-anchor="end">60</text><line x1="62" y1="91.0" x2="582" y2="91.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="95.0" text-anchor="end">70</text><line x1="62" y1="66.0" x2="582" y2="66.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="70.0" text-anchor="end">80</text><line x1="62" y1="41.0" x2="582" y2="41.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="45.0" text-anchor="end">90</text><line x1="62" y1="16.0" x2="582" y2="16.0" stroke="currentColor" stroke-opacity=".14"/><text x="56" y="20.0" text-anchor="end">100</text><line x1="62" y1="16" x2="62" y2="266" stroke="currentColor" stroke-opacity=".55"/><path d="M71 270 l4 -8 M77 270 l4 -8" stroke="currentColor" fill="none"/><line x1="96.0" y1="266" x2="96.0" y2="271" stroke="currentColor" stroke-opacity=".55"/><text x="96.0" y="286" text-anchor="middle">20</text><line x1="155.5" y1="266" x2="155.5" y2="271" stroke="currentColor" stroke-opacity=".55"/><text x="155.5" y="286" text-anchor="middle">30</text><line x1="215.0" y1="266" x2="215.0" y2="271" stroke="currentColor" stroke-opacity=".55"/><text x="215.0" y="286" text-anchor="middle">40</text><line x1="274.5" y1="266" x2="274.5" y2="271" stroke="currentColor" stroke-opacity=".55"/><text x="274.5" y="286" text-anchor="middle">50</text><line x1="334.0" y1="266" x2="334.0" y2="271" stroke="currentColor" stroke-opacity=".55"/><text x="334.0" y="286" text-anchor="middle">60</text><line x1="393.5" y1="266" x2="393.5" y2="271" stroke="currentColor" stroke-opacity=".55"/><text x="393.5" y="286" text-anchor="middle">70</text><line x1="453.0" y1="266" x2="453.0" y2="271" stroke="currentColor" stroke-opacity=".55"/><text x="453.0" y="286" text-anchor="middle">80</text><line x1="512.5" y1="266" x2="512.5" y2="271" stroke="currentColor" stroke-opacity=".55"/><text x="512.5" y="286" text-anchor="middle">90</text><line x1="572.0" y1="266" x2="572.0" y2="271" stroke="currentColor" stroke-opacity=".55"/><text x="572.0" y="286" text-anchor="middle">100</text><text x="596" y="324" text-anchor="end">分數（分）</text><text x="14" y="141" transform="rotate(-90 14 141)" text-anchor="middle">累積相對次數（%）</text><polyline points="96.0,266.0 155.5,228.5 215.0,191.0 274.5,166.0 334.0,128.5 393.5,78.5 453.0,53.5 512.5,28.5 572.0,16.0" fill="none" stroke="#2563eb" stroke-width="2"/><circle cx="96.0" cy="266.0" r="4" fill="#2563eb"/><circle cx="155.5" cy="228.5" r="4" fill="#2563eb"/><circle cx="215.0" cy="191.0" r="4" fill="#2563eb"/><circle cx="274.5" cy="166.0" r="4" fill="#2563eb"/><circle cx="334.0" cy="128.5" r="4" fill="#2563eb"/><circle cx="393.5" cy="78.5" r="4" fill="#2563eb"/><circle cx="453.0" cy="53.5" r="4" fill="#2563eb"/><circle cx="512.5" cy="28.5" r="4" fill="#2563eb"/><circle cx="572.0" cy="16.0" r="4" fill="#2563eb"/><polyline points="155.5,266.0 215.0,228.5 274.5,191.0 334.0,166.0 393.5,128.5 453.0,78.5 512.5,41.0 572.0,16.0" fill="none" stroke="#dc2626" stroke-width="2"/><path d="M155.5 260.5 l5 8.5 h-10 z" fill="#dc2626"/><path d="M215.0 223.0 l5 8.5 h-10 z" fill="#dc2626"/><path d="M274.5 185.5 l5 8.5 h-10 z" fill="#dc2626"/><path d="M334.0 160.5 l5 8.5 h-10 z" fill="#dc2626"/><path d="M393.5 123.0 l5 8.5 h-10 z" fill="#dc2626"/><path d="M453.0 73.0 l5 8.5 h-10 z" fill="#dc2626"/><path d="M512.5 35.5 l5 8.5 h-10 z" fill="#dc2626"/><path d="M572.0 10.5 l5 8.5 h-10 z" fill="#dc2626"/><text x="145.5" y="220.5" text-anchor="middle" font-weight="700" fill="#2563eb">15</text><text x="322.0" y="120.5" text-anchor="middle" font-weight="700" fill="#2563eb">55</text><text x="381.5" y="70.5" text-anchor="middle" font-weight="700" fill="#2563eb">75</text><text x="441.0" y="45.5" text-anchor="middle" font-weight="700" fill="#2563eb">85</text><text x="500.5" y="20.5" text-anchor="middle" font-weight="700" fill="#2563eb">95</text><text x="572.0" y="6.0" text-anchor="middle" font-weight="700" fill="#2563eb">100</text><text x="227.0" y="244.5" text-anchor="middle" font-weight="700" fill="#dc2626">15</text><text x="467.0" y="94.5" text-anchor="middle" font-weight="700" fill="#dc2626">75</text><circle cx="84" cy="26" r="4" fill="#2563eb"/><text x="94" y="30">甲班</text><path d="M84 38 l5 8.5 h-10 z" fill="#dc2626"/><text x="94" y="48">乙班</text></g></svg><p class="note">※ 每個點代表「未滿這個分數」的人占幾 %；未標數字的點依講義原圖估讀。</p></div><div class="q" id="q5-1-3-1" data-q="5-1-3-1"><div class="qh"><span class="qn">1</span><span class="dn">✓ 已答對</span></div><div class="qt">數學段考及格比例（60 分以上（含））較多的是哪一班？</div><div class="part" data-p="0"><button type="button" class="ch" data-o="0">甲班</button><button type="button" class="ch" data-o="1">乙班</button><button type="button" class="ch" data-o="2">一樣多</button><span class="mk"></span></div><div class="tools"><button type="button" class="go">對答案</button><span class="fb"></span><button type="button" class="rv" hidden>還是不會？看一步一步解法（會看到答案）</button></div><div class="sol" hidden><div class="sol-h">一步一步解　·　本站自解（非官方）</div><div class="sol-b"></div></div></div><div class="q" id="q5-1-3-2" data-q="5-1-3-2"><div class="qh"><span class="qn">2</span><span class="dn">✓ 已答對</span></div><div class="qt">數學段考分數最低分的學生在哪一班？</div><div class="part" data-p="0"><button type="button" class="ch" data-o="0">甲班</button><button type="button" class="ch" data-o="1">乙班</button><button type="button" class="ch" data-o="2">一樣多</button><span class="mk"></span></div><div class="tools"><button type="button" class="go">對答案</button><span class="fb"></span><button type="button" class="rv" hidden>還是不會？看一步一步解法（會看到答案）</button></div><div class="sol" hidden><div class="sol-h">一步一步解　·　本站自解（非官方）</div><div class="sol-b"></div></div></div><div class="q" id="q5-1-3-3" data-q="5-1-3-3"><div class="qh"><span class="qn">3</span><span class="dn">✓ 已答對</span></div><div class="qt">若甲、乙兩班參加數學段考的學生分別有 40 人和 30 人，試問數學段考分數 90 分以上（含）的學生哪一班較多？</div><div class="part" data-p="0"><button type="button" class="ch" data-o="0">甲班</button><button type="button" class="ch" data-o="1">乙班</button><button type="button" class="ch" data-o="2">一樣多</button><span class="mk"></span></div><div class="tools"><button type="button" class="go">對答案</button><span class="fb"></span><button type="button" class="rv" hidden>還是不會？看一步一步解法（會看到答案）</button></div><div class="sol" hidden><div class="sol-h">一步一步解　·　本站自解（非官方）</div><div class="sol-b"></div></div></div><div class="q" id="q5-1-3-4" data-q="5-1-3-4"><div class="qh"><span class="qn">4</span><span class="dn">✓ 已答對</span></div><div class="qt">哪一班的學生數學段考分數在 80 分以上（含），未滿 90 分的比例較多？</div><div class="part" data-p="0"><button type="button" class="ch" data-o="0">甲班</button><button type="button" class="ch" data-o="1">乙班</button><button type="button" class="ch" data-o="2">一樣多</button><span class="mk"></span></div><div class="tools"><button type="button" class="go">對答案</button><span class="fb"></span><button type="button" class="rv" hidden>還是不會？看一步一步解法（會看到答案）</button></div><div class="sol" hidden><div class="sol-h">一步一步解　·　本站自解（非官方）</div><div class="sol-b"></div></div></div>
+<!-- SITENAV:bottom 由 _add_site_nav.py 產生，勿手改 -->
+<div class="sitenav-b"><a class="prev" href="drill-4-3.html"><small>← 上一頁</small><span>計算熟練 4-3</span></a><a class="homeb" href="index.html">回八年級首頁</a><a class="next" href="exam-sections.html"><small>下一頁 →</small><span>段考・照節次練</span></a></div>
+<!-- /SITENAV:bottom -->
+
+<footer>題目出自國中數學 2上「計算熟練」講義；解答為本站自解（非官方），有疑問請問老師。</footer>
+</div>
+<script>var DATA={"5-1-1-1": {"parts": [{"t": "choice", "ok": [0], "multi": false, "label": ""}], "steps": "累積折線圖：每個點＝從 6:00AM 一路加到那個時刻的總雨量<br>看 2:00PM 之前最後一個點（1:00PM）：基隆市 105 毫米<br>臺中市約 60 毫米，低很多<br><b>答：基隆市</b>"}, "5-1-1-2": {"parts": [{"t": "choice", "ok": [0], "multi": false, "label": "臺中市"}, {"t": "choice", "ok": [1], "multi": false, "label": "基隆市"}], "steps": "基隆市：到 11:00AM 累積約 100 毫米，已超過 80 毫米 → 至少是大雨<br>基隆市 8:00→9:00 一小時就下了約 40 毫米，也符合「時雨量 40」<br>豪雨要 3 小時累積 100：基隆市最多的 3 小時 7:00→10:00 是 90−5＝85，不到 100 → 不是豪雨<br>臺中市：到 11:00AM 只有約 35 毫米，每小時都不到 40 毫米 → 未達大雨<br><b>答：臺中市未達大雨；基隆市為大雨</b>"}, "5-1-1-3": {"parts": [{"t": "choice", "ok": [1], "multi": false, "label": ""}], "steps": "這段時間下的雨＝6:00PM 的累積量 − 2:00PM 的累積量<br>基隆市：約 155−120＝35 毫米（後段幾乎持平）<br>臺中市：約 210−80＝130 毫米（線變得很陡）<br>線越陡＝那段時間下得越多<br><b>答：臺中市</b>"}, "5-1-2-1": {"parts": [{"t": "num", "v": 18.0, "label": "", "unit": "%"}], "steps": "比小米年輕＝未滿 20 歲<br>0～10 歲 10%，10～20 歲 8%<br>10＋8＝18<br><b>答：18%</b>"}, "5-1-2-2": {"parts": [{"t": "num", "v": 50.0, "label": "", "unit": "%"}], "steps": "30～40 歲 30%，40～50 歲 20%<br>30＋20＝50<br><b>答：50%</b>"}, "5-1-2-3": {"parts": [{"t": "num", "v": 108.0, "label": "", "unit": "人"}], "steps": "40 歲以上：40～50 歲 20%＋50～60 歲 10%＋60～70 歲 6%<br>20＋10＋6＝36%<br>300×36%＝300×<span class=\"frac\"><span>36</span><span>100</span></span>＝108<br><b>答：108 人</b>"}, "5-1-3-1": {"parts": [{"t": "choice", "ok": [1], "multi": false, "label": ""}], "steps": "60 分那個點＝未滿 60 分的人占幾 %<br>甲班 55% 不及格 → 及格 100−55＝45%<br>乙班 40% 不及格 → 及格 100−40＝60%<br><b>答：乙班</b>"}, "5-1-3-2": {"parts": [{"t": "choice", "ok": [0], "multi": false, "label": ""}], "steps": "看折線從 0% 開始往上爬的位置<br>甲班從 20 分就開始爬：20～30 分有人（15%）<br>乙班到 30 分才開始爬：最低的人至少 30 分<br><b>答：甲班</b>"}, "5-1-3-3": {"parts": [{"t": "choice", "ok": [1], "multi": false, "label": ""}], "steps": "90 分以上＝100% − 未滿 90 分的 %<br>甲班：100−95＝5%，40×5%＝2 人<br>乙班：100−90＝10%，30×10%＝3 人<br><b>答：乙班（3 人比 2 人）</b>"}, "5-1-3-4": {"parts": [{"t": "choice", "ok": [1], "multi": false, "label": ""}], "steps": "80～90 分的比例＝90 分的點 − 80 分的點<br>甲班：95−85＝10%<br>乙班：90−75＝15%<br><b>答：乙班</b>"}};</script>
+<script>
+(function(){
+"use strict";
+var KEY="jhs8math-drill-v1";
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){return {}}}
+function save(s){try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}}
+
+/* ---------- 正規化與解析 ---------- */
+function norm(s){
+  s=s.replace(/[０-９]/g,function(c){return String.fromCharCode(c.charCodeAt(0)-65248)});
+  return s.replace(/[＋]/g,"+").replace(/[−－–—]/g,"-").replace(/[×＊·]/g,"*").replace(/[（]/g,"(").replace(/[）]/g,")")
+   .replace(/²/g,"^2").replace(/³/g,"^3").replace(/[／÷]/g,"/").replace(/[，、；;]/g,",").replace(/＝/g,"=")
+   .replace(/sqrt|根號/gi,"√").replace(/\+\/-|\+-/g,"±").replace(/[ＸX]/g,"x").replace(/[ＹY]/g,"y").replace(/\s+/g,"")
+   .replace(/\[/g,"(").replace(/\]/g,")").replace(/[｛{]/g,"(").replace(/[｝}]/g,")");
+}
+function parse(src){
+  var s=src,i=0;
+  function peek(){return s[i]}
+  function expr(){var a=[term()];while(peek()==="+"||peek()==="-"){var op=s[i++];var t=term();a.push(op==="-"?{t:"neg",a:t}:t)}return a.length===1?a[0]:{t:"+",a:a}}
+  function startsPrimary(c){return c!==undefined&&(/[0-9.xy(√]/.test(c))}
+  function term(){var a=[unary()];for(;;){var c=peek();
+      if(c==="*"){i++;a.push(unary())}else if(c==="/"){i++;a.push({t:"inv",a:unary()})}
+      else if(startsPrimary(c)){a.push(power())}else break}
+    return a.length===1?a[0]:{t:"*",a:a}}
+  function unary(){var c=peek();if(c==="-"){i++;return {t:"neg",a:unary()}}if(c==="+"){i++;return unary()}return power()}
+  function power(){var b=primary();if(peek()==="^"){i++;var e=unary();return {t:"^",b:b,e:e}}return b}
+  function primary(){var c=peek();
+    if(c===undefined)throw 0;
+    if(c==="("){i++;var e=expr();if(peek()!==")")throw 0;i++;return e}
+    if(c==="√"){i++;return {t:"sqrt",a:power()}}
+    if(c==="x"||c==="y"){i++;return {t:"v",n:c}}
+    var m=/^[0-9]*\.?[0-9]+/.exec(s.slice(i));if(m){i+=m[0].length;return {t:"n",v:parseFloat(m[0])}}
+    throw 0}
+  var r=expr();if(i!==s.length)throw 0;return r;
+}
+function ev(n,env){switch(n.t){
+  case "n":return n.v;case "v":return env[n.n];case "neg":return -ev(n.a,env);
+  case "+":return n.a.reduce(function(s,k){return s+ev(k,env)},0);
+  case "*":return n.a.reduce(function(s,k){return s*ev(k,env)},1);
+  case "inv":return 1/ev(n.a,env);case "^":return Math.pow(ev(n.b,env),ev(n.e,env));
+  case "sqrt":return Math.sqrt(ev(n.a,env))}}
+function hasVar(n){if(n.t==="v")return true;if(n.t==="n")return false;if(n.a&&n.a.map)return n.a.some(hasVar);
+  if(n.t==="^")return hasVar(n.b)||hasVar(n.e);return hasVar(n.a)}
+var PTS=[[0.37,1.3],[1.91,-0.7],[-2.23,2.1],[3.7,0.45],[-0.61,-1.9]];
+function close(a,b){return Math.abs(a-b)<=1e-7*Math.max(1,Math.abs(b))}
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=a%b;a=b;b=t}return a}
+
+/* ---------- 各種作答格 ---------- */
+function chkFactor(raw,ans){
+  var s=norm(raw);if(!s)return {ok:false,msg:"還沒填"};
+  var u,t;try{u=parse(s)}catch(e){return {ok:false,msg:"看不懂這個式子，檢查括號和符號"}}
+  t=parse(norm(ans));
+  for(var k=0;k<PTS.length;k++){var env={x:PTS[k][0],y:PTS[k][1]};if(!close(ev(u,env),ev(t,env)))return {ok:false,msg:"展開後和原式不一樣"}}
+  var fs=[];(function fl(n,m){if(n.t==="neg")return fl(n.a,m);if(n.t==="*"){n.a.forEach(function(f){fl(f,m)});return}
+    if(n.t==="^"&&!hasVar(n.e)){var e=ev(n.e,{});if(e>0&&Math.round(e)===e)return fl(n.b,m*e)}fs.push({n:n,m:m})})(u,1);
+  var cnt=0;
+  for(var j=0;j<fs.length;j++){var f=fs[j].n;if(!hasVar(f))continue;
+    var c=ev(f,{x:0,y:0}),ax=ev(f,{x:1,y:0})-c,ay=ev(f,{x:0,y:1})-c;
+    for(var k2=0;k2<PTS.length;k2++){var p=PTS[k2];if(!close(ev(f,{x:p[0],y:p[1]}),c+ax*p[0]+ay*p[1]))return {ok:false,msg:"和原式相等，但有一部分還能再分解（或還沒寫成相乘）"}}
+    if([c,ax,ay].some(function(z){return Math.abs(z-Math.round(z))>1e-9}))return {ok:false,msg:"括號裡請用整數係數"};
+    if(gcd(gcd(Math.round(c),Math.round(ax)),Math.round(ay))>1)return {ok:false,msg:"括號裡還有公因數，要再提出來"};
+    cnt+=fs[j].m}
+  if(cnt<2)return {ok:false,msg:"和原式相等，但還沒寫成「相乘」的樣子"};
+  return {ok:true};
+}
+function values(raw,allowVar){
+  var s=norm(raw);if(!s)return {err:"還沒填"};
+  if(/無解|沒有|無實數|不存在/.test(raw))return {none:true,vals:[]};
+  s=s.replace(/[\u4e00-\u9fff%]+/g,",").replace(/[a-z]*=/g,",").replace(/=/g,",");
+  var toks=s.split(",").filter(function(z){return z!==""}),out=[];
+  for(var i=0;i<toks.length;i++){var ts=toks[i].indexOf("±")>=0?[toks[i].replace("±","+"),toks[i].replace("±","-")]:[toks[i]];
+    for(var j=0;j<ts.length;j++){var n;try{n=parse(ts[j])}catch(e){return {err:"看不懂「"+toks[i]+"」"}}
+      if(hasVar(n))return {err:"答案裡不要有 x，寫成 x＝數字"};out.push(ev(n,{}))}}
+  if(!out.length)return {err:"還沒填"};
+  return {vals:out};
+}
+function sameSet(a,b){var ua=[],ub=[];a.forEach(function(v){if(!ua.some(function(w){return close(w,v)}))ua.push(v)});
+  b.forEach(function(v){if(!ub.some(function(w){return close(w,v)}))ub.push(v)});
+  return ua.length===ub.length&&ua.every(function(v){return ub.some(function(w){return close(w,v)})})}
+function chkSet(raw,vals){var r=values(raw);if(r.err)return {ok:false,msg:r.err};
+  if(!vals.length)return r.none?{ok:true}:{ok:false,msg:"再想想：解出來的數合理嗎？"};
+  if(r.none)return {ok:false,msg:"其實有解喔"};
+  if(sameSet(r.vals,vals))return {ok:true};
+  var some=r.vals.some(function(v){return vals.some(function(w){return close(v,w)})});
+  return {ok:false,msg:some?"有對的，但不完整或多寫了":"不對，再算一次"}}
+function chkNum(raw,v){var r=values(raw);if(r.err)return {ok:false,msg:r.err};if(r.none)return {ok:false,msg:"這題有答案喔"};
+  if(r.vals.length!==1)return {ok:false,msg:"只要填一個數"};return close(r.vals[0],v)?{ok:true}:{ok:false,msg:"不對，再算一次"}}
+
+/* ---------- 頁面 ---------- */
+var state=load(),last=null;
+function refresh(){var qs=document.querySelectorAll(".q"),d=0;qs.forEach(function(q){if(state[q.dataset.q]){q.classList.add("done");d++}});
+  var b=document.getElementById("cnt");if(b)b.textContent=d+" / "+qs.length;var f=document.getElementById("fill");if(f)f.style.width=(qs.length?d/qs.length*100:0)+"%"}
+function showSol(q){var sol=q.querySelector(".sol");if(!sol.hidden)return;sol.hidden=false;var b=q.querySelector(".sol-b"),h=DATA[q.dataset.q].steps;
+  if(window.StepPlay)StepPlay.mount(b,h);else b.innerHTML=h}
+document.addEventListener("focusin",function(e){if(e.target.matches&&e.target.matches("input.in"))last=e.target});
+document.addEventListener("click",function(e){
+  var t=e.target.closest("button");if(!t)return;var q=t.closest(".q");
+  if(t.classList.contains("ch")){var part=t.closest(".part"),d=DATA[q.dataset.q].parts[+part.dataset.p];
+    if(!d.multi)part.querySelectorAll(".ch").forEach(function(b){if(b!==t)b.classList.remove("sel")});t.classList.toggle("sel");return}
+  if(t.dataset.k!==undefined&&q){var inp=(last&&q.contains(last))?last:q.querySelector("input.in");if(!inp)return;
+    var k=t.dataset.k==="，"?", ":t.dataset.k,st=inp.selectionStart==null?inp.value.length:inp.selectionStart,en=inp.selectionEnd==null?st:inp.selectionEnd;
+    inp.value=inp.value.slice(0,st)+k+inp.value.slice(en);inp.focus();try{inp.setSelectionRange(st+k.length,st+k.length)}catch(_){}return}
+  if(t.classList.contains("rv")){showSol(q);return}
+  if(t.classList.contains("go")){var all=true,D=DATA[q.dataset.q];
+    q.querySelectorAll(".part").forEach(function(part){var d=D.parts[+part.dataset.p],r,mk=part.querySelector(".mk");
+      if(d.t==="choice"){var sel=[];part.querySelectorAll(".ch.sel").forEach(function(b){sel.push(+b.dataset.o)});
+        r=!sel.length?{ok:false,msg:"還沒選"}:(sel.length===d.ok.length&&sel.every(function(v){return d.ok.indexOf(v)>=0})?{ok:true}:{ok:false,msg:d.multi?"不對（可能不只一個）":"不對"})}
+      else{var v=part.querySelector("input").value;
+        r=d.t==="factor"?chkFactor(v,d.ans):d.t==="num"?chkNum(v,d.v):chkSet(v,d.vals)}
+      mk.className="mk "+(r.ok?"ok":"no");mk.textContent=r.ok?"✓":"✗ "+(r.msg||"");if(!r.ok)all=false});
+    var fb=q.querySelector(".fb"),rv=q.querySelector(".rv");
+    if(all){fb.className="fb ok";fb.textContent="答對了！看看解法有沒有和你一樣 👇";rv.hidden=true;state[q.dataset.q]=1;save(state);refresh();showSol(q)}
+    else{fb.className="fb no";fb.textContent="還沒全對，改一改再按一次";rv.hidden=false}}
+  if(t.id==="reset"){state={};save(state);location.reload()}
+});
+document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target.matches&&e.target.matches("input.in")){var g=e.target.closest(".q").querySelector(".go");if(g)g.click()}});
+document.querySelectorAll(".q").forEach(function(q){if(state[q.dataset.q])q.querySelector(".rv").hidden=false});
+document.querySelectorAll(".q .rv").forEach(function(b){if(state[b.closest(".q").dataset.q])b.textContent="看解法"});
+refresh();
+})();
+</script>
+<!--STEPPLAY-->
+<script>
+/* stepplay.js — 國中學習站共用「一步一步看」解說播放器（2026-10-24）
+ * 原始檔：D:\Zettelkasten\20_教學\_共用\stepplay.js。各站產生器 build 時把整支內嵌進網頁，🔴 改這支、不要改產出的 html。
+ *
+ * 做法：把一段解析 HTML 依「換行、＝、→、，。；：」切成好幾步（標籤不拆，根號、分數、SVG 跟著所在的步出現），
+ * 一次亮一步，新出現的那步有淡入＋螢光底；下方有 上一步／下一步／自動播放／全部顯示。
+ *
+ * 用法：
+ *   StepPlay.mount(el, html)          把 html 放進 el 並做成播放器
+ *   StepPlay.enhance(el)              把 el 現有內容做成播放器（已做過就重來一次）
+ *   StepPlay.watch("選擇器, 選擇器")   之後這些元素一出現或內容一換，就自動做成播放器（給手寫頁、各站引擎用）
+ *   在元素加 class="sp-skip" 或 data-sp="off" 就不切步。
+ */
+(function (root) {
+  "use strict";
+  if (root.StepPlay) return;
+
+  var CSS =
+    ".sp-u,.sp-e{transition:opacity .25s}" +
+    ".sp-off{display:none!important}" +
+    ".sp-new{animation:spIn .55s ease-out both;border-radius:4px}" +
+    "@keyframes spIn{0%{opacity:0;transform:translateY(6px);background:rgba(255,214,10,.55)}" +
+    "60%{opacity:1;transform:none;background:rgba(255,214,10,.45)}100%{opacity:1;background:transparent}}" +
+    ".sp-u{display:inline}" +
+    ".sp-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;font-size:14px}" +
+    ".sp-bar button{font:inherit;font-size:14px;padding:5px 11px;border-radius:999px;border:1px solid rgba(0,0,0,.18);" +
+    "background:#fff;color:#1f2937;cursor:pointer;line-height:1.3}" +
+    ".sp-bar button:disabled{opacity:.4;cursor:default}" +
+    ".sp-bar .sp-next{background:#2563eb;border-color:#2563eb;color:#fff;font-weight:700}" +
+    ".sp-bar .sp-cnt{color:#6b7280;margin-left:auto;font-variant-numeric:tabular-nums}" +
+    ".sp-bar .sp-dots{display:inline-flex;gap:3px}" +
+    ".sp-bar .sp-dots i{width:7px;height:7px;border-radius:50%;background:#d1d5db;display:inline-block}" +
+    ".sp-bar .sp-dots i.on{background:#2563eb}" +
+    "@media (prefers-color-scheme:dark){.sp-bar button{background:#1f2937;color:#e5e7eb;border-color:#4b5563}" +
+    ".sp-bar .sp-next{background:#3b82f6;border-color:#3b82f6;color:#fff}.sp-bar .sp-cnt{color:#9ca3af}" +
+    "@keyframes spIn{0%{opacity:0;transform:translateY(6px);background:rgba(250,204,21,.35)}" +
+    "60%{opacity:1;transform:none;background:rgba(250,204,21,.28)}100%{opacity:1;background:transparent}}}" +
+    "@media (prefers-reduced-motion:reduce){.sp-new{animation:none}}";
+
+  function injectCss() {
+    if (document.getElementById("sp-css")) return;
+    var s = document.createElement("style");
+    s.id = "sp-css";
+    s.textContent = CSS;
+    (document.head || document.documentElement).appendChild(s);
+  }
+
+  // 每一步最少幾個字，太短的併到前一步（避免「＝72」單獨一步太碎時可調）
+  var MIN_CHARS = 3, MAX_STEPS = 9;
+  // 斷點：在 ＝ → ≈ ⇒ 之前斷；在 ，。；：！？ 之後斷
+  var SPLIT = /(?=[＝→≈⇒])|(?<=[，。；：！？])/;
+  // 不切開、整塊跟著出現的元素（SVG、圖、公式小圖）
+  var ATOMIC = { SVG: 1, IMG: 1, CANVAS: 1, VIDEO: 1, AUDIO: 1, INPUT: 1, BUTTON: 1, SELECT: 1 };
+
+  function splitText(t) {
+    try { return t.split(SPLIT); } catch (e) { return t.split(/(?=[＝→])/); } // 舊瀏覽器沒有 lookbehind
+  }
+
+  /* 走過 el 的所有節點，把文字切成 .sp-u，每個片段標第幾步；回傳總步數 */
+  function tag(el) {
+    var step = 0, chars = 0, started = false, units = [], needBr = false, prose = false; // prose＝這一行已經出現中文說明
+    function bump(soft, minc) { // 開新的一步（目前這步字太少就不開）；soft＝從句中切開的，要自己補換行
+      if (started && chars >= (minc || MIN_CHARS)) { step++; chars = 0; needBr = !!soft; }
+      else if (!soft) needBr = false;
+    }
+    function br() { // 每一步從新的一行開始（10/24 使用者要求）
+      needBr = false;
+      var b = document.createElement("br"); b.className = "sp-e sp-br"; b.dataset.s = step; units.push(b); return b;
+    }
+    function walk(node) {
+      var kids = Array.prototype.slice.call(node.childNodes);
+      kids.forEach(function (n) {
+        if (n.nodeType === 3) {
+          var t = n.nodeValue;
+          if (!t) return;
+          if (!t.trim()) { // 純空白：跟著前一步
+            var w = document.createElement("span"); w.className = "sp-u"; w.dataset.s = step;
+            n.parentNode.insertBefore(w, n); w.appendChild(n); units.push(w); return;
+          }
+          var parts = splitText(t), frag = document.createDocumentFragment();
+          parts.forEach(function (p, i) {
+            if (!p) return;
+            var eqHead = /^[＝→≈⇒]/.test(p);
+            // 說明句子裡的算式（這一行前面已經有中文）不在「＝」「→」拆行，整句留在同一行（10/24 使用者要求）
+            if (eqHead && prose) {
+              var last = frag.lastChild || (units.length ? units[units.length - 1] : null);
+              if (i > 0 && last && last.classList && last.classList.contains("sp-u")) { last.textContent += p; chars += p.length; return; }
+            } else if (i > 0 || eqHead) bump(true, eqHead ? 5 : 0); // 「1＋3＝4」這種短算式不拆
+            if (needBr) { frag.appendChild(br()); p = p.replace(/^\s+/, ""); if (!p) return; }
+            var s = document.createElement("span"); s.className = "sp-u"; s.dataset.s = step;
+            s.textContent = p; frag.appendChild(s); units.push(s);
+            if (/[一-鿿]/.test(p)) prose = true;
+            chars += p.replace(/\s/g, "").length; started = true;
+          });
+          n.parentNode.replaceChild(frag, n);
+        } else if (n.nodeType === 1) {
+          var tn = n.tagName.toUpperCase();
+          if (tn === "BR") { prose = false; bump(); n.classList.add("sp-e"); n.dataset.s = step; units.push(n); return; } // 換行跟著下一步出現
+          if (n.classList.contains("sp-bar")) return;
+          if (ATOMIC[tn] || n.classList.contains("xc") || n.classList.contains("sp-atom")) {
+            if (needBr) n.parentNode.insertBefore(br(), n);
+            n.classList.add("sp-e"); n.dataset.s = step; units.push(n); started = true; chars += 2; return;
+          }
+          var block = /^(P|DIV|LI|TR|H[1-6]|TABLE|UL|OL|BLOCKQUOTE)$/.test(tn);
+          if (block) { prose = false; bump(); }
+          walk(n);
+          if (block) bump();
+        }
+      });
+    }
+    walk(el);
+    var n = units.length ? (+units[units.length - 1].dataset.s + 1) : 0;
+    // 步數太多就等比例合併
+    if (n > MAX_STEPS) {
+      var r = n / MAX_STEPS;
+      units.forEach(function (u) { u.dataset.s = Math.floor(+u.dataset.s / r); });
+      n = MAX_STEPS;
+    }
+    // 每個元素的「出現步」＝它裡面最早的那一步（根號上的橫線、分數線才不會先跑出來）
+    var all = el.querySelectorAll("*");
+    for (var i = all.length - 1; i >= 0; i--) {
+      var e = all[i];
+      if (e.classList.contains("sp-u") || e.classList.contains("sp-e") || e.closest(".sp-bar")) continue;
+      var m = Infinity, d = e.querySelectorAll(".sp-u,.sp-e");
+      for (var j = 0; j < d.length; j++) m = Math.min(m, +d[j].dataset.s);
+      if (m !== Infinity) { e.dataset.s = m; e.classList.add("sp-w"); }
+    }
+    return n;
+  }
+
+  function show(p, k, anim) {
+    p.k = k;
+    var nodes = p.el.querySelectorAll(".sp-u,.sp-e,.sp-w");
+    for (var i = 0; i < nodes.length; i++) {
+      var x = nodes[i], s = +x.dataset.s;
+      x.classList.toggle("sp-on", s <= k);
+      x.classList.toggle("sp-off", s > k);
+      x.classList.remove("sp-new");
+      if (anim && s === k && !x.classList.contains("sp-w")) { void x.offsetWidth; x.classList.add("sp-new"); }
+    }
+    var b = p.bar;
+    b.querySelector(".sp-prev").disabled = k <= 0;
+    b.querySelector(".sp-next").disabled = k >= p.n - 1;
+    b.querySelector(".sp-all").disabled = k >= p.n - 1;
+    b.querySelector(".sp-cnt").textContent = "第 " + (k + 1) + " 步 / 共 " + p.n + " 步";
+    var dots = b.querySelectorAll(".sp-dots i");
+    for (var d = 0; d < dots.length; d++) dots[d].classList.toggle("on", d <= k);
+    if (k >= p.n - 1) stop(p);
+  }
+
+  function stop(p) {
+    if (p.timer) { clearTimeout(p.timer); p.timer = null; }
+    var a = p.bar.querySelector(".sp-auto");
+    a.textContent = p.k >= p.n - 1 ? "⟲ 重播" : "▶ 自動播放";
+  }
+  function stepLen(p, k) { // 字越多停越久
+    var t = 0, u = p.el.querySelectorAll('.sp-u[data-s="' + k + '"]');
+    for (var i = 0; i < u.length; i++) t += u[i].textContent.length;
+    return Math.min(4200, 1300 + t * 90);
+  }
+  function play(p) {
+    var a = p.bar.querySelector(".sp-auto");
+    if (p.k >= p.n - 1) show(p, 0, true);
+    a.textContent = "⏸ 暫停";
+    (function tick() {
+      p.timer = setTimeout(function () {
+        if (p.k < p.n - 1) { show(p, p.k + 1, true); if (p.k < p.n - 1) tick(); }
+      }, stepLen(p, p.k));
+    })();
+  }
+
+  function enhance(el, opts) {
+    if (!el || el.dataset.sp === "off" || el.classList.contains("sp-skip")) return null;
+    injectCss();
+    opts = opts || {};
+    el._spBusy = true;
+    if (el._sp) { // 做過一次：內容若還是切好的樣子，先還原成原本的 HTML 再切
+      if (el._sp.timer) clearTimeout(el._sp.timer);
+      if (el.querySelector(".sp-u,.sp-e")) el.innerHTML = el._spHtml;
+    }
+    el._spHtml = el.innerHTML;
+    var n = tag(el);
+    var p = { el: el, n: n, k: 0, timer: null };
+    el._sp = p;
+    if (n <= 1) { // 只有一步：不放按鈕，淡入就好
+      var bar0 = document.createElement("div"); bar0.className = "sp-bar"; bar0.style.display = "none";
+      bar0.innerHTML = '<button class="sp-prev"></button><button class="sp-next"></button><button class="sp-auto"></button><button class="sp-all"></button><span class="sp-dots"></span><span class="sp-cnt"></span>';
+      el.appendChild(bar0); p.bar = bar0; show(p, 0, true);
+      el._spBusy = false; return p;
+    }
+    var bar = document.createElement("div");
+    bar.className = "sp-bar";
+    var dots = ""; for (var i = 0; i < n; i++) dots += "<i></i>";
+    bar.innerHTML =
+      '<button type="button" class="sp-prev">◀ 上一步</button>' +
+      '<button type="button" class="sp-next">下一步 ▶</button>' +
+      '<button type="button" class="sp-auto">▶ 自動播放</button>' +
+      '<button type="button" class="sp-all">全部顯示</button>' +
+      '<span class="sp-dots">' + dots + '</span><span class="sp-cnt"></span>';
+    el.appendChild(bar);
+    p.bar = bar;
+    function on(cls, fn) { bar.querySelector(cls).addEventListener("click", function (ev) { ev.preventDefault(); ev.stopPropagation(); fn(); }); }
+    on(".sp-prev", function () { stop(p); if (p.k > 0) show(p, p.k - 1, false); });
+    on(".sp-next", function () { stop(p); if (p.k < p.n - 1) show(p, p.k + 1, true); });
+    on(".sp-all", function () { stop(p); show(p, p.n - 1, false); });
+    on(".sp-auto", function () { if (p.timer) stop(p); else play(p); });
+    show(p, 0, true);
+    if (opts.autoplay) play(p);
+    el._spVis = el.offsetParent !== null; // 記下做好時看不看得到；重新整理後已顯示的解析，第一次按下一步才不會被拉回第 1 步
+    el._spBusy = false;
+    return p;
+  }
+
+  function mount(el, html, opts) {
+    if (!el) return null;
+    el.innerHTML = html;
+    return enhance(el, opts);
+  }
+
+  /* 自動模式：選擇器命中的元素，內容一放進來（或換掉）就做成播放器；已做過且內容沒變就跳過 */
+  function watch(sel, opts) {
+    injectCss();
+    function scan(rootEl) {
+      var list = (rootEl.matches && rootEl.matches(sel)) ? [rootEl] : [];
+      if (rootEl.querySelectorAll) list = list.concat(Array.prototype.slice.call(rootEl.querySelectorAll(sel)));
+      list.forEach(function (el) {
+        if (el._spBusy || !el.textContent.trim()) return;
+        if (el._sp && el.querySelector(":scope > .sp-bar")) return; // 做過且內容沒被換掉
+        enhance(el, opts);
+      });
+    }
+    var pending = false;
+    var mo = new MutationObserver(function () {
+      if (pending) return; pending = true;
+      (root.requestAnimationFrame || setTimeout)(function () { pending = false; scan(document.body); });
+    });
+    function start() { scan(document.body); mo.observe(document.body, { childList: true, subtree: true }); }
+    if (document.body) start(); else document.addEventListener("DOMContentLoaded", start);
+    // 元素從隱藏變成看得到（hidden 拿掉、加 .on/.show）時，從第 1 步重新開始
+    document.addEventListener("click", function () {
+      setTimeout(function () {
+        var els = document.querySelectorAll(sel);
+        for (var i = 0; i < els.length; i++) {
+          var e = els[i], vis = e.offsetParent !== null;
+          if (e._sp && vis && !e._spVis && e._sp.n > 1) show(e._sp, 0, true);
+          e._spVis = vis;
+        }
+      }, 30);
+    }, true);
+  }
+
+  root.StepPlay = { mount: mount, enhance: enhance, watch: watch };
+})(typeof window !== "undefined" ? window : this);
+</script>
+<!--/STEPPLAY-->
+</body>
+</html>

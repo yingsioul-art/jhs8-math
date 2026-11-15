@@ -60,8 +60,10 @@ button.rv{font:inherit;font-size:14px;cursor:pointer;background:#fff;border:1.5p
 .sol-b{font-size:16px;line-height:2}
 .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.92em;line-height:1.25;margin:0 2px}
 .frac>span:first-child{border-bottom:1.3px solid currentColor;padding:0 4px}
-.rad{border-top:1.3px solid currentColor;padding:0 3px 0 1px;margin-left:-1px}
-.frac .rad{border-top-width:1px}
+.sq{display:inline-flex;align-items:stretch;vertical-align:bottom;white-space:nowrap;margin:0 1px}
+.sq>svg.sqs{width:.6em;flex:none;overflow:visible;display:block}
+.rad{border-top:1.6px solid currentColor;padding:.1em .15em 0 .05em;line-height:1.35}
+.frac .rad{border-top-width:1.3px}
 .cx{display:inline-grid;grid-template-columns:auto auto;gap:0 30px;padding:2px 12px;vertical-align:middle;line-height:1.6;margin:2px 4px;
  background:linear-gradient(to top right,transparent calc(50% - .7px),var(--warm) 50%,transparent calc(50% + .7px)),
  linear-gradient(to bottom right,transparent calc(50% - .7px),var(--warm) 50%,transparent calc(50% + .7px))}
@@ -78,61 +80,72 @@ footer{padding:30px 0 0;font-size:13px;color:var(--ink2);line-height:1.9;border-
  :root:not([data-theme="light"]) input.in,:root:not([data-theme="light"]) .keys button,:root:not([data-theme="light"]) button.rv{background:#2a2838;color:#eee}
  :root:not([data-theme="light"]) button.ch{background:#2a2838}}
 
-.lead{font-size:15px;margin:10px 0}
+/* 2026-11-15：手機上字太小 → 整頁字級放大一級 */
+body{font-size:17.5px}
+.sub{font-size:16px}
+.howto{font-size:16.5px;line-height:1.9}
+.howto ol{padding-left:1.3em;margin:.4em 0}
+.howto li{margin:.25em 0}
+.lead{font-size:17px;margin:10px 0}
+.pass-rule{background:color-mix(in srgb,var(--accent) 8%,var(--card));border:1.5px solid var(--accent);border-radius:12px;padding:8px 14px;margin:10px 0;font-size:16.5px}
+.road{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.road .seg{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;border:1px solid var(--line);font-size:14px;color:var(--ink2)}
+.road .seg.now{border-color:var(--accent);color:var(--accent);font-weight:700}
+.left{font-weight:700;color:var(--accent)}
 .stlist{display:grid;gap:12px;margin-top:16px}
 .st{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
 .st:hover{border-color:var(--accent)}
 .st .sh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.st .sid{font-size:12.5px;font-weight:700;color:#fff;background:var(--accent);border-radius:99px;padding:1px 10px}
-.st .sn{font-size:17px;font-weight:700}
-.st .stag{font-size:12px;border:1px solid var(--line);border-radius:99px;padding:0 8px;color:var(--ink2)}
-.st .sg{font-size:14px;color:var(--ink2);margin-top:4px}
-.st .ss{font-size:13.5px;margin-top:6px;font-weight:700;color:var(--warm)}
+.st .sid{font-size:14px;font-weight:700;color:#fff;background:var(--accent);border-radius:99px;padding:1px 10px}
+.st .sn{font-size:19px;font-weight:700}
+.st .stag{font-size:13.5px;border:1px solid var(--line);border-radius:99px;padding:0 8px;color:var(--ink2)}
+.st .sg{font-size:16px;color:var(--ink2);margin-top:4px}
+.st .ss{font-size:15.5px;margin-top:6px;font-weight:700;color:var(--warm)}
 .st.pass .ss{color:var(--ok)}
 .view{display:none}
 .view.on{display:block}
 .vh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 6px}
-.vh h2{font-size:19px;margin:0}
-button.back{font:inherit;font-size:14px;cursor:pointer;background:none;border:1.5px solid var(--line);border-radius:10px;padding:4px 12px;color:var(--ink2)}
-.concept{background:color-mix(in srgb,var(--accent) 7%,var(--card));border:1px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0;font-size:15px}
+.vh h2{font-size:21px;margin:0}
+button.back{font:inherit;font-size:16px;cursor:pointer;background:none;border:1.5px solid var(--line);border-radius:10px;padding:4px 12px;color:var(--ink2)}
+.concept{background:color-mix(in srgb,var(--accent) 7%,var(--card));border:1px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0;font-size:17px}
 .concept summary{cursor:pointer;font-weight:700}
 .concept p{margin:.5em 0}
-.why{font-size:13.5px;color:var(--ink2)}
-.meter{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px;margin:12px 0 4px}
+.why{font-size:15.5px;color:var(--ink2)}
+.meter{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:16px;margin:12px 0 4px}
 .lv{font-weight:700;color:var(--accent)}
 .dots{display:inline-flex;gap:5px}
-.dots i{width:14px;height:14px;border-radius:99px;border:1.5px solid var(--line);display:inline-block}
+.dots i{width:18px;height:18px;border-radius:99px;border:1.5px solid var(--line);display:inline-block}
 .dots i.on{background:var(--ok);border-color:var(--ok)}
 .qbox{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:10px 0}
-.qtext{font-size:16.5px;line-height:1.95;overflow-wrap:anywhere}
-.big{font-size:21px;font-weight:700;margin:6px 0;line-height:1.8}
-span.big{font-size:19px}
+.qtext{font-size:19.5px;line-height:2;overflow-wrap:anywhere}
+.big{font-size:25px;font-weight:700;margin:6px 0;line-height:1.8}
+span.big{font-size:22px}
 svg.fig{width:100%;max-width:360px;height:auto;display:block;margin:10px auto;color:var(--ink)}
 .step{border-left:3px solid var(--line);padding:4px 0 4px 12px;margin:14px 0}
 .step.cur{border-left-color:var(--accent)}
 .step.okd{border-left-color:var(--ok)}
 .step.nod{border-left-color:var(--no)}
-.sask{font-weight:700;font-size:15.5px}
-.shint{font-size:14px;color:var(--warm);margin:4px 0}
-button.hintb{font:inherit;font-size:13.5px;cursor:pointer;background:none;border:1px dashed var(--warm);color:var(--warm);border-radius:8px;padding:1px 10px;margin:4px 0}
+.sask{font-weight:700;font-size:18px;line-height:1.9}
+.shint{font-size:16.5px;color:var(--warm);margin:4px 0}
+button.hintb{font:inherit;font-size:16px;cursor:pointer;background:none;border:1px dashed var(--warm);color:var(--warm);border-radius:8px;padding:1px 10px;margin:4px 0}
 .opts{display:grid;gap:8px;margin-top:8px}
-button.op{font:inherit;font-size:16px;text-align:left;cursor:pointer;background:#fbfbf9;border:1.5px solid var(--line);border-radius:11px;padding:9px 14px;color:var(--ink);line-height:1.7}
+button.op{font:inherit;font-size:19px;text-align:left;cursor:pointer;background:#fbfbf9;border:1.5px solid var(--line);border-radius:11px;padding:11px 16px;color:var(--ink);line-height:1.8}
 button.op:disabled{cursor:default}
 button.op.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,#fff);font-weight:700}
 button.op.no{border-color:var(--no);background:color-mix(in srgb,var(--no) 10%,#fff)}
-.fbk{font-size:15px;margin-top:8px;line-height:1.85}
+.fbk{font-size:17.5px;margin-top:8px;line-height:1.85}
 .fbk.ok{color:var(--ok)}.fbk.no{color:var(--no)}
 .fbk .w{color:var(--ink)}
-.exb{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;font-size:15.5px;line-height:2}
-.exb b.h{font-size:12.5px;letter-spacing:.1em;color:var(--warm)}
+.exb{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;font-size:18px;line-height:2.05}
+.exb b.h{font-size:14px;letter-spacing:.1em;color:var(--warm)}
 .nav2{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center}
 .toast{background:color-mix(in srgb,var(--ok) 14%,var(--card));border:1.5px solid var(--ok);border-radius:12px;padding:10px 14px;margin:10px 0;font-weight:700;color:var(--ok)}
 .toast.up{background:color-mix(in srgb,var(--accent) 12%,var(--card));border-color:var(--accent);color:var(--accent)}
-.stuck{font:inherit;font-size:14px;cursor:pointer;background:none;border:1.5px solid var(--warm);color:var(--warm);border-radius:10px;padding:4px 12px;margin-top:6px}
+.stuck{font:inherit;font-size:16px;cursor:pointer;background:none;border:1.5px solid var(--warm);color:var(--warm);border-radius:10px;padding:4px 12px;margin-top:6px}
 .secgrid{display:grid;gap:14px;margin-top:18px}
 a.sec{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 17px}
-a.sec .t{font-size:18px;font-weight:700}
-a.sec ul{margin:6px 0 0;padding-left:1.2em;font-size:14.5px;color:var(--ink2)}
+a.sec .t{font-size:20px;font-weight:700}
+a.sec ul{margin:6px 0 0;padding-left:1.2em;font-size:16.5px;color:var(--ink2)}
 a.sec li.pass{color:var(--ok)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button.op{background:#2a2838}
  :root:not([data-theme="light"]) button.op.ok{background:color-mix(in srgb,var(--ok) 25%,#2a2838)}
@@ -168,13 +181,13 @@ a.sec li.pass{color:var(--ok)}
 <nav class="sitenav" aria-label="站內導覽"><a class="home" href="index.html">八年級數學自學站</a><span class="sep">·</span><a class="" href="multiply.html">1-1 乘法公式</a><a class="" href="polynomial.html">1-2 多項式加減</a><a class="" href="division.html">1-3 多項式乘除</a><a class="" href="sqrt.html">2-1 平方根</a><a class="" href="radical.html">2-2 根式運算</a><a class="" href="pythag.html">2-3 畢氏定理</a><a class="" href="factor.html">3-1 提公因式與乘法公式</a><a class="" href="cross.html">3-2 十字交乘法</a><a class="" href="quadfactor.html">4-1 因式分解解方程式</a><a class="" href="quadformula.html">4-2 配方法與公式解</a><a class="" href="quadapply.html">4-3 應用問題</a><span class="sep">·</span><a class="" href="drill.html">計算熟練</a><span class="sep">·</span><a class="now" href="delib.html">刻意練習</a><span class="sep">·</span><a class="" href="exam-sections.html">段考・照節次練</a><a class="" href="exam.html">段考・整卷模擬</a></nav>
 <!-- /SITENAV:top -->
 <header><div class="kick">刻意練習</div><h1>刻意練習：專練最容易卡的地方</h1><div class="sub">16 個練習站、147 題，分在 2-2、2-3、3-1 三節。每站只練一件事，練到不用提示也會。</div></header>
-<details class="howto"><summary>什麼是刻意練習？怎麼用這一頁（第一次先看）</summary><ul>
-<li><b>不是多寫題，而是專練一個卡點。</b>每個練習站只練一件最容易卡的事，練到「不用提示也會」才算過關。</li>
-<li>每題<b>選完立刻知道對錯</b>；選錯會告訴你錯在哪，這題過幾題還會再出現一次，直到你真的會。</li>
-<li>標「鷹架」的練習站分三級：<b>第 1 級</b>每一步都有提示；連對 2 題升到<b>第 2 級</b>，提示收起來（要看再按）；再連對 2 題升到<b>第 3 級</b>，只剩最後一題，卡住才看步驟。第 3 級連對 3 題就過關。</li>
-<li>用了提示、或中間有一步選錯，這題就不算「連對」，但沒關係，下一題再來。</li>
-<li>進度存在這台手機（或電腦）上，換裝置會重來。</li>
-</ul></details><h2 class="grp">建議的練習順序</h2><ol class="lead"><li>2-3 畢氏定理：先練單元頁裡的「找出直角三角形」28 關，再練這裡的 P1～P5。</li><li>2-2 根式運算：R1 根號外和根號內（觀念）→ R2 → R3 (a±b)² 填空框。</li><li>3-1 因式分解：F2 先提公因數再套公式 → F5 提出負數公因數 → F4 → F1。</li><li>每天花 5 分鐘：R4 最簡偵探、R5 負號跟著走、F3 分解完全了嗎。</li></ol><div class="secgrid"><a class="sec" href="delib-radical.html"><div class="t">2-2 根式運算</div><ul><li data-id="R1">R1　根號外和根號內（先補觀念）</li><li data-id="R2">R2　(k√m)² 專練（練到很快）</li><li data-id="R3">R3　(a±b)² 填空框（鷹架）</li><li data-id="R4">R4　最簡偵探（檢查習慣）</li><li data-id="R5">R5　負號跟著走（檢查習慣）</li></ul></a><a class="sec" href="delib-pythag.html"><div class="t">2-3 畢氏定理</div><ul><li data-id="P1">P1　x 是斜邊還是股（先補觀念）</li><li data-id="P2">P2　根號螺旋（鷹架）</li><li data-id="P3">P3　三個正方形（鷹架）</li><li data-id="P4">P4　一條高切兩半（鷹架）</li><li data-id="P5">P5　斜邊上的高（鷹架）</li><li data-id="P6">P6　等號不亂接（寫法）</li></ul></a><a class="sec" href="delib-factor.html"><div class="t">3-1 提公因式與乘法公式</div><ul><li data-id="F1">F1　是不是因式（先補觀念）</li><li data-id="F2">F2　先提公因數再套公式（鷹架）</li><li data-id="F3">F3　分解完全了嗎（檢查習慣）</li><li data-id="F4">F4　減號後面要變號（鷹架）</li><li data-id="F5">F5　提出負數公因數（鷹架）</li></ul></a></div>
+<details class="howto"><summary>怎麼練？練到什麼程度？（第一次先看，30 秒）</summary><ol>
+<li><b>選一個練習站。</b>每站只練一個最容易錯的地方，照順序練就好。</li>
+<li><b>答題。</b>選完馬上知道對錯；選錯會說明錯在哪裡，再看解析。</li>
+<li><b>看上面的圓點：</b>不看提示答對 → 亮一顆；答錯 → 退一顆；按了提示 → 不加也不扣。</li>
+<li><b>圓點全亮＝這一站過關。</b>每站大約 6～10 題，畫面上會一直顯示「還差幾題」。過關後按「換下一站」。</li>
+<li>標「鷹架」的站，圓點分三段：第一段每一步都有提示，第二段提示收起來（要看再按），第三段只剩最後一題。</li>
+</ol><p style="margin:.3em 0"><b>一天練多少？</b>一次 1～2 站、大約 10 分鐘就夠；沒過關的明天再接著練，進度會留著（存在這台手機或電腦上）。</p></details><h2 class="grp">建議的練習順序</h2><ol class="lead"><li>2-3 畢氏定理：先練單元頁裡的「找出直角三角形」28 關，再練這裡的 P1～P5。</li><li>2-2 根式運算：R1 根號外和根號內（觀念）→ R2 → R3 (a±b)² 填空框。</li><li>3-1 因式分解：F2 先提公因數再套公式 → F5 提出負數公因數 → F4 → F1。</li><li>每天花 5 分鐘：R4 最簡偵探、R5 負號跟著走、F3 分解完全了嗎。</li></ol><div class="secgrid"><a class="sec" href="delib-radical.html"><div class="t">2-2 根式運算</div><ul><li data-id="R1">R1　根號外和根號內（先補觀念）</li><li data-id="R2">R2　(k√m)² 專練（練到很快）</li><li data-id="R3">R3　(a±b)² 填空框（鷹架）</li><li data-id="R4">R4　最簡偵探（檢查習慣）</li><li data-id="R5">R5　負號跟著走（檢查習慣）</li></ul></a><a class="sec" href="delib-pythag.html"><div class="t">2-3 畢氏定理</div><ul><li data-id="P1">P1　x 是斜邊還是股（先補觀念）</li><li data-id="P2">P2　根號螺旋（鷹架）</li><li data-id="P3">P3　三個正方形（鷹架）</li><li data-id="P4">P4　一條高切兩半（鷹架）</li><li data-id="P5">P5　斜邊上的高（鷹架）</li><li data-id="P6">P6　等號不亂接（寫法）</li></ul></a><a class="sec" href="delib-factor.html"><div class="t">3-1 提公因式與乘法公式</div><ul><li data-id="F1">F1　是不是因式（先補觀念）</li><li data-id="F2">F2　先提公因數再套公式（鷹架）</li><li data-id="F3">F3　分解完全了嗎（檢查習慣）</li><li data-id="F4">F4　減號後面要變號（鷹架）</li><li data-id="F5">F5　提出負數公因數（鷹架）</li></ul></a></div>
 <!-- SITENAV:bottom 由 _add_site_nav.py 產生，勿手改 -->
 <div class="sitenav-b"><a class="prev" href="drill-5-1.html"><small>← 上一頁</small><span>計算熟練 5-1</span></a><a class="homeb" href="index.html">回八年級首頁</a><a class="next" href="delib-radical.html"><small>下一頁 →</small><span>刻意練習 2-2</span></a></div>
 <!-- /SITENAV:bottom -->
